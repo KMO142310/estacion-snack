@@ -59,7 +59,7 @@ header{position:sticky;top:0;z-index:100;height:56px;padding:0 16px;display:flex
 /* CARD VISUAL */
 .cvis{position:relative;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:transform .4s var(--ease)}
 .card.on .cvis{transform:scale(1.03)}
-.cvis-emoji{font-size:72px;filter:drop-shadow(0 6px 16px rgba(0,0,0,.25));transition:transform .3s var(--sp);position:relative;z-index:2;user-select:none;line-height:1}
+.cvis-emoji{font-size:72px;filter:drop-shadow(0 6px 16px rgba(0,0,0,.3));transition:transform .3s var(--sp);position:relative;z-index:2;user-select:none;line-height:1;text-shadow:0 4px 12px rgba(0,0,0,.2)}
 .card.on .cvis-emoji{transform:scale(1.1) rotate(-5deg)}
 
 /* Per-product gradients */
@@ -70,13 +70,17 @@ header{position:sticky;top:0;z-index:100;height:56px;padding:0 16px;display:flex
 [data-id=gomita]   .cvis{background:linear-gradient(145deg,#880040,#C2185B 40%,#FF80AB 70%,#FFD6E8)}
 [data-id=almendra] .cvis{background:linear-gradient(145deg,#3e2010,#6D4C41 40%,#A1887F 70%,#EFEBE9)}
 
+/* Product photo */
+.cvis-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;opacity:0;transition:opacity .5s ease}
+.cvis-img.loaded{opacity:1}
+
 /* Light overlay */
-.cvis::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 25%,rgba(255,255,255,.18),transparent 60%);pointer-events:none;z-index:1}
+.cvis::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 25%,rgba(255,255,255,.18),transparent 60%);pointer-events:none;z-index:3}
 
 /* Badges */
-.cstk{position:absolute;top:8px;right:8px;z-index:3;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);color:#fff;font-size:9px;font-weight:800;padding:3px 8px;border-radius:999px}
+.cstk{position:absolute;top:8px;right:8px;z-index:4;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);color:#fff;font-size:9px;font-weight:800;padding:3px 8px;border-radius:999px}
 .cstk.low{background:var(--t)}
-.cchk{position:absolute;top:8px;left:8px;z-index:3;width:24px;height:24px;border-radius:50%;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;transform:scale(0) rotate(-45deg);opacity:0;transition:transform .3s var(--sp),opacity .2s}
+.cchk{position:absolute;top:8px;left:8px;z-index:4;width:24px;height:24px;border-radius:50%;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;transform:scale(0) rotate(-45deg);opacity:0;transition:transform .3s var(--sp),opacity .2s}
 .card.on .cchk{transform:scale(1) rotate(0);opacity:1}
 
 /* CARD BODY */
@@ -253,12 +257,18 @@ header{position:sticky;top:0;z-index:100;height:56px;padding:0 16px;display:flex
 <script>
 const WA='56953743338';
 const P=[
-  {id:'mix',      cat:'frutos',emoji:'🥜',tag:'Frutos secos',name:'Mix Europeo',           copy:'La mezcla que se acaba primero',price:13000,stock:5},
-  {id:'tropical', cat:'dulces',emoji:'🍬',tag:'Dulces',      name:'Maní Confitado Tropical',copy:'Imposible comer solo uno',      price:5990, stock:5},
-  {id:'rojo',     cat:'dulces',emoji:'🔴',tag:'Dulces',      name:'Maní Confitado Rojo',    copy:'El clásico de siempre',         price:5990, stock:5},
-  {id:'chuby',    cat:'dulces',emoji:'🎨',tag:'Dulces',      name:'Chuby Bardú',            copy:'12 colores, solo en Santa Cruz',price:9990, stock:5},
-  {id:'gomita',   cat:'dulces',emoji:'🐻',tag:'Dulces',      name:'Gomita Osito Docile',    copy:'Para grandes y para chicos',   price:8500, stock:5},
-  {id:'almendra', cat:'frutos',emoji:'🌰',tag:'Frutos secos',name:'Almendra Entera',        copy:'Solo 1 kg disponible',         price:16000,stock:1},
+  {id:'mix',      cat:'frutos',emoji:'🥜',tag:'Frutos secos',name:'Mix Europeo',           copy:'La mezcla que se acaba primero',price:13000,stock:5,
+   img:'https://images.unsplash.com/photo-1621955511418-7f76e6f0a5f5?auto=format&fit=crop&q=80&w=600'},
+  {id:'tropical', cat:'dulces',emoji:'🍬',tag:'Dulces',      name:'Maní Confitado Tropical',copy:'Imposible comer solo uno',      price:5990, stock:5,
+   img:'https://images.unsplash.com/photo-1562707666-1af4e27de3a0?auto=format&fit=crop&q=80&w=600'},
+  {id:'rojo',     cat:'dulces',emoji:'🔴',tag:'Dulces',      name:'Maní Confitado Rojo',    copy:'El clásico de siempre',         price:5990, stock:5,
+   img:'https://images.unsplash.com/photo-1582461833047-2d06e73e6d5b?auto=format&fit=crop&q=80&w=600'},
+  {id:'chuby',    cat:'dulces',emoji:'🎨',tag:'Dulces',      name:'Chuby Bardú',            copy:'12 colores, solo en Santa Cruz',price:9990, stock:5,
+   img:'https://images.unsplash.com/photo-1513558812234-44d4fc57e6a3?auto=format&fit=crop&q=80&w=600'},
+  {id:'gomita',   cat:'dulces',emoji:'🐻',tag:'Dulces',      name:'Gomita Osito Docile',    copy:'Para grandes y para chicos',   price:8500, stock:5,
+   img:'https://images.unsplash.com/photo-1560713781-d4f65c9fe2cd?auto=format&fit=crop&q=80&w=600'},
+  {id:'almendra', cat:'frutos',emoji:'🌰',tag:'Frutos secos',name:'Almendra Entera',        copy:'Solo 1 kg disponible',         price:16000,stock:1,
+   img:'https://images.unsplash.com/photo-1508061253366-f7da158b6d46?auto=format&fit=crop&q=80&w=600'},
 ];
 let cart={},filter='all',prev=0;
 const fmt=n=>'$'+n.toLocaleString('es-CL');
@@ -278,7 +288,8 @@ function render(){
       <div class="cvis">
         <span class="cchk">✓</span>
         <div class="cstk${p.stock<=2?' low':''}">${p.stock<=2?'⚠ ':''}${p.stock}kg</div>
-        <div class="cvis-emoji">${p.emoji}</div>
+        ${p.img?`<img class="cvis-img" src="${p.img}" alt="${p.name}" loading="lazy" onload="this.classList.add('loaded');this.nextElementSibling.style.opacity='0'" onerror="this.remove()">`:''}
+        <div class="cvis-emoji" style="transition:opacity .5s">${p.emoji}</div>
       </div>
       <div class="cbody">
         <span class="ctag">${p.tag}</span>

@@ -1,248 +1,492 @@
 <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Catálogo — Estación Snack</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --verde: #5C7A3E;
+    --verde-claro: #7a9e54;
+    --terra: #C4603A;
+    --beige: #F5F0E6;
+    --beige2: #EDE5D0;
+    --marron: #8B7355;
+    --negro: #1a1a18;
+    --wa: #25D366;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Manrope',sans-serif; background:var(--beige); color:var(--negro); min-height:100vh; }
 
-<html class="light" lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Catálogo - Estación Snack</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#5C7A3E",
-                        accent: "#C4603A",
-                        beige: "#F5F0E6",
-                        earth: "#8B7355",
-                    },
-                    borderRadius: {
-                        "DEFAULT": "1rem",
-                        "lg": "2rem",
-                        "xl": "3rem",
-                        "full": "9999px"
-                    },
-                    fontFamily: {
-                        "headline": ["Manrope"],
-                        "body": ["Manrope"],
-                        "label": ["Manrope"]
-                    }
-                },
-            },
-        }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            display: inline-block;
-            line-height: 1;
-            text-transform: none;
-            letter-spacing: normal;
-            word-wrap: normal;
-            white-space: nowrap;
-            direction: ltr;
-        }
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-[#F5F0E6] font-body text-[#8B7355]">
-<!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-[#F5F0E6] dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-[#5C7A3E] dark:text-lime-500" data-icon="menu">menu</span>
-<h1 class="text-xl font-black text-[#5C7A3E] dark:text-lime-400 tracking-tight font-['Manrope']">Estación Snack</h1>
-</div>
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-[#5C7A3E] dark:text-lime-500" data-icon="shopping_basket">shopping_basket</span>
-</div>
+  /* ─── HEADER ─── */
+  header {
+    position:sticky; top:0; z-index:50;
+    background:rgba(245,240,230,0.92); backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(0,0,0,0.07);
+    padding:0 20px; height:60px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo { font-size:17px; font-weight:900; color:var(--verde); letter-spacing:-0.5px; text-decoration:none; }
+  .cart-btn {
+    position:relative; background:var(--verde); color:white;
+    border:none; border-radius:999px; padding:10px 18px;
+    font-family:'Manrope',sans-serif; font-size:14px; font-weight:700;
+    cursor:pointer; display:flex; align-items:center; gap:8px;
+    transition:background 0.2s, transform 0.1s;
+  }
+  .cart-btn:active { transform:scale(0.96); }
+  .cart-count {
+    background:var(--terra); color:white; border-radius:50%;
+    width:20px; height:20px; font-size:11px; font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform 0.2s;
+  }
+  .cart-count.bump { animation:bump 0.25s ease; }
+  @keyframes bump { 0%{transform:scale(1)} 50%{transform:scale(1.4)} 100%{transform:scale(1)} }
+
+  /* ─── HERO STRIP ─── */
+  .hero-strip {
+    background:var(--verde); color:white;
+    padding:20px 20px; text-align:center;
+  }
+  .hero-strip h1 { font-size:22px; font-weight:900; letter-spacing:-0.5px; }
+  .hero-strip p { font-size:13px; opacity:0.75; margin-top:4px; }
+  .badges { display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap; }
+  .badge {
+    background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25);
+    border-radius:999px; padding:5px 12px; font-size:12px; font-weight:700;
+  }
+
+  /* ─── PRODUCTS ─── */
+  .products-wrap { padding:20px 16px 160px; max-width:600px; margin:0 auto; }
+  .section-title { font-size:13px; font-weight:700; color:var(--marron); text-transform:uppercase; letter-spacing:1px; margin-bottom:16px; }
+
+  .product-card {
+    background:white; border-radius:20px; margin-bottom:12px;
+    border:2px solid transparent; transition:border-color 0.2s, box-shadow 0.2s;
+    overflow:hidden;
+  }
+  .product-card.in-cart { border-color:var(--verde); box-shadow:0 0 0 4px rgba(92,122,62,0.08); }
+
+  .product-main { padding:16px; display:flex; align-items:center; gap:14px; }
+  .product-emoji {
+    width:64px; height:64px; border-radius:14px;
+    background:var(--beige); display:flex; align-items:center; justify-content:center;
+    font-size:32px; flex-shrink:0;
+  }
+  .product-info { flex:1; min-width:0; }
+  .product-name { font-size:16px; font-weight:800; line-height:1.2; }
+  .product-desc { font-size:12px; color:var(--marron); margin-top:2px; }
+  .product-price { font-size:20px; font-weight:900; color:var(--verde); margin-top:4px; }
+  .product-price span { font-size:13px; font-weight:600; color:var(--marron); }
+
+  .product-controls { padding:0 16px 16px; display:flex; align-items:center; justify-content:space-between; }
+  .stock-label { font-size:12px; color:var(--marron); font-weight:600; }
+  .stock-label.low { color:var(--terra); }
+
+  .kg-selector { display:flex; align-items:center; gap:0; background:var(--beige); border-radius:999px; overflow:hidden; }
+  .kg-btn {
+    background:none; border:none; width:38px; height:38px;
+    font-size:20px; font-weight:700; color:var(--verde);
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:background 0.15s;
+    font-family:'Manrope',sans-serif;
+  }
+  .kg-btn:hover { background:var(--beige2); }
+  .kg-btn:disabled { color:rgba(0,0,0,0.2); cursor:not-allowed; }
+  .kg-display {
+    min-width:52px; text-align:center;
+    font-size:16px; font-weight:800; color:var(--negro);
+  }
+  .kg-display .unit { font-size:11px; font-weight:600; color:var(--marron); }
+
+  .product-subtotal {
+    margin:0 16px 16px;
+    background:rgba(92,122,62,0.08); border-radius:10px;
+    padding:10px 14px; display:flex; justify-content:space-between; align-items:center;
+  }
+  .product-subtotal .label { font-size:13px; color:var(--verde); font-weight:600; }
+  .product-subtotal .amount { font-size:18px; font-weight:900; color:var(--verde); }
+
+  /* ─── CART DRAWER ─── */
+  .cart-overlay {
+    position:fixed; inset:0; background:rgba(0,0,0,0.4);
+    z-index:90; opacity:0; pointer-events:none; transition:opacity 0.25s;
+  }
+  .cart-overlay.open { opacity:1; pointer-events:all; }
+
+  .cart-drawer {
+    position:fixed; bottom:0; left:0; right:0; z-index:100;
+    background:white; border-radius:24px 24px 0 0;
+    padding:24px 20px 40px;
+    transform:translateY(100%); transition:transform 0.3s cubic-bezier(0.32,0.72,0,1);
+    max-height:85vh; overflow-y:auto;
+  }
+  .cart-drawer.open { transform:translateY(0); }
+  .drawer-handle { width:40px; height:4px; background:rgba(0,0,0,0.12); border-radius:2px; margin:0 auto 20px; }
+  .drawer-title { font-size:20px; font-weight:900; margin-bottom:20px; }
+
+  .cart-items { margin-bottom:20px; }
+  .cart-item {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:12px 0; border-bottom:1px solid rgba(0,0,0,0.06);
+  }
+  .cart-item:last-child { border-bottom:none; }
+  .cart-item-name { font-size:14px; font-weight:700; }
+  .cart-item-detail { font-size:12px; color:var(--marron); margin-top:2px; }
+  .cart-item-price { font-size:16px; font-weight:900; color:var(--verde); }
+
+  .cart-empty { text-align:center; padding:40px 0; color:var(--marron); font-size:14px; }
+  .cart-empty-icon { font-size:48px; margin-bottom:12px; }
+
+  .cart-total-row {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 0; border-top:2px solid var(--beige);
+    margin-bottom:8px;
+  }
+  .cart-total-label { font-size:14px; font-weight:700; color:var(--marron); }
+  .cart-total-amount { font-size:28px; font-weight:900; color:var(--negro); letter-spacing:-1px; }
+
+  .despacho-info {
+    background:var(--beige); border-radius:12px; padding:12px 16px;
+    font-size:13px; color:var(--marron); margin-bottom:20px; line-height:1.5;
+  }
+  .despacho-info strong { color:var(--negro); }
+
+  /* Nombre input */
+  .input-group { margin-bottom:12px; }
+  .input-group label { font-size:12px; font-weight:700; color:var(--marron); text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:6px; }
+  .input-group input, .input-group textarea {
+    width:100%; padding:12px 16px;
+    background:var(--beige); border:2px solid transparent; border-radius:12px;
+    font-family:'Manrope',sans-serif; font-size:15px; font-weight:600;
+    color:var(--negro); outline:none; transition:border-color 0.2s;
+    resize:none;
+  }
+  .input-group input:focus, .input-group textarea:focus { border-color:var(--verde); }
+
+  .wa-btn {
+    width:100%; background:var(--wa); color:white; border:none;
+    border-radius:16px; padding:18px; font-family:'Manrope',sans-serif;
+    font-size:17px; font-weight:800; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    transition:background 0.2s, transform 0.1s;
+    letter-spacing:-0.3px;
+  }
+  .wa-btn:hover { background:#1fbc5a; }
+  .wa-btn:active { transform:scale(0.98); }
+  .wa-btn:disabled { background:#a0a0a0; cursor:not-allowed; }
+  .wa-icon { font-size:22px; }
+
+  /* ─── STICKY BOTTOM ─── */
+  .sticky-bar {
+    position:fixed; bottom:0; left:0; right:0; z-index:40;
+    background:white; border-top:1px solid rgba(0,0,0,0.08);
+    padding:12px 16px; display:flex; align-items:center; justify-content:space-between;
+    box-shadow:0 -4px 20px rgba(0,0,0,0.08);
+    transform:translateY(100%); transition:transform 0.3s ease;
+  }
+  .sticky-bar.visible { transform:translateY(0); }
+  .sticky-total { }
+  .sticky-total-label { font-size:11px; font-weight:600; color:var(--marron); text-transform:uppercase; letter-spacing:0.5px; }
+  .sticky-total-amount { font-size:22px; font-weight:900; color:var(--negro); letter-spacing:-1px; line-height:1; }
+  .sticky-cta {
+    background:var(--wa); color:white; border:none;
+    border-radius:14px; padding:14px 24px; font-family:'Manrope',sans-serif;
+    font-size:15px; font-weight:800; cursor:pointer;
+    display:flex; align-items:center; gap:8px;
+    transition:background 0.2s, transform 0.1s;
+  }
+  .sticky-cta:active { transform:scale(0.97); }
+
+  /* ─── TOAST ─── */
+  .toast {
+    position:fixed; top:80px; left:50%; transform:translateX(-50%) translateY(-20px);
+    background:var(--negro); color:white; padding:10px 20px; border-radius:999px;
+    font-size:13px; font-weight:700; opacity:0; pointer-events:none;
+    transition:all 0.25s; z-index:200; white-space:nowrap;
+  }
+  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="index.html" class="logo">🌰 Estación Snack</a>
+  <button class="cart-btn" onclick="openCart()">
+    <span>Mi pedido</span>
+    <span class="cart-count" id="cartCount">0</span>
+  </button>
 </header>
-<main class="pt-16 pb-32">
-<!-- Sticky Filters -->
-<div class="sticky top-16 z-40 bg-[#F5F0E6]/95 backdrop-blur-md py-4 px-4 overflow-x-auto no-scrollbar flex gap-2 border-b border-stone-100">
-<button class="whitespace-nowrap px-6 py-2 rounded-full bg-[#5C7A3E] text-white font-bold text-sm">Todos</button>
-<button class="whitespace-nowrap px-6 py-2 rounded-full bg-white text-[#8B7355] border border-stone-200 font-bold text-sm">Frutos Secos</button>
-<button class="whitespace-nowrap px-6 py-2 rounded-full bg-white text-[#8B7355] border border-stone-200 font-bold text-sm">Dulces</button>
-<button class="whitespace-nowrap px-6 py-2 rounded-full bg-white text-[#8B7355] border border-stone-200 font-bold text-sm">Mix</button>
+
+<!-- HERO -->
+<div class="hero-strip">
+  <h1>¿Qué vas a llevar hoy?</h1>
+  <p>Selecciona los kilos de cada producto y te escribimos el pedido solo</p>
+  <div class="badges">
+    <span class="badge">📦 Por kilo entero</span>
+    <span class="badge">🚗 Despacho Mar y Vie</span>
+    <span class="badge">💬 Pedido por WhatsApp</span>
+  </div>
 </div>
-<!-- Product List -->
-<section class="px-4 mt-6 flex flex-col gap-4">
-<!-- Product 1 -->
-<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
-<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
-<img alt="Almendra Entera" class="w-full h-full object-cover" data-alt="Close-up of premium whole roasted almonds in a rustic wooden bowl with warm natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEuuhjojEl0ApM7d7c2BsuW-XeORhJmUhYQyMwhQ3cQ3NM00qiyKzxLaElPqtnQgb8TtQ8lM2e8Ur2E0tyTl9fjrruxq8TkgCCFQOqz46Y2K5LSLpL3ufZJh6qW8IjaSF3hFUPTD0UEIQtOIF_Uz25JEraJzYKgEcl9Ua0DAH0KKnygmhocC1PdrJCnVA8COdcfdcJt9hPFcAzSpVW8as0WoOCT-IvzeHxw5CnlS9UJetgeh0nhyq_51D4MIxBa5zOKZk-rXUipC6p"/>
+
+<!-- PRODUCTS -->
+<div class="products-wrap">
+  <div class="section-title">Productos disponibles</div>
+  <div id="productList"></div>
 </div>
-<div class="flex-grow min-w-0">
-<h3 class="font-bold text-stone-800 truncate">Almendra Entera</h3>
-<p class="text-sm text-stone-500 truncate">Tostada natural</p>
-<p class="text-[#5C7A3E] font-extrabold mt-1">$10.490/kg</p>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar" id="stickyBar">
+  <div class="sticky-total">
+    <div class="sticky-total-label">Total pedido</div>
+    <div class="sticky-total-amount" id="stickyAmount">$0</div>
+  </div>
+  <button class="sticky-cta" onclick="openCart()">
+    <span>Ver pedido →</span>
+  </button>
 </div>
-<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="drawer-handle"></div>
+  <div class="drawer-title">Tu pedido</div>
+
+  <div class="cart-items" id="cartItems"></div>
+
+  <div id="cartFooter" style="display:none">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total a pagar</span>
+      <span class="cart-total-amount" id="cartTotal">$0</span>
+    </div>
+
+    <div class="despacho-info">
+      <strong>Despacho en Santa Cruz</strong> — Martes y Viernes<br/>
+      Pedido mínimo: 1 kg · Pago: transferencia o efectivo al recibir
+    </div>
+
+    <div class="input-group">
+      <label>Tu nombre</label>
+      <input type="text" id="clientName" placeholder="Ej: María González" autocomplete="name"/>
+    </div>
+    <div class="input-group">
+      <label>Dirección de despacho</label>
+      <input type="text" id="clientAddress" placeholder="Ej: Los Aromos 234, Santa Cruz" autocomplete="street-address"/>
+    </div>
+    <div class="input-group">
+      <label>Nota (opcional)</label>
+      <textarea id="clientNote" rows="2" placeholder="Ej: Llegar después de las 18:00..."></textarea>
+    </div>
+
+    <button class="wa-btn" id="waBtn" onclick="sendWhatsApp()">
+      <span class="wa-icon">💬</span>
+      Enviar pedido por WhatsApp
+    </button>
+  </div>
 </div>
-<!-- Product 2 -->
-<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
-<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
-<img alt="Almendra Laminada" class="w-full h-full object-cover" data-alt="Artisanal sliced blanched almonds on a clean beige surface with soft overhead shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJMkvG0sVLc5i9zaehe7_ACDFrzh1KPLyVS-Ww-OuAg84NZR81hf7bdf5IJq2ZUqJiXXKshd66QcgCFn6WyWRvBqdb6em9NXNGkYukrBeS5JjckQqSFeRpSxEXP3tc8tJqnjyItgevy5l7tyKRkjwpRIhi7wfKAutvVP5Tzq7uQKgeaNl1pAs5V3Nu6ahPUCnRflMJzN7385WU9ptOHowj_8dWalfEf6TM2MBUSoKZuX9lEyB1JmqLxfKM1voqAk1MQonT4KlFcYUJ"/>
-</div>
-<div class="flex-grow min-w-0">
-<h3 class="font-bold text-stone-800 truncate">Almendra Laminada</h3>
-<p class="text-sm text-stone-500 truncate">Sin piel</p>
-<p class="text-[#5C7A3E] font-extrabold mt-1">$11.290/kg</p>
-</div>
-<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
-</div>
-<!-- Product 3 -->
-<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
-<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
-<img alt="Castaña de Caju Salada" class="w-full h-full object-cover" data-alt="Golden roasted salted cashew nuts with visible salt crystals on a textured neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0dRp1mjA_AjCurxtQ0eA_HZBExVZl6QSmB8DS2_Ud1QmjsxyIozi2KixbHGtqQUTqmWKAhz28-CjVLqsWYUs9wrOsagv39yw2zxebCxN1XS5GBtLm2UecdQO3zojnWjgb4faSOwwkfoGWl6m-dqFilmFW8HwwxNBMaJ4N27cZmxyXs1hYVyYy5ajONusbkQ8J4144tLOcIYYeNlGfCEsJiw7d5pwEmBPs-S16AtsCAiSaiYRNQ5ZXuedJN9Fbt0JKI6rcaDhnCUnm"/>
-</div>
-<div class="flex-grow min-w-0">
-<h3 class="font-bold text-stone-800 truncate">Castaña de Caju Salada</h3>
-<p class="text-sm text-stone-500 truncate">Crujiente</p>
-<p class="text-[#5C7A3E] font-extrabold mt-1">$13.990/kg</p>
-</div>
-<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
-</div>
-<!-- Product 4 -->
-<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
-<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
-<img alt="Castaña de Caju sin Sal" class="w-full h-full object-cover" data-alt="Raw natural cashew nuts showing their ivory color and creamy texture in soft daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN_X5PlM6zffF9KK3ej50lMAKCxTp2GrUDIzTDXklrTt9KhvE03oe6zO-Uqu3FiX0mSNFoAIbXOKnSvp_J0gegI7NJbQdeFgoPLytVpq5TpWnQ7VxNPOgu8n2ORYXVaXoQ2lFcQnIAXu6PVcAAzZgmkZOLFvfZmucwyRw6OHBgXQICOAoTTIxuWEDLnGNaSmuk_2szzt_KwxG_y0qDd0p9WyCbgMoPwVCf8gSGHgnfXIHa17Sq2DCG1exRUSYPrMpM-TK2scH5kAbR"/>
-</div>
-<div class="flex-grow min-w-0">
-<h3 class="font-bold text-stone-800 truncate">Castaña de Caju sin Sal</h3>
-<p class="text-sm text-stone-500 truncate">Natural</p>
-<p class="text-[#5C7A3E] font-extrabold mt-1">$13.990/kg</p>
-</div>
-<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
-</div>
-<!-- Middle Banner -->
-<div class="my-4 p-6 bg-[#C4603A]/10 rounded-3xl border border-[#C4603A]/20 text-center relative overflow-hidden">
-<div class="relative z-10">
-<h4 class="text-[#C4603A] font-extrabold text-lg leading-tight">¿Quieres un MIX personalizado?</h4>
-<p class="text-[#8B7355] mt-1 font-medium">¡Te lo armamos a tu gusto!</p>
-<button class="mt-3 bg-[#C4603A] text-white px-6 py-2 rounded-full font-bold text-sm">Consultar ahora</button>
-</div>
-</div>
-<!-- Product 5 -->
-<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
-<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
-<img alt="Pistacho Salado" class="w-full h-full object-cover" data-alt="Roasted pistachios in their shells, some slightly open showing vibrant green nuts with salt grains" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRP8Fsz-d9N3RbStsHwvckvNJAUNx-hv3-WbU4NycnzfMQW1GyhYCGHSGY_3AHjMKHLNvs1U4yb57CIYPZPAxUHlclyVl1zbSZsbDy5bR6ci6dMO5UEtUYQH0wrNbpfRC-9QJPqPSltINcTbyU8u6ktus7qW-_tK6dmm-CzBEpBDwHsflZ31Jh5EOetgLbEOIe-aT-ptiEUjhAPBj11O5WHrOU7crxZ2adEbzNf1_MmNMw0lO6tqAbhsIk5Hj83rFRrhUwnUnfU_ps"/>
-</div>
-<div class="flex-grow min-w-0">
-<h3 class="font-bold text-stone-800 truncate">Pistacho Salado</h3>
-<p class="text-sm text-stone-500 truncate">Con cáscara</p>
-<p class="text-[#5C7A3E] font-extrabold mt-1">$14.590/kg</p>
-</div>
-<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
-</div>
-<!-- Product 6 -->
-<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
-<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
-<img alt="Banana Chip" class="w-full h-full object-cover" data-alt="Thin slices of dried sweetened banana chips stacked together showing golden-yellow color" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCh6VHPa4AyP2FqjJdWfFdyNvgdELW5asa-g1dcvHlOYJsp-St4z1-QbOZKGCwS6DnTY4Z9NEHw5DwUzkVilmZ-IKyTRIGKRaCa6OgDPdlJtQf8eK--3NR-Cs1fAyTFbuM0lONvwXP8E7U5kCYsZcdckl27MOyel9a-UCGxB72urOD2yPr6kYLau-8KdaQC7PeHd0jo0mv1YXD7kQDrQ4HgpLYtBJbOTkNmHmU7d5CVlG-NlaaJk1myI5BdB9ATHoGiyMC_1O7LY2-o"/>
-</div>
-<div class="flex-grow min-w-0">
-<h3 class="font-bold text-stone-800 truncate">Banana Chip</h3>
-<p class="text-sm text-stone-500 truncate">Clásica dulce</p>
-<p class="text-[#5C7A3E] font-extrabold mt-1">$4.300/kg</p>
-</div>
-<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
-</div>
-<!-- Product 7 -->
-<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
-<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
-<img alt="Banana Chip Salada" class="w-full h-full object-cover" data-alt="Crunchy savory banana chips with a light dusting of salt on a rustic surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCJw8XiixjeOU-Vc64AIsaDor8ysHWUMpwnu0dLdaYFcfmaLc5XE-zRgR-X4pZ5HWTA2gFyAg8ZjLRQ5N-r0FtYE_qMfdLvuC-pmoHTA6phJmRra3LvJSS7Ko2HI9f66KR8b1WVojtGaodoVbe-wC8Hxjp4lKZkl1egrWUejQkRb6kFaTsn-kZGYxmVXrskmSlhj-AeS-GuY9eR7_URL83lKONtJV810DG8BfI-CuZBicHgGHM2lQlefXUFV1WaqCXAhKn0QAe1rht"/>
-</div>
-<div class="flex-grow min-w-0">
-<h3 class="font-bold text-stone-800 truncate">Banana Chip Salada</h3>
-<p class="text-sm text-stone-500 truncate">Crujiente</p>
-<p class="text-[#5C7A3E] font-extrabold mt-1">$13.990/kg</p>
-</div>
-<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
-</div>
-<!-- Product 8 -->
-<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
-<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
-<img alt="Avellana Europea" class="w-full h-full object-cover" data-alt="Roasted whole hazelnuts without skin, showing deep golden brown color and rich texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkHCZM5Z_Q3YenSDXmMBHN-Jxpebyq-ND39b0QwbYuy6FGIsA3U-zSEjFVx6zxEB3oqSug8sCDJacf5BSj9HviV4fuJDl4hX6AcigF7mhJ7J-uQbMrcrQQWDcC6gf5a_jAJRr6jgApCoYeA90HcqeeFQ9FfCyohr2HqbQVnIym2tNd0UKDFKUdwvGznRpxm-HoDUfa7Zcdxo3QmC4PXzcIBw8xBOVfpticS65XDmYp14rhZbh-d2wA_Uus-MlqeuITYe_jyRa7lnNl"/>
-</div>
-<div class="flex-grow min-w-0">
-<h3 class="font-bold text-stone-800 truncate">Avellana Europea</h3>
-<p class="text-sm text-stone-500 truncate">Tostada</p>
-<p class="text-[#5C7A3E] font-extrabold mt-1">$10.990/kg</p>
-</div>
-<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
-</div>
-<!-- Product 9 -->
-<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
-<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
-<img alt="Habas Fritas" class="w-full h-full object-cover" data-alt="Fried broad beans with salt, displaying a crunchy texture and light green to gold hues" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDY7bcUHLh7VnljTq80wNyexfUOVV1VGy80hRRxsGGZgOROZGijyDoYriR-JR_tb2kIHmwuv3VI1qgbEdPUmQW_UnI-Vi017w_XU5FOc8zzyqTpE8C_D4EkPWP0A2EV-iPDdudGuyLLcbhi4ZnOrLMfbiCmr5f2hotr9oTBqjic5juQHzsG-VcZ3rEaCAqxgg-WzZBqgHYsTCIOrYHwBcgC_AVQIGSmxBFmKqBpoNBLHOabhVtc-sP0ee-H3Jqv9MVFVtmv1WhtsPY4"/>
-</div>
-<div class="flex-grow min-w-0">
-<h3 class="font-bold text-stone-800 truncate">Habas Fritas</h3>
-<p class="text-sm text-stone-500 truncate">Saladas</p>
-<p class="text-[#5C7A3E] font-extrabold mt-1">$7.990/kg</p>
-</div>
-<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
-</div>
-<!-- Product 10 -->
-<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
-<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
-<img alt="Maíz Miel Mostaza" class="w-full h-full object-cover" data-alt="Golden fried corn kernels coated with honey mustard seasoning, vibrant and textured snack" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCx8gRdAt9X-Bb6V3NVCs8XTteF_vTS4QQuLhXadJ_IJRfYJaBiJ-h3yAP021op0lWxBS3cUSbFmqYWQ1OMsf-bnIoAfyDx8gnd8q-HKFNMZPgpKmGpcWJATJZd7y_uETSwZnlwXzJD0DA1cAcA4qLpTuUrMs48OCpWZCn9sO427LYJ-rlSo3EUaXwobnFGv1fwer5e67WcT-igoy8-aXmP7zKJJ_zumAZQt-skyOoeRRLE5_tJHd6pJYqT_vvs4yp9vKjYhsPUkaXD"/>
-</div>
-<div class="flex-grow min-w-0">
-<h3 class="font-bold text-stone-800 truncate">Maíz Miel Mostaza</h3>
-<p class="text-sm text-stone-500 truncate">Sabor único</p>
-<p class="text-[#5C7A3E] font-extrabold mt-1">$5.700/kg</p>
-</div>
-<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
-</div>
-</section>
-</main>
-<!-- WhatsApp FAB -->
-<a class="fixed bottom-24 right-4 w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-transform z-50" href="#">
-<svg class="w-8 h-8 fill-current" viewbox="0 0 24 24">
-<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
-</svg>
-</a>
-<!-- BottomNavBar -->
-<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 pb-4 pt-2 bg-white/90 dark:bg-stone-950/90 backdrop-blur-md rounded-t-3xl border-t border-stone-100 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-<a class="flex flex-col items-center justify-center text-[#8B7355] dark:text-stone-400 hover:text-[#5C7A3E] active:scale-90 duration-150" href="#">
-<span class="material-symbols-outlined" data-icon="home">home</span>
-<span class="font-['Manrope'] font-bold text-[10px]">Inicio</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#C4603A] dark:text-orange-400 bg-[#C4603A]/10 rounded-xl px-3 py-1 active:scale-90 duration-150" href="#">
-<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
-<span class="font-['Manrope'] font-bold text-[10px]">Productos</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#8B7355] dark:text-stone-400 hover:text-[#5C7A3E] active:scale-90 duration-150" href="#">
-<span class="material-symbols-outlined" data-icon="info">info</span>
-<span class="font-['Manrope'] font-bold text-[10px]">Nosotros</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#8B7355] dark:text-stone-400 hover:text-[#5C7A3E] active:scale-90 duration-150" href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20en%20Estaci%C3%B3n%20Snack%20%F0%9F%8C%B0" target="_blank">
-<span class="material-symbols-outlined" data-icon="chat">chat</span>
-<span class="font-['Manrope'] font-bold text-[10px]">Pedir</span>
-</a>
-</nav>
-<!-- Footer -->
-<footer class="w-full py-12 px-6 flex flex-col items-center gap-4 mb-20 text-center bg-[#8B7355] dark:bg-stone-950">
-<div class="text-[#F5F0E6] font-bold">Estación Snack</div>
-<p class="font-['Manrope'] text-sm text-[#F5F0E6] opacity-80">© 2024 Estación Snack - Frutos Secos por Kilo</p>
-<div class="flex gap-4">
-<a class="text-[#F5F0E6] text-sm opacity-80 hover:opacity-100 transition-opacity underline font-bold" href="#">Términos</a>
-<a class="text-[#F5F0E6] text-sm opacity-80 hover:opacity-100 transition-opacity" href="#">Contacto</a>
-<a class="text-[#F5F0E6] text-sm opacity-80 hover:opacity-100 transition-opacity" href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20en%20Estaci%C3%B3n%20Snack%20%F0%9F%8C%B0" target="_blank">WhatsApp</a>
-</div>
-</footer>
-</body></html>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const WA_NUMBER = '56953743338';
+
+const PRODUCTS = [
+  { id:'mix',      emoji:'🥜', name:'Mix Europeo',           desc:'Mezcla premium de frutos secos europeos', price:13000, stock:5 },
+  { id:'tropical', emoji:'🍬', name:'Maní Confitado Tropical', desc:'Dulce, crocante, sabor frutal tropical',  price:5990,  stock:5 },
+  { id:'rojo',     emoji:'🔴', name:'Maní Confitado Rojo',    desc:'Confite natural, color rojo intenso',     price:5990,  stock:5 },
+  { id:'chuby',    emoji:'🎨', name:'Chuby Bardú 12 colores', desc:'Confite colorido, exclusivo en Santa Cruz',price:9990,  stock:5 },
+  { id:'gomita',   emoji:'🐻', name:'Gomita Osito Docile',    desc:'Gomitas tiernas, marca Docile',           price:8500,  stock:5 },
+  { id:'almendra', emoji:'🌰', name:'Almendra Entera',        desc:'Almendra natural, stock limitado',        price:16000, stock:1 },
+];
+
+let cart = {};  // { id: kg }
+
+function fmt(n){ return '$' + n.toLocaleString('es-CL'); }
+
+// ─── RENDER PRODUCTS ───
+function renderProducts(){
+  const container = document.getElementById('productList');
+  container.innerHTML = PRODUCTS.map(p => {
+    const kg = cart[p.id] || 0;
+    const inCart = kg > 0;
+    const subtotal = kg * p.price;
+    return `
+    <div class="product-card ${inCart?'in-cart':''}" id="card-${p.id}">
+      <div class="product-main">
+        <div class="product-emoji">${p.emoji}</div>
+        <div class="product-info">
+          <div class="product-name">${p.name}</div>
+          <div class="product-desc">${p.desc}</div>
+          <div class="product-price">${fmt(p.price)} <span>/ kg</span></div>
+        </div>
+      </div>
+      <div class="product-controls">
+        <div class="stock-label ${p.stock<=2?'low':''}">
+          ${p.stock<=2?'⚠️ ':''}Stock: ${p.stock} kg disponible${p.stock!==1?'s':''}
+        </div>
+        <div class="kg-selector">
+          <button class="kg-btn" onclick="changeKg('${p.id}',-1)" ${kg===0?'disabled':''}>−</button>
+          <div class="kg-display">
+            ${kg > 0 ? `${kg}<div class="unit">kg</div>` : `<span style="color:rgba(0,0,0,0.25);font-size:13px">0 kg</span>`}
+          </div>
+          <button class="kg-btn" onclick="changeKg('${p.id}',1)" ${kg>=p.stock?'disabled':''}>+</button>
+        </div>
+      </div>
+      ${inCart ? `
+      <div class="product-subtotal">
+        <span class="label">${kg} kg × ${fmt(p.price)}</span>
+        <span class="amount">${fmt(subtotal)}</span>
+      </div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+// ─── CHANGE KG ───
+function changeKg(id, delta){
+  const p = PRODUCTS.find(x=>x.id===id);
+  const current = cart[id] || 0;
+  const next = Math.max(0, Math.min(p.stock, current + delta));
+  if(next === 0) delete cart[id];
+  else cart[id] = next;
+
+  renderProducts();
+  updateStickyBar();
+
+  if(delta > 0){
+    showToast(`${p.emoji} ${p.name} — ${next} kg agregado${next!==1?'s':''}`);
+    // bump cart count
+    const cc = document.getElementById('cartCount');
+    cc.classList.remove('bump');
+    void cc.offsetWidth;
+    cc.classList.add('bump');
+  }
+}
+
+// ─── TOTAL ───
+function getTotal(){
+  return Object.entries(cart).reduce((sum,[id,kg])=>{
+    const p = PRODUCTS.find(x=>x.id===id);
+    return sum + (p ? kg * p.price : 0);
+  }, 0);
+}
+
+function getTotalKg(){
+  return Object.values(cart).reduce((a,b)=>a+b,0);
+}
+
+// ─── STICKY BAR ───
+function updateStickyBar(){
+  const total = getTotal();
+  const totalKg = getTotalKg();
+  const bar = document.getElementById('stickyBar');
+  document.getElementById('stickyAmount').textContent = fmt(total);
+  document.getElementById('cartCount').textContent = totalKg;
+  if(totalKg > 0) bar.classList.add('visible');
+  else bar.classList.remove('visible');
+}
+
+// ─── CART DRAWER ───
+function openCart(){
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderCart();
+}
+
+function closeCart(){
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderCart(){
+  const items = document.getElementById('cartItems');
+  const footer = document.getElementById('cartFooter');
+  const cartTotal = document.getElementById('cartTotal');
+  const keys = Object.keys(cart);
+
+  if(keys.length === 0){
+    items.innerHTML = `
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🛒</div>
+        <div>Aún no has agregado productos</div>
+        <div style="margin-top:8px;font-size:12px;opacity:0.6">Usa los botones + en el catálogo</div>
+      </div>`;
+    footer.style.display = 'none';
+    return;
+  }
+
+  items.innerHTML = keys.map(id => {
+    const p = PRODUCTS.find(x=>x.id===id);
+    const kg = cart[id];
+    const subtotal = kg * p.price;
+    return `
+    <div class="cart-item">
+      <div>
+        <div class="cart-item-name">${p.emoji} ${p.name}</div>
+        <div class="cart-item-detail">${kg} kg × ${fmt(p.price)}</div>
+      </div>
+      <div class="cart-item-price">${fmt(subtotal)}</div>
+    </div>`;
+  }).join('');
+
+  cartTotal.textContent = fmt(getTotal());
+  footer.style.display = 'block';
+}
+
+// ─── SEND WHATSAPP ───
+function sendWhatsApp(){
+  const name = document.getElementById('clientName').value.trim();
+  const address = document.getElementById('clientAddress').value.trim();
+  const note = document.getElementById('clientNote').value.trim();
+
+  if(!name){ shakeInput('clientName'); showToast('⚠️ Escribe tu nombre'); return; }
+  if(!address){ shakeInput('clientAddress'); showToast('⚠️ Escribe tu dirección'); return; }
+
+  const lines = ['🌰 *PEDIDO ESTACIÓN SNACK*', ''];
+  Object.entries(cart).forEach(([id,kg]) => {
+    const p = PRODUCTS.find(x=>x.id===id);
+    lines.push(`• ${p.name}: *${kg} kg* → ${fmt(kg * p.price)}`);
+  });
+  lines.push('');
+  lines.push(`*TOTAL: ${fmt(getTotal())}*`);
+  lines.push('');
+  lines.push(`👤 *Nombre:* ${name}`);
+  lines.push(`📍 *Dirección:* ${address}`);
+  if(note) lines.push(`📝 *Nota:* ${note}`);
+  lines.push('');
+  lines.push('Pago: transferencia o efectivo al recibir ✅');
+
+  const msg = encodeURIComponent(lines.join('\n'));
+  window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
+}
+
+function shakeInput(id){
+  const el = document.getElementById(id);
+  el.style.borderColor = '#ef4444';
+  el.focus();
+  setTimeout(()=>el.style.borderColor='', 1500);
+}
+
+// ─── TOAST ───
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._to);
+  t._to = setTimeout(()=>t.classList.remove('show'), 2000);
+}
+
+// ─── INIT ───
+renderProducts();
+updateStickyBar();
+</script>
+</body>
+</html>

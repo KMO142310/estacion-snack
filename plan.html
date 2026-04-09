@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Estación Snack — Plan de Negocio 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --verde: #5C7A3E;
+    --verde-oscuro: #3d5229;
+    --verde-claro: #8aad62;
+    --terracota: #C4603A;
+    --terracota-claro: #e8845f;
+    --beige: #F5F0E6;
+    --beige-oscuro: #E8DFC8;
+    --marron: #8B7355;
+    --negro: #111210;
+    --gris: #6b7280;
+    --blanco: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--negro);
+    color: var(--blanco);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 20px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(17,18,16,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-logo { font-size: 18px; font-weight: 800; color: var(--verde-claro); letter-spacing: -0.5px; }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 600; text-decoration: none; letter-spacing: 0.5px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--verde-claro); }
+  .nav-cta {
+    background: var(--verde); color: white; padding: 10px 24px;
+    border-radius: 999px; font-size: 13px; font-weight: 700;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--verde-claro); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 160px 48px 100px;
+    background: var(--negro);
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(92,122,62,0.08) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(92,122,62,0.08) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-glow {
+    position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(92,122,62,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-glow-2 {
+    position: absolute; bottom: -200px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(196,96,58,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(92,122,62,0.15); border: 1px solid rgba(92,122,62,0.3);
+    color: var(--verde-claro); padding: 8px 16px; border-radius: 999px;
+    font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 32px; width: fit-content;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--verde-claro); display: block; }
+  .hero h1 {
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 900; line-height: 0.95;
+    letter-spacing: -3px; position: relative; z-index: 1;
+    max-width: 900px;
+  }
+  .hero h1 .accent { color: var(--verde-claro); }
+  .hero h1 .accent-t { color: var(--terracota-claro); }
+  .hero-sub {
+    margin-top: 32px; font-size: 18px; color: rgba(255,255,255,0.45);
+    max-width: 560px; line-height: 1.6; font-weight: 400; position: relative; z-index: 1;
+  }
+  .hero-meta {
+    display: flex; gap: 48px; margin-top: 64px;
+    position: relative; z-index: 1;
+  }
+  .hero-meta-item .label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1px; }
+  .hero-meta-item .value { font-size: 28px; font-weight: 800; color: white; margin-top: 4px; letter-spacing: -1px; }
+  .hero-meta-item .value.green { color: var(--verde-claro); }
+  .hero-meta-item .value.terra { color: var(--terracota-claro); }
+  .hero-divider { width: 1px; background: rgba(255,255,255,0.1); }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 120px 48px; }
+  .section-tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--verde-claro); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-tag::before { content: ''; width: 24px; height: 2px; background: var(--verde-claro); display: block; }
+  h2 {
+    font-size: clamp(36px, 5vw, 56px); font-weight: 900;
+    letter-spacing: -2px; line-height: 1.05; margin-bottom: 16px;
+  }
+  .section-desc { font-size: 17px; color: rgba(255,255,255,0.45); max-width: 560px; line-height: 1.7; margin-bottom: 64px; }
+
+  /* ─── MARKET CONTEXT ─── */
+  .market-section { background: #151714; }
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 48px; }
+  .stat-card {
+    background: #1a1d19; padding: 40px 36px;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .stat-card:first-child { border-radius: 16px 0 0 16px; }
+  .stat-card:last-child { border-radius: 0 16px 16px 0; }
+  .stat-number { font-size: 56px; font-weight: 900; letter-spacing: -2px; line-height: 1; }
+  .stat-number.green { color: var(--verde-claro); }
+  .stat-number.terra { color: var(--terracota-claro); }
+  .stat-number.white { color: white; }
+  .stat-label { font-size: 14px; color: rgba(255,255,255,0.4); margin-top: 12px; line-height: 1.5; }
+  .stat-source { font-size: 11px; color: rgba(255,255,255,0.2); margin-top: 16px; }
+
+  .insight-box {
+    background: linear-gradient(135deg, rgba(92,122,62,0.12), rgba(92,122,62,0.04));
+    border: 1px solid rgba(92,122,62,0.25);
+    border-radius: 16px; padding: 40px;
+    display: flex; gap: 24px; align-items: flex-start;
+  }
+  .insight-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: rgba(92,122,62,0.2); display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .insight-text h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+  .insight-text p { font-size: 15px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+  /* ─── COMPETITORS ─── */
+  .comp-section { background: var(--negro); }
+  .comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 48px; }
+  .comp-card {
+    background: #151714; border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px; padding: 36px; position: relative; overflow: hidden;
+  }
+  .comp-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--terracota), transparent);
+  }
+  .comp-card.opportunity::before { background: linear-gradient(90deg, var(--verde), transparent); }
+  .comp-name { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+  .comp-sub { font-size: 13px; color: rgba(255,255,255,0.35); margin-bottom: 24px; }
+  .comp-attr { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .comp-attr-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-red { background: #ef4444; }
+  .dot-green { background: var(--verde-claro); }
+  .comp-attr-text { font-size: 14px; color: rgba(255,255,255,0.6); }
+  .comp-verdict {
+    margin-top: 24px; padding: 12px 16px;
+    background: rgba(239,68,68,0.1); border-radius: 10px;
+    font-size: 13px; font-weight: 600; color: #fca5a5;
+  }
+  .comp-verdict.win { background: rgba(92,122,62,0.15); color: var(--verde-claro); }
+
+  .gap-table { width: 100%; border-collapse: collapse; }
+  .gap-table th {
+    text-align: left; padding: 12px 20px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    color: rgba(255,255,255,0.3); background: #0d0f0c;
+  }
+  .gap-table td { padding: 16px 20px; font-size: 14px; border-top: 1px solid rgba(255,255,255,0.05); }
+  .gap-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+  .badge-no { background: rgba(239,68,68,0.12); color: #fca5a5; }
+  .badge-yes { background: rgba(92,122,62,0.15); color: var(--verde-claro); }
+
+  /* ─── SEGMENTS ─── */
+  .seg-section { background: #0d0f0c; }
+  .seg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .seg-card {
+    background: #151714; border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px; padding: 36px; position: relative; overflow: hidden;
+  }
+  .seg-letter {
+    position: absolute; top: 24px; right: 28px;
+    font-size: 80px; font-weight: 900; letter-spacing: -4px;
+    color: rgba(255,255,255,0.04); line-height: 1;
+  }
+  .seg-tag {
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .seg-tag.a { background: rgba(92,122,62,0.15); color: var(--verde-claro); }
+  .seg-tag.b { background: rgba(196,96,58,0.15); color: var(--terracota-claro); }
+  .seg-tag.c { background: rgba(139,115,85,0.2); color: #d4b896; }
+  .seg-tag.d { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
+  .seg-name { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  .seg-profile { font-size: 14px; color: rgba(255,255,255,0.45); margin-bottom: 24px; line-height: 1.6; }
+  .seg-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+  .seg-row-label { font-size: 12px; color: rgba(255,255,255,0.35); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .seg-row-value { font-size: 14px; font-weight: 700; color: white; }
+  .seg-trigger {
+    margin-top: 24px; padding: 16px; border-radius: 12px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+    font-size: 14px; color: rgba(255,255,255,0.6); font-style: italic; line-height: 1.5;
+  }
+  .seg-trigger::before { content: '"'; font-size: 24px; color: var(--verde-claro); font-style: normal; line-height: 0; vertical-align: -8px; margin-right: 4px; }
+
+  /* ─── PRICING ─── */
+  .price-section { background: #151714; }
+  .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px; }
+  .price-card {
+    background: #1a1d19; border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px; padding: 28px; position: relative; overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .price-card:hover { border-color: rgba(92,122,62,0.3); transform: translateY(-2px); }
+  .price-card.star { border-color: rgba(92,122,62,0.25); }
+  .price-card.star::after {
+    content: 'ESTRELLA'; position: absolute; top: 16px; right: 16px;
+    background: rgba(92,122,62,0.2); color: var(--verde-claro);
+    font-size: 9px; font-weight: 800; letter-spacing: 1px;
+    padding: 4px 8px; border-radius: 4px;
+  }
+  .price-product { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+  .price-desc { font-size: 12px; color: rgba(255,255,255,0.35); margin-bottom: 20px; }
+  .price-main { font-size: 36px; font-weight: 900; color: var(--verde-claro); letter-spacing: -1px; line-height: 1; }
+  .price-per { font-size: 13px; color: rgba(255,255,255,0.3); margin-bottom: 16px; }
+  .price-min { font-size: 13px; color: rgba(255,255,255,0.45); }
+  .price-min span { color: white; font-weight: 700; }
+  .price-margin {
+    margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex; justify-content: space-between;
+  }
+  .price-margin-label { font-size: 11px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.5px; }
+  .price-margin-val { font-size: 13px; font-weight: 800; color: var(--verde-claro); }
+
+  .combos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .combo-card {
+    background: linear-gradient(135deg, rgba(92,122,62,0.1), rgba(92,122,62,0.03));
+    border: 1px solid rgba(92,122,62,0.2); border-radius: 16px; padding: 28px;
+  }
+  .combo-name { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+  .combo-price { font-size: 40px; font-weight: 900; color: var(--verde-claro); letter-spacing: -2px; margin: 12px 0; }
+  .combo-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 16px; }
+  .combo-saving { font-size: 12px; color: var(--terracota-claro); font-weight: 700; }
+  .combo-margin { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 4px; }
+
+  /* ─── FINANCIALS ─── */
+  .fin-section { background: var(--negro); }
+  .fin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 48px; }
+  .fin-card {
+    background: #151714; border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px; padding: 36px;
+  }
+  .fin-card h3 { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; }
+  .scenario { margin-bottom: 24px; }
+  .scenario-name { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .scenario-bar-wrap { display: flex; align-items: center; gap: 12px; }
+  .scenario-bar { height: 8px; border-radius: 4px; flex: 1; background: rgba(255,255,255,0.06); overflow: hidden; }
+  .scenario-bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+  .bar-conservador { background: var(--marron); width: 58%; }
+  .bar-realista { background: var(--verde); width: 85%; }
+  .bar-optimo { background: var(--verde-claro); width: 100%; }
+  .scenario-val { font-size: 18px; font-weight: 800; white-space: nowrap; }
+  .scenario-pct { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+  .stock-table { width: 100%; border-collapse: collapse; }
+  .stock-table th { text-align: left; padding: 10px 16px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.25); }
+  .stock-table td { padding: 14px 16px; font-size: 14px; border-top: 1px solid rgba(255,255,255,0.05); }
+  .stock-table tr:last-child td { font-weight: 800; color: var(--verde-claro); border-top: 2px solid rgba(92,122,62,0.3); }
+  .stock-table .profit { color: var(--verde-claro); font-weight: 700; }
+
+  .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .proj-card { background: #151714; padding: 32px 28px; }
+  .proj-card:first-child { border-radius: 16px 0 0 16px; }
+  .proj-card:last-child { border-radius: 0 16px 16px 0; }
+  .proj-month { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .proj-revenue { font-size: 38px; font-weight: 900; color: white; letter-spacing: -1px; line-height: 1; }
+  .proj-profit { font-size: 18px; font-weight: 700; color: var(--verde-claro); margin-top: 4px; }
+  .proj-clients { font-size: 13px; color: rgba(255,255,255,0.3); margin-top: 8px; }
+  .proj-arrow { font-size: 11px; color: var(--verde-claro); margin-top: 12px; font-weight: 700; }
+
+  /* ─── CONTENT ─── */
+  .content-section { background: #0d0f0c; }
+  .content-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .content-card {
+    background: #151714; border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px; overflow: hidden;
+  }
+  .content-card-top {
+    padding: 32px; border-bottom: 1px solid rgba(255,255,255,0.05);
+    background: linear-gradient(135deg, rgba(92,122,62,0.08), transparent);
+  }
+  .content-num { font-size: 56px; font-weight: 900; color: rgba(92,122,62,0.2); line-height: 1; letter-spacing: -3px; margin-bottom: 16px; }
+  .content-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+  .content-hook { font-size: 14px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+  .content-card-bottom { padding: 24px 32px; }
+  .content-why { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.7; }
+  .content-viral {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 700; color: var(--terracota-claro);
+    background: rgba(196,96,58,0.1); padding: 4px 10px; border-radius: 4px;
+    margin-top: 16px; letter-spacing: 0.5px;
+  }
+
+  /* ─── SYSTEM ─── */
+  .system-section { background: #151714; }
+  .timeline { position: relative; }
+  .timeline::before {
+    content: ''; position: absolute; left: 24px; top: 0; bottom: 0;
+    width: 1px; background: rgba(255,255,255,0.08);
+  }
+  .timeline-item { display: flex; gap: 40px; margin-bottom: 48px; position: relative; }
+  .timeline-dot {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--negro); border: 2px solid rgba(92,122,62,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; color: var(--verde-claro);
+    flex-shrink: 0; z-index: 1;
+  }
+  .timeline-content { flex: 1; padding-top: 8px; }
+  .timeline-week { font-size: 11px; font-weight: 700; color: var(--verde-claro); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .timeline-title { font-size: 20px; font-weight: 800; margin-bottom: 12px; }
+  .timeline-tasks { display: flex; flex-direction: column; gap: 8px; }
+  .timeline-task {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: #1a1d19; border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 10px; padding: 12px 16px;
+    font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.5;
+  }
+  .timeline-task::before {
+    content: '→'; color: var(--verde-claro); font-weight: 700;
+    flex-shrink: 0; margin-top: 1px;
+  }
+
+  /* ─── KPIs ─── */
+  .kpi-section { background: var(--negro); }
+  .kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .kpi-card {
+    background: #151714; border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px; padding: 28px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .kpi-card.key { border-color: rgba(92,122,62,0.25); background: rgba(92,122,62,0.05); }
+  .kpi-label { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 8px; max-width: 220px; line-height: 1.4; }
+  .kpi-value { font-size: 32px; font-weight: 900; color: white; letter-spacing: -1px; }
+  .kpi-value.green { color: var(--verde-claro); }
+  .kpi-note { font-size: 11px; color: rgba(255,255,255,0.2); margin-top: 4px; }
+  .kpi-icon { font-size: 28px; opacity: 0.6; }
+
+  /* ─── DOMAIN ─── */
+  .domain-section {
+    background: linear-gradient(135deg, var(--verde-oscuro), #1a2d0f);
+    border-top: 1px solid rgba(92,122,62,0.3);
+  }
+  .domain-box {
+    max-width: 800px; margin: 0 auto; text-align: center;
+  }
+  .domain-url {
+    font-size: clamp(36px, 6vw, 64px); font-weight: 900; letter-spacing: -2px;
+    color: white; margin: 32px 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .domain-url .tld { color: var(--verde-claro); }
+  .domain-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; text-align: left; }
+  .domain-step { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; }
+  .domain-step-num { font-size: 12px; font-weight: 700; color: var(--verde-claro); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .domain-step-title { font-size: 16px; font-weight: 800; margin-bottom: 6px; }
+  .domain-step-text { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #0a0b0a; padding: 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-brand { font-size: 16px; font-weight: 800; color: var(--verde-claro); }
+  .footer-meta { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .hero { padding: 120px 24px 80px; }
+    .stats-grid, .comp-grid, .seg-grid, .price-grid, .combos-grid,
+    .fin-grid, .content-grid, .kpi-grid, .domain-steps, .proj-grid { grid-template-columns: 1fr; }
+    .hero-meta { flex-wrap: wrap; gap: 24px; }
+    .hero-divider { display: none; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-up {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Estación Snack</div>
+  <div class="nav-links">
+    <a href="#mercado">Mercado</a>
+    <a href="#competencia">Competencia</a>
+    <a href="#segmentos">Segmentos</a>
+    <a href="#precios">Precios</a>
+    <a href="#financiero">Financiero</a>
+    <a href="#sistema">Sistema</a>
+  </div>
+  <a href="#dominio" class="nav-cta">Ver dominio</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-tag">Plan de negocio · Abril 2026 · Confidencial</div>
+  <h1>
+    Estación<br/>
+    <span class="accent">Snack</span><br/>
+    <span class="accent-t">Santa Cruz</span>
+  </h1>
+  <p class="hero-sub">
+    Frutos secos y dulces por kilo en el Valle de Colchagua.<br/>
+    Primer operador digital del mercado local. Inversión $129.690. Retorno proyectado 83%.
+  </p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="label">Inversión inicial</div>
+      <div class="value">$129K</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="label">Ganancia proyectada</div>
+      <div class="value green">$105K</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="label">Stock inicial</div>
+      <div class="value">26 kg</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="label">Competidores digitales</div>
+      <div class="value terra">0</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="label">Dominio objetivo</div>
+      <div class="value green">estacionsnack.cl</div>
+    </div>
+  </div>
+</div>
+
+<!-- MARKET -->
+<section class="market-section fade-up" id="mercado">
+  <div class="section-tag">01 — Contexto de mercado</div>
+  <h2>Por qué este<br/>negocio gana ahora</h2>
+  <p class="section-desc">Chile lidera el consumo de snacks en Latinoamérica. Santa Cruz acaba de recibir el mayor flujo turístico de su historia. Y ningún competidor local tiene presencia digital.</p>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number green">5,4 kg</div>
+      <div class="stat-label">Consumo per cápita anual de snacks en Chile — el más alto de América Latina</div>
+      <div class="stat-source">Fuente: Portal Frutícola / Statista 2024</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number terra">160.000</div>
+      <div class="stat-label">Visitantes en la Vendimia Colchagua 2026 (6-8 marzo) — récord histórico. Valle aún activo en abril.</div>
+      <div class="stat-source">Fuente: Como Me Gusta / El Mostrador 2026</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number white">+17%</div>
+      <div class="stat-label">Crecimiento del mercado de confitería en Chile en 2023. Gomitas y confites lideran el alza.</div>
+      <div class="stat-source">Fuente: AmericaRetail / Diario Financiero</div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <div class="insight-icon">⚡</div>
+    <div class="insight-text">
+      <h3>El momento exacto</h3>
+      <p>Santa Cruz tiene 41.511 habitantes y acaba de consolidarse como capital del enoturismo chileno. El valle tiene ocupación hotelera sostenida en abril, eventos complementarios a la Vendimia, y un perfil de visitante de alto poder adquisitivo. Ningún negocio local está capturando esa demanda de snacks con un modelo digital. La brecha existe hoy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITORS -->
+<section class="comp-section fade-up" id="competencia">
+  <div class="section-tag">02 — Inteligencia competitiva</div>
+  <h2>La competencia<br/>no existe digitalmente</h2>
+  <p class="section-desc">Dos actores en Santa Cruz. Ninguno hace lo que tú harás.</p>
+
+  <div class="comp-grid">
+    <div class="comp-card">
+      <div class="comp-name">Frutos Secos Colchagua</div>
+      <div class="comp-sub">Facebook · Fundada 2017 · Sin Instagram</div>
+      <div class="comp-attr"><div class="comp-attr-dot dot-red"></div><div class="comp-attr-text">Solo producen almendras y nueces propias del valle</div></div>
+      <div class="comp-attr"><div class="comp-attr-dot dot-red"></div><div class="comp-attr-text">Sin snacks dulces, sin gomitas, sin confites</div></div>
+      <div class="comp-attr"><div class="comp-attr-dot dot-red"></div><div class="comp-attr-text">Sin delivery. El cliente debe ir donde ellos.</div></div>
+      <div class="comp-attr"><div class="comp-attr-dot dot-red"></div><div class="comp-attr-text">Sin catálogo online ni precios visibles</div></div>
+      <div class="comp-attr"><div class="comp-attr-dot dot-red"></div><div class="comp-attr-text">Son agricultores vendiendo excedente, no comerciantes</div></div>
+      <div class="comp-verdict">No te compiten en ningún producto que tú vendes</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-name">Raíz Distribuidora</div>
+      <div class="comp-sub">O'Higgins 456, Santa Cruz · Tienda física</div>
+      <div class="comp-attr"><div class="comp-attr-dot dot-red"></div><div class="comp-attr-text">Cero presencia digital rastreable en 2026</div></div>
+      <div class="comp-attr"><div class="comp-attr-dot dot-red"></div><div class="comp-attr-text">Sin WhatsApp Business ni catálogo online</div></div>
+      <div class="comp-attr"><div class="comp-attr-dot dot-red"></div><div class="comp-attr-text">Modelo almacén: espera que el cliente llegue</div></div>
+      <div class="comp-attr"><div class="comp-attr-dot dot-red"></div><div class="comp-attr-text">Sin Instagram, sin Marketplace activo</div></div>
+      <div class="comp-attr"><div class="comp-attr-dot dot-red"></div><div class="comp-attr-text">Horario limitado, no disponible 24/7</div></div>
+      <div class="comp-verdict">Tu modelo es exactamente el inverso: tú llegas al cliente</div>
+    </div>
+  </div>
+
+  <table class="gap-table">
+    <thead>
+      <tr>
+        <th>Capacidad</th>
+        <th>Frutos Secos Colchagua</th>
+        <th>Raíz Distribuidora</th>
+        <th>Estación Snack</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Instagram activo</td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-yes">✓ Sí</span></td>
+      </tr>
+      <tr>
+        <td>Delivery por WhatsApp</td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-yes">✓ Sí</span></td>
+      </tr>
+      <tr>
+        <td>Landing page con precios</td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-yes">✓ Sí</span></td>
+      </tr>
+      <tr>
+        <td>Gomitas y confites por kilo</td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-yes">✓ Sí</span></td>
+      </tr>
+      <tr>
+        <td>Chuby Bardu disponible</td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-yes">✓ Sí</span></td>
+      </tr>
+      <tr>
+        <td>Catálogo online 24/7</td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-no">✗ No</span></td>
+        <td><span class="badge badge-yes">✓ Sí</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SEGMENTS -->
+<section class="seg-section fade-up" id="segmentos">
+  <div class="section-tag">03 — Arquitectura de clientes</div>
+  <h2>Cuatro segmentos,<br/>cuatro mensajes distintos</h2>
+  <p class="section-desc">No hay "el cliente". Cada segmento tiene motivaciones distintas y necesita una promesa diferente.</p>
+
+  <div class="seg-grid">
+    <div class="seg-card">
+      <div class="seg-letter">A</div>
+      <span class="seg-tag a">Segmento A · Volumen</span>
+      <div class="seg-name">La Mamá Organizadora</div>
+      <div class="seg-profile">30-50 años. Compra para la casa, el recreo de los hijos, las visitas del fin de semana. Decide por precio y conveniencia. Si le funciona una vez, repite cada 2 semanas sin que la busques.</div>
+      <div class="seg-row"><span class="seg-row-label">Productos</span><span class="seg-row-value">Gomita Osito + Maní Confitado</span></div>
+      <div class="seg-row"><span class="seg-row-label">Ticket promedio</span><span class="seg-row-value">$6.000–$8.000</span></div>
+      <div class="seg-row"><span class="seg-row-label">Canal</span><span class="seg-row-value">WhatsApp directo · Grupos apoderados</span></div>
+      <div class="seg-trigger">Lo mismo que el super, a mitad de precio, y te lo traigo</div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-letter">B</div>
+      <span class="seg-tag b">Segmento B · Viralidad</span>
+      <div class="seg-name">El Joven / Estudiante</div>
+      <div class="seg-profile">18-30 años. Compra para compartir, el aperitivo, la reunión. Sensible al precio pero más sensible a lo novedoso. El Chuby Bardu lo detiene porque no lo conoce. Las gomitas lo activan por nostalgia.</div>
+      <div class="seg-row"><span class="seg-row-label">Productos</span><span class="seg-row-value">Chuby Bardu + Gomita Osito</span></div>
+      <div class="seg-row"><span class="seg-row-label">Ticket promedio</span><span class="seg-row-value">$3.000–$5.000</span></div>
+      <div class="seg-row"><span class="seg-row-label">Canal</span><span class="seg-row-value">Instagram Reels · WhatsApp grupos</span></div>
+      <div class="seg-trigger">¿Sabes cuánto cuesta esto en el supermercado?</div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-letter">C</div>
+      <span class="seg-tag c">Segmento C · Premium</span>
+      <div class="seg-name">El Turista del Valle</div>
+      <div class="seg-profile">Viene de Santiago o del extranjero. Mayor poder adquisitivo. Busca experiencias locales. El Mix Europeo y la Almendra posicionados como "snack del Colchagua" le hablan directamente. Paga sin negociar.</div>
+      <div class="seg-row"><span class="seg-row-label">Productos</span><span class="seg-row-value">Mix Europeo + Almendra Entera</span></div>
+      <div class="seg-row"><span class="seg-row-label">Ticket promedio</span><span class="seg-row-value">$10.000–$15.000</span></div>
+      <div class="seg-row"><span class="seg-row-label">Canal</span><span class="seg-row-value">Facebook grupos turismo · Marketplace</span></div>
+      <div class="seg-trigger">Lleva el sabor del Valle de Colchagua</div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-letter">D</div>
+      <span class="seg-tag d">Segmento D · Escala</span>
+      <div class="seg-name">La Empresa / Oficina</div>
+      <div class="seg-profile">Hoteles boutique, viñas, oficinas locales, gimnasios. Un cliente corporativo que compra 3kg/semana vale más que 20 clientes individuales. No regatea porque compra con cuenta de la empresa.</div>
+      <div class="seg-row"><span class="seg-row-label">Productos</span><span class="seg-row-value">Mix Europeo + Combos</span></div>
+      <div class="seg-row"><span class="seg-row-label">Ticket promedio</span><span class="seg-row-value">$25.000–$60.000</span></div>
+      <div class="seg-row"><span class="seg-row-label">Canal</span><span class="seg-row-value">Contacto directo · WhatsApp</span></div>
+      <div class="seg-trigger">Snack para tu equipo, sin ir al supermercado</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="price-section fade-up" id="precios">
+  <div class="section-tag">04 — Arquitectura de precios</div>
+  <h2>Psicología de precio,<br/>no intuición</h2>
+  <p class="section-desc">El error del granel: fijar precio por kilo y mostrarlo así. El kilo se percibe caro. La porción se percibe accesible. Ancla en kilo, vende en porción mínima.</p>
+
+  <div class="price-grid">
+    <div class="price-card star">
+      <div class="price-product">Maní Confitado Tropical</div>
+      <div class="price-desc">Alta rotación · Margen 110%</div>
+      <div class="price-main">$5.990</div>
+      <div class="price-per">por kilo</div>
+      <div class="price-min">Mínimo <span>300g → $1.797</span></div>
+      <div class="price-margin">
+        <div><div class="price-margin-label">Costo</div><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.5)">$2.850/kg</div></div>
+        <div><div class="price-margin-label">Ganancia</div><div class="price-margin-val">$3.140/kg</div></div>
+      </div>
+    </div>
+    <div class="price-card star">
+      <div class="price-product">Maní Confitado Rojo</div>
+      <div class="price-desc">Exclusivo local · No existe en SC</div>
+      <div class="price-main">$5.990</div>
+      <div class="price-per">por kilo</div>
+      <div class="price-min">Mínimo <span>300g → $1.797</span></div>
+      <div class="price-margin">
+        <div><div class="price-margin-label">Costo</div><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.5)">$2.850/kg</div></div>
+        <div><div class="price-margin-label">Ganancia</div><div class="price-margin-val">$3.140/kg</div></div>
+      </div>
+    </div>
+    <div class="price-card">
+      <div class="price-product">Gomita Osito Docile</div>
+      <div class="price-desc">Marca conocida · Gancho familias</div>
+      <div class="price-main">$8.500</div>
+      <div class="price-per">por kilo</div>
+      <div class="price-min">Mínimo <span>300g → $2.550</span></div>
+      <div class="price-margin">
+        <div><div class="price-margin-label">Costo</div><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.5)">$4.750/kg</div></div>
+        <div><div class="price-margin-label">Ganancia</div><div class="price-margin-val">$3.750/kg</div></div>
+      </div>
+    </div>
+    <div class="price-card star">
+      <div class="price-product">Chuby Bardu 12 colores</div>
+      <div class="price-desc">Producto viral · Sin competencia local</div>
+      <div class="price-main">$9.990</div>
+      <div class="price-per">por kilo</div>
+      <div class="price-min">Mínimo <span>250g → $2.497</span></div>
+      <div class="price-margin">
+        <div><div class="price-margin-label">Costo</div><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.5)">$5.990/kg</div></div>
+        <div><div class="price-margin-label">Ganancia</div><div class="price-margin-val">$4.000/kg</div></div>
+      </div>
+    </div>
+    <div class="price-card">
+      <div class="price-product">Mix Europeo</div>
+      <div class="price-desc">Posicionamiento premium · Turistas</div>
+      <div class="price-main">$13.000</div>
+      <div class="price-per">por kilo</div>
+      <div class="price-min">Mínimo <span>500g → $6.500</span></div>
+      <div class="price-margin">
+        <div><div class="price-margin-label">Costo</div><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.5)">$7.000/kg</div></div>
+        <div><div class="price-margin-label">Ganancia</div><div class="price-margin-val">$6.000/kg</div></div>
+      </div>
+    </div>
+    <div class="price-card">
+      <div class="price-product">Almendra Entera</div>
+      <div class="price-desc">Referencia premium · 1kg en stock</div>
+      <div class="price-main">$16.000</div>
+      <div class="price-per">por kilo</div>
+      <div class="price-min">Mínimo <span>500g → $8.000</span></div>
+      <div class="price-margin">
+        <div><div class="price-margin-label">Costo</div><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.5)">$10.490/kg</div></div>
+        <div><div class="price-margin-label">Ganancia</div><div class="price-margin-val">$5.510/kg</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:24px;">
+    <div class="section-tag" style="margin-bottom:8px;">Combos estratégicos</div>
+    <p style="font-size:15px;color:rgba(255,255,255,0.4);margin-bottom:32px;">Los combos multiplican el ticket promedio y crean percepción de ahorro sin reducir margen real.</p>
+  </div>
+  <div class="combos-grid">
+    <div class="combo-card">
+      <div class="combo-name">Combo Familiar</div>
+      <div class="combo-price">$6.990</div>
+      <div class="combo-desc">500g Maní Confitado + 500g Gomita Osito. Para quienes compran para la casa y buscan variedad.</div>
+      <div class="combo-saving">↑ Ahorro percibido: $255 vs precio separado</div>
+      <div class="combo-margin">Margen real: $3.940 · 129% retorno</div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-name">Snack del Valle</div>
+      <div class="combo-price">$9.990</div>
+      <div class="combo-desc">500g Mix Europeo + 200g Almendra. Presentado como snack gourmet del Colchagua para turistas.</div>
+      <div class="combo-saving">↑ Posicionamiento premium · Sin comparación local</div>
+      <div class="combo-margin">Margen real: $4.445 · 80% retorno</div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-name">Caja Sorpresa</div>
+      <div class="combo-price">$7.990</div>
+      <div class="combo-desc">200g de cada uno de los 6 productos (1,2kg total). Ideal para probar todo o como regalo.</div>
+      <div class="combo-saving">↑ El mayor margen del catálogo · 90% retorno</div>
+      <div class="combo-margin">Costo real: $4.200 · Ganancia: $3.790</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINANCIALS -->
+<section class="fin-section fade-up" id="financiero">
+  <div class="section-tag">05 — Proyección financiera</div>
+  <h2>Los números<br/>sin adornos</h2>
+  <p class="section-desc">Stock actual: 26 kg. Inversión: $129.690. Lo que necesitas vender para cubrir costos: 13,5 kg (52%).</p>
+
+  <div class="fin-grid">
+    <div class="fin-card">
+      <h3>Escenarios mes 1</h3>
+      <div class="scenario">
+        <div class="scenario-name">Conservador · 15 kg vendidos (58%)</div>
+        <div class="scenario-bar-wrap">
+          <div class="scenario-bar"><div class="scenario-bar-fill bar-conservador"></div></div>
+          <div>
+            <div class="scenario-val" style="color:var(--marron)">$14K</div>
+            <div class="scenario-pct">ganancia neta</div>
+          </div>
+        </div>
+      </div>
+      <div class="scenario">
+        <div class="scenario-name">Realista · 22 kg vendidos (85%)</div>
+        <div class="scenario-bar-wrap">
+          <div class="scenario-bar"><div class="scenario-bar-fill bar-realista"></div></div>
+          <div>
+            <div class="scenario-val" style="color:var(--verde)">$81K</div>
+            <div class="scenario-pct">ganancia neta</div>
+          </div>
+        </div>
+      </div>
+      <div class="scenario">
+        <div class="scenario-name">Óptimo · 26 kg vendidos (100%)</div>
+        <div class="scenario-bar-wrap">
+          <div class="scenario-bar"><div class="scenario-bar-fill bar-optimo"></div></div>
+          <div>
+            <div class="scenario-val" style="color:var(--verde-claro)">$119K</div>
+            <div class="scenario-pct">ganancia neta</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fin-card">
+      <h3>Detalle por producto</h3>
+      <table class="stock-table">
+        <thead>
+          <tr><th>Producto</th><th>Stock</th><th>Venta</th><th>Ganancia</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Maní Conf. Tropical</td><td>5 kg</td><td>$29.950</td><td class="profit">$15.700</td></tr>
+          <tr><td>Maní Conf. Rojo</td><td>5 kg</td><td>$29.950</td><td class="profit">$15.700</td></tr>
+          <tr><td>Chuby Bardu</td><td>5 kg</td><td>$49.950</td><td class="profit">$20.000</td></tr>
+          <tr><td>Gomita Osito</td><td>5 kg</td><td>$42.500</td><td class="profit">$18.750</td></tr>
+          <tr><td>Mix Europeo</td><td>5 kg</td><td>$65.000</td><td class="profit">$30.000</td></tr>
+          <tr><td>Almendra Entera</td><td>1 kg</td><td>$16.000</td><td class="profit">$5.510</td></tr>
+          <tr><td>TOTAL</td><td>26 kg</td><td>$233.350</td><td>$105.660</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="margin-bottom:24px;">
+    <div class="section-tag" style="margin-bottom:8px;">Proyección trimestral</div>
+    <p style="font-size:15px;color:rgba(255,255,255,0.4);margin-bottom:32px;">El salto de abril a junio depende de un factor clave: primer cliente corporativo + lista de difusión activa.</p>
+  </div>
+  <div class="proj-grid">
+    <div class="proj-card">
+      <div class="proj-month">Abril 2026 — Lanzamiento</div>
+      <div class="proj-revenue">$211K</div>
+      <div class="proj-profit">+ $81K ganancia</div>
+      <div class="proj-clients">25–35 clientes nuevos</div>
+      <div class="proj-arrow">→ Validar qué vuela primero</div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-month">Mayo 2026 — Crecimiento</div>
+      <div class="proj-revenue">$310K</div>
+      <div class="proj-profit">+ $130K ganancia</div>
+      <div class="proj-clients">50–70 clientes activos</div>
+      <div class="proj-arrow">→ Lista difusión + primer B2B</div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-month">Junio 2026 — Escala</div>
+      <div class="proj-revenue">$430K</div>
+      <div class="proj-profit">+ $190K ganancia</div>
+      <div class="proj-clients">80–110 clientes activos</div>
+      <div class="proj-arrow">→ 2 clientes corporativos fijos</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<section class="content-section fade-up">
+  <div class="section-tag">06 — Contenido que convierte</div>
+  <h2>3 videos que mueven<br/>el negocio entero</h2>
+  <p class="section-desc">No los que se ven bonitos. Los que generan pedidos al WhatsApp.</p>
+
+  <div class="content-grid">
+    <div class="content-card">
+      <div class="content-card-top">
+        <div class="content-num">01</div>
+        <div class="content-title">La balanza no miente</div>
+        <div class="content-hook">Grabas en el super cuánto cuesta 200g de maní confitado. Luego muestras cuánto te dan con ese mismo dinero en Estación Snack. Sin edición, sin filtros, solo la balanza y los números.</div>
+      </div>
+      <div class="content-card-bottom">
+        <div class="content-why">Activa indignación. La gente lo manda al grupo familiar diciendo "mira el cuento del super". Tú no lo haces viral — ellos lo hacen por ti. Costo de producción: cero.</div>
+        <div class="content-viral">⚡ Alto potencial viral · Compartible</div>
+      </div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-top">
+        <div class="content-num">02</div>
+        <div class="content-title">¿Qué es esto?</div>
+        <div class="content-hook">Grabas el Chuby Bardu sin decir el nombre. Preguntas en cámara "¿saben qué es esto?". 24 horas de suspense en stories. Luego revelas: confites de 12 colores, $9.990/kg.</div>
+      </div>
+      <div class="content-card-bottom">
+        <div class="content-why">El Chuby Bardu no existe en ninguna tienda local de Santa Cruz. La curiosidad genera comentarios. Los comentarios disparan el algoritmo. El algoritmo te da alcance gratis.</div>
+        <div class="content-viral">⚡ Producto exclusivo · Genera preguntas</div>
+      </div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-top">
+        <div class="content-num">03</div>
+        <div class="content-title">¿Cuánto te alcanza con $3.000?</div>
+        <div class="content-hook">Muestras en balanza cuánto recibes por $3.000 de cada producto. Termina con el botón de WhatsApp y el precio mínimo de pedido.</div>
+      </div>
+      <div class="content-card-bottom">
+        <div class="content-why">Ancla el precio bajo. $3.000 es lo que la gente gasta sin pensar. Si pueden probar con esa plata, el umbral de entrada desaparece. Convierte directo a pedido.</div>
+        <div class="content-viral">⚡ Conversión directa · CTA natural</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEM -->
+<section class="system-section fade-up" id="sistema">
+  <div class="section-tag">07 — Sistema de ventas</div>
+  <h2>Un sistema que corre solo,<br/>no una estrategia que depende de ti</h2>
+  <p class="section-desc">Una estrategia depende de que la ejecutes cada día. Un sistema funciona aunque no estés mirando.</p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot">1</div>
+      <div class="timeline-content">
+        <div class="timeline-week">Semana 1 — Activación</div>
+        <div class="timeline-title">Los 3 videos + Marketplace + Grupos</div>
+        <div class="timeline-tasks">
+          <div class="timeline-task">Grabar y publicar los 3 videos en lunes, miércoles y viernes. Sin producción cara — solo teléfono y buena luz.</div>
+          <div class="timeline-task">Subir 6 listings en Facebook Marketplace (uno por producto). Foto real, precio visible, link de WhatsApp directo.</div>
+          <div class="timeline-task">Unirse y publicar en 8 grupos de Facebook de Santa Cruz y Colchagua. El video de la balanza como primer post.</div>
+          <div class="timeline-task">Publicar en grupos de turismo y Vendimia Colchagua — el valle sigue activo en abril con eventos complementarios.</div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot">2</div>
+      <div class="timeline-content">
+        <div class="timeline-week">Semana 2 — Primera lista de difusión</div>
+        <div class="timeline-title">Convertir clientes en suscriptores</div>
+        <div class="timeline-tasks">
+          <div class="timeline-task">Con los primeros 15-20 clientes que compren, crear lista de difusión en WhatsApp Business.</div>
+          <div class="timeline-task">Cada lunes a las 10am: mensaje de 3 líneas con stock disponible esa semana. Sin imágenes elaboradas. Solo texto.</div>
+          <div class="timeline-task">En cada despacho, incluir nota manuscrita con el número y "cuando se acabe avísame con un día de anticipación".</div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot">3</div>
+      <div class="timeline-content">
+        <div class="timeline-week">Semana 3 — Ataque corporativo</div>
+        <div class="timeline-title">El primer cliente que vale por 20</div>
+        <div class="timeline-tasks">
+          <div class="timeline-task">Identificar 5 negocios en Santa Cruz: hoteles boutique, viñas, gimnasios, oficinas municipales.</div>
+          <div class="timeline-task">Llevar muestra física de 100g de Mix Europeo y Chuby Bardu. No pedir nada — solo dejar que prueben.</div>
+          <div class="timeline-task">Seguimiento por WhatsApp 3 días después. Un hotel que compra 3kg/semana = $39.000/semana solo.</div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot">4</div>
+      <div class="timeline-content">
+        <div class="timeline-week">Semana 4 — Restock inteligente</div>
+        <div class="timeline-title">Solo lo que rota, más cantidad</div>
+        <div class="timeline-tasks">
+          <div class="timeline-task">Recomprar únicamente los 3 productos con mayor rotación. Duplicar su cantidad.</div>
+          <div class="timeline-task">Dejar de comprar lo que no se movió. El capital se concentra donde probadamente hay demanda.</div>
+          <div class="timeline-task">Usar la ganancia del primer ciclo para el siguiente stock — sin poner plata nueva de tu bolsillo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KPIs -->
+<section class="kpi-section fade-up">
+  <div class="section-tag">08 — Métricas que importan</div>
+  <h2>Lo que mides<br/>es lo que creces</h2>
+  <p class="section-desc">Seguidores y likes son vanity metrics. Lo que paga las cuentas son estas 5 cifras.</p>
+
+  <div class="kpi-grid">
+    <div class="kpi-card key">
+      <div>
+        <div class="kpi-label">Tasa de recompra a 30 días · El número más importante</div>
+        <div class="kpi-value green">35%</div>
+        <div class="kpi-note">Meta mes 1. Si un cliente vuelve, el negocio existe.</div>
+      </div>
+      <div class="kpi-icon">🔄</div>
+    </div>
+    <div class="kpi-card">
+      <div>
+        <div class="kpi-label">Tiempo máximo de respuesta en WhatsApp</div>
+        <div class="kpi-value">10 min</div>
+        <div class="kpi-note">El 40% de los pedidos se pierden si tardas más.</div>
+      </div>
+      <div class="kpi-icon">⚡</div>
+    </div>
+    <div class="kpi-card">
+      <div>
+        <div class="kpi-label">Ticket promedio por pedido</div>
+        <div class="kpi-value">$7.500</div>
+        <div class="kpi-note">Con combos se alcanza sin esfuerzo adicional.</div>
+      </div>
+      <div class="kpi-icon">🛒</div>
+    </div>
+    <div class="kpi-card">
+      <div>
+        <div class="kpi-label">Clientes nuevos mes 1</div>
+        <div class="kpi-value">30</div>
+        <div class="kpi-note">Base mínima para la lista de difusión.</div>
+      </div>
+      <div class="kpi-icon">👤</div>
+    </div>
+    <div class="kpi-card">
+      <div>
+        <div class="kpi-label">Costo de adquisición por cliente</div>
+        <div class="kpi-value green">$0</div>
+        <div class="kpi-note">Solo orgánico el primer mes. Sin publicidad paga.</div>
+      </div>
+      <div class="kpi-icon">💰</div>
+    </div>
+    <div class="kpi-card key">
+      <div>
+        <div class="kpi-label">El activo real del negocio · Lista de difusión WhatsApp</div>
+        <div class="kpi-value green">100</div>
+        <div class="kpi-note">100 clientes activos = $1.800.000/mes recurrente.</div>
+      </div>
+      <div class="kpi-icon">📱</div>
+    </div>
+  </div>
+</section>
+
+<!-- DOMAIN -->
+<section class="domain-section fade-up" id="dominio">
+  <div class="domain-box">
+    <div class="section-tag" style="justify-content:center">09 — Próximo paso estratégico</div>
+    <h2 style="text-align:center">El dominio que<br/>nadie tiene todavía</h2>
+    <div class="domain-url">estacionsnack<span class="tld">.cl</span></div>
+    <p style="color:rgba(255,255,255,0.5);font-size:16px;line-height:1.7;max-width:560px;margin:0 auto">
+      Una URL propia elimina la última fricción de confianza. Nadie teme escribir a una marca con dominio propio. El .cl refuerza que eres local — y en Santa Cruz, lo local vende.
+    </p>
+    <div class="domain-steps">
+      <div class="domain-step">
+        <div class="domain-step-num">Paso 1</div>
+        <div class="domain-step-title">Registrar en NIC.cl</div>
+        <div class="domain-step-text">nic.cl es el registro oficial de dominios .cl en Chile. Costo ~$5.000/año. Requiere RUT chileno. Disponibilidad a verificar.</div>
+      </div>
+      <div class="domain-step">
+        <div class="domain-step-num">Paso 2</div>
+        <div class="domain-step-title">Apuntar a Vercel</div>
+        <div class="domain-step-text">La landing actual está en Vercel. Conectar el dominio toma 5 minutos desde el panel. URL limpia sin costo adicional de hosting.</div>
+      </div>
+      <div class="domain-step">
+        <div class="domain-step-num">Paso 3</div>
+        <div class="domain-step-title">Actualizar todo</div>
+        <div class="domain-step-text">Bio de Instagram, WhatsApp Business, Marketplace, grupos de Facebook. Un solo cambio que profesionaliza toda la operación.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Estación Snack · Santa Cruz, Chile</div>
+  <div class="footer-meta">Plan de negocio confidencial · Abril 2026 · estacionsnack.cl</div>
+</footer>
+
+<script>
+  // Fade-up on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

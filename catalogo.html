@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Catálogo - Estación Snack</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#5C7A3E",
+                        accent: "#C4603A",
+                        beige: "#F5F0E6",
+                        earth: "#8B7355",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#F5F0E6] font-body text-[#8B7355]">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-[#F5F0E6] dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#5C7A3E] dark:text-lime-500" data-icon="menu">menu</span>
+<h1 class="text-xl font-black text-[#5C7A3E] dark:text-lime-400 tracking-tight font-['Manrope']">Estación Snack</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#5C7A3E] dark:text-lime-500" data-icon="shopping_basket">shopping_basket</span>
+</div>
+</header>
+<main class="pt-16 pb-32">
+<!-- Sticky Filters -->
+<div class="sticky top-16 z-40 bg-[#F5F0E6]/95 backdrop-blur-md py-4 px-4 overflow-x-auto no-scrollbar flex gap-2 border-b border-stone-100">
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-[#5C7A3E] text-white font-bold text-sm">Todos</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-white text-[#8B7355] border border-stone-200 font-bold text-sm">Frutos Secos</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-white text-[#8B7355] border border-stone-200 font-bold text-sm">Dulces</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-white text-[#8B7355] border border-stone-200 font-bold text-sm">Mix</button>
+</div>
+<!-- Product List -->
+<section class="px-4 mt-6 flex flex-col gap-4">
+<!-- Product 1 -->
+<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
+<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
+<img alt="Almendra Entera" class="w-full h-full object-cover" data-alt="Close-up of premium whole roasted almonds in a rustic wooden bowl with warm natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEuuhjojEl0ApM7d7c2BsuW-XeORhJmUhYQyMwhQ3cQ3NM00qiyKzxLaElPqtnQgb8TtQ8lM2e8Ur2E0tyTl9fjrruxq8TkgCCFQOqz46Y2K5LSLpL3ufZJh6qW8IjaSF3hFUPTD0UEIQtOIF_Uz25JEraJzYKgEcl9Ua0DAH0KKnygmhocC1PdrJCnVA8COdcfdcJt9hPFcAzSpVW8as0WoOCT-IvzeHxw5CnlS9UJetgeh0nhyq_51D4MIxBa5zOKZk-rXUipC6p"/>
+</div>
+<div class="flex-grow min-w-0">
+<h3 class="font-bold text-stone-800 truncate">Almendra Entera</h3>
+<p class="text-sm text-stone-500 truncate">Tostada natural</p>
+<p class="text-[#5C7A3E] font-extrabold mt-1">$10.490/kg</p>
+</div>
+<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
+</div>
+<!-- Product 2 -->
+<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
+<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
+<img alt="Almendra Laminada" class="w-full h-full object-cover" data-alt="Artisanal sliced blanched almonds on a clean beige surface with soft overhead shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJMkvG0sVLc5i9zaehe7_ACDFrzh1KPLyVS-Ww-OuAg84NZR81hf7bdf5IJq2ZUqJiXXKshd66QcgCFn6WyWRvBqdb6em9NXNGkYukrBeS5JjckQqSFeRpSxEXP3tc8tJqnjyItgevy5l7tyKRkjwpRIhi7wfKAutvVP5Tzq7uQKgeaNl1pAs5V3Nu6ahPUCnRflMJzN7385WU9ptOHowj_8dWalfEf6TM2MBUSoKZuX9lEyB1JmqLxfKM1voqAk1MQonT4KlFcYUJ"/>
+</div>
+<div class="flex-grow min-w-0">
+<h3 class="font-bold text-stone-800 truncate">Almendra Laminada</h3>
+<p class="text-sm text-stone-500 truncate">Sin piel</p>
+<p class="text-[#5C7A3E] font-extrabold mt-1">$11.290/kg</p>
+</div>
+<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
+</div>
+<!-- Product 3 -->
+<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
+<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
+<img alt="Castaña de Caju Salada" class="w-full h-full object-cover" data-alt="Golden roasted salted cashew nuts with visible salt crystals on a textured neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0dRp1mjA_AjCurxtQ0eA_HZBExVZl6QSmB8DS2_Ud1QmjsxyIozi2KixbHGtqQUTqmWKAhz28-CjVLqsWYUs9wrOsagv39yw2zxebCxN1XS5GBtLm2UecdQO3zojnWjgb4faSOwwkfoGWl6m-dqFilmFW8HwwxNBMaJ4N27cZmxyXs1hYVyYy5ajONusbkQ8J4144tLOcIYYeNlGfCEsJiw7d5pwEmBPs-S16AtsCAiSaiYRNQ5ZXuedJN9Fbt0JKI6rcaDhnCUnm"/>
+</div>
+<div class="flex-grow min-w-0">
+<h3 class="font-bold text-stone-800 truncate">Castaña de Caju Salada</h3>
+<p class="text-sm text-stone-500 truncate">Crujiente</p>
+<p class="text-[#5C7A3E] font-extrabold mt-1">$13.990/kg</p>
+</div>
+<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
+</div>
+<!-- Product 4 -->
+<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
+<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
+<img alt="Castaña de Caju sin Sal" class="w-full h-full object-cover" data-alt="Raw natural cashew nuts showing their ivory color and creamy texture in soft daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN_X5PlM6zffF9KK3ej50lMAKCxTp2GrUDIzTDXklrTt9KhvE03oe6zO-Uqu3FiX0mSNFoAIbXOKnSvp_J0gegI7NJbQdeFgoPLytVpq5TpWnQ7VxNPOgu8n2ORYXVaXoQ2lFcQnIAXu6PVcAAzZgmkZOLFvfZmucwyRw6OHBgXQICOAoTTIxuWEDLnGNaSmuk_2szzt_KwxG_y0qDd0p9WyCbgMoPwVCf8gSGHgnfXIHa17Sq2DCG1exRUSYPrMpM-TK2scH5kAbR"/>
+</div>
+<div class="flex-grow min-w-0">
+<h3 class="font-bold text-stone-800 truncate">Castaña de Caju sin Sal</h3>
+<p class="text-sm text-stone-500 truncate">Natural</p>
+<p class="text-[#5C7A3E] font-extrabold mt-1">$13.990/kg</p>
+</div>
+<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
+</div>
+<!-- Middle Banner -->
+<div class="my-4 p-6 bg-[#C4603A]/10 rounded-3xl border border-[#C4603A]/20 text-center relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="text-[#C4603A] font-extrabold text-lg leading-tight">¿Quieres un MIX personalizado?</h4>
+<p class="text-[#8B7355] mt-1 font-medium">¡Te lo armamos a tu gusto!</p>
+<button class="mt-3 bg-[#C4603A] text-white px-6 py-2 rounded-full font-bold text-sm">Consultar ahora</button>
+</div>
+</div>
+<!-- Product 5 -->
+<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
+<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
+<img alt="Pistacho Salado" class="w-full h-full object-cover" data-alt="Roasted pistachios in their shells, some slightly open showing vibrant green nuts with salt grains" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRP8Fsz-d9N3RbStsHwvckvNJAUNx-hv3-WbU4NycnzfMQW1GyhYCGHSGY_3AHjMKHLNvs1U4yb57CIYPZPAxUHlclyVl1zbSZsbDy5bR6ci6dMO5UEtUYQH0wrNbpfRC-9QJPqPSltINcTbyU8u6ktus7qW-_tK6dmm-CzBEpBDwHsflZ31Jh5EOetgLbEOIe-aT-ptiEUjhAPBj11O5WHrOU7crxZ2adEbzNf1_MmNMw0lO6tqAbhsIk5Hj83rFRrhUwnUnfU_ps"/>
+</div>
+<div class="flex-grow min-w-0">
+<h3 class="font-bold text-stone-800 truncate">Pistacho Salado</h3>
+<p class="text-sm text-stone-500 truncate">Con cáscara</p>
+<p class="text-[#5C7A3E] font-extrabold mt-1">$14.590/kg</p>
+</div>
+<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
+</div>
+<!-- Product 6 -->
+<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
+<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
+<img alt="Banana Chip" class="w-full h-full object-cover" data-alt="Thin slices of dried sweetened banana chips stacked together showing golden-yellow color" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCh6VHPa4AyP2FqjJdWfFdyNvgdELW5asa-g1dcvHlOYJsp-St4z1-QbOZKGCwS6DnTY4Z9NEHw5DwUzkVilmZ-IKyTRIGKRaCa6OgDPdlJtQf8eK--3NR-Cs1fAyTFbuM0lONvwXP8E7U5kCYsZcdckl27MOyel9a-UCGxB72urOD2yPr6kYLau-8KdaQC7PeHd0jo0mv1YXD7kQDrQ4HgpLYtBJbOTkNmHmU7d5CVlG-NlaaJk1myI5BdB9ATHoGiyMC_1O7LY2-o"/>
+</div>
+<div class="flex-grow min-w-0">
+<h3 class="font-bold text-stone-800 truncate">Banana Chip</h3>
+<p class="text-sm text-stone-500 truncate">Clásica dulce</p>
+<p class="text-[#5C7A3E] font-extrabold mt-1">$4.300/kg</p>
+</div>
+<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
+</div>
+<!-- Product 7 -->
+<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
+<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
+<img alt="Banana Chip Salada" class="w-full h-full object-cover" data-alt="Crunchy savory banana chips with a light dusting of salt on a rustic surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCJw8XiixjeOU-Vc64AIsaDor8ysHWUMpwnu0dLdaYFcfmaLc5XE-zRgR-X4pZ5HWTA2gFyAg8ZjLRQ5N-r0FtYE_qMfdLvuC-pmoHTA6phJmRra3LvJSS7Ko2HI9f66KR8b1WVojtGaodoVbe-wC8Hxjp4lKZkl1egrWUejQkRb6kFaTsn-kZGYxmVXrskmSlhj-AeS-GuY9eR7_URL83lKONtJV810DG8BfI-CuZBicHgGHM2lQlefXUFV1WaqCXAhKn0QAe1rht"/>
+</div>
+<div class="flex-grow min-w-0">
+<h3 class="font-bold text-stone-800 truncate">Banana Chip Salada</h3>
+<p class="text-sm text-stone-500 truncate">Crujiente</p>
+<p class="text-[#5C7A3E] font-extrabold mt-1">$13.990/kg</p>
+</div>
+<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
+</div>
+<!-- Product 8 -->
+<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
+<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
+<img alt="Avellana Europea" class="w-full h-full object-cover" data-alt="Roasted whole hazelnuts without skin, showing deep golden brown color and rich texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkHCZM5Z_Q3YenSDXmMBHN-Jxpebyq-ND39b0QwbYuy6FGIsA3U-zSEjFVx6zxEB3oqSug8sCDJacf5BSj9HviV4fuJDl4hX6AcigF7mhJ7J-uQbMrcrQQWDcC6gf5a_jAJRr6jgApCoYeA90HcqeeFQ9FfCyohr2HqbQVnIym2tNd0UKDFKUdwvGznRpxm-HoDUfa7Zcdxo3QmC4PXzcIBw8xBOVfpticS65XDmYp14rhZbh-d2wA_Uus-MlqeuITYe_jyRa7lnNl"/>
+</div>
+<div class="flex-grow min-w-0">
+<h3 class="font-bold text-stone-800 truncate">Avellana Europea</h3>
+<p class="text-sm text-stone-500 truncate">Tostada</p>
+<p class="text-[#5C7A3E] font-extrabold mt-1">$10.990/kg</p>
+</div>
+<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
+</div>
+<!-- Product 9 -->
+<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
+<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
+<img alt="Habas Fritas" class="w-full h-full object-cover" data-alt="Fried broad beans with salt, displaying a crunchy texture and light green to gold hues" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDY7bcUHLh7VnljTq80wNyexfUOVV1VGy80hRRxsGGZgOROZGijyDoYriR-JR_tb2kIHmwuv3VI1qgbEdPUmQW_UnI-Vi017w_XU5FOc8zzyqTpE8C_D4EkPWP0A2EV-iPDdudGuyLLcbhi4ZnOrLMfbiCmr5f2hotr9oTBqjic5juQHzsG-VcZ3rEaCAqxgg-WzZBqgHYsTCIOrYHwBcgC_AVQIGSmxBFmKqBpoNBLHOabhVtc-sP0ee-H3Jqv9MVFVtmv1WhtsPY4"/>
+</div>
+<div class="flex-grow min-w-0">
+<h3 class="font-bold text-stone-800 truncate">Habas Fritas</h3>
+<p class="text-sm text-stone-500 truncate">Saladas</p>
+<p class="text-[#5C7A3E] font-extrabold mt-1">$7.990/kg</p>
+</div>
+<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
+</div>
+<!-- Product 10 -->
+<div class="bg-white rounded-2xl p-3 flex items-center gap-4 shadow-sm">
+<div class="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-stone-100">
+<img alt="Maíz Miel Mostaza" class="w-full h-full object-cover" data-alt="Golden fried corn kernels coated with honey mustard seasoning, vibrant and textured snack" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCx8gRdAt9X-Bb6V3NVCs8XTteF_vTS4QQuLhXadJ_IJRfYJaBiJ-h3yAP021op0lWxBS3cUSbFmqYWQ1OMsf-bnIoAfyDx8gnd8q-HKFNMZPgpKmGpcWJATJZd7y_uETSwZnlwXzJD0DA1cAcA4qLpTuUrMs48OCpWZCn9sO427LYJ-rlSo3EUaXwobnFGv1fwer5e67WcT-igoy8-aXmP7zKJJ_zumAZQt-skyOoeRRLE5_tJHd6pJYqT_vvs4yp9vKjYhsPUkaXD"/>
+</div>
+<div class="flex-grow min-w-0">
+<h3 class="font-bold text-stone-800 truncate">Maíz Miel Mostaza</h3>
+<p class="text-sm text-stone-500 truncate">Sabor único</p>
+<p class="text-[#5C7A3E] font-extrabold mt-1">$5.700/kg</p>
+</div>
+<button class="bg-[#C4603A] text-white px-4 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform">Pedir</button>
+</div>
+</section>
+</main>
+<!-- WhatsApp FAB -->
+<a class="fixed bottom-24 right-4 w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-transform z-50" href="#">
+<svg class="w-8 h-8 fill-current" viewbox="0 0 24 24">
+<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
+</svg>
+</a>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 pb-4 pt-2 bg-white/90 dark:bg-stone-950/90 backdrop-blur-md rounded-t-3xl border-t border-stone-100 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-[#8B7355] dark:text-stone-400 hover:text-[#5C7A3E] active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Manrope'] font-bold text-[10px]">Inicio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#C4603A] dark:text-orange-400 bg-[#C4603A]/10 rounded-xl px-3 py-1 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-['Manrope'] font-bold text-[10px]">Productos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#8B7355] dark:text-stone-400 hover:text-[#5C7A3E] active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+<span class="font-['Manrope'] font-bold text-[10px]">Nosotros</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#8B7355] dark:text-stone-400 hover:text-[#5C7A3E] active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="font-['Manrope'] font-bold text-[10px]">Pedir</span>
+</a>
+</nav>
+<!-- Footer -->
+<footer class="w-full py-12 px-6 flex flex-col items-center gap-4 mb-20 text-center bg-[#8B7355] dark:bg-stone-950">
+<div class="text-[#F5F0E6] font-bold">Estación Snack</div>
+<p class="font-['Manrope'] text-sm text-[#F5F0E6] opacity-80">© 2024 Estación Snack - Frutos Secos por Kilo</p>
+<div class="flex gap-4">
+<a class="text-[#F5F0E6] text-sm opacity-80 hover:opacity-100 transition-opacity underline font-bold" href="#">Términos</a>
+<a class="text-[#F5F0E6] text-sm opacity-80 hover:opacity-100 transition-opacity" href="#">Contacto</a>
+<a class="text-[#F5F0E6] text-sm opacity-80 hover:opacity-100 transition-opacity" href="#">WhatsApp</a>
+</div>
+</footer>
+</body></html>

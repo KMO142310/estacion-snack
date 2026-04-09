@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+                olive: "#5C7A3E",
+                terracotta: "#C4603A",
+                beige: "#F5F0E6",
+                warmbrown: "#8B7355",
+                whatsapp: "#25D366"
+            },
+            borderRadius: {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            fontFamily: {
+                    "headline": ["Manrope"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #F5F0E6;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-beige text-stone-900 pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-stone-50 dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800 shadow-sm">
+<button class="text-green-800 dark:text-green-400 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="text-green-800 dark:text-green-400 font-['Manrope'] font-bold text-lg">¿Cómo pedir?</h1>
+<button class="text-green-800 dark:text-green-400 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</button>
+</header>
+<main class="mt-20 px-6 max-w-md mx-auto">
+<!-- Hero Section -->
+<div class="mb-8 text-center">
+<div class="inline-block px-4 py-1.5 bg-olive/10 text-olive rounded-full text-xs font-bold mb-4">
+                GUÍA DE COMPRA
+            </div>
+<h2 class="text-3xl font-extrabold text-stone-800 leading-tight">Comprar natural es más simple de lo que crees</h2>
+</div>
+<!-- 4 Pasos Section -->
+<div class="space-y-4 mb-10">
+<!-- Step 1 -->
+<div class="bg-white rounded-xl p-6 shadow-sm flex items-start gap-4 border border-stone-100 transition-transform active:scale-[0.98]">
+<div class="bg-beige h-12 w-12 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-terracotta text-2xl" data-icon="shopping_cart">shopping_cart</span>
+</div>
+<div>
+<h3 class="font-bold text-lg text-stone-800 mb-1">Paso 1: Elige tu producto</h3>
+<p class="text-stone-600 text-sm leading-relaxed">Revisa el catálogo y decide cuántos kilos quieres.</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="bg-white rounded-xl p-6 shadow-sm flex items-start gap-4 border border-stone-100 transition-transform active:scale-[0.98]">
+<div class="bg-beige h-12 w-12 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-terracotta text-2xl" data-icon="chat">chat</span>
+</div>
+<div>
+<h3 class="font-bold text-lg text-stone-800 mb-1">Paso 2: Escríbenos por WhatsApp</h3>
+<p class="text-stone-600 text-sm leading-relaxed">Te confirmamos disponibilidad y precio total.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="bg-white rounded-xl p-6 shadow-sm flex items-start gap-4 border border-stone-100 transition-transform active:scale-[0.98]">
+<div class="bg-beige h-12 w-12 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-terracotta text-2xl" data-icon="payments">payments</span>
+</div>
+<div>
+<h3 class="font-bold text-lg text-stone-800 mb-1">Paso 3: Paga fácil</h3>
+<p class="text-stone-600 text-sm leading-relaxed">Transferencia o efectivo al recibir.</p>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="bg-white rounded-xl p-6 shadow-sm flex items-start gap-4 border border-stone-100 transition-transform active:scale-[0.98]">
+<div class="bg-beige h-12 w-12 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-terracotta text-2xl" data-icon="local_shipping">local_shipping</span>
+</div>
+<div>
+<h3 class="font-bold text-lg text-stone-800 mb-1">Paso 4: Recibe en Santa Cruz</h3>
+<p class="text-stone-600 text-sm leading-relaxed">Despacho martes y viernes.</p>
+</div>
+</div>
+</div>
+<!-- Dispatch Information Card -->
+<div class="bg-olive rounded-xl p-6 mb-12 shadow-lg relative overflow-hidden">
+<div class="absolute -right-4 -top-4 opacity-10">
+<span class="material-symbols-outlined text-[100px]" data-icon="schedule">schedule</span>
+</div>
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-white/80" data-icon="info">info</span>
+<span class="text-white/80 text-xs font-bold uppercase tracking-wider">Información útil</span>
+</div>
+<div class="space-y-2 text-white">
+<p class="font-bold text-lg">Pedido mínimo 500g</p>
+<div class="h-px bg-white/20 w-full my-2"></div>
+<div class="flex flex-col gap-1 text-white/90 text-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="calendar_month">calendar_month</span>
+<span>Despacho Mar y Vie</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="alarm">alarm</span>
+<span>Atención Lun-Sáb 9:00-20:00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Testimonials -->
+<div class="mb-12">
+<h4 class="text-warmbrown font-bold text-sm uppercase tracking-widest mb-6 text-center">Nuestra comunidad</h4>
+<div class="space-y-6">
+<!-- Testimonial 1 -->
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="bg-white rounded-2xl rounded-bl-none p-4 shadow-sm border border-stone-100 relative">
+<p class="text-stone-700 italic text-sm leading-relaxed">"Las almendras son frescas y baratas, ya no compro en el super 🌰"</p>
+<div class="absolute -bottom-6 left-0 flex items-center gap-2">
+<div class="w-5 h-5 bg-terracotta/20 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-terracotta" data-icon="person" data-weight="fill">person</span>
+</div>
+<span class="text-xs font-bold text-stone-500">María</span>
+</div>
+</div>
+</div>
+<!-- Testimonial 2 -->
+<div class="flex flex-col items-end mt-8 ml-auto max-w-[85%]">
+<div class="bg-olive/10 rounded-2xl rounded-br-none p-4 shadow-sm border border-olive/10 relative">
+<p class="text-olive font-medium text-sm leading-relaxed">"Pedí mix para la oficina, todos quedaron felices"</p>
+<div class="absolute -bottom-6 right-0 flex items-center gap-2">
+<span class="text-xs font-bold text-stone-500">Carlos</span>
+<div class="w-5 h-5 bg-olive/20 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-olive" data-icon="person" data-weight="fill">person</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- CTA Button -->
+<div class="mt-8">
+<button class="w-full bg-whatsapp text-white rounded-xl py-4 flex items-center justify-center gap-3 font-bold text-lg shadow-lg active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+                HACER MI PRIMER PEDIDO
+            </button>
+<p class="text-center text-stone-500 text-xs mt-4">Haz clic para chatear directamente con nosotros</p>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full flex flex-col items-center gap-4 text-center px-6 bg-stone-100 dark:bg-stone-950 full-width py-8 mb-20 border-t border-stone-200 dark:border-stone-800">
+<div class="font-bold text-green-800 dark:text-green-500">Estación Snack</div>
+<div class="flex gap-4">
+<a class="text-stone-500 dark:text-stone-400 font-['Manrope'] text-sm hover:underline decoration-orange-500 transition-opacity duration-300" href="#">Envíos</a>
+<a class="text-stone-500 dark:text-stone-400 font-['Manrope'] text-sm hover:underline decoration-orange-500 transition-opacity duration-300" href="#">Privacidad</a>
+<a class="text-stone-500 dark:text-stone-400 font-['Manrope'] text-sm hover:underline decoration-orange-500 transition-opacity duration-300" href="#">WhatsApp</a>
+</div>
+<p class="text-stone-700 dark:text-stone-300 font-['Manrope'] text-sm leading-relaxed">© 2024 Estacion Snack — Honestidad Natural</p>
+</footer>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe pt-2 bg-stone-50/95 dark:bg-stone-900/95 backdrop-blur-md rounded-t-2xl border-t border-stone-200 dark:border-stone-800 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+<div class="flex flex-col items-center justify-center text-stone-500 dark:text-stone-400 px-3 py-1.5 hover:text-green-700 active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Manrope'] font-medium text-[11px]">Inicio</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-500 dark:text-stone-400 px-3 py-1.5 hover:text-green-700 active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-['Manrope'] font-medium text-[11px]">Productos</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-500 dark:text-stone-400 px-3 py-1.5 hover:text-green-700 active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Manrope'] font-medium text-[11px]">Nosotros</span>
+</div>
+<!-- Active Tab: Pedir -->
+<div class="flex flex-col items-center justify-center bg-green-100 dark:bg-green-900/40 text-green-900 dark:text-green-100 rounded-2xl px-3 py-1.5 active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="shopping_cart" data-weight="fill">shopping_cart</span>
+<span class="font-['Manrope'] font-medium text-[11px]">Pedir</span>
+</div>
+</nav>
+</body></html>

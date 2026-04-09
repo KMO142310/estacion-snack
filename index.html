@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#5C7A3E",
+                        accent: "#C4603A",
+                        beige: "#F5F0E6",
+                        brown: "#8B7355",
+                        whatsapp: "#25D366"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"],
+                        "label": ["Manrope", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; background-color: #F5F0E6; }
+        .material-symbols-outlined { font-size: 24px; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-stone-900 overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-[#F5F0E6] dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#5C7A3E] dark:text-lime-500" data-icon="menu">menu</span>
+<span class="text-xl font-black text-[#5C7A3E] dark:text-lime-400 tracking-tight font-['Manrope']">Estación Snack</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#5C7A3E] dark:text-lime-500" data-icon="shopping_basket">shopping_basket</span>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative pt-24 pb-12 px-6 flex flex-col items-center text-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-20" data-alt="overhead view of assorted nuts and dried fruits spread across a rustic wooden surface with warm natural morning lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALV5rq_CBhvTf9Phd6_yzNnUSbcjqRCsC6IqzGi9RxToXkAmq9jyQ86CIUGdiYx_BsA0A7tYjLanQwNpNDByiXkNwmWGT3CVCyX3G-aHByggE-xxsPdCNMiFPQTDFX7MIzYqBao3WpVbJg21QnqFPYM49YTimjWO5WhHd31xaCH6jMHYwZV52WL9R3pMRrz1_OpAIAoiga_6WwPg2Vlu5BAhNk7AgxGXEoCbQUzXBa3SuPF9LXz-TLZx6PHcU0w9OKBUfFNLTqXu8S"/>
+<div class="absolute inset-0 bg-gradient-to-b from-[#F5F0E6] via-[#F5F0E6]/80 to-[#F5F0E6]"></div>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-20 h-20 bg-[#5C7A3E] rounded-full flex items-center justify-center mb-6 shadow-xl active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-white text-4xl" data-icon="nutrition">nutrition</span>
+</div>
+<h1 class="text-4xl font-extrabold text-stone-900 mb-2 leading-tight">
+                Tu parada para snacks de verdad
+            </h1>
+<div class="mt-4 bg-white/50 backdrop-blur-sm border border-[#5C7A3E]/20 px-4 py-2 rounded-full inline-flex gap-2 items-center">
+<span class="text-xs font-bold text-[#5C7A3E] uppercase tracking-wider">Fresco · Por kilo · Sin vueltas</span>
+</div>
+</div>
+</section>
+<!-- Why Us Chips -->
+<section class="px-6 pb-12 relative z-10">
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-stone-100">
+<div class="w-12 h-12 bg-[#F5F0E6] rounded-xl flex items-center justify-center text-[#5C7A3E]">
+<span class="material-symbols-outlined" data-icon="balance">balance</span>
+</div>
+<span class="font-bold text-stone-800">Precio real por kilo</span>
+</div>
+<div class="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-stone-100">
+<div class="w-12 h-12 bg-[#F5F0E6] rounded-xl flex items-center justify-center text-[#5C7A3E]">
+<span class="material-symbols-outlined" data-icon="eco">eco</span>
+</div>
+<span class="font-bold text-stone-800">Sin envases de más</span>
+</div>
+<div class="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-stone-100">
+<div class="w-12 h-12 bg-[#F5F0E6] rounded-xl flex items-center justify-center text-[#C4603A]">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</div>
+<span class="font-bold text-stone-800">Despacho en Santa Cruz</span>
+</div>
+</div>
+</section>
+<!-- Product Grid -->
+<section class="px-4 pb-24">
+<div class="flex items-center justify-between mb-6 px-2">
+<h2 class="text-2xl font-extrabold text-stone-900 tracking-tight">Nuestros Favoritos</h2>
+<span class="text-[#5C7A3E] font-bold text-sm">Ver todos</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Product 1 -->
+<div class="bg-white rounded-[2rem] p-3 flex flex-col shadow-sm border border-stone-100">
+<div class="aspect-square rounded-2xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover" data-alt="high quality raw whole almonds in a glass bowl on neutral beige background with soft shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqED8cvA0zecIE1RTGj7W-waGKCo6Rt11dftk6zaRDVBRwcuDsWRsM0bKHDULAZU44QSEdjIObGsNozoNr6afzIYvsUusPVeICPszd9HZiJI410oJCCh2Gbqtlr4nGhOT5xcucnSdVlhpifezaLHeOytKR8iisvs-PphOLLbvHvp-2qXaJCMFgiD1FfVrAwSGZ_GMbZdQFajbSCSpx50JHB19nO-fVixvzXgxSRM4E7uiq_ruW3wPw0WSUJUxL7-wPBjb8oO3FqPSC"/>
+</div>
+<h3 class="font-bold text-stone-900 px-1 leading-tight mb-1">Almendra Entera</h3>
+<p class="text-[#5C7A3E] font-extrabold text-lg px-1 mb-3">$10.490/kg</p>
+<button class="w-full bg-[#C4603A] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="shopping_cart">shopping_cart</span>
+                    Pedir
+                </button>
+</div>
+<!-- Product 2 -->
+<div class="bg-white rounded-[2rem] p-3 flex flex-col shadow-sm border border-stone-100">
+<div class="aspect-square rounded-2xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover" data-alt="macro photograph of creamy raw cashew nuts scattered on a rustic linen cloth" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCt5iSKHAN1BZ3w8ddduHesr7X5lGAspMOOEcHgxsdXbW2elaS1oVzqyxvmuuzLCxLtGXgHezdY6hnhbbBwXZoMBSMO-y2OP1EL2ZNUGhAR45gA6XoZh-zsE4Rhb2W3qvvWzqsJpFHY2HXMt3uGNd-3SD7B-Y2y8ZhuWD7XNjscQNeDMY1hwHEIn42NA23b_7IVMH13trEVrBlvRElCnYp0IT-a3Bdthvz-pP1kNPHw3S96-n2fyWBUObPggSqUt_Ds3-67i-JC3RAf"/>
+</div>
+<h3 class="font-bold text-stone-900 px-1 leading-tight mb-1">Castaña de Caju</h3>
+<p class="text-[#5C7A3E] font-extrabold text-lg px-1 mb-3">$13.990/kg</p>
+<button class="w-full bg-[#C4603A] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="shopping_cart">shopping_cart</span>
+                    Pedir
+                </button>
+</div>
+<!-- Product 3 -->
+<div class="bg-white rounded-[2rem] p-3 flex flex-col shadow-sm border border-stone-100">
+<div class="aspect-square rounded-2xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover" data-alt="close up of crispy dehydrated banana chips snack on a warm wood texture surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6l5U1Do1281EexaeI7mgwjfIndghfXfV_DXte-hYJC6XZuAQJQrKIXqqNNEo2JazPc8rJcd9ZB5uTvtG6OydzG1j7O6RLR34kAt7O4zOlU-JAXcxlznnWiP3wh9fqblrjIBK7E6sVTM6vIVAvbjE_OwFrafTH0Rc0zN0PCFAJJR5pQTvrDoXWp_eFY7XoPUjTm8elmS1heZY_0LGIT7l_L0K5CUfjMHlpc724W735uw6PilHnX3eJUHIevn7zwOR0WUjODKQgU1pO"/>
+</div>
+<h3 class="font-bold text-stone-900 px-1 leading-tight mb-1">Banana Chip</h3>
+<p class="text-[#5C7A3E] font-extrabold text-lg px-1 mb-3">$4.300/kg</p>
+<button class="w-full bg-[#C4603A] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="shopping_cart">shopping_cart</span>
+                    Pedir
+                </button>
+</div>
+<!-- Product 4 -->
+<div class="bg-white rounded-[2rem] p-3 flex flex-col shadow-sm border border-stone-100">
+<div class="aspect-square rounded-2xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover" data-alt="salted roasted pistachios in shells in a small ceramic bowl with dark earthy tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2X7WAL_BQo9-tNjRc9SChue-_3cIVt51R9l0JtFLVDodo2gHMkGuODMsWM9-v-fyetUbxQkC-8j6J90PKOeEg97ZjMPIHrsg5HIZUJ-66VHs3E4q8sASG3Pe2F67qnQBvRjNaxyx6m-2xmOGO5j72p9pvml049Riv3aNgHpU9_Aldovyi6qKPbE-a-pfjm90HlLjPWWxoQ89H5U_Ajmocr_776f3s3XfBvsjhchcDSNPZFShrU8BCFAB_iECziQF6drbAt6GBMB3q"/>
+</div>
+<h3 class="font-bold text-stone-900 px-1 leading-tight mb-1">Pistacho Salado</h3>
+<p class="text-[#5C7A3E] font-extrabold text-lg px-1 mb-3">$14.590/kg</p>
+<button class="w-full bg-[#C4603A] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="shopping_cart">shopping_cart</span>
+                    Pedir
+                </button>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="px-6 py-12 bg-[#8B7355] text-center mb-32 rounded-t-[3rem]">
+<h2 class="text-white text-2xl font-extrabold mb-4">¿Quieres el catálogo completo?</h2>
+<p class="text-[#F5F0E6] mb-8 opacity-90">Escríbenos y te enviamos la lista de precios actualizada al instante.</p>
+<a class="inline-flex items-center gap-3 bg-[#25D366] text-white px-8 py-4 rounded-full font-bold shadow-lg active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+            ESCRIBIR POR WHATSAPP
+        </a>
+</section>
+<!-- Sticky WhatsApp FAB -->
+<div class="fixed bottom-24 right-4 z-[60]">
+<a class="flex items-center gap-3 bg-[#25D366] text-white p-4 rounded-full shadow-[0_10px_20px_rgba(37,211,102,0.3)] active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="font-bold pr-2">PEDIR POR WHATSAPP</span>
+</a>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 pb-4 pt-2 bg-white/90 dark:bg-stone-950/90 backdrop-blur-md rounded-t-3xl border-t border-stone-100 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-[#C4603A] dark:text-orange-400 bg-[#C4603A]/10 rounded-xl px-3 py-1 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Manrope'] font-bold text-[10px]">Inicio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#8B7355] dark:text-stone-400 hover:text-[#5C7A3E] active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-['Manrope'] font-bold text-[10px]">Productos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#8B7355] dark:text-stone-400 hover:text-[#5C7A3E] active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+<span class="font-['Manrope'] font-bold text-[10px]">Nosotros</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#8B7355] dark:text-stone-400 hover:text-[#5C7A3E] active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="font-['Manrope'] font-bold text-[10px]">Pedir</span>
+</a>
+</nav>
+<!-- Footer -->
+<footer class="w-full py-12 px-6 flex flex-col items-center gap-4 mb-20 text-center bg-[#8B7355] dark:bg-stone-950">
+<span class="text-[#F5F0E6] font-bold">Estación Snack</span>
+<p class="text-[#F5F0E6] font-['Manrope'] text-sm opacity-80">© 2024 Estación Snack - Frutos Secos por Kilo</p>
+<div class="flex gap-4">
+<a class="text-[#F5F0E6] text-sm underline font-bold transition-opacity hover:opacity-100" href="#">Términos</a>
+<a class="text-[#F5F0E6] text-sm opacity-80 transition-opacity hover:opacity-100" href="#">Contacto</a>
+<a class="text-[#F5F0E6] text-sm opacity-80 transition-opacity hover:opacity-100" href="#">WhatsApp</a>
+</div>
+</footer>
+</body></html>

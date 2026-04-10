@@ -3,156 +3,204 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Estación Snack — Frutos Secos por Kilo · Santa Cruz</title>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>Estación Snack — Frutos Secos y Dulces por Kilo · Santa Cruz</title>
+<meta name="description" content="Frutos secos, confites y dulces frescos por kilo. Despacho en Santa Cruz. Pide tu pedido por WhatsApp.">
+<meta name="theme-color" content="#1A1A2E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --g:#4A6D2E;--g2:#5C7A3E;--t:#C4603A;--b:#F5F0E6;--w:#fff;--k:#1A1A18;
-  --s:#8B7355;--wa:#25D366;--r:18px;
-  --sp:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.32,.72,0,1)
+  --primary:#E85D3A;--primary-light:#FFF0EC;
+  --dark:#1A1A2E;--accent:#FFD23F;--accent-soft:#FFF8E1;
+  --green:#3D8B37;--green-light:#E8F5E8;
+  --bg:#FAFAF8;--surface:#FFFFFF;
+  --n100:#F5F5F0;--n200:#E8E8E0;--n400:#A8A89C;--n500:#8A8A7E;--n600:#6B6B60;--n800:#2D2D28;--n900:#1A1A16;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.04),0 1px 3px rgba(0,0,0,.06);
+  --shadow-md:0 4px 6px rgba(0,0,0,.04),0 2px 4px rgba(0,0,0,.06);
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:24px;--r-full:9999px;
+  --ease:cubic-bezier(.32,.72,0,1);--spring:cubic-bezier(.34,1.56,.64,1)
 }
 html{-webkit-text-size-adjust:100%}
-body{font-family:'Manrope',system-ui,sans-serif;background:#E8E3D9;color:var(--k);min-height:100dvh;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',system-ui,sans-serif;background:#E8E6E0;color:var(--n900);min-height:100dvh;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif}
 a{-webkit-tap-highlight-color:transparent;text-decoration:none;color:inherit}
 img{display:block;max-width:100%}
 
-/* SHELL */
-.shell{max-width:480px;margin:0 auto;background:var(--b);min-height:100dvh;position:relative;overflow-x:hidden}
-@media(min-width:481px){.shell{box-shadow:0 0 80px rgba(0,0,0,.12)}}
+.shell{max-width:480px;margin:0 auto;background:var(--bg);min-height:100dvh;position:relative;overflow-x:hidden}
+@media(min-width:481px){.shell{box-shadow:0 0 80px rgba(0,0,0,.1),0 0 2px rgba(0,0,0,.08)}}
 
-/* HEADER */
-.hdr{position:sticky;top:0;z-index:100;height:56px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;background:rgba(245,240,230,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,.06)}
-.logo{display:flex;align-items:center;gap:7px;font-size:17px;font-weight:900;color:var(--g);letter-spacing:-.5px}
-.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--t);flex-shrink:0}
-.hdr-link{color:var(--g);font-size:13px;font-weight:700;display:flex;align-items:center;gap:4px}
-.hdr-link svg{width:18px;height:18px}
+/* Header */
+.hdr{position:sticky;top:0;z-index:100;padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;background:var(--dark);color:#fff}
+.logo{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.5px;display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--primary)}
+.hdr-cta{padding:8px 16px;border-radius:var(--r-full);background:var(--primary);color:#fff;font-size:12px;font-weight:700;transition:transform .15s var(--spring)}
+.hdr-cta:active{transform:scale(.95)}
 
-/* HERO */
-.hero{padding:32px 20px 24px;text-align:center}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--g);color:#fff;padding:6px 14px;border-radius:99px;font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-bottom:16px}
-.hero h1{font-size:32px;font-weight:900;letter-spacing:-1.2px;line-height:1.05;margin-bottom:10px}
-.hero h1 em{font-style:normal;color:var(--g)}
-.hero p{font-size:14px;color:var(--s);line-height:1.6;max-width:300px;margin:0 auto}
+/* Hero */
+.hero{position:relative;padding:32px 20px 0;overflow:hidden}
+.hero-label{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--r-full);background:var(--accent-soft);font-size:12px;font-weight:700;color:var(--n800);margin-bottom:14px}
+.hero h1{font-size:clamp(28px,7vw,36px);font-weight:700;letter-spacing:-1.2px;line-height:1.05;margin-bottom:12px;color:var(--n900)}
+.hero h1 em{font-style:normal;color:var(--primary)}
+.hero p{font-size:15px;color:var(--n500);line-height:1.6;max-width:320px;margin-bottom:20px}
+.hero-ctas{display:flex;gap:10px;margin-bottom:24px}
+.btn-primary{padding:12px 24px;border-radius:var(--r-sm);background:var(--dark);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px;transition:transform .15s var(--spring)}
+.btn-primary:active{transform:scale(.96)}
+.btn-primary svg{width:16px;height:16px}
+.btn-secondary{padding:12px 20px;border-radius:var(--r-sm);background:var(--n100);color:var(--n800);font-size:14px;font-weight:700;transition:transform .15s var(--spring)}
+.btn-secondary:active{transform:scale(.96)}
 
-/* MARQUEE */
-.mq{overflow:hidden;background:var(--g);padding:8px 0}
+/* Hero image composition */
+.hero-imgs{display:flex;gap:8px;margin:0 -20px;padding:0 20px;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x mandatory}
+.hero-imgs::-webkit-scrollbar{display:none}
+.hero-img{flex-shrink:0;width:140px;height:140px;border-radius:var(--r-lg);overflow:hidden;scroll-snap-align:start;box-shadow:var(--shadow-md)}
+.hero-img img{width:100%;height:100%;object-fit:cover}
+
+/* Marquee */
+.mq{overflow:hidden;background:var(--dark);padding:10px 0;margin-top:24px}
 .mq-track{display:flex;width:max-content;animation:scroll 22s linear infinite}
 @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.mq-item{white-space:nowrap;padding:0 16px;font-size:11px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.85)}
+.mq-item{white-space:nowrap;padding:0 16px;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.7)}
 
-/* VALUE PROPS */
-.props{padding:20px 16px;display:flex;flex-direction:column;gap:10px}
-.prop{display:flex;align-items:center;gap:14px;background:var(--w);padding:14px 16px;border-radius:16px;box-shadow:0 1px 4px rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.04)}
-.prop-ico{width:44px;height:44px;border-radius:12px;background:var(--b);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.prop-txt{font-size:14px;font-weight:800;color:var(--k)}
+/* Props */
+.props{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:20px 14px}
+.prop{background:var(--surface);border-radius:var(--r-md);padding:14px 10px;text-align:center;box-shadow:var(--shadow-sm)}
+.prop-ico{font-size:24px;margin-bottom:6px}
+.prop-txt{font-size:11px;font-weight:700;color:var(--n800);line-height:1.3}
 
-/* SECTION HEADER */
-.sec-hdr{display:flex;align-items:center;justify-content:space-between;padding:4px 16px 12px}
-.sec-hdr h2{font-size:22px;font-weight:900;letter-spacing:-.6px}
-.sec-hdr a{font-size:13px;font-weight:800;color:var(--g)}
+/* Section header */
+.sec-hdr{display:flex;align-items:baseline;justify-content:space-between;padding:8px 16px 12px}
+.sec-hdr h2{font-size:22px;font-weight:700;letter-spacing:-.5px}
+.sec-hdr a{font-size:13px;font-weight:700;color:var(--primary)}
 
-/* PRODUCT GRID */
-.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px 24px}
-.pcard{background:var(--w);border-radius:var(--r);overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06);transition:transform .15s var(--sp);display:block}
+/* Product grid */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px 16px}
+.pcard{background:var(--surface);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm);display:block;transition:transform .15s var(--spring)}
 .pcard:active{transform:scale(.97)}
-.pcard-img{aspect-ratio:1/1;background:#f0ece2;overflow:hidden}
-.pcard-img img{width:100%;height:100%;object-fit:cover}
+.pcard-img{aspect-ratio:1/1;background:var(--n100);overflow:hidden}
+.pcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s var(--ease)}
+.pcard:hover .pcard-img img,.pcard:active .pcard-img img{transform:scale(1.05)}
 .pcard-body{padding:10px 12px 14px}
-.pcard-name{font-size:14px;font-weight:800;color:var(--k);line-height:1.2;margin-bottom:4px}
-.pcard-price{font-size:17px;font-weight:900;color:var(--g);letter-spacing:-.3px}
-.pcard-price small{font-size:11px;font-weight:600;color:var(--s)}
+.pcard-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--primary);margin-bottom:3px}
+.pcard-name{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--n900);line-height:1.2;margin-bottom:4px}
+.pcard-price{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:var(--green)}
+.pcard-price small{font-size:11px;font-weight:500;color:var(--n400)}
 
-/* CTA */
-.cta{background:var(--s);border-radius:24px 24px 0 0;padding:36px 20px;text-align:center;margin-top:12px}
-.cta h2{font-size:22px;font-weight:900;color:#fff;margin-bottom:8px;letter-spacing:-.3px}
-.cta p{font-size:13px;color:rgba(245,240,230,.8);margin-bottom:20px;line-height:1.5}
-.wa-btn{display:inline-flex;align-items:center;gap:10px;background:var(--wa);color:#fff;padding:14px 28px;border-radius:99px;font-size:15px;font-weight:900;box-shadow:0 4px 20px rgba(37,211,102,.35);transition:transform .15s var(--sp)}
+/* Promo banner */
+.promo{margin:4px 14px 16px;padding:20px;border-radius:var(--r-xl);background:var(--accent);position:relative;overflow:hidden}
+.promo::after{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.15)}
+.promo-tag{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:rgba(0,0,0,.4);margin-bottom:6px}
+.promo h3{font-size:18px;font-weight:700;color:var(--n900);letter-spacing:-.3px;margin-bottom:4px}
+.promo p{font-size:13px;color:rgba(0,0,0,.5);margin-bottom:12px}
+.promo-btn{display:inline-flex;padding:10px 20px;border-radius:var(--r-sm);background:var(--dark);color:#fff;font-size:13px;font-weight:700}
+
+/* CTA section */
+.cta{background:var(--dark);padding:36px 20px;text-align:center;margin-top:8px}
+.cta h2{font-size:24px;font-weight:700;color:#fff;letter-spacing:-.4px;margin-bottom:8px}
+.cta p{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:20px;line-height:1.5}
+.wa-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:var(--r-full);background:#25D366;color:#fff;font-size:15px;font-weight:800;box-shadow:0 4px 20px rgba(37,211,102,.3);transition:transform .15s var(--spring)}
 .wa-btn:active{transform:scale(.95)}
 .wa-btn svg{width:20px;height:20px;flex-shrink:0}
 
-/* FOOTER */
-footer{background:var(--s);padding:24px 20px calc(80px + env(safe-area-inset-bottom));text-align:center}
-footer strong{color:#F5F0E6;font-size:14px;font-weight:800;display:block;margin-bottom:4px}
-footer p{color:rgba(245,240,230,.65);font-size:12px}
+/* Footer */
+footer{background:var(--dark);padding:24px 20px calc(80px + env(safe-area-inset-bottom));text-align:center;border-top:1px solid rgba(255,255,255,.06)}
+footer strong{color:rgba(255,255,255,.8);font-size:13px;font-weight:700;display:block;margin-bottom:4px}
+footer p{color:rgba(255,255,255,.3);font-size:11px}
 
-/* BOTTOM NAV */
-.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:50;display:flex;justify-content:space-around;padding:6px 8px calc(8px + env(safe-area-inset-bottom));background:rgba(255,255,255,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(0,0,0,.05);border-radius:20px 20px 0 0}
-.ni{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--s);font-size:10px;font-weight:700;padding:5px 14px;border-radius:12px}
-.ni.cur{color:var(--t);background:rgba(196,96,58,.07)}
-.ni-ico{font-size:20px;line-height:1}
+/* Bottom nav */
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:50;display:flex;justify-content:space-around;padding:6px 8px calc(8px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--n200)}
+.ni{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--n400);font-size:10px;font-weight:600;padding:5px 14px;border-radius:var(--r-sm)}
+.ni.cur{color:var(--primary)}
+.ni svg{width:20px;height:20px}
 
-/* FLOATING CTA */
-.fab{position:fixed;bottom:76px;right:max(16px,calc((100vw - 480px)/2 + 16px));z-index:60;display:flex;align-items:center;gap:8px;background:var(--wa);color:#fff;padding:14px 18px;border-radius:99px;font-size:14px;font-weight:900;box-shadow:0 6px 24px rgba(37,211,102,.35);transition:transform .15s var(--sp)}
+/* FAB */
+.fab{position:fixed;bottom:76px;right:max(16px,calc((100vw - 480px)/2 + 16px));z-index:60;display:flex;align-items:center;gap:8px;padding:14px 18px;border-radius:var(--r-full);background:#25D366;color:#fff;font-size:13px;font-weight:800;box-shadow:0 6px 24px rgba(37,211,102,.35);transition:transform .15s var(--spring)}
 .fab:active{transform:scale(.93)}
 .fab svg{width:18px;height:18px;flex-shrink:0}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s var(--ease)}.reveal.vis{opacity:1;transform:none}
 </style>
 </head>
 <body>
 <div class="shell">
 
-<!-- HEADER -->
 <header class="hdr">
   <div class="logo"><div class="logo-dot"></div>Estación Snack</div>
-  <a href="catalogo.html" class="hdr-link">
-    Catálogo
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-  </a>
+  <a href="catalogo.html" class="hdr-cta">Ver catálogo →</a>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">🌰 Santa Cruz, Chile</div>
-  <h1>Tu parada para<br>snacks <em>de verdad</em></h1>
-  <p>Frutos secos, confites y dulces frescos. Por kilo, sin envases de más, directo a tu puerta.</p>
+  <div class="hero-label">📍 Santa Cruz, Chile</div>
+  <h1>Tus snacks<br>favoritos, <em>por kilo</em></h1>
+  <p>Frutos secos, confites y dulces frescos. Sin envases de más, directo a tu puerta.</p>
+  <div class="hero-ctas">
+    <a href="catalogo.html" class="btn-primary">
+      Ver catálogo
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20%F0%9F%8C%B0" target="_blank" class="btn-secondary">WhatsApp</a>
+  </div>
+  <div class="hero-imgs">
+    <div class="hero-img"><img src="https://images.pexels.com/photos/1295572/pexels-photo-1295572.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Mix Europeo" loading="lazy"></div>
+    <div class="hero-img"><img src="https://images.pexels.com/photos/6291521/pexels-photo-6291521.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Maní Confitado" loading="lazy"></div>
+    <div class="hero-img"><img src="https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=400&q=80" alt="Gomitas" loading="lazy"></div>
+    <div class="hero-img"><img src="https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=400&q=80" alt="Almendras" loading="lazy"></div>
+  </div>
 </section>
 
 <!-- MARQUEE -->
 <div class="mq">
   <div class="mq-track">
-    <span class="mq-item">Santa Cruz ·</span><span class="mq-item">Por kilo ·</span><span class="mq-item">Despacho Martes y Viernes ·</span><span class="mq-item">Fresco ·</span><span class="mq-item">Sin vueltas ·</span><span class="mq-item">953 743 338 ·</span>
-    <span class="mq-item">Santa Cruz ·</span><span class="mq-item">Por kilo ·</span><span class="mq-item">Despacho Martes y Viernes ·</span><span class="mq-item">Fresco ·</span><span class="mq-item">Sin vueltas ·</span><span class="mq-item">953 743 338 ·</span>
+    <span class="mq-item">Despacho martes y viernes ·</span><span class="mq-item">Pago transferencia o efectivo ·</span><span class="mq-item">Por kilo, sin envases de más ·</span><span class="mq-item">WhatsApp: 953 743 338 ·</span>
+    <span class="mq-item">Despacho martes y viernes ·</span><span class="mq-item">Pago transferencia o efectivo ·</span><span class="mq-item">Por kilo, sin envases de más ·</span><span class="mq-item">WhatsApp: 953 743 338 ·</span>
   </div>
 </div>
 
 <!-- VALUE PROPS -->
 <section class="props">
-  <div class="prop"><div class="prop-ico">⚖️</div><span class="prop-txt">Precio real por kilo</span></div>
-  <div class="prop"><div class="prop-ico">🌱</div><span class="prop-txt">Sin envases de más</span></div>
-  <div class="prop"><div class="prop-ico">🚗</div><span class="prop-txt">Despacho en Santa Cruz</span></div>
+  <div class="prop"><div class="prop-ico">⚖️</div><div class="prop-txt">Precio real por kilo</div></div>
+  <div class="prop"><div class="prop-ico">🚗</div><div class="prop-txt">Despacho en Santa Cruz</div></div>
+  <div class="prop"><div class="prop-ico">⚡</div><div class="prop-txt">Respuesta en 1 hora</div></div>
 </section>
 
-<!-- FEATURED PRODUCTS -->
+<!-- PRODUCTS -->
 <section>
   <div class="sec-hdr">
-    <h2>Nuestros Favoritos</h2>
-    <a href="catalogo.html">Ver todos &rarr;</a>
+    <h2>Los más pedidos</h2>
+    <a href="catalogo.html">Ver todos →</a>
   </div>
   <div class="pgrid">
     <a href="catalogo.html" class="pcard">
-      <div class="pcard-img"><img src="https://www.elpalomo.cl/3484-large_default/mix-europeo-x-kilo.jpg" alt="Mix Europeo" loading="lazy"></div>
+      <div class="pcard-img"><img src="https://images.pexels.com/photos/1295572/pexels-photo-1295572.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Mix Europeo" loading="lazy"></div>
       <div class="pcard-body">
+        <div class="pcard-tag">Frutos secos</div>
         <div class="pcard-name">Mix Europeo</div>
         <div class="pcard-price">$13.000 <small>/kg</small></div>
       </div>
     </a>
     <a href="catalogo.html" class="pcard">
-      <div class="pcard-img"><img src="https://www.elpalomo.cl/2744-large_default/mani-confitado-tropical-x-kilo.jpg" alt="Maní Confitado Tropical" loading="lazy"></div>
+      <div class="pcard-img"><img src="https://images.pexels.com/photos/6291521/pexels-photo-6291521.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Maní Confitado Tropical" loading="lazy"></div>
       <div class="pcard-body">
+        <div class="pcard-tag">Dulces</div>
         <div class="pcard-name">Maní Confitado Tropical</div>
         <div class="pcard-price">$5.990 <small>/kg</small></div>
       </div>
     </a>
     <a href="catalogo.html" class="pcard">
-      <div class="pcard-img"><img src="https://www.elpalomo.cl/3183-large_default/gomita-osito-docile-x-kg.jpg" alt="Gomita Osito Docile" loading="lazy"></div>
+      <div class="pcard-img"><img src="https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=600&q=80" alt="Gomita Osito Docile" loading="lazy"></div>
       <div class="pcard-body">
+        <div class="pcard-tag">Dulces</div>
         <div class="pcard-name">Gomita Osito Docile</div>
         <div class="pcard-price">$8.500 <small>/kg</small></div>
       </div>
     </a>
     <a href="catalogo.html" class="pcard">
-      <div class="pcard-img"><img src="https://www.elpalomo.cl/3340-large_default/saco-almendra-enteras-x-10-kilos.jpg" alt="Almendra Entera" loading="lazy"></div>
+      <div class="pcard-img"><img src="https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=600&q=80" alt="Almendra Entera" loading="lazy"></div>
       <div class="pcard-body">
+        <div class="pcard-tag">Frutos secos</div>
         <div class="pcard-name">Almendra Entera</div>
         <div class="pcard-price">$16.000 <small>/kg</small></div>
       </div>
@@ -160,13 +208,21 @@ footer p{color:rgba(245,240,230,.65);font-size:12px}
   </div>
 </section>
 
+<!-- PROMO BANNER -->
+<div class="promo">
+  <div class="promo-tag">Dato del día</div>
+  <h3>Compra por kilo y ahorra</h3>
+  <p>Sin envase, sin sobreprecio. El mismo producto que compran los locales.</p>
+  <a href="catalogo.html" class="promo-btn">Armar mi pedido →</a>
+</div>
+
 <!-- CTA -->
 <section class="cta">
   <h2>¿Listo para pedir?</h2>
-  <p>Arma tu pedido en el catálogo o escríbenos directo por WhatsApp.</p>
+  <p>Arma tu pedido en el catálogo o escríbenos directo.</p>
   <a class="wa-btn" href="https://wa.me/56953743338?text=Hola!%20Vi%20la%20p%C3%A1gina%20de%20Estaci%C3%B3n%20Snack%20y%20quiero%20hacer%20un%20pedido%20%F0%9F%8C%B0" target="_blank">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    ESCRIBIR POR WHATSAPP
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Escribir por WhatsApp
   </a>
 </section>
 
@@ -175,21 +231,40 @@ footer p{color:rgba(245,240,230,.65);font-size:12px}
   <p>&copy; 2025 — Frutos secos por kilo · Santa Cruz, Chile</p>
 </footer>
 
-</div><!-- /shell -->
+</div>
 
 <!-- FAB -->
-<a class="fab" href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20en%20Estaci%C3%B3n%20Snack%20%F0%9F%8C%B0" target="_blank">
-  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-  PEDIR
+<a class="fab" href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20%F0%9F%8C%B0" target="_blank">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Pedir
 </a>
 
 <!-- BOTTOM NAV -->
 <nav class="bnav">
-  <a href="index.html" class="ni cur"><span class="ni-ico">🏠</span>Inicio</a>
-  <a href="catalogo.html" class="ni"><span class="ni-ico">🛍</span>Productos</a>
-  <a href="como-pedir.html" class="ni"><span class="ni-ico">ℹ️</span>Cómo pedir</a>
-  <a href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20%F0%9F%8C%B0" target="_blank" class="ni"><span class="ni-ico">💬</span>Pedir</a>
+  <a href="index.html" class="ni cur">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Inicio
+  </a>
+  <a href="catalogo.html" class="ni">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    Catálogo
+  </a>
+  <a href="como-pedir.html" class="ni">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Cómo pedir
+  </a>
+  <a href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20%F0%9F%8C%B0" target="_blank" class="ni">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+    Pedir
+  </a>
 </nav>
 
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }});
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>

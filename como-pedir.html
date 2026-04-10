@@ -1,207 +1,174 @@
 <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Cómo Pedir — Estación Snack</title>
+<meta name="theme-color" content="#FAF7F2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FAF7F2;--text:#2C2416;--accent:#C8553D;--subtle:#A69580;--surface:#EEE8DF;--line:#DDD5CA;--green:#5C7A3E;--wa:#25D366}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:15px;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'DM Serif Display',Georgia,serif;font-weight:400;letter-spacing:-.02em}
+a{text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent}
 
-<html lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-                olive: "#5C7A3E",
-                terracotta: "#C4603A",
-                beige: "#F5F0E6",
-                warmbrown: "#8B7355",
-                whatsapp: "#25D366"
-            },
-            borderRadius: {
-                    "DEFAULT": "1rem",
-                    "lg": "2rem",
-                    "xl": "3rem",
-                    "full": "9999px"
-            },
-            fontFamily: {
-                    "headline": ["Manrope"],
-                    "body": ["Manrope"],
-                    "label": ["Manrope"]
-            }
-          },
-        },
-      }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        body {
-            font-family: 'Manrope', sans-serif;
-            background-color: #F5F0E6;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-beige text-stone-900 pb-32">
-<!-- TopAppBar -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-stone-50 dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800 shadow-sm">
-<button class="text-green-800 dark:text-green-400 active:scale-95 transition-transform">
-<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
-</button>
-<h1 class="text-green-800 dark:text-green-400 font-['Manrope'] font-bold text-lg">¿Cómo pedir?</h1>
-<button class="text-green-800 dark:text-green-400 active:scale-95 transition-transform">
-<span class="material-symbols-outlined" data-icon="chat">chat</span>
-</button>
-</header>
-<main class="mt-20 px-6 max-w-md mx-auto">
-<!-- Hero Section -->
-<div class="mb-8 text-center">
-<div class="inline-block px-4 py-1.5 bg-olive/10 text-olive rounded-full text-xs font-bold mb-4">
-                GUÍA DE COMPRA
-            </div>
-<h2 class="text-3xl font-extrabold text-stone-800 leading-tight">Comprar natural es más simple de lo que crees</h2>
-</div>
-<!-- 4 Pasos Section -->
-<div class="space-y-4 mb-10">
-<!-- Step 1 -->
-<div class="bg-white rounded-xl p-6 shadow-sm flex items-start gap-4 border border-stone-100 transition-transform active:scale-[0.98]">
-<div class="bg-beige h-12 w-12 rounded-full flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-terracotta text-2xl" data-icon="shopping_cart">shopping_cart</span>
-</div>
-<div>
-<h3 class="font-bold text-lg text-stone-800 mb-1">Paso 1: Elige tu producto</h3>
-<p class="text-stone-600 text-sm leading-relaxed">Revisa el catálogo y decide cuántos kilos quieres.</p>
-</div>
-</div>
-<!-- Step 2 -->
-<div class="bg-white rounded-xl p-6 shadow-sm flex items-start gap-4 border border-stone-100 transition-transform active:scale-[0.98]">
-<div class="bg-beige h-12 w-12 rounded-full flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-terracotta text-2xl" data-icon="chat">chat</span>
-</div>
-<div>
-<h3 class="font-bold text-lg text-stone-800 mb-1">Paso 2: Escríbenos por WhatsApp</h3>
-<p class="text-stone-600 text-sm leading-relaxed">Te confirmamos disponibilidad y precio total.</p>
-</div>
-</div>
-<!-- Step 3 -->
-<div class="bg-white rounded-xl p-6 shadow-sm flex items-start gap-4 border border-stone-100 transition-transform active:scale-[0.98]">
-<div class="bg-beige h-12 w-12 rounded-full flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-terracotta text-2xl" data-icon="payments">payments</span>
-</div>
-<div>
-<h3 class="font-bold text-lg text-stone-800 mb-1">Paso 3: Paga fácil</h3>
-<p class="text-stone-600 text-sm leading-relaxed">Transferencia o efectivo al recibir.</p>
-</div>
-</div>
-<!-- Step 4 -->
-<div class="bg-white rounded-xl p-6 shadow-sm flex items-start gap-4 border border-stone-100 transition-transform active:scale-[0.98]">
-<div class="bg-beige h-12 w-12 rounded-full flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-terracotta text-2xl" data-icon="local_shipping">local_shipping</span>
-</div>
-<div>
-<h3 class="font-bold text-lg text-stone-800 mb-1">Paso 4: Recibe en Santa Cruz</h3>
-<p class="text-stone-600 text-sm leading-relaxed">Despacho martes y viernes.</p>
-</div>
-</div>
-</div>
-<!-- Dispatch Information Card -->
-<div class="bg-olive rounded-xl p-6 mb-12 shadow-lg relative overflow-hidden">
-<div class="absolute -right-4 -top-4 opacity-10">
-<span class="material-symbols-outlined text-[100px]" data-icon="schedule">schedule</span>
-</div>
-<div class="flex items-center gap-2 mb-3">
-<span class="material-symbols-outlined text-white/80" data-icon="info">info</span>
-<span class="text-white/80 text-xs font-bold uppercase tracking-wider">Información útil</span>
-</div>
-<div class="space-y-2 text-white">
-<p class="font-bold text-lg">Pedido mínimo 500g</p>
-<div class="h-px bg-white/20 w-full my-2"></div>
-<div class="flex flex-col gap-1 text-white/90 text-sm">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-sm" data-icon="calendar_month">calendar_month</span>
-<span>Despacho Mar y Vie</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-sm" data-icon="alarm">alarm</span>
-<span>Atención Lun-Sáb 9:00-20:00</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Testimonials -->
-<div class="mb-12">
-<h4 class="text-warmbrown font-bold text-sm uppercase tracking-widest mb-6 text-center">Nuestra comunidad</h4>
-<div class="space-y-6">
-<!-- Testimonial 1 -->
-<div class="flex flex-col items-start max-w-[85%]">
-<div class="bg-white rounded-2xl rounded-bl-none p-4 shadow-sm border border-stone-100 relative">
-<p class="text-stone-700 italic text-sm leading-relaxed">"Las almendras son frescas y baratas, ya no compro en el super 🌰"</p>
-<div class="absolute -bottom-6 left-0 flex items-center gap-2">
-<div class="w-5 h-5 bg-terracotta/20 rounded-full flex items-center justify-center">
-<span class="material-symbols-outlined text-[12px] text-terracotta" data-icon="person" data-weight="fill">person</span>
-</div>
-<span class="text-xs font-bold text-stone-500">María</span>
-</div>
-</div>
-</div>
-<!-- Testimonial 2 -->
-<div class="flex flex-col items-end mt-8 ml-auto max-w-[85%]">
-<div class="bg-olive/10 rounded-2xl rounded-br-none p-4 shadow-sm border border-olive/10 relative">
-<p class="text-olive font-medium text-sm leading-relaxed">"Pedí mix para la oficina, todos quedaron felices"</p>
-<div class="absolute -bottom-6 right-0 flex items-center gap-2">
-<span class="text-xs font-bold text-stone-500">Carlos</span>
-<div class="w-5 h-5 bg-olive/20 rounded-full flex items-center justify-center">
-<span class="material-symbols-outlined text-[12px] text-olive" data-icon="person" data-weight="fill">person</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- CTA Button -->
-<div class="mt-8">
-<button class="w-full bg-whatsapp text-white rounded-xl py-4 flex items-center justify-center gap-3 font-bold text-lg shadow-lg active:scale-95 transition-all">
-<span class="material-symbols-outlined" data-icon="chat">chat</span>
-                HACER MI PRIMER PEDIDO
-            </button>
-<p class="text-center text-stone-500 text-xs mt-4">Haz clic para chatear directamente con nosotros</p>
-</div>
-</main>
-<!-- Footer -->
-<footer class="w-full flex flex-col items-center gap-4 text-center px-6 bg-stone-100 dark:bg-stone-950 full-width py-8 mb-20 border-t border-stone-200 dark:border-stone-800">
-<div class="font-bold text-green-800 dark:text-green-500">Estación Snack</div>
-<div class="flex gap-4">
-<a class="text-stone-500 dark:text-stone-400 font-['Manrope'] text-sm hover:underline decoration-orange-500 transition-opacity duration-300" href="#">Envíos</a>
-<a class="text-stone-500 dark:text-stone-400 font-['Manrope'] text-sm hover:underline decoration-orange-500 transition-opacity duration-300" href="#">Privacidad</a>
-<a class="text-stone-500 dark:text-stone-400 font-['Manrope'] text-sm hover:underline decoration-orange-500 transition-opacity duration-300" href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20en%20Estaci%C3%B3n%20Snack%20%F0%9F%8C%B0" target="_blank">WhatsApp</a>
-</div>
-<p class="text-stone-700 dark:text-stone-300 font-['Manrope'] text-sm leading-relaxed">© 2024 Estacion Snack — Honestidad Natural</p>
-</footer>
-<!-- BottomNavBar -->
-<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe pt-2 bg-stone-50/95 dark:bg-stone-900/95 backdrop-blur-md rounded-t-2xl border-t border-stone-200 dark:border-stone-800 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
-<div class="flex flex-col items-center justify-center text-stone-500 dark:text-stone-400 px-3 py-1.5 hover:text-green-700 active:scale-90 transition-all duration-200">
-<span class="material-symbols-outlined" data-icon="home">home</span>
-<span class="font-['Manrope'] font-medium text-[11px]">Inicio</span>
-</div>
-<div class="flex flex-col items-center justify-center text-stone-500 dark:text-stone-400 px-3 py-1.5 hover:text-green-700 active:scale-90 transition-all duration-200">
-<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
-<span class="font-['Manrope'] font-medium text-[11px]">Productos</span>
-</div>
-<div class="flex flex-col items-center justify-center text-stone-500 dark:text-stone-400 px-3 py-1.5 hover:text-green-700 active:scale-90 transition-all duration-200">
-<span class="material-symbols-outlined" data-icon="person">person</span>
-<span class="font-['Manrope'] font-medium text-[11px]">Nosotros</span>
-</div>
-<!-- Active Tab: Pedir -->
-<div class="flex flex-col items-center justify-center bg-green-100 dark:bg-green-900/40 text-green-900 dark:text-green-100 rounded-2xl px-3 py-1.5 active:scale-90 transition-all duration-200">
-<span class="material-symbols-outlined" data-icon="shopping_cart" data-weight="fill">shopping_cart</span>
-<span class="font-['Manrope'] font-medium text-[11px]">Pedir</span>
-</div>
+nav{padding:16px 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;background:rgba(250,247,242,.92);backdrop-filter:blur(12px)}
+@media(min-width:768px){nav{padding:18px 48px}}
+.nav-left{display:flex;align-items:center;gap:16px}
+.nav-back{color:var(--subtle);display:flex}
+.nav-back svg{width:20px;height:20px}
+.nav-brand{font-family:'DM Serif Display',Georgia,serif;font-size:20px}
+.nav-links{display:none;gap:32px}
+@media(min-width:768px){.nav-links{display:flex}}
+.nav-links a{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);transition:color .15s}
+.nav-links a:hover,.nav-links a.cur{color:var(--text)}
+
+.wrap{max-width:720px;margin:0 auto;padding:0 24px}
+@media(min-width:768px){.wrap{padding:0 48px}}
+
+.page-hdr{padding:48px 0 24px;border-bottom:1px solid var(--line);margin-bottom:40px}
+@media(min-width:768px){.page-hdr{padding:80px 0 32px;margin-bottom:56px}}
+.page-hdr h1{font-size:clamp(36px,6vw,52px);line-height:1.05;margin-bottom:12px}
+.page-hdr p{color:var(--subtle);font-size:16px;line-height:1.6}
+
+.steps{display:flex;flex-direction:column;gap:40px;margin-bottom:56px}
+@media(min-width:768px){.steps{gap:56px;margin-bottom:80px}}
+.step{display:flex;gap:20px;align-items:flex-start}
+.step-num{width:40px;height:40px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',Georgia,serif;font-size:20px;background:var(--surface);border:1px solid var(--line)}
+.step-body h3{font-size:18px;margin-bottom:6px;line-height:1.2}
+@media(min-width:768px){.step-body h3{font-size:20px}}
+.step-body p{font-size:14px;color:var(--subtle);line-height:1.6}
+
+.info-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);margin-bottom:56px}
+@media(min-width:640px){.info-grid{grid-template-columns:1fr 1fr}}
+.info-card{background:var(--bg);padding:28px 24px}
+@media(min-width:768px){.info-card{padding:36px 32px}}
+.info-card h3{font-size:16px;margin-bottom:8px}
+.info-card p{font-size:14px;color:var(--subtle);line-height:1.6}
+
+.cta-box{text-align:center;padding:48px 0 64px;border-top:1px solid var(--line)}
+@media(min-width:768px){.cta-box{padding:80px 0 96px}}
+.cta-box h2{font-size:clamp(28px,5vw,40px);margin-bottom:12px}
+.cta-box p{color:var(--subtle);font-size:15px;margin-bottom:24px;line-height:1.6}
+.wa-btn{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;background:var(--wa);color:#fff;font-size:14px;font-weight:700;transition:opacity .15s}
+.wa-btn:hover{opacity:.9}
+.wa-btn svg{width:20px;height:20px}
+
+footer{border-top:1px solid var(--line);padding:32px 0 calc(80px + env(safe-area-inset-bottom))}
+@media(min-width:768px){footer{padding:40px 0}}
+.foot-inner{max-width:720px;margin:0 auto;padding:0 24px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+@media(min-width:768px){.foot-inner{flex-direction:row;justify-content:space-between;text-align:left;padding:0 48px}}
+footer strong{font-size:14px;font-weight:600}
+footer p{font-size:12px;color:var(--subtle)}
+.foot-links{display:flex;gap:24px}
+.foot-links a{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--subtle);transition:color .15s}
+.foot-links a:hover{color:var(--text)}
+
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:50;display:flex;justify-content:space-around;padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:rgba(250,247,242,.95);backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+@media(min-width:768px){.bnav{display:none}}
+.ni{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:600;color:var(--subtle);padding:4px 12px}
+.ni.cur{color:var(--accent)}
+.ni svg{width:18px;height:18px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></a>
+    <a href="index.html" class="nav-brand">Estación Snack</a>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="catalogo.html">Catálogo</a>
+    <a href="como-pedir.html" class="cur">Cómo pedir</a>
+  </div>
 </nav>
-</body></html>
+
+<div class="wrap">
+  <div class="page-hdr">
+    <h1>Cómo pedir</h1>
+    <p>Pedir en Estación Snack es simple. Elige tus productos, arma tu pedido y envíalo por WhatsApp. Nosotros nos encargamos del resto.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Elige tus productos</h3>
+        <p>Entra al catálogo y selecciona los kilos que quieras de cada producto. Puedes agregar y quitar con los botones +/− de cada producto.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Revisa tu pedido</h3>
+        <p>Toca "Ver pedido" para revisar todo lo que agregaste. Verás el detalle de kilos, precios y el total. Completa tu nombre y dirección.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Envía por WhatsApp</h3>
+        <p>Toca "Enviar por WhatsApp" y se abrirá un mensaje prellenado con todo tu pedido. Solo tienes que enviarlo y nosotros te confirmamos.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Recibe en tu puerta</h3>
+        <p>Coordinamos el despacho para martes o viernes. Pagas por transferencia o en efectivo al momento de recibir.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <h3>📍 Zona de despacho</h3>
+      <p>Santa Cruz y alrededores. Despacho los días martes y viernes.</p>
+    </div>
+    <div class="info-card">
+      <h3>💰 Formas de pago</h3>
+      <p>Transferencia bancaria o efectivo al momento de la entrega.</p>
+    </div>
+    <div class="info-card">
+      <h3>📦 Formato de venta</h3>
+      <p>Todos los productos se venden por kilo. Mínimo 1 kg por producto.</p>
+    </div>
+    <div class="info-card">
+      <h3>⏰ Tiempo de respuesta</h3>
+      <p>Te respondemos el WhatsApp en menos de 1 hora durante horario hábil.</p>
+    </div>
+  </div>
+</div>
+
+<section class="cta-box">
+  <div class="wrap">
+    <h2>¿Listo para armar tu pedido?</h2>
+    <p>Elige tus productos favoritos y envíanos tu pedido por WhatsApp.</p>
+    <a class="wa-btn" href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20en%20Estaci%C3%B3n%20Snack%20%F0%9F%8C%B0" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479c0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Escribir por WhatsApp
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div><strong>Estación Snack</strong><p>Frutos secos por kilo · Santa Cruz, Chile · 2025</p></div>
+    <div class="foot-links"><a href="catalogo.html">Catálogo</a><a href="como-pedir.html">Cómo pedir</a><a href="https://wa.me/56953743338" target="_blank">WhatsApp</a></div>
+  </div>
+</footer>
+
+<nav class="bnav">
+  <a href="index.html" class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Inicio</a>
+  <a href="catalogo.html" class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Catálogo</a>
+  <a href="como-pedir.html" class="ni cur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Info</a>
+  <a href="https://wa.me/56953743338" target="_blank" class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>Pedir</a>
+</nav>
+
+</body>
+</html>

@@ -5,190 +5,165 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Estación Snack — Frutos Secos y Dulces por Kilo · Santa Cruz</title>
 <meta name="description" content="Frutos secos, confites y dulces frescos por kilo. Despacho en Santa Cruz. Pide por WhatsApp.">
-<meta name="theme-color" content="#1A1A2E">
+<meta name="theme-color" content="#FAF7F2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --primary:#E85D3A;--dark:#1A1A2E;--accent:#FFD23F;--accent-soft:#FFF8E1;
-  --green:#3D8B37;--green-light:#E8F5E8;--wa:#25D366;
-  --bg:#FAFAF8;--surface:#FFF;
-  --n100:#F5F5F0;--n200:#E8E8E0;--n400:#A8A89C;--n500:#8A8A7E;--n600:#6B6B60;--n800:#2D2D28;--n900:#1A1A16;
-  --shadow-sm:0 1px 3px rgba(0,0,0,.06);--shadow-md:0 4px 12px rgba(0,0,0,.07);
-  --r:12px;--r-lg:16px;--r-xl:24px;--r-full:9999px;
-  --ease:cubic-bezier(.32,.72,0,1);--spring:cubic-bezier(.34,1.56,.64,1)
+  --bg:#FAF7F2;--text:#2C2416;--accent:#C8553D;--accent-hover:#B04530;
+  --subtle:#A69580;--surface:#EEE8DF;--line:#DDD5CA;
+  --green:#5C7A3E;--wa:#25D366
 }
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--n900);-webkit-font-smoothing:antialiased}
-h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:15px;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.serif{font-family:'DM Serif Display',Georgia,serif;font-weight:400;letter-spacing:-.02em}
 a{text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent}
 img{display:block;max-width:100%}
-.container{max-width:1200px;margin:0 auto;padding:0 16px}
-@media(min-width:768px){.container{padding:0 32px}}
-@media(min-width:1024px){.container{padding:0 48px}}
 
-/* HEADER */
-.hdr{position:sticky;top:0;z-index:100;background:var(--dark);color:#fff}
-.hdr-inner{max-width:1200px;margin:0 auto;padding:0 16px;height:60px;display:flex;align-items:center;justify-content:space-between}
-@media(min-width:768px){.hdr-inner{padding:0 32px;height:64px}}
-.logo{font-family:'Space Grotesk';font-size:18px;font-weight:700;letter-spacing:-.5px;display:flex;align-items:center;gap:8px}
-@media(min-width:768px){.logo{font-size:20px}}
-.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--primary)}
-.hdr-nav{display:none}
-@media(min-width:768px){
-  .hdr-nav{display:flex;align-items:center;gap:28px}
-  .hdr-nav a{font-size:14px;font-weight:600;color:rgba(255,255,255,.6);transition:color .15s}
-  .hdr-nav a:hover,.hdr-nav a.cur{color:#fff}
-}
-.hdr-right{display:flex;gap:8px}
-.hdr-cta{padding:8px 18px;border-radius:var(--r-full);background:var(--primary);color:#fff;font-size:13px;font-weight:700;transition:transform .15s var(--spring)}
-.hdr-cta:hover{transform:scale(1.03)}
-.hdr-wa{display:none;align-items:center;gap:8px;padding:8px 18px;border-radius:var(--r-full);background:var(--wa);color:#fff;font-size:13px;font-weight:700;transition:transform .15s var(--spring)}
-.hdr-wa:hover{transform:scale(1.03)}
-.hdr-wa svg{width:16px;height:16px}
-@media(min-width:768px){.hdr-wa{display:flex}}
+/* NAV */
+nav{padding:16px 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;background:rgba(250,247,242,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+@media(min-width:768px){nav{padding:18px 48px}}
+.nav-brand{font-family:'DM Serif Display',Georgia,serif;font-size:20px;color:var(--text)}
+.nav-links{display:none;gap:32px}
+@media(min-width:768px){.nav-links{display:flex}}
+.nav-links a{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);transition:color .15s}
+.nav-links a:hover,.nav-links a.cur{color:var(--text)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-cta{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;color:var(--text);padding:8px 20px;border:1px solid var(--text);transition:all .15s}
+.nav-cta:hover{background:var(--text);color:var(--bg)}
+.nav-wa{display:none;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);transition:color .15s}
+.nav-wa:hover{color:var(--text)}
+@media(min-width:768px){.nav-wa{display:block}}
+
+/* CONTAINER */
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+@media(min-width:768px){.wrap{padding:0 48px}}
 
 /* HERO */
-.hero{padding:32px 0}
-@media(min-width:768px){.hero{padding:56px 0 48px}}
-.hero-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:center}
-@media(min-width:768px){.hero-grid{grid-template-columns:1fr 1fr;gap:40px}}
-.hero-label{display:inline-flex;padding:6px 14px;border-radius:var(--r-full);background:var(--accent-soft);font-size:12px;font-weight:700;color:var(--n800);margin-bottom:14px}
-.hero h1{font-size:clamp(30px,6vw,52px);font-weight:700;letter-spacing:-1.5px;line-height:1.05;margin-bottom:14px}
-.hero h1 em{font-style:normal;color:var(--primary)}
-.hero p{font-size:clamp(14px,2vw,17px);color:var(--n500);line-height:1.6;margin-bottom:24px;max-width:480px}
-.hero-ctas{display:flex;gap:10px;flex-wrap:wrap}
-.btn-dark{padding:14px 28px;border-radius:var(--r);background:var(--dark);color:#fff;font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:transform .15s var(--spring)}
-.btn-dark:hover{transform:translateY(-2px)}
-.btn-dark svg{width:18px;height:18px}
-.btn-light{padding:14px 24px;border-radius:var(--r);background:var(--n100);color:var(--n800);font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:transform .15s var(--spring)}
-.btn-light:hover{transform:translateY(-2px)}
+.hero{padding:48px 0 0}
+@media(min-width:768px){.hero{padding:80px 0 0}}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:32px}
+@media(min-width:768px){.hero-grid{grid-template-columns:1fr 1fr;gap:48px;align-items:center}}
+.hero-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--subtle);margin-bottom:16px;display:block}
+.hero h1{font-size:clamp(36px,7vw,64px);line-height:1.02;margin-bottom:16px}
+.hero p{color:var(--subtle);font-size:16px;line-height:1.6;max-width:420px;margin-bottom:28px}
+@media(min-width:768px){.hero p{font-size:17px}}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn-fill{padding:14px 32px;background:var(--text);color:var(--bg);font-size:13px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;transition:background .15s;display:inline-flex;align-items:center;gap:8px}
+.btn-fill:hover{background:#1a1608}
+.btn-outline{padding:14px 28px;border:1px solid var(--line);color:var(--text);font-size:13px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;transition:all .15s}
+.btn-outline:hover{border-color:var(--text)}
 
-/* Hero images */
-.hero-imgs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-@media(min-width:768px){.hero-imgs{gap:14px}}
-.hero-img{border-radius:var(--r-lg);overflow:hidden;aspect-ratio:1/1;background:var(--n100);box-shadow:var(--shadow-md)}
-.hero-img img{width:100%;height:100%;object-fit:contain;padding:8px;transition:transform .4s var(--ease)}
-.hero-img:hover img{transform:scale(1.06)}
+.hero-imgs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(min-width:768px){.hero-imgs{gap:12px}}
+.hero-img{aspect-ratio:4/5;background:var(--surface);overflow:hidden}
+.hero-img img{width:100%;height:100%;object-fit:contain;padding:12px;transition:transform .6s cubic-bezier(.32,.72,0,1)}
+.hero-img:hover img{transform:scale(1.04)}
+
+/* DIVIDER */
+.divider{border:none;border-top:1px solid var(--line);margin:48px 0}
+@media(min-width:768px){.divider{margin:80px 0}}
 
 /* MARQUEE */
-.mq{overflow:hidden;background:var(--dark);padding:10px 0}
-.mq-track{display:flex;width:max-content;animation:scroll 24s linear infinite}
+.marquee{overflow:hidden;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.marquee-track{display:flex;width:max-content;animation:scroll 30s linear infinite}
 @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.mq-item{white-space:nowrap;padding:0 18px;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.6)}
-
-/* PROPS */
-.props{padding:28px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-@media(min-width:768px){.props{gap:16px;padding:40px 0}}
-.prop{background:var(--surface);border-radius:var(--r);padding:16px 12px;text-align:center;box-shadow:var(--shadow-sm);transition:transform .2s var(--spring)}
-.prop:hover{transform:translateY(-3px)}
-.prop-ico{font-size:28px;margin-bottom:8px}
-@media(min-width:768px){.prop-ico{font-size:32px}}
-.prop-txt{font-size:12px;font-weight:700;color:var(--n800);line-height:1.3}
-@media(min-width:768px){.prop-txt{font-size:14px}}
+.marquee-item{white-space:nowrap;padding:0 24px;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--subtle)}
 
 /* SECTION */
-.sec{padding:8px 0 24px}
-@media(min-width:768px){.sec{padding:16px 0 40px}}
-.sec-hdr{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px}
-.sec-hdr h2{font-size:clamp(22px,4vw,32px);font-weight:700;letter-spacing:-.5px}
-.sec-hdr a{font-size:14px;font-weight:700;color:var(--primary)}
+.section{padding:48px 0}
+@media(min-width:768px){.section{padding:80px 0}}
+.section-hdr{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:32px}
+@media(min-width:768px){.section-hdr{margin-bottom:48px}}
+.section-hdr h2{font-size:clamp(28px,4vw,40px);line-height:1.1}
+.section-hdr a{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);font-weight:600;transition:color .15s}
+.section-hdr a:hover{color:var(--text)}
 
-/* Product grid */
-.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-@media(min-width:640px){.pgrid{grid-template-columns:repeat(3,1fr);gap:14px}}
-@media(min-width:1024px){.pgrid{grid-template-columns:repeat(4,1fr);gap:16px}}
-.pcard{background:var(--surface);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm);display:block;transition:all .2s var(--spring)}
-.pcard:hover{box-shadow:var(--shadow-md);transform:translateY(-4px)}
-.pcard-img{aspect-ratio:1/1;background:var(--n100);overflow:hidden}
-.pcard-img img{width:100%;height:100%;object-fit:contain;padding:8px;transition:transform .4s var(--ease)}
-.pcard:hover .pcard-img img{transform:scale(1.06)}
-.pcard-body{padding:12px 14px 16px}
-@media(min-width:768px){.pcard-body{padding:14px 16px 18px}}
-.pcard-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--primary);margin-bottom:4px}
-.pcard-name{font-family:'Space Grotesk';font-size:15px;font-weight:700;line-height:1.2;margin-bottom:6px}
-@media(min-width:768px){.pcard-name{font-size:17px}}
-.pcard-price{font-family:'Space Grotesk';font-size:18px;font-weight:700;color:var(--green)}
-@media(min-width:768px){.pcard-price{font-size:20px}}
-.pcard-price small{font-size:12px;font-weight:500;color:var(--n400)}
+/* PROPS */
+.props{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line)}
+.prop{background:var(--bg);padding:24px 16px;text-align:center}
+@media(min-width:768px){.prop{padding:40px 24px}}
+.prop-ico{font-size:28px;margin-bottom:10px}
+@media(min-width:768px){.prop-ico{font-size:32px}}
+.prop-title{font-size:13px;font-weight:600;margin-bottom:2px}
+.prop-desc{font-size:12px;color:var(--subtle);line-height:1.4}
 
-/* PROMO */
-.promo{padding:24px;border-radius:var(--r-xl);background:var(--accent);position:relative;overflow:hidden;margin-bottom:32px}
-@media(min-width:768px){.promo{padding:40px;margin-bottom:48px;display:flex;align-items:center;justify-content:space-between;gap:24px}}
-.promo::after{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.15)}
-.promo-tag{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:rgba(0,0,0,.4);margin-bottom:8px}
-.promo h3{font-size:clamp(18px,3vw,26px);font-weight:700;color:var(--n900);letter-spacing:-.3px;margin-bottom:6px}
-.promo p{font-size:14px;color:rgba(0,0,0,.5);margin-bottom:16px;max-width:400px}
-@media(min-width:768px){.promo p{margin-bottom:0}}
-.promo-btn{display:inline-flex;padding:12px 24px;border-radius:var(--r);background:var(--dark);color:#fff;font-size:14px;font-weight:700;flex-shrink:0;transition:transform .15s var(--spring)}
-.promo-btn:hover{transform:scale(1.03)}
+/* PRODUCT GRID */
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px 16px}
+@media(min-width:640px){.pgrid{grid-template-columns:repeat(3,1fr);gap:48px 24px}}
 
-/* CTA */
-.cta{background:var(--dark);padding:48px 0;text-align:center}
-@media(min-width:768px){.cta{padding:64px 0}}
-.cta h2{font-size:clamp(24px,5vw,40px);font-weight:700;color:#fff;letter-spacing:-.5px;margin-bottom:10px}
-.cta p{font-size:15px;color:rgba(255,255,255,.5);margin-bottom:24px;line-height:1.5}
-.wa-btn{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:var(--r-full);background:var(--wa);color:#fff;font-size:16px;font-weight:800;box-shadow:0 4px 20px rgba(37,211,102,.3);transition:transform .15s var(--spring)}
-.wa-btn:hover{transform:scale(1.04)}
-.wa-btn svg{width:22px;height:22px}
+/* PRODUCT CARD */
+.pcard{display:block;transition:opacity .15s}
+.pcard:hover{opacity:.85}
+.pcard-img{aspect-ratio:4/5;background:var(--surface);overflow:hidden;margin-bottom:12px}
+.pcard-img img{width:100%;height:100%;object-fit:contain;padding:12px;transition:transform .6s cubic-bezier(.32,.72,0,1)}
+.pcard:hover .pcard-img img{transform:scale(1.04)}
+.pcard-cat{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--subtle);margin-bottom:4px}
+.pcard-name{font-family:'DM Serif Display',Georgia,serif;font-size:18px;line-height:1.2;margin-bottom:4px}
+@media(min-width:768px){.pcard-name{font-size:20px}}
+.pcard-price{font-size:14px;color:var(--subtle)}
+.pcard-price b{color:var(--text);font-weight:600}
+
+/* CTA SECTION */
+.cta-section{padding:64px 0;text-align:center;border-top:1px solid var(--line)}
+@media(min-width:768px){.cta-section{padding:96px 0}}
+.cta-section h2{font-size:clamp(28px,5vw,44px);line-height:1.05;margin-bottom:12px}
+.cta-section p{color:var(--subtle);font-size:15px;margin-bottom:28px;max-width:400px;margin-left:auto;margin-right:auto;line-height:1.6}
+.wa-btn{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;background:var(--wa);color:#fff;font-size:14px;font-weight:700;letter-spacing:.02em;transition:opacity .15s}
+.wa-btn:hover{opacity:.9}
+.wa-btn svg{width:20px;height:20px}
 
 /* FOOTER */
-footer{background:var(--dark);padding:32px 0 calc(80px + env(safe-area-inset-bottom));border-top:1px solid rgba(255,255,255,.06);text-align:center}
-@media(min-width:768px){footer{padding:40px 0 40px;text-align:left}}
-.foot-inner{display:flex;flex-direction:column;align-items:center;gap:8px}
-@media(min-width:768px){.foot-inner{flex-direction:row;justify-content:space-between}}
-footer strong{color:rgba(255,255,255,.8);font-size:14px;font-weight:700}
-footer p{color:rgba(255,255,255,.3);font-size:12px}
-.foot-links{display:flex;gap:20px}
-.foot-links a{color:rgba(255,255,255,.4);font-size:13px;font-weight:600;transition:color .15s}
-.foot-links a:hover{color:#fff}
+footer{border-top:1px solid var(--line);padding:32px 0 calc(80px + env(safe-area-inset-bottom))}
+@media(min-width:768px){footer{padding:40px 0}}
+.foot-inner{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+@media(min-width:768px){.foot-inner{flex-direction:row;justify-content:space-between;text-align:left}}
+footer strong{font-size:14px;font-weight:600}
+footer p{font-size:12px;color:var(--subtle)}
+.foot-links{display:flex;gap:24px}
+.foot-links a{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--subtle);transition:color .15s}
+.foot-links a:hover{color:var(--text)}
 
-/* BOTTOM NAV (mobile only) */
-.bnav{position:fixed;bottom:0;left:0;right:0;z-index:50;display:flex;justify-content:space-around;padding:6px 8px calc(8px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-top:1px solid var(--n200)}
+/* BOTTOM NAV — mobile */
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:50;display:flex;justify-content:space-around;padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:rgba(250,247,242,.95);backdrop-filter:blur(12px);border-top:1px solid var(--line)}
 @media(min-width:768px){.bnav{display:none}}
-.ni{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--n400);font-size:10px;font-weight:600;padding:5px 14px;border-radius:8px}
-.ni.cur{color:var(--primary)}
-.ni svg{width:20px;height:20px}
+.ni{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:600;color:var(--subtle);padding:4px 12px;letter-spacing:.02em}
+.ni.cur{color:var(--accent)}
+.ni svg{width:18px;height:18px}
 
 /* FAB */
-.fab{position:fixed;bottom:76px;right:16px;z-index:60;display:flex;align-items:center;gap:8px;padding:14px 18px;border-radius:var(--r-full);background:var(--wa);color:#fff;font-size:13px;font-weight:800;box-shadow:0 6px 24px rgba(37,211,102,.35);transition:transform .15s var(--spring)}
-.fab:hover,.fab:active{transform:scale(1.05)}
+.fab{position:fixed;z-index:60;bottom:72px;right:16px;display:flex;align-items:center;gap:8px;padding:14px 20px;background:var(--wa);color:#fff;font-size:13px;font-weight:700;box-shadow:0 4px 16px rgba(37,211,102,.25);transition:transform .15s cubic-bezier(.34,1.56,.64,1)}
+.fab:hover,.fab:active{transform:scale(1.04)}
 .fab svg{width:18px;height:18px}
-@media(min-width:768px){.fab{bottom:32px;right:32px}}
+@media(min-width:768px){.fab{bottom:32px;right:48px}}
 </style>
 </head>
 <body>
 
-<header class="hdr">
-  <div class="hdr-inner">
-    <div class="logo"><div class="logo-dot"></div>Estación Snack</div>
-    <nav class="hdr-nav">
-      <a href="index.html" class="cur">Inicio</a>
-      <a href="catalogo.html">Catálogo</a>
-      <a href="como-pedir.html">Cómo pedir</a>
-    </nav>
-    <div class="hdr-right">
-      <a class="hdr-wa" href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20%F0%9F%8C%B0" target="_blank">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479c0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        WhatsApp
-      </a>
-      <a href="catalogo.html" class="hdr-cta">Ver catálogo →</a>
-    </div>
+<nav>
+  <a href="index.html" class="nav-brand">Estación Snack</a>
+  <div class="nav-links">
+    <a href="index.html" class="cur">Inicio</a>
+    <a href="catalogo.html">Catálogo</a>
+    <a href="como-pedir.html">Cómo pedir</a>
   </div>
-</header>
+  <div class="nav-right">
+    <a href="https://wa.me/56953743338" target="_blank" class="nav-wa">WhatsApp</a>
+    <a href="catalogo.html" class="nav-cta">Ver catálogo</a>
+  </div>
+</nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
+<div class="wrap">
+  <section class="hero">
     <div class="hero-grid">
       <div>
-        <div class="hero-label">📍 Santa Cruz, Chile</div>
-        <h1>Tus snacks favoritos, <em>por kilo</em></h1>
-        <p>Frutos secos, confites y dulces frescos. Sin envases de más, con despacho directo a tu puerta.</p>
+        <span class="hero-label">Santa Cruz, Chile</span>
+        <h1>Frutos secos y dulces por kilo</h1>
+        <p>Sin envases de más, sin sobreprecio. El mismo producto que compran los locales, directo a tu puerta.</p>
         <div class="hero-ctas">
-          <a href="catalogo.html" class="btn-dark">Ver catálogo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-          <a href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20%F0%9F%8C%B0" target="_blank" class="btn-light">WhatsApp</a>
+          <a href="catalogo.html" class="btn-fill">Ver catálogo →</a>
+          <a href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20%F0%9F%8C%B0" target="_blank" class="btn-outline">WhatsApp</a>
         </div>
       </div>
       <div class="hero-imgs">
@@ -198,68 +173,81 @@ footer p{color:rgba(255,255,255,.3);font-size:12px}
         <div class="hero-img"><img src="https://www.elpalomo.cl/3340-large_default/saco-almendra-enteras-x-10-kilos.jpg" alt="Almendras"></div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
-<!-- MARQUEE -->
-<div class="mq"><div class="mq-track">
-  <span class="mq-item">Despacho martes y viernes ·</span><span class="mq-item">Pago transferencia o efectivo ·</span><span class="mq-item">Por kilo, sin envases de más ·</span><span class="mq-item">WhatsApp: 953 743 338 ·</span>
-  <span class="mq-item">Despacho martes y viernes ·</span><span class="mq-item">Pago transferencia o efectivo ·</span><span class="mq-item">Por kilo, sin envases de más ·</span><span class="mq-item">WhatsApp: 953 743 338 ·</span>
-</div></div>
+<hr class="divider">
 
-<!-- PROPS -->
-<div class="container">
-  <div class="props">
-    <div class="prop"><div class="prop-ico">⚖️</div><div class="prop-txt">Precio real por kilo</div></div>
-    <div class="prop"><div class="prop-ico">🚗</div><div class="prop-txt">Despacho en Santa Cruz</div></div>
-    <div class="prop"><div class="prop-ico">⚡</div><div class="prop-txt">Respuesta en 1 hora</div></div>
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item">Despacho martes y viernes</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Pago transferencia o efectivo</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Por kilo, sin envases</span><span class="marquee-item">·</span>
+    <span class="marquee-item">WhatsApp 953 743 338</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Despacho martes y viernes</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Pago transferencia o efectivo</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Por kilo, sin envases</span><span class="marquee-item">·</span>
+    <span class="marquee-item">WhatsApp 953 743 338</span><span class="marquee-item">·</span>
   </div>
 </div>
 
-<!-- PRODUCTS -->
-<div class="container">
-  <section class="sec">
-    <div class="sec-hdr"><h2>Nuestros productos</h2><a href="catalogo.html">Ver todos →</a></div>
+<div class="wrap">
+  <div class="section">
+    <div class="props">
+      <div class="prop"><div class="prop-ico">⚖️</div><div class="prop-title">Precio por kilo</div><div class="prop-desc">Sin envase, sin sobreprecio</div></div>
+      <div class="prop"><div class="prop-ico">🚗</div><div class="prop-title">Despacho local</div><div class="prop-desc">Martes y viernes en Santa Cruz</div></div>
+      <div class="prop"><div class="prop-ico">💬</div><div class="prop-title">Pedido fácil</div><div class="prop-desc">Arma tu pedido y lo envías por WhatsApp</div></div>
+    </div>
+  </div>
+
+  <section class="section" style="padding-top:0">
+    <div class="section-hdr">
+      <h2>Nuestros productos</h2>
+      <a href="catalogo.html">Ver catálogo →</a>
+    </div>
     <div class="pgrid">
       <a href="catalogo.html" class="pcard">
         <div class="pcard-img"><img src="https://www.elpalomo.cl/3484-large_default/mix-europeo-x-kilo.jpg" alt="Mix Europeo" loading="lazy"></div>
-        <div class="pcard-body"><div class="pcard-tag">Frutos secos</div><div class="pcard-name">Mix Europeo</div><div class="pcard-price">$13.000 <small>/kg</small></div></div>
+        <div class="pcard-cat">Frutos secos</div>
+        <div class="pcard-name">Mix Europeo</div>
+        <div class="pcard-price"><b>$13.000</b> / kg</div>
       </a>
       <a href="catalogo.html" class="pcard">
         <div class="pcard-img"><img src="https://www.elpalomo.cl/2744-large_default/mani-confitado-tropical-x-kilo.jpg" alt="Maní Confitado Tropical" loading="lazy"></div>
-        <div class="pcard-body"><div class="pcard-tag">Dulces</div><div class="pcard-name">Maní Confitado Tropical</div><div class="pcard-price">$5.990 <small>/kg</small></div></div>
+        <div class="pcard-cat">Dulces</div>
+        <div class="pcard-name">Maní Confitado Tropical</div>
+        <div class="pcard-price"><b>$5.990</b> / kg</div>
       </a>
       <a href="catalogo.html" class="pcard">
         <div class="pcard-img"><img src="https://www.elpalomo.cl/2748-large_default/mani-confitado-natural-rojo-x-kilo.jpg" alt="Maní Confitado Rojo" loading="lazy"></div>
-        <div class="pcard-body"><div class="pcard-tag">Dulces</div><div class="pcard-name">Maní Confitado Rojo</div><div class="pcard-price">$5.990 <small>/kg</small></div></div>
-      </a>
-      <a href="catalogo.html" class="pcard">
-        <div class="pcard-img"><img src="https://www.elpalomo.cl/3183-large_default/gomita-osito-docile-x-kg.jpg" alt="Gomita Osito Docile" loading="lazy"></div>
-        <div class="pcard-body"><div class="pcard-tag">Dulces</div><div class="pcard-name">Gomita Osito Docile</div><div class="pcard-price">$8.500 <small>/kg</small></div></div>
+        <div class="pcard-cat">Dulces</div>
+        <div class="pcard-name">Maní Confitado Rojo</div>
+        <div class="pcard-price"><b>$5.990</b> / kg</div>
       </a>
       <a href="catalogo.html" class="pcard">
         <div class="pcard-img"><img src="https://www.elpalomo.cl/2873-large_default/chuby-bardu-x-kilo-.jpg" alt="Chuby Bardú" loading="lazy"></div>
-        <div class="pcard-body"><div class="pcard-tag">Dulces</div><div class="pcard-name">Chuby Bardú</div><div class="pcard-price">$9.990 <small>/kg</small></div></div>
+        <div class="pcard-cat">Dulces</div>
+        <div class="pcard-name">Chuby Bardú</div>
+        <div class="pcard-price"><b>$9.990</b> / kg</div>
+      </a>
+      <a href="catalogo.html" class="pcard">
+        <div class="pcard-img"><img src="https://www.elpalomo.cl/3183-large_default/gomita-osito-docile-x-kg.jpg" alt="Gomita Osito Docile" loading="lazy"></div>
+        <div class="pcard-cat">Dulces</div>
+        <div class="pcard-name">Gomita Osito Docile</div>
+        <div class="pcard-price"><b>$8.500</b> / kg</div>
       </a>
       <a href="catalogo.html" class="pcard">
         <div class="pcard-img"><img src="https://www.elpalomo.cl/3340-large_default/saco-almendra-enteras-x-10-kilos.jpg" alt="Almendra Entera" loading="lazy"></div>
-        <div class="pcard-body"><div class="pcard-tag">Frutos secos</div><div class="pcard-name">Almendra Entera</div><div class="pcard-price">$16.000 <small>/kg</small></div></div>
+        <div class="pcard-cat">Frutos secos</div>
+        <div class="pcard-name">Almendra Entera</div>
+        <div class="pcard-price"><b>$16.000</b> / kg</div>
       </a>
     </div>
   </section>
 </div>
 
-<!-- PROMO -->
-<div class="container">
-  <div class="promo">
-    <div><div class="promo-tag">Dato del día</div><h3>Compra por kilo y ahorra</h3><p>Sin envase, sin sobreprecio. El mismo producto que compran los locales de Santa Cruz.</p></div>
-    <a href="catalogo.html" class="promo-btn">Armar mi pedido →</a>
-  </div>
-</div>
-
-<!-- CTA -->
-<section class="cta">
-  <div class="container">
+<section class="cta-section">
+  <div class="wrap">
     <h2>¿Listo para pedir?</h2>
     <p>Arma tu pedido en el catálogo o escríbenos directo por WhatsApp.</p>
     <a class="wa-btn" href="https://wa.me/56953743338?text=Hola!%20Vi%20la%20p%C3%A1gina%20de%20Estaci%C3%B3n%20Snack%20y%20quiero%20hacer%20un%20pedido%20%F0%9F%8C%B0" target="_blank">
@@ -269,23 +257,29 @@ footer p{color:rgba(255,255,255,.3);font-size:12px}
   </div>
 </section>
 
-<footer><div class="container"><div class="foot-inner">
-  <div><strong>Estación Snack</strong><p>&copy; 2025 — Frutos secos por kilo · Santa Cruz, Chile</p></div>
-  <div class="foot-links"><a href="catalogo.html">Catálogo</a><a href="como-pedir.html">Cómo pedir</a><a href="https://wa.me/56953743338" target="_blank">WhatsApp</a></div>
-</div></div></footer>
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <div><strong>Estación Snack</strong><p>Frutos secos por kilo · Santa Cruz, Chile · 2025</p></div>
+      <div class="foot-links">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="como-pedir.html">Cómo pedir</a>
+        <a href="https://wa.me/56953743338" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</footer>
 
-<!-- FAB -->
 <a class="fab" href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20%F0%9F%8C%B0" target="_blank">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479c0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   Pedir
 </a>
 
-<!-- BOTTOM NAV mobile -->
 <nav class="bnav">
-  <a href="index.html" class="ni cur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Inicio</a>
-  <a href="catalogo.html" class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Catálogo</a>
-  <a href="como-pedir.html" class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Cómo pedir</a>
-  <a href="https://wa.me/56953743338" target="_blank" class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>Pedir</a>
+  <a href="index.html" class="ni cur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Inicio</a>
+  <a href="catalogo.html" class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Catálogo</a>
+  <a href="como-pedir.html" class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Info</a>
+  <a href="https://wa.me/56953743338" target="_blank" class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>Pedir</a>
 </nav>
 
 </body>

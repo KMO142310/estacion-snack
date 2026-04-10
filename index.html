@@ -54,10 +54,10 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 .cart-badge.show{transform:scale(1)}
 
 /* HERO */
-.hero{text-align:center;padding:40px 20px 32px}
+.hero{text-align:center;padding:32px 16px 24px}
 @media(min-width:768px){.hero{padding:64px 40px 48px}}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:var(--orange-soft);color:var(--orange);font-size:13px;font-weight:700;border-radius:var(--r-full);margin-bottom:20px}
-.hero h1{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(36px,8vw,68px);line-height:.95;letter-spacing:-.03em;margin-bottom:16px;font-weight:400}
+.hero h1{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(32px,7vw,68px);line-height:.95;letter-spacing:-.03em;margin-bottom:14px;font-weight:400}
 .hero h1 em{font-style:italic;color:var(--orange)}
 .hero p{font-size:clamp(15px,2.5vw,18px);color:var(--sub);max-width:480px;margin:0 auto 28px;line-height:1.6}
 .hero-ctas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
@@ -98,8 +98,9 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 .combo-price{font-size:22px;font-weight:900}
 .combo-old{font-size:14px;color:var(--sub);text-decoration:line-through}
 .combo-save{font-size:11px;font-weight:800;color:var(--green);background:var(--green-soft);padding:3px 10px;border-radius:var(--r-full)}
-.combo-btn{width:100%;padding:12px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid var(--text);background:transparent;color:var(--text);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.combo-btn{width:100%;padding:14px;font-size:14px;font-weight:700;border-radius:12px;border:2px solid var(--text);background:transparent;color:var(--text);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px}
 .combo-btn:hover{background:var(--text);color:#fff}
+.combo-btn:active{transform:scale(.96)}
 .combo:nth-child(1){background:var(--orange-soft)}
 .combo:nth-child(2){background:var(--purple-soft)}
 .combo:nth-child(3){background:var(--green-soft)}
@@ -180,8 +181,8 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 .about-stat-label{font-size:11px;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.06em}
 
 /* CTA */
-.cta-section{text-align:center;padding:48px 20px 56px;background:var(--text);color:#fff;border-radius:var(--r-lg) var(--r-lg) 0 0;margin-top:16px}
-@media(min-width:768px){.cta-section{padding:80px 40px;border-radius:40px 40px 0 0}}
+.cta-section{text-align:center;padding:48px 20px calc(80px + env(safe-area-inset-bottom));background:var(--text);color:#fff;border-radius:var(--r-lg) var(--r-lg) 0 0;margin-top:16px}
+@media(min-width:768px){.cta-section{padding:80px 40px 80px;border-radius:40px 40px 0 0}}
 .cta-section h2{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,6vw,48px);font-weight:400;margin-bottom:12px;line-height:1}
 .cta-section h2 em{font-style:italic;color:var(--orange)}
 .cta-section p{font-size:15px;color:rgba(255,255,255,.5);max-width:380px;margin:0 auto 28px;line-height:1.6}
@@ -196,8 +197,9 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 /* DRAWER */
 .overlay{position:fixed;inset:0;z-index:200;background:rgba(26,24,22,.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .3s}
 .overlay.on{opacity:1;pointer-events:all}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:100%;max-width:400px;z-index:210;background:var(--bg);transform:translateX(105%);transition:transform .4s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;border-left:2px solid rgba(0,0,0,.06)}
-.drawer.on{transform:translateX(0)}
+.drawer{position:fixed;bottom:0;left:0;right:0;z-index:210;background:var(--bg);transform:translateY(105%);transition:transform .4s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;max-height:92dvh;border-top:2px solid rgba(0,0,0,.06);border-radius:20px 20px 0 0}
+.drawer.on{transform:translateY(0)}
+@media(min-width:768px){.drawer{top:0;bottom:0;left:auto;right:0;width:400px;max-height:none;transform:translateX(105%);border-top:none;border-left:2px solid rgba(0,0,0,.06);border-radius:0}.drawer.on{transform:translateX(0)}}
 .drw-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:2px solid rgba(0,0,0,.04)}
 .drw-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px}
 .drw-close{width:44px;height:44px;border-radius:12px;background:rgba(0,0,0,.04);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--sub);transition:background .15s}
@@ -402,6 +404,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 
 <div class="overlay" id="overlay" onclick="closeDrawer()"></div>
 <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Tu pedido">
+  <div style="width:36px;height:4px;background:rgba(0,0,0,.12);border-radius:2px;margin:8px auto 0"></div>
   <div class="drw-head"><span class="drw-title" id="drwTitle">Tu pedido</span><button class="drw-close" onclick="closeDrawer()">✕</button></div>
   <div class="drw-body" id="drwBody"></div>
   <div class="drw-foot" id="drwFoot"></div>

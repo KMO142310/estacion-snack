@@ -32,11 +32,33 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 
-<!-- GA4 + Meta Pixel placeholders: pegar snippets aquí -->
+<!-- GA4 — descomenta y reemplaza REEMPLAZAR_GA4_ID con tu Measurement ID (ej. G-XXXXXXX) -->
+<!--
+<script async src="https://www.googletagmanager.com/gtag/js?id=REEMPLAZAR_GA4_ID"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','REEMPLAZAR_GA4_ID');</script>
+-->
+
+<!-- Meta Pixel — descomenta y reemplaza REEMPLAZAR_META_PIXEL_ID con tu Pixel ID -->
+<!--
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','REEMPLAZAR_META_PIXEL_ID');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=REEMPLAZAR_META_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
+-->
 
 <!-- JSON-LD: LocalBusiness -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LocalBusiness","name":"Estación Snack","description":"Frutos secos y dulces frescos por kilo en Santa Cruz, Chile.","url":"https://estacion-snack.vercel.app/","telephone":"+56953743338","priceRange":"$$","address":{"@type":"PostalAddress","addressLocality":"Santa Cruz","addressRegion":"O'Higgins","addressCountry":"CL"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Tuesday","Friday"],"opens":"10:00","closes":"19:00"}]}
+</script>
+
+<!-- JSON-LD: FAQPage -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"¿Cómo hago mi pedido?","acceptedAnswer":{"@type":"Answer","text":"Agrega los productos que quieras al carrito, abre el detalle, completa tu nombre y dirección, y toca Enviar por WhatsApp. Se abre un mensaje listo con todo tu pedido. Solo tienes que mandarlo."}},
+  {"@type":"Question","name":"¿Cuál es el mínimo de compra?","acceptedAnswer":{"@type":"Answer","text":"No hay mínimo. Puedes pedir desde 1 kilo de un solo producto. Mientras más kilos pidas, mejor se aprovecha el despacho."}},
+  {"@type":"Question","name":"¿Cuándo despachan?","acceptedAnswer":{"@type":"Answer","text":"Martes y viernes en Santa Cruz y alrededores. Coordinamos el horario contigo por WhatsApp después de confirmar el pedido."}},
+  {"@type":"Question","name":"¿Qué medios de pago aceptan?","acceptedAnswer":{"@type":"Answer","text":"Transferencia bancaria o efectivo al momento de recibir el pedido. Te enviamos los datos de la cuenta por WhatsApp cuando confirmes."}},
+  {"@type":"Question","name":"¿Puedo agregar más productos después de enviar el pedido?","acceptedAnswer":{"@type":"Answer","text":"Sí, siempre que no hayamos salido a despachar. Escríbenos por WhatsApp y te ayudamos a sumar lo que quieras."}},
+  {"@type":"Question","name":"¿Cuánto duran los productos?","acceptedAnswer":{"@type":"Answer","text":"Los frutos secos duran 2-3 meses guardados en frasco hermético en un lugar fresco y seco. Los dulces y confites duran hasta 6 meses en las mismas condiciones."}}
+]}
 </script>
 
 <!-- JSON-LD: Product catalog -->
@@ -142,7 +164,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 @media(min-width:520px){.combos{grid-template-columns:1fr 1fr 1fr}}
 .combo{border-radius:var(--r);padding:20px;position:relative;overflow:hidden;border:1.5px solid rgba(0,0,0,.06)}
 .combo-img{aspect-ratio:16/10;margin:-20px -20px 16px;display:flex;align-items:center;justify-content:center;font-size:48px;border-bottom:1.5px solid rgba(0,0,0,.06)}
-.combo-discount{position:absolute;top:14px;right:14px;background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:5px 10px;border-radius:var(--r-full);z-index:2}
+.combo-discount{position:absolute;top:14px;right:14px;background:var(--green);color:#fff;font-size:11px;font-weight:800;padding:5px 10px;border-radius:var(--r-full);z-index:2}
 .combo-includes{font-size:11px;color:var(--sub);margin-bottom:12px;padding:8px 10px;background:rgba(0,0,0,.04);border-radius:8px}
 .combo-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;display:inline-block;padding:4px 10px;background:rgba(0,0,0,.05);border-radius:var(--r-full);color:var(--sub)}
 .combo h3{font-size:18px;font-weight:800;margin-bottom:6px;line-height:1.2}
@@ -411,6 +433,8 @@ html{scroll-behavior:smooth}
   </div>
 </header>
 
+<main>
+
 <!-- HERO -->
 <section class="hero">
   <div class="hero-badge">📍 Santa Cruz, Chile</div>
@@ -425,9 +449,9 @@ html{scroll-behavior:smooth}
 <!-- BENEFITS -->
 <div class="wrap benefits-wrap">
   <div class="benefits">
-    <div class="benefit reveal"><div class="benefit-ico">⚖️</div><div class="benefit-title">Compra solo lo que necesitas</div><div class="benefit-desc">Por kilo, sin envases innecesarios. Pagas exacto lo que llevas.</div></div>
-    <div class="benefit reveal"><div class="benefit-ico">🚗</div><div class="benefit-title">Te lo llevamos</div><div class="benefit-desc">Despacho en Santa Cruz cada martes y viernes. Transferencia o efectivo.</div></div>
-    <div class="benefit reveal"><div class="benefit-ico">💬</div><div class="benefit-title">Pedido en 2 minutos</div><div class="benefit-desc">Arma tu pedido acá y se envía directo a nuestro WhatsApp. Sin app, sin registro.</div></div>
+    <div class="benefit"><div class="benefit-ico">⚖️</div><h3 class="benefit-title">Compra solo lo que necesitas</h3><div class="benefit-desc">Por kilo, sin envases innecesarios. Pagas exacto lo que llevas.</div></div>
+    <div class="benefit"><div class="benefit-ico">🚗</div><h3 class="benefit-title">Te lo llevamos</h3><div class="benefit-desc">Despacho en Santa Cruz cada martes y viernes. Transferencia o efectivo.</div></div>
+    <div class="benefit"><div class="benefit-ico">💬</div><h3 class="benefit-title">Pedido en 2 minutos</h3><div class="benefit-desc">Arma tu pedido acá y se envía directo a nuestro WhatsApp. Sin app, sin registro.</div></div>
   </div>
 </div>
 
@@ -476,7 +500,7 @@ html{scroll-behavior:smooth}
 </div>
 
 <!-- PRODUCTS -->
-<main class="wrap" id="productos">
+<div class="wrap" id="productos">
   <div class="sec-hdr"><h2>Todos los productos</h2><span id="prodCount">6 disponibles</span></div>
   <div class="filters" role="tablist" aria-label="Filtrar productos">
     <button class="chip active" data-filter="all" role="tab" aria-selected="true">Todos</button>
@@ -485,10 +509,10 @@ html{scroll-behavior:smooth}
     <button class="chip" data-filter="cheap" role="tab" aria-selected="false">Menos de $10.000/kg</button>
   </div>
   <div class="grid" id="grid"></div>
-</main>
+</div>
 
 <!-- TESTIMONIALS -->
-<div class="wrap">
+<section aria-label="Testimonios" class="wrap">
   <div class="sec-hdr"><h2>Lo que dicen nuestros clientes</h2></div>
   <div class="testimonials">
     <div class="testimonial reveal">
@@ -507,23 +531,23 @@ html{scroll-behavior:smooth}
       <div class="testimonial-author">— Francisca L., Santa Cruz</div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- ABOUT -->
-<div class="wrap">
-  <div class="about">
+<section aria-label="Acerca de" class="wrap">
+  <div class="about" style="grid-template-columns:1fr">
     <div class="about-text">
       <h2>Detrás de <em class="serif">Estación Snack</em></h2>
       <p>Somos de Santa Cruz y nos cansamos de los snacks caros en envases chicos. Así que decidimos vender directo: por kilo, sin envases de más, a precio justo.</p>
-      <p>Trabajamos con El Palomo, uno de los distribuidores más grandes de Chile, para garantizar producto fresco y de calidad.</p>
+      <p>Seleccionamos cada producto con criterio artesanal: buscamos frescura, sabor real y calidad consistente para que cada kilo valga la pena.</p>
       <div class="about-stats">
         <div class="about-stat"><div class="about-stat-num">6</div><div class="about-stat-label">Productos</div></div>
         <div class="about-stat"><div class="about-stat-num">2</div><div class="about-stat-label">Despachos/semana</div></div>
-        <div class="about-stat"><div class="about-stat-num">1h</div><div class="about-stat-label">Respuesta</div></div>
+        <div class="about-stat"><div class="about-stat-num">0</div><div class="about-stat-label">Mínimo de compra</div></div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- FAQ -->
 <section class="faq wrap" id="faq">
@@ -547,6 +571,8 @@ html{scroll-behavior:smooth}
     Enviar pedido
   </button>
 </section>
+
+</main>
 
 <!-- FOOTER semántico -->
 <footer class="site-footer">
@@ -575,8 +601,8 @@ html{scroll-behavior:smooth}
       <div class="footer-col">
         <h4>Legal</h4>
         <ul>
-          <li><a href="#">Términos</a></li>
-          <li><a href="#">Privacidad</a></li>
+          <li>Términos</li>
+          <li>Privacidad</li>
         </ul>
       </div>
     </div>
@@ -645,7 +671,7 @@ function render(){
     const per100=Math.round(p.price/10);
     return `<article class="card reveal" data-color="${p.color}">
       <div class="card-visual">
-        ${p.badge&&!soldOut?`<div class="card-badge">${p.badge}</div>`:''}
+        ${p.badge&&!soldOut?`<div class="card-badge" style="background:${p.badge==='Último kg'?'var(--red)':'var(--orange)'}">${p.badge}</div>`:''}
         ${soldOut?`<div class="card-badge" style="background:var(--red)">Agotado</div>`:''}
         <picture>
           <source type="image/webp" srcset="${p.img400} 400w, ${p.imgWebp} 800w" sizes="(max-width:768px) 50vw, 260px">
@@ -785,33 +811,36 @@ document.querySelectorAll('.chip').forEach(btn=>{
   });
 });
 
-// Next shipping countdown
+// Next shipping countdown — cutoff 18:00 del día anterior al despacho
 function updateShipping(){
   const el=document.getElementById('next-shipping');if(!el)return;
   const now=new Date();
-  const day=now.getDay();// 0=Sun, 1=Mon, 2=Tue, 5=Fri
-  const days=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
-  // Next Tue(2) or Fri(5)
-  let next=null,nextDay='';
-  for(let i=0;i<=7;i++){
+  const dn=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  let found=null;
+  for(let i=0;i<=8;i++){
     const d=new Date(now);d.setDate(now.getDate()+i);
     const wd=d.getDay();
     if(wd===2||wd===5){
-      d.setHours(10,0,0,0);
-      // Skip if same day and already past 18:00 yesterday = too late
-      if(i===0&&now.getHours()>=19)continue;
-      next=d;nextDay=days[wd];break;
+      // cutoff = día anterior a las 18:00
+      const cut=new Date(d);cut.setDate(d.getDate()-1);cut.setHours(18,0,0,0);
+      if(now<cut){found={dispatch:d,cut,name:dn[wd]};break;}
     }
   }
-  if(!next){el.textContent='Martes o viernes';return;}
-  const diff=next-now;
-  const hours=Math.floor(diff/3600000);
-  const daysLeft=Math.floor(hours/24);
-  if(daysLeft===0)el.textContent=`Hoy ${nextDay}`;
-  else if(daysLeft===1)el.textContent=`Mañana ${nextDay}`;
-  else el.textContent=`${nextDay} (en ${daysLeft} días)`;
+  if(!found){el.textContent='Martes o viernes';return;}
+  const {dispatch,cut,name}=found;
+  const diffCut=cut-now;
+  const h=Math.floor(diffCut/3600000);
+  const m=Math.floor((diffCut%3600000)/60000);
+  if(h<24){
+    // Cuenta regresiva al cierre de pedidos
+    el.textContent=`${name} — cierra en ${h}h ${m}m`;
+  } else {
+    const daysToDispatch=Math.round((dispatch-now)/86400000);
+    if(daysToDispatch<=1)el.textContent=`Mañana ${name}`;
+    else el.textContent=`${name} (en ${daysToDispatch} días)`;
+  }
 }
-updateShipping();setInterval(updateShipping,60000);
+updateShipping();setInterval(updateShipping,30000);
 
 // Scroll tracking + header compress
 const hdr=document.querySelector('header');

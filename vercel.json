@@ -2,8 +2,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "routes": [
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/catalogo", "dest": "/catalogo.html" }
+    { "src": "/", "dest": "/index.html" }
   ],
   "redirects": [
     { "source": "/como-pedir.html", "destination": "/#faq", "permanent": true },

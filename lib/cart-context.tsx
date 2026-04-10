@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import { reserveStock } from "./actions";
+import { trackAddToCart } from "./analytics";
 import type { Product } from "./types";
 
 interface CartState {
@@ -114,6 +115,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return { ...s, items: { ...s.items, [product.id]: nextQty } };
     });
     bumpExpiry();
+    trackAddToCart(
+      { id: product.id, name: product.name, price: product.price, category: product.cat_label },
+      qty
+    );
     if (sid) await reserveStock(sid, product.id, nextQty);
   }, [bumpExpiry]);
 

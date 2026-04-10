@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, DM_Serif_Display } from "next/font/google";
+import AnalyticsScripts from "@/components/AnalyticsScripts";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -17,17 +18,33 @@ const dmSerif = DM_Serif_Display({
   variable: "--font-dm-serif",
 });
 
+const SITE =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://estacion-snack-next.vercel.app";
+
 export const metadata: Metadata = {
-  title: "Estación Snack — Snacks naturales por kilo · Santa Cruz",
+  title: {
+    default: "Estación Snack — Snacks naturales por kilo · Santa Cruz",
+    template: "%s · Estación Snack",
+  },
   description:
     "Frutos secos y snacks naturales por kilo en Santa Cruz. Mix de nueces, almendras, maní confitado y más. Despacho martes y viernes. Pide por WhatsApp.",
-  metadataBase: new URL("https://estacion-snack.vercel.app"),
+  metadataBase: new URL(SITE),
+  alternates: { canonical: "/" },
+  keywords: [
+    "frutos secos santa cruz",
+    "snacks por kilo",
+    "mix de frutos secos",
+    "maní confitado",
+    "almendras",
+    "delivery snacks chile",
+    "estacion snack",
+  ],
   openGraph: {
     title: "Estación Snack — Snacks por kilo",
     description: "Frutos secos y dulces frescos por kilo en Santa Cruz.",
-    url: "https://estacion-snack.vercel.app",
+    url: SITE,
     siteName: "Estación Snack",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Estación Snack" }],
     locale: "es_CL",
     type: "website",
   },
@@ -51,6 +68,27 @@ export const viewport: Viewport = {
   themeColor: "#FFFDF9",
 };
 
+const orgJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": `${SITE}/#business`,
+  name: "Estación Snack",
+  description:
+    "Frutos secos y snacks naturales por kilo en Santa Cruz, Chile. Despacho martes y viernes.",
+  url: SITE,
+  image: `${SITE}/og-image.jpg`,
+  telephone: "+56953743338",
+  priceRange: "$$",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Santa Cruz",
+    addressRegion: "Región de O'Higgins",
+    addressCountry: "CL",
+  },
+  areaServed: "Santa Cruz, Chile",
+  openingHours: "Tu,Fr 10:00-19:00",
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -58,7 +96,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className={`${outfit.variable} ${dmSerif.variable} ${outfit.className}`}>
-      <body>{children}</body>
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        {children}
+        <AnalyticsScripts />
+      </body>
     </html>
   );
 }

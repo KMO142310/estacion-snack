@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -8,6 +8,7 @@ import Bnav from "@/components/Bnav";
 import Drawer from "@/components/Drawer";
 import Announce from "@/components/Announce";
 import { useCart } from "@/lib/cart-context";
+import { trackViewItem } from "@/lib/analytics";
 import { fmt } from "@/lib/products";
 import type { Product } from "@/lib/types";
 
@@ -46,6 +47,10 @@ export default function ProductDetail({ product, related }: Props) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [qty, setQty] = useState(0.5);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    trackViewItem({ id: product.id, name: product.name, price: product.price, category: product.cat_label });
+  }, [product.id, product.name, product.price, product.cat_label]);
   const inCart = items[product.id] ?? 0;
   const accent = COLOR_ACCENT[product.color] ?? "var(--orange)";
   const soft = COLOR_SOFT[product.color] ?? "var(--orange-soft)";

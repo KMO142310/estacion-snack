@@ -59,6 +59,8 @@ const COMBOS: ComboConfig[] = [
     oldPrice: 29000,
     bg: "var(--green-soft)",
     emoji: "🥜🌰",
+    image: "/img/pack-proteina.jpg",
+    imageWebp: "/img/pack-proteina.webp",
   },
 ];
 

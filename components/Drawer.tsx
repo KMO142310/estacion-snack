@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useCart } from "@/lib/cart-context";
 import { placeOrder } from "@/lib/actions";
+import { trackBeginCheckout, trackPurchase } from "@/lib/analytics";
 import { fmt, WA } from "@/lib/products";
 import type { Product } from "@/lib/types";
 
@@ -48,6 +49,15 @@ export default function Drawer({ open, onClose, products }: Props) {
 
     setLoading(true);
     const itemsArr = cartEntries.map(([id, qty]) => ({ product_id: id, qty }));
+    const trackedItems = cartEntries
+      .map(([id, qty]) => {
+        const p = products.find((x) => x.id === id);
+        if (!p) return null;
+        return { id: p.id, name: p.name, price: p.price, category: p.cat_label, qty };
+      })
+      .filter((x): x is NonNullable<typeof x> => x !== null);
+    trackBeginCheckout(trackedItems, total);
+
     const result = await placeOrder({
       sessionId,
       customerName: name.trim(),
@@ -60,6 +70,10 @@ export default function Drawer({ open, onClose, products }: Props) {
     if (!result.ok) {
       showToast("❌ Error: " + result.error);
       return;
+    }
+
+    if (result.orderId) {
+      trackPurchase(result.orderId, trackedItems, total);
     }
 
     clearCart();

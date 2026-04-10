@@ -43,6 +43,8 @@ export default function Drawer({ open, onClose, products }: Props) {
     if (!name.trim()) { setNameErr(true); valid = false; }
     if (!phone.trim()) { setPhoneErr(true); valid = false; }
     if (!valid) return;
+    if (!sessionId) { showToast("Recargá la página e intentá de nuevo"); return; }
+    if (cartEntries.length === 0) return;
 
     setLoading(true);
     const itemsArr = cartEntries.map(([id, qty]) => ({ product_id: id, qty }));

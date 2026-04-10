@@ -106,37 +106,40 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const addItem = useCallback(async (product: Product, qty: number) => {
+    let nextQty = 0;
+    let sid = "";
     setState((s) => {
-      const newItems = { ...s.items, [product.id]: (s.items[product.id] ?? 0) + qty };
-      return { ...s, items: newItems };
+      sid = s.sessionId;
+      nextQty = (s.items[product.id] ?? 0) + qty;
+      return { ...s, items: { ...s.items, [product.id]: nextQty } };
     });
     bumpExpiry();
-    await reserveStock(state.sessionId, product.id, (state.items[product.id] ?? 0) + qty);
-  }, [state.sessionId, state.items, bumpExpiry]);
+    if (sid) await reserveStock(sid, product.id, nextQty);
+  }, [bumpExpiry]);
 
   const updateQty = useCallback(async (product: Product, qty: number) => {
+    let sid = "";
     setState((s) => {
+      sid = s.sessionId;
       const newItems = { ...s.items };
       if (qty <= 0) delete newItems[product.id];
       else newItems[product.id] = qty;
       return { ...s, items: newItems };
     });
-    if (qty > 0) {
-      bumpExpiry();
-      await reserveStock(state.sessionId, product.id, qty);
-    } else {
-      await reserveStock(state.sessionId, product.id, 0);
-    }
-  }, [state.sessionId, bumpExpiry]);
+    if (qty > 0) bumpExpiry();
+    if (sid) await reserveStock(sid, product.id, Math.max(0, qty));
+  }, [bumpExpiry]);
 
   const removeItem = useCallback(async (productId: string) => {
+    let sid = "";
     setState((s) => {
+      sid = s.sessionId;
       const newItems = { ...s.items };
       delete newItems[productId];
       return { ...s, items: newItems };
     });
-    await reserveStock(state.sessionId, productId, 0);
-  }, [state.sessionId]);
+    if (sid) await reserveStock(sid, productId, 0);
+  }, []);
 
   const clearCart = useCallback(() => {
     setState((s) => ({ ...s, items: {}, reservationExpiry: null }));

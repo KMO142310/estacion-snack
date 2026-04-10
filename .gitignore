@@ -23,6 +23,14 @@
 # misc
 .DS_Store
 *.pem
+*.key
+*.crt
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+credentials.json
+service-account*.json
 
 # debug
 npm-debug.log*
@@ -30,17 +38,24 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files
+# env files — belt and suspenders: explicit names AND glob
 .env
 .env.local
+.env.*.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env.backup*
 # keep the example
 !.env.local.example
 
-# vercel
+# vercel (linked project config, contains projectId/orgId)
 .vercel
+.vercel/
+
+# supabase CLI temp/local state
+supabase/.temp/
+supabase/.branches/
 
 # typescript
 *.tsbuildinfo

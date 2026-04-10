@@ -1,9 +1,9 @@
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 
 export const revalidate = 0;
 
 export default async function ClientesPage() {
-  const supabase = await createClient();
+  const supabase = await createAdminClient();
   const { data: customers } = await supabase
     .from("customers")
     .select("*")

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { updateStock } from "@/lib/admin-actions";
 import { fmt } from "@/lib/products";
 import type { Product } from "@/lib/types";
 
@@ -33,25 +33,33 @@ export default function StockEditor({ products: initial }: Props) {
     setEditing((e) => ({ ...e, [id]: String(currentStock) }));
   };
 
+  const [errorMsg, setErrorMsg] = useState<Record<string, string>>({});
+
   const saveStock = async (product: Product) => {
     const newStock = parseFloat(editing[product.id] ?? String(product.stock_kg));
     if (isNaN(newStock) || newStock < 0) return;
 
     setSaving((s) => ({ ...s, [product.id]: true }));
-    const supabase = createClient();
-    const { error } = await supabase
-      .from("products")
-      .update({ stock_kg: newStock })
-      .eq("id", product.id);
-
+    setErrorMsg((e) => { const n = { ...e }; delete n[product.id]; return n; });
+    const result = await updateStock(product.id, newStock);
     setSaving((s) => ({ ...s, [product.id]: false }));
-    if (!error) {
+
+    if (result.ok) {
       setProducts((ps) =>
-        ps.map((p) => p.id === product.id ? { ...p, stock_kg: newStock } : p)
+        ps.map((p) => {
+          if (p.id !== product.id) return p;
+          const status =
+            newStock === 0 ? "agotado" :
+            newStock <= 1 ? "ultimo_kg" :
+            newStock <= p.low_threshold ? "pocas" : "disponible";
+          return { ...p, stock_kg: newStock, status };
+        })
       );
       setEditing((e) => { const n = { ...e }; delete n[product.id]; return n; });
       setSaved((s) => ({ ...s, [product.id]: true }));
       setTimeout(() => setSaved((s) => ({ ...s, [product.id]: false })), 2000);
+    } else {
+      setErrorMsg((e) => ({ ...e, [product.id]: result.error ?? "Error" }));
     }
   };
 
@@ -142,6 +150,7 @@ export default function StockEditor({ products: initial }: Props) {
                 </button>
               )}
               {wasSaved && <span style={{ fontSize: 12, color: "#4A8C3F" }}>✓ Guardado</span>}
+              {errorMsg[p.id] && <span style={{ fontSize: 11, color: "#D94B4B" }}>{errorMsg[p.id]}</span>}
             </div>
 
             {/* Status */}

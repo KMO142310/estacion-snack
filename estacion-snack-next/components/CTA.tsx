@@ -16,7 +16,7 @@ export default function CTA({ onCartOpen }: Props) {
       borderRadius: "var(--r-lg) var(--r-lg) 0 0",
       marginTop: 16,
     }}>
-      <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontSize: "clamp(28px,6vw,48px)", fontWeight: 400, marginBottom: 12, lineHeight: 1 }}>
+      <h2 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: "clamp(28px,6vw,48px)", fontWeight: 400, marginBottom: 12, lineHeight: 1 }}>
         ¿Armaste <em style={{ fontStyle: "italic", color: "var(--orange)" }}>tu pedido?</em>
       </h2>
       <p style={{ fontSize: 15, color: "rgba(255,255,255,.5)", maxWidth: 380, margin: "0 auto 28px", lineHeight: 1.6 }}>

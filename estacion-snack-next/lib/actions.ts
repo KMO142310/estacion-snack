@@ -22,6 +22,23 @@ export async function getProducts(): Promise<Product[]> {
   }
 }
 
+export async function getProductBySlug(slug: string): Promise<Product | null> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .eq("slug", slug)
+      .maybeSingle();
+    if (error || !data) {
+      return PRODUCTS.find((p) => p.slug === slug) ?? null;
+    }
+    return data as Product;
+  } catch {
+    return PRODUCTS.find((p) => p.slug === slug) ?? null;
+  }
+}
+
 export async function reserveStock(
   sessionId: string,
   productId: string,
@@ -78,8 +95,12 @@ export async function placeOrder(params: {
       return acc + (p ? p.price * item.qty : 0);
     }, 0);
 
+    const site =
+      process.env.NEXT_PUBLIC_SITE_URL ?? "https://estacion-snack-next.vercel.app";
+    const orderUrl = `${site}/pedido/${data}`;
+
     const msg = encodeURIComponent(
-      `¡Hola! Hago el siguiente pedido 🌰\n\n${lines}\n\nTotal: $${total.toLocaleString("es-CL")}\n\nNombre: ${params.customerName}\nTeléfono: ${params.customerPhone}${params.notes ? `\nNotas: ${params.notes}` : ""}\n\nID pedido: ${data}`
+      `¡Hola! Hago el siguiente pedido 🌰\n\n${lines}\n\nTotal: $${total.toLocaleString("es-CL")}\n\nNombre: ${params.customerName}\nTeléfono: ${params.customerPhone}${params.notes ? `\nNotas: ${params.notes}` : ""}\n\nVer estado del pedido: ${orderUrl}`
     );
 
     const waUrl = `https://wa.me/${WA}?text=${msg}`;

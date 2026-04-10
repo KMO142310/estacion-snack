@@ -11,7 +11,7 @@ export default function FAQ() {
   return (
     <section className="wrap" id="faq" style={{ padding: "48px 0" }}>
       <div style={{ paddingBottom: 20, display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
-        <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontSize: "clamp(24px,4vw,36px)", fontWeight: 400 }}>
+        <h2 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: "clamp(24px,4vw,36px)", fontWeight: 400 }}>
           Preguntas frecuentes
         </h2>
       </div>

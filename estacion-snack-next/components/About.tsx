@@ -3,7 +3,7 @@ export default function About() {
     <section aria-label="Acerca de" className="wrap">
       <div style={{ paddingBottom: 48 }}>
         <div>
-          <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontSize: "clamp(24px,4vw,36px)", fontWeight: 400, marginBottom: 12 }}>
+          <h2 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: "clamp(24px,4vw,36px)", fontWeight: 400, marginBottom: 12 }}>
             Detrás de <em className="serif">Estación Snack</em>
           </h2>
           <p style={{ fontSize: 15, color: "var(--sub)", lineHeight: 1.7, marginBottom: 12 }}>

@@ -51,7 +51,7 @@ export default function ProductGrid({ products }: Props) {
         flexWrap: "wrap",
         gap: 8,
       }}>
-        <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontSize: "clamp(24px,4vw,36px)", fontWeight: 400 }}>
+        <h2 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: "clamp(24px,4vw,36px)", fontWeight: 400 }}>
           Todos los productos
         </h2>
         <span style={{ fontSize: 13, color: "var(--sub)" }}>{filtered.length} disponibles</span>

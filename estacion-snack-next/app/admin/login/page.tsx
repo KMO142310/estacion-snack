@@ -32,13 +32,12 @@ export default function LoginPage() {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      fontFamily: "'Outfit', system-ui, sans-serif",
+      fontFamily: "var(--font-outfit), system-ui, sans-serif",
       padding: 20,
     }}>
-      <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet" />
       <div style={{ width: "100%", maxWidth: 400 }}>
         <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <h1 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontSize: 28, marginBottom: 8 }}>
+          <h1 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: 28, marginBottom: 8 }}>
             Estación Snack
           </h1>
           <p style={{ fontSize: 14, color: "#5F5A52" }}>Panel de administración</p>

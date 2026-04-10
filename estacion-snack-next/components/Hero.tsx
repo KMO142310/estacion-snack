@@ -24,7 +24,7 @@ export default function Hero() {
       <h1
         className="hero-anim-h1"
         style={{
-          fontFamily: "'DM Serif Display', Georgia, serif",
+          fontFamily: "var(--font-dm-serif), Georgia, serif",
           fontSize: "clamp(38px, 7vw, 72px)",
           lineHeight: 0.95,
           letterSpacing: "-.03em",

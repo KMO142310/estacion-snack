@@ -39,7 +39,7 @@ export default function Header({ onCartOpen }: HeaderProps) {
       <a
         href="/"
         style={{
-          fontFamily: "'DM Serif Display', Georgia, serif",
+          fontFamily: "var(--font-dm-serif), Georgia, serif",
           fontSize: "clamp(18px, 5vw, 22px)",
           display: "flex",
           alignItems: "center",

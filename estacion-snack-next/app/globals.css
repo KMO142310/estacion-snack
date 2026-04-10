@@ -48,7 +48,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: var(--font-outfit), system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
@@ -60,7 +60,7 @@ body {
 }
 
 .serif {
-  font-family: 'DM Serif Display', Georgia, serif;
+  font-family: var(--font-dm-serif), Georgia, serif;
   font-weight: 400;
 }
 

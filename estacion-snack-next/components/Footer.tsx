@@ -10,7 +10,7 @@ export default function Footer() {
           borderBottom: "1px solid rgba(255,255,255,.08)",
         }}>
           <div>
-            <div style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontSize: 24, color: "#fff", marginBottom: 8 }}>
+            <div style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: 24, color: "#fff", marginBottom: 8 }}>
               Estación Snack
             </div>
             <p style={{ fontSize: 13, lineHeight: 1.6, maxWidth: 320 }}>

@@ -12,7 +12,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8f8f6", fontFamily: "'Outfit', system-ui, sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "#f8f8f6", fontFamily: "var(--font-outfit), system-ui, sans-serif" }}>
       <nav style={{
         background: "#1A1816",
         color: "#fff",
@@ -25,9 +25,10 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         top: 0,
         zIndex: 50,
       }}>
-        <span style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontSize: 18, marginRight: 16 }}>
+        <span style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: 18, marginRight: 16 }}>
           Estación Snack
         </span>
+        <a href="/admin"           style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,.7)", padding: "4px 12px", borderRadius: 8 }}>Inicio</a>
         <a href="/admin/productos" style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,.7)", padding: "4px 12px", borderRadius: 8 }}>Productos</a>
         <a href="/admin/pedidos"   style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,.7)", padding: "4px 12px", borderRadius: 8 }}>Pedidos</a>
         <a href="/admin/clientes"  style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,.7)", padding: "4px 12px", borderRadius: 8 }}>Clientes</a>
@@ -42,8 +43,6 @@ export default async function AdminLayout({ children }: { children: ReactNode })
       <main style={{ padding: "24px 24px 48px" }}>
         {children}
       </main>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet" />
     </div>
   );
 }

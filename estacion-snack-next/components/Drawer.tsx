@@ -65,6 +65,9 @@ export default function Drawer({ open, onClose, products }: Props) {
     clearCart();
     onClose();
     window.open(result.waUrl, "_blank");
+    if (result.orderId) {
+      window.location.href = `/pedido/${result.orderId}`;
+    }
   };
 
   const fmtCountdown = (s: number) => {
@@ -118,7 +121,7 @@ export default function Drawer({ open, onClose, products }: Props) {
 
         {/* Header */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 20px", borderBottom: "2px solid rgba(0,0,0,.04)" }}>
-          <h3 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontSize: 22 }}>Tu pedido</h3>
+          <h3 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: 22 }}>Tu pedido</h3>
           <button
             onClick={onClose}
             aria-label="Cerrar carrito"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
 import { fmt } from "@/lib/products";
 import type { Product } from "@/lib/types";
@@ -57,47 +58,55 @@ export default function ProductCard({ product }: Props) {
       className="product-card"
     >
       {/* Image */}
-      <div style={{
-        aspectRatio: "1/1",
-        position: "relative",
-        overflow: "hidden",
-        background: colors.soft,
-      }}>
-        <picture>
-          <source srcSet={product.image_webp_url} type="image/webp" />
-          <img
-            src={product.image_url}
-            alt={product.name}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            loading="lazy"
-          />
-        </picture>
-        {product.badge && (
-          <span style={{
-            position: "absolute",
-            top: 12,
-            right: 12,
-            fontSize: 10,
-            fontWeight: 700,
-            padding: "5px 12px",
-            background: "var(--text)",
-            color: "#fff",
-            borderRadius: "var(--r-full)",
-            letterSpacing: ".02em",
-          }}>
-            {product.badge}
-          </span>
-        )}
-      </div>
+      <Link
+        href={`/producto/${product.slug}`}
+        aria-label={`Ver detalle de ${product.name}`}
+        style={{ display: "block" }}
+      >
+        <div style={{
+          aspectRatio: "1/1",
+          position: "relative",
+          overflow: "hidden",
+          background: colors.soft,
+        }}>
+          <picture>
+            <source srcSet={product.image_webp_url} type="image/webp" />
+            <img
+              src={product.image_url}
+              alt={product.name}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              loading="lazy"
+            />
+          </picture>
+          {product.badge && (
+            <span style={{
+              position: "absolute",
+              top: 12,
+              right: 12,
+              fontSize: 10,
+              fontWeight: 700,
+              padding: "5px 12px",
+              background: "var(--text)",
+              color: "#fff",
+              borderRadius: "var(--r-full)",
+              letterSpacing: ".02em",
+            }}>
+              {product.badge}
+            </span>
+          )}
+        </div>
+      </Link>
 
       {/* Body */}
       <div style={{ padding: 16 }}>
         <div style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4, color: colors.accent }}>
           {product.cat_label}
         </div>
-        <h3 style={{ fontSize: 16, fontWeight: 800, lineHeight: 1.2, marginBottom: 4 }}>
-          {product.name}
-        </h3>
+        <Link href={`/producto/${product.slug}`}>
+          <h3 style={{ fontSize: 16, fontWeight: 800, lineHeight: 1.2, marginBottom: 4 }}>
+            {product.name}
+          </h3>
+        </Link>
         <p style={{ fontSize: 12, color: "var(--sub)", lineHeight: 1.5, marginBottom: 10, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
           {product.copy}
         </p>

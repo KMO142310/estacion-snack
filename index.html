@@ -1,197 +1,258 @@
 <!DOCTYPE html>
-
-<html class="light" lang="es"><head>
+<html class="light" lang="es">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#5C7A3E",
-                        accent: "#C4603A",
-                        beige: "#F5F0E6",
-                        brown: "#8B7355",
-                        whatsapp: "#25D366"
-                    },
-                    borderRadius: {
-                        "DEFAULT": "1rem",
-                        "lg": "2rem",
-                        "xl": "3rem",
-                        "full": "9999px"
-                    },
-                    fontFamily: {
-                        "headline": ["Manrope", "sans-serif"],
-                        "body": ["Manrope", "sans-serif"],
-                        "label": ["Manrope", "sans-serif"]
-                    }
-                },
-            },
-        }
-    </script>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Estación Snack — Frutos Secos por Kilo</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800;900&display=swap" rel="stylesheet"/>
 <style>
-        body { font-family: 'Manrope', sans-serif; background-color: #F5F0E6; }
-        .material-symbols-outlined { font-size: 24px; }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="text-stone-900 overflow-x-hidden">
-<!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-[#F5F0E6] dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-[#5C7A3E] dark:text-lime-500" data-icon="menu">menu</span>
-<span class="text-xl font-black text-[#5C7A3E] dark:text-lime-400 tracking-tight font-['Manrope']">Estación Snack</span>
-</div>
-<div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-[#5C7A3E] dark:text-lime-500" data-icon="shopping_basket">shopping_basket</span>
-</div>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --g:#5C7A3E;--t:#C4603A;--b:#F5F0E6;--w:#fff;--k:#1A1A18;--s:#8B7355;
+  --wa:#25D366;--sp:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.32,.72,0,1)
+}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Manrope',sans-serif;background:#EEEAE0;color:var(--k);min-height:100dvh;-webkit-font-smoothing:antialiased}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;cursor:pointer;text-decoration:none}
+
+/* SHELL */
+.shell{max-width:480px;margin:0 auto;background:var(--b);min-height:100dvh;position:relative;box-shadow:0 0 60px rgba(0,0,0,.12)}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:100;height:56px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;background:rgba(245,240,230,.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,.08)}
+.logo{font-size:17px;font-weight:900;color:var(--g);letter-spacing:-.6px;display:flex;align-items:center;gap:7px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--t);flex-shrink:0}
+.hico{display:flex;align-items:center;gap:4px;color:var(--g);font-size:22px;line-height:1}
+
+/* HERO */
+.hero{padding:32px 20px 24px;text-align:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(160deg,rgba(92,122,62,.08) 0%,transparent 60%);pointer-events:none}
+.hero-icon{width:72px;height:72px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 8px 24px rgba(92,122,62,.35);font-size:36px;transition:transform .15s var(--sp)}
+.hero-icon:active{transform:scale(.92)}
+.hero h1{font-size:28px;font-weight:900;letter-spacing:-1px;line-height:1.1;margin-bottom:12px;color:var(--k)}
+.hero-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border:1px solid rgba(92,122,62,.2);padding:7px 16px;border-radius:999px}
+.hero-pill span{font-size:11px;font-weight:800;color:var(--g);text-transform:uppercase;letter-spacing:.8px}
+
+/* WHY CHIPS */
+.why{padding:0 16px 24px;display:flex;flex-direction:column;gap:10px}
+.chip{display:flex;align-items:center;gap:12px;background:var(--w);padding:14px 16px;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.05)}
+.chip-ico{width:44px;height:44px;border-radius:12px;background:var(--b);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.chip span.label{font-size:14px;font-weight:800;color:var(--k)}
+
+/* SECTION HEADER */
+.sec-h{display:flex;align-items:center;justify-content:space-between;padding:0 16px 12px}
+.sec-h h2{font-size:22px;font-weight:900;letter-spacing:-.5px}
+.sec-h a{font-size:13px;font-weight:800;color:var(--g)}
+
+/* PRODUCT GRID */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px 24px}
+
+/* PRODUCT CARD */
+.pcard{background:var(--w);border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.05);display:flex;flex-direction:column;transition:transform .15s var(--sp)}
+.pcard:active{transform:scale(.975)}
+.pvis{position:relative;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pvis-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;opacity:0;transition:opacity .5s ease}
+.pvis-img.loaded{opacity:1}
+.pvis-emoji{font-size:60px;position:relative;z-index:2;filter:drop-shadow(0 4px 12px rgba(0,0,0,.25));transition:opacity .5s;line-height:1}
+.pbody{padding:10px 10px 12px;display:flex;flex-direction:column;flex:1}
+.pname{font-size:13px;font-weight:900;letter-spacing:-.2px;line-height:1.2;margin-bottom:4px;color:var(--k)}
+.pprice{font-size:17px;font-weight:900;color:var(--g);letter-spacing:-.4px;margin-bottom:10px}
+.pprice small{font-size:11px;font-weight:600;color:var(--s)}
+.pbtn{display:flex;align-items:center;justify-content:center;gap:5px;background:var(--t);color:#fff;padding:10px;border-radius:10px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:800;border:none;transition:transform .15s var(--sp);margin-top:auto}
+.pbtn:active{transform:scale(.94)}
+
+/* CTA BANNER */
+.cta{background:var(--s);border-radius:24px 24px 0 0;padding:32px 20px 48px;text-align:center;margin-top:8px}
+.cta h2{font-size:22px;font-weight:900;color:#fff;margin-bottom:8px;letter-spacing:-.4px}
+.cta p{font-size:13px;color:rgba(245,240,230,.85);margin-bottom:20px;line-height:1.5}
+.wabtn{display:inline-flex;align-items:center;gap:10px;background:var(--wa);color:#fff;padding:14px 24px;border-radius:999px;font-family:'Manrope',sans-serif;font-size:15px;font-weight:900;box-shadow:0 4px 20px rgba(37,211,102,.38);transition:transform .15s var(--sp)}
+.wabtn:active{transform:scale(.96)}
+.wabtn svg{width:20px;height:20px;flex-shrink:0}
+
+/* STICKY WHATSAPP FAB */
+.fab{position:fixed;bottom:80px;right:16px;z-index:60;display:flex;align-items:center;gap:10px;background:var(--wa);color:#fff;padding:14px 18px;border-radius:999px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:900;box-shadow:0 8px 24px rgba(37,211,102,.35);transition:transform .15s var(--sp)}
+.fab:active{transform:scale(.93)}
+.fab svg{width:18px;height:18px;flex-shrink:0}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:50;display:flex;justify-content:space-around;padding:8px 8px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-top:1px solid rgba(0,0,0,.06);border-radius:20px 20px 0 0}
+.ni{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--s);font-size:10px;font-weight:700;padding:4px 12px;border-radius:10px}
+.ni.cur{color:var(--t);background:rgba(196,96,58,.08)}
+.ni-ico{font-size:20px;line-height:1.2}
+
+/* MARQUEE */
+.mq{overflow:hidden;background:var(--g);padding:7px 0}
+.mq-t{display:flex;width:max-content;animation:mq 20s linear infinite}
+.mq-t:hover{animation-play-state:paused}
+.mq-i{white-space:nowrap;padding:0 14px;font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.85)}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* FOOTER */
+footer{background:var(--s);padding:20px;text-align:center;color:rgba(245,240,230,.75);font-size:12px;padding-bottom:calc(20px + env(safe-area-inset-bottom))}
+footer strong{color:#F5F0E6;display:block;font-size:14px;font-weight:800;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>Estación Snack
+  </div>
+  <a href="catalogo.html" class="hico" aria-label="Ver catálogo">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+  </a>
 </header>
-<!-- Hero Section -->
-<section class="relative pt-24 pb-12 px-6 flex flex-col items-center text-center overflow-hidden">
-<div class="absolute inset-0 z-0">
-<img class="w-full h-full object-cover opacity-20" data-alt="overhead view of assorted nuts and dried fruits spread across a rustic wooden surface with warm natural morning lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALV5rq_CBhvTf9Phd6_yzNnUSbcjqRCsC6IqzGi9RxToXkAmq9jyQ86CIUGdiYx_BsA0A7tYjLanQwNpNDByiXkNwmWGT3CVCyX3G-aHByggE-xxsPdCNMiFPQTDFX7MIzYqBao3WpVbJg21QnqFPYM49YTimjWO5WhHd31xaCH6jMHYwZV52WL9R3pMRrz1_OpAIAoiga_6WwPg2Vlu5BAhNk7AgxGXEoCbQUzXBa3SuPF9LXz-TLZx6PHcU0w9OKBUfFNLTqXu8S"/>
-<div class="absolute inset-0 bg-gradient-to-b from-[#F5F0E6] via-[#F5F0E6]/80 to-[#F5F0E6]"></div>
-</div>
-<div class="relative z-10 flex flex-col items-center">
-<div class="w-20 h-20 bg-[#5C7A3E] rounded-full flex items-center justify-center mb-6 shadow-xl active:scale-95 transition-transform">
-<span class="material-symbols-outlined text-white text-4xl" data-icon="nutrition">nutrition</span>
-</div>
-<h1 class="text-4xl font-extrabold text-stone-900 mb-2 leading-tight">
-                Tu parada para snacks de verdad
-            </h1>
-<div class="mt-4 bg-white/50 backdrop-blur-sm border border-[#5C7A3E]/20 px-4 py-2 rounded-full inline-flex gap-2 items-center">
-<span class="text-xs font-bold text-[#5C7A3E] uppercase tracking-wider">Fresco · Por kilo · Sin vueltas</span>
-</div>
-</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-icon">🌰</div>
+  <h1>Tu parada para<br/>snacks de verdad</h1>
+  <div style="margin-top:12px">
+    <div class="hero-pill">
+      <span>Fresco · Por kilo · Sin vueltas</span>
+    </div>
+  </div>
 </section>
-<!-- Why Us Chips -->
-<section class="px-6 pb-12 relative z-10">
-<div class="flex flex-col gap-3">
-<div class="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-stone-100">
-<div class="w-12 h-12 bg-[#F5F0E6] rounded-xl flex items-center justify-center text-[#5C7A3E]">
-<span class="material-symbols-outlined" data-icon="balance">balance</span>
+
+<!-- MARQUEE -->
+<div class="mq">
+  <div class="mq-t">
+    <span class="mq-i">Santa Cruz · </span><span class="mq-i">Por kilo · </span><span class="mq-i">Despacho Martes y Viernes · </span><span class="mq-i">Fresco · </span><span class="mq-i">Sin vueltas · </span><span class="mq-i">953 743 338 · </span>
+    <span class="mq-i">Santa Cruz · </span><span class="mq-i">Por kilo · </span><span class="mq-i">Despacho Martes y Viernes · </span><span class="mq-i">Fresco · </span><span class="mq-i">Sin vueltas · </span><span class="mq-i">953 743 338 · </span>
+  </div>
 </div>
-<span class="font-bold text-stone-800">Precio real por kilo</span>
-</div>
-<div class="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-stone-100">
-<div class="w-12 h-12 bg-[#F5F0E6] rounded-xl flex items-center justify-center text-[#5C7A3E]">
-<span class="material-symbols-outlined" data-icon="eco">eco</span>
-</div>
-<span class="font-bold text-stone-800">Sin envases de más</span>
-</div>
-<div class="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-stone-100">
-<div class="w-12 h-12 bg-[#F5F0E6] rounded-xl flex items-center justify-center text-[#C4603A]">
-<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
-</div>
-<span class="font-bold text-stone-800">Despacho en Santa Cruz</span>
-</div>
-</div>
+
+<!-- WHY US -->
+<section class="why" style="margin-top:20px">
+  <div class="chip">
+    <div class="chip-ico">⚖️</div>
+    <span class="label">Precio real por kilo</span>
+  </div>
+  <div class="chip">
+    <div class="chip-ico">🌱</div>
+    <span class="label">Sin envases de más</span>
+  </div>
+  <div class="chip">
+    <div class="chip-ico">🚗</div>
+    <span class="label">Despacho en Santa Cruz</span>
+  </div>
 </section>
-<!-- Product Grid -->
-<section class="px-4 pb-24">
-<div class="flex items-center justify-between mb-6 px-2">
-<h2 class="text-2xl font-extrabold text-stone-900 tracking-tight">Nuestros Favoritos</h2>
-<a href="catalogo.html" class="text-[#5C7A3E] font-bold text-sm">Ver todos</a>
-</div>
-<div class="grid grid-cols-2 gap-4">
-<!-- Product 1: Mix Europeo -->
-<div class="bg-white rounded-[2rem] p-3 flex flex-col shadow-sm border border-stone-100">
-<div class="aspect-square rounded-2xl overflow-hidden mb-3 bg-[#F5F0E6] flex items-center justify-center">
-<span class="material-symbols-outlined text-[#5C7A3E] text-6xl">restaurant</span>
-</div>
-<h3 class="font-bold text-stone-900 px-1 leading-tight mb-1">Mix Europeo</h3>
-<p class="text-[#5C7A3E] font-extrabold text-lg px-1 mb-3">$12.000/kg</p>
-<a href="https://wa.me/56953743338?text=Hola!%20Quiero%20pedir%20Mix%20Europeo%20%F0%9F%8C%B0" target="_blank" class="w-full bg-[#C4603A] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform">
-<span class="material-symbols-outlined text-sm">shopping_cart</span>Pedir
-</a>
-</div>
-<!-- Product 2: Maní Confitado Tropical -->
-<div class="bg-white rounded-[2rem] p-3 flex flex-col shadow-sm border border-stone-100">
-<div class="aspect-square rounded-2xl overflow-hidden mb-3 bg-[#F5F0E6] flex items-center justify-center">
-<span class="material-symbols-outlined text-[#C4603A] text-6xl">favorite</span>
-</div>
-<h3 class="font-bold text-stone-900 px-1 leading-tight mb-1">Maní Confitado Tropical</h3>
-<p class="text-[#5C7A3E] font-extrabold text-lg px-1 mb-3">$5.500/kg</p>
-<a href="https://wa.me/56953743338?text=Hola!%20Quiero%20pedir%20Man%C3%AD%20Confitado%20Tropical%20%F0%9F%8C%B0" target="_blank" class="w-full bg-[#C4603A] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform">
-<span class="material-symbols-outlined text-sm">shopping_cart</span>Pedir
-</a>
-</div>
-<!-- Product 3: Gomita Osito -->
-<div class="bg-white rounded-[2rem] p-3 flex flex-col shadow-sm border border-stone-100">
-<div class="aspect-square rounded-2xl overflow-hidden mb-3 bg-[#F5F0E6] flex items-center justify-center">
-<span class="material-symbols-outlined text-[#C4603A] text-6xl">child_care</span>
-</div>
-<h3 class="font-bold text-stone-900 px-1 leading-tight mb-1">Gomita Osito</h3>
-<p class="text-[#5C7A3E] font-extrabold text-lg px-1 mb-3">$7.990/kg</p>
-<a href="https://wa.me/56953743338?text=Hola!%20Quiero%20pedir%20Gomitas%20Osito%20%F0%9F%8C%B0" target="_blank" class="w-full bg-[#C4603A] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform">
-<span class="material-symbols-outlined text-sm">shopping_cart</span>Pedir
-</a>
-</div>
-<!-- Product 4: Almendra Entera -->
-<div class="bg-white rounded-[2rem] p-3 flex flex-col shadow-sm border border-stone-100">
-<div class="aspect-square rounded-2xl overflow-hidden mb-3 bg-[#F5F0E6] flex items-center justify-center">
-<span class="material-symbols-outlined text-[#5C7A3E] text-6xl">nutrition</span>
-</div>
-<h3 class="font-bold text-stone-900 px-1 leading-tight mb-1">Almendra Entera</h3>
-<p class="text-[#5C7A3E] font-extrabold text-lg px-1 mb-3">$16.000/kg</p>
-<a href="https://wa.me/56953743338?text=Hola!%20Quiero%20pedir%20Almendra%20Entera%20%F0%9F%8C%B0" target="_blank" class="w-full bg-[#C4603A] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform">
-<span class="material-symbols-outlined text-sm">shopping_cart</span>Pedir
-</a>
-</div>
-</div>
+
+<!-- PRODUCT GRID -->
+<section style="padding-bottom:20px">
+  <div class="sec-h">
+    <h2>Nuestros Favoritos</h2>
+    <a href="catalogo.html">Ver todos →</a>
+  </div>
+  <div class="pgrid">
+
+    <!-- Mix Europeo -->
+    <div class="pcard">
+      <div class="pvis" style="background:linear-gradient(145deg,#3d1f0a,#8B5520 40%,#C8862E 70%,#E8C070)">
+        <img class="pvis-img" src="https://images.unsplash.com/photo-1621955511418-7f76e6f0a5f5?auto=format&fit=crop&q=80&w=600"
+             alt="Mix Europeo" loading="lazy"
+             onload="this.classList.add('loaded');this.nextElementSibling.style.opacity='0'"
+             onerror="this.remove()">
+        <div class="pvis-emoji" style="transition:opacity .5s">🥜</div>
+      </div>
+      <div class="pbody">
+        <div class="pname">Mix Europeo</div>
+        <div class="pprice">$13.000<small>/kg</small></div>
+        <a href="catalogo.html" class="pbtn">+ Agregar</a>
+      </div>
+    </div>
+
+    <!-- Maní Confitado Tropical -->
+    <div class="pcard">
+      <div class="pvis" style="background:linear-gradient(145deg,#1a4a0a,#2E7D32 40%,#F57C00 70%,#FFD740)">
+        <img class="pvis-img" src="https://images.unsplash.com/photo-1562707666-1af4e27de3a0?auto=format&fit=crop&q=80&w=600"
+             alt="Maní Confitado Tropical" loading="lazy"
+             onload="this.classList.add('loaded');this.nextElementSibling.style.opacity='0'"
+             onerror="this.remove()">
+        <div class="pvis-emoji" style="transition:opacity .5s">🍬</div>
+      </div>
+      <div class="pbody">
+        <div class="pname">Maní Confitado Tropical</div>
+        <div class="pprice">$5.990<small>/kg</small></div>
+        <a href="catalogo.html" class="pbtn">+ Agregar</a>
+      </div>
+    </div>
+
+    <!-- Gomita Osito -->
+    <div class="pcard">
+      <div class="pvis" style="background:linear-gradient(145deg,#880040,#C2185B 40%,#FF80AB 70%,#FFD6E8)">
+        <img class="pvis-img" src="https://images.unsplash.com/photo-1560713781-d4f65c9fe2cd?auto=format&fit=crop&q=80&w=600"
+             alt="Gomita Osito" loading="lazy"
+             onload="this.classList.add('loaded');this.nextElementSibling.style.opacity='0'"
+             onerror="this.remove()">
+        <div class="pvis-emoji" style="transition:opacity .5s">🐻</div>
+      </div>
+      <div class="pbody">
+        <div class="pname">Gomita Osito Docile</div>
+        <div class="pprice">$8.500<small>/kg</small></div>
+        <a href="catalogo.html" class="pbtn">+ Agregar</a>
+      </div>
+    </div>
+
+    <!-- Almendra Entera -->
+    <div class="pcard">
+      <div class="pvis" style="background:linear-gradient(145deg,#3e2010,#6D4C41 40%,#A1887F 70%,#EFEBE9)">
+        <img class="pvis-img" src="https://images.unsplash.com/photo-1508061253366-f7da158b6d46?auto=format&fit=crop&q=80&w=600"
+             alt="Almendra Entera" loading="lazy"
+             onload="this.classList.add('loaded');this.nextElementSibling.style.opacity='0'"
+             onerror="this.remove()">
+        <div class="pvis-emoji" style="transition:opacity .5s">🌰</div>
+      </div>
+      <div class="pbody">
+        <div class="pname">Almendra Entera</div>
+        <div class="pprice">$16.000<small>/kg</small></div>
+        <a href="catalogo.html" class="pbtn">+ Agregar</a>
+      </div>
+    </div>
+
+  </div>
 </section>
-<!-- Final CTA -->
-<section class="px-6 py-12 bg-[#8B7355] text-center mb-32 rounded-t-[3rem]">
-<h2 class="text-white text-2xl font-extrabold mb-4">¿Quieres el catálogo completo?</h2>
-<p class="text-[#F5F0E6] mb-8 opacity-90">Escríbenos y te enviamos la lista de precios actualizada al instante.</p>
-<a class="inline-flex items-center gap-3 bg-[#25D366] text-white px-8 py-4 rounded-full font-bold shadow-lg active:scale-95 transition-transform" href="https://wa.me/56953743338?text=Hola!%20Vi%20la%20p%C3%A1gina%20de%20Estaci%C3%B3n%20Snack%20y%20quiero%20ver%20el%20cat%C3%A1logo%20completo%20%F0%9F%8C%B0" target="_blank">
-<span class="material-symbols-outlined" data-icon="chat">chat</span>
-            ESCRIBIR POR WHATSAPP
-        </a>
+
+<!-- CTA BANNER -->
+<section class="cta">
+  <h2>¿Quieres el catálogo completo?</h2>
+  <p>Escríbenos y te enviamos la lista de precios actualizada al instante.</p>
+  <a class="wabtn" href="https://wa.me/56953743338?text=Hola!%20Vi%20la%20p%C3%A1gina%20de%20Estaci%C3%B3n%20Snack%20y%20quiero%20ver%20el%20cat%C3%A1logo%20completo%20%F0%9F%8C%B0" target="_blank">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    ESCRIBIR POR WHATSAPP
+  </a>
 </section>
-<!-- Sticky WhatsApp FAB -->
-<div class="fixed bottom-24 right-4 z-[60]">
-<a class="flex items-center gap-3 bg-[#25D366] text-white p-4 rounded-full shadow-[0_10px_20px_rgba(37,211,102,0.3)] active:scale-90 transition-transform" href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20en%20Estaci%C3%B3n%20Snack%20%F0%9F%8C%B0" target="_blank">
-<span class="material-symbols-outlined" data-icon="chat">chat</span>
-<span class="font-bold pr-2">PEDIR POR WHATSAPP</span>
-</a>
-</div>
-<!-- BottomNavBar -->
-<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 pb-4 pt-2 bg-white/90 dark:bg-stone-950/90 backdrop-blur-md rounded-t-3xl border-t border-stone-100 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-<a class="flex flex-col items-center justify-center text-[#C4603A] dark:text-orange-400 bg-[#C4603A]/10 rounded-xl px-3 py-1 active:scale-90 duration-150" href="index.html">
-<span class="material-symbols-outlined" data-icon="home">home</span>
-<span class="font-['Manrope'] font-bold text-[10px]">Inicio</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#8B7355] dark:text-stone-400 hover:text-[#5C7A3E] active:scale-90 duration-150" href="catalogo.html">
-<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
-<span class="font-['Manrope'] font-bold text-[10px]">Productos</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#8B7355] dark:text-stone-400 hover:text-[#5C7A3E] active:scale-90 duration-150" href="como-pedir.html">
-<span class="material-symbols-outlined" data-icon="info">info</span>
-<span class="font-['Manrope'] font-bold text-[10px]">Cómo pedir</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#8B7355] dark:text-stone-400 hover:text-[#5C7A3E] active:scale-90 duration-150" href="https://wa.me/56953743338?text=Hola!%20Vi%20la%20p%C3%A1gina%20de%20Estaci%C3%B3n%20Snack%20y%20quiero%20hacer%20un%20pedido%20%F0%9F%8C%B0" target="_blank">
-<span class="material-symbols-outlined" data-icon="chat">chat</span>
-<span class="font-['Manrope'] font-bold text-[10px]">Pedir</span>
-</a>
-</nav>
-<!-- Footer -->
-<footer class="w-full py-12 px-6 flex flex-col items-center gap-4 mb-20 text-center bg-[#8B7355] dark:bg-stone-950">
-<span class="text-[#F5F0E6] font-bold">Estación Snack</span>
-<p class="text-[#F5F0E6] font-['Manrope'] text-sm opacity-80">© 2024 Estación Snack - Frutos Secos por Kilo</p>
-<div class="flex gap-4">
-<a class="text-[#F5F0E6] text-sm underline font-bold transition-opacity hover:opacity-100" href="#">Términos</a>
-<a class="text-[#F5F0E6] text-sm opacity-80 transition-opacity hover:opacity-100" href="#">Contacto</a>
-<a class="text-[#F5F0E6] text-sm opacity-80 transition-opacity hover:opacity-100" href="#">WhatsApp</a>
-</div>
+
+<footer>
+  <strong>Estación Snack</strong>
+  © 2025 Estación Snack — Frutos Secos por Kilo · Santa Cruz, Chile
 </footer>
-</body></html>
+
+</div><!-- shell -->
+
+<!-- FAB -->
+<a class="fab" href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20en%20Estaci%C3%B3n%20Snack%20%F0%9F%8C%B0" target="_blank">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  PEDIR
+</a>
+
+<!-- BOTTOM NAV -->
+<nav class="bnav">
+  <a href="index.html" class="ni cur">
+    <span class="ni-ico">🏠</span>Inicio
+  </a>
+  <a href="catalogo.html" class="ni">
+    <span class="ni-ico">🛍</span>Productos
+  </a>
+  <a href="como-pedir.html" class="ni">
+    <span class="ni-ico">ℹ️</span>Cómo pedir
+  </a>
+  <a href="https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido%20%F0%9F%8C%B0" target="_blank" class="ni">
+    <span class="ni-ico">💬</span>Pedir
+  </a>
+</nav>
+
+</body>
+</html>

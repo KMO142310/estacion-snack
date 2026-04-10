@@ -31,6 +31,8 @@ const COMBOS: ComboConfig[] = [
     oldPrice: 18990,
     bg: "var(--orange-soft)",
     emoji: "🥜🍬",
+    image: "/img/pack-pica.jpg",
+    imageWebp: "/img/pack-pica.webp",
   },
   {
     id: "pack_dulce",

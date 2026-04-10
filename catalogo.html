@@ -69,19 +69,20 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 .btn-secondary:hover{background:var(--text);color:#fff}
 
 /* BENEFITS */
-.benefits{display:grid;grid-template-columns:1fr;gap:12px;padding:0 0 40px}
+.benefits{display:grid;grid-template-columns:1fr;gap:1px;background:rgba(0,0,0,.06);border-radius:var(--r);overflow:hidden;margin-bottom:32px}
 @media(min-width:520px){.benefits{grid-template-columns:1fr 1fr 1fr}}
-.benefit{background:var(--green-soft);border-radius:var(--r);padding:20px;text-align:center}
-.benefit-ico{font-size:28px;margin-bottom:8px}
-.benefit-title{font-size:15px;font-weight:800;margin-bottom:4px}
-.benefit-desc{font-size:12px;color:var(--sub);line-height:1.4}
+.benefit{background:var(--bg);padding:24px 20px;text-align:center}
+.benefit-ico{font-size:24px;margin-bottom:10px}
+.benefit-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.benefit-desc{font-size:12px;color:var(--sub);line-height:1.5}
 
-/* MARQUEE */
-.marquee{overflow:hidden;padding:14px 0;background:var(--text);margin-bottom:40px}
-@media(min-width:768px){.marquee{margin-bottom:56px}}
-.mq-track{display:flex;width:max-content;animation:scroll 25s linear infinite}
-@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.mq-item{white-space:nowrap;padding:0 20px;font-size:13px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:.03em}
+/* MARQUEE — seamless infinite loop */
+.marquee{overflow:hidden;padding:12px 0;background:var(--text)}
+.mq-track{display:flex;width:max-content;animation:mq-scroll 20s linear infinite;will-change:transform}
+.mq-set{display:flex;flex-shrink:0}
+@keyframes mq-scroll{to{transform:translateX(-33.333%)}}
+.mq-item{white-space:nowrap;padding:0 12px;font-size:12px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.05em;text-transform:uppercase}
+.mq-dot{color:rgba(255,255,255,.2);padding:0 4px}
 
 /* SECTION HEADERS */
 .sec-hdr{padding:0 0 20px;display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px}
@@ -89,17 +90,17 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 .sec-hdr span{font-size:13px;color:var(--sub)}
 
 /* COMBOS */
-.combos{display:grid;grid-template-columns:1fr;gap:14px;padding:0 0 48px}
+.combos{display:grid;grid-template-columns:1fr;gap:12px;padding:0 0 48px}
 @media(min-width:520px){.combos{grid-template-columns:1fr 1fr 1fr}}
-.combo{border-radius:var(--r-lg);padding:24px;position:relative;overflow:hidden}
-.combo-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;display:inline-block;padding:4px 12px;background:rgba(0,0,0,.08);border-radius:var(--r-full)}
-.combo h3{font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-bottom:6px;line-height:1.1}
+.combo{border-radius:var(--r);padding:20px;position:relative;overflow:hidden;border:1.5px solid rgba(0,0,0,.06)}
+.combo-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:inline-block;padding:4px 10px;background:rgba(0,0,0,.05);border-radius:var(--r-full);color:var(--sub)}
+.combo h3{font-size:18px;font-weight:800;margin-bottom:6px;line-height:1.2}
 .combo p{font-size:13px;color:var(--sub);line-height:1.5;margin-bottom:14px}
 .combo-prices{display:flex;align-items:baseline;gap:8px;margin-bottom:16px}
-.combo-price{font-size:22px;font-weight:900}
-.combo-old{font-size:14px;color:var(--sub);text-decoration:line-through}
-.combo-save{font-size:11px;font-weight:800;color:var(--green);background:var(--green-soft);padding:3px 10px;border-radius:var(--r-full)}
-.combo-btn{width:100%;padding:14px;font-size:14px;font-weight:700;border-radius:12px;border:2px solid var(--text);background:transparent;color:var(--text);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px}
+.combo-price{font-size:20px;font-weight:900}
+.combo-old{font-size:13px;color:var(--sub);text-decoration:line-through}
+.combo-save{font-size:10px;font-weight:800;color:var(--green);background:var(--green-soft);padding:3px 8px;border-radius:var(--r-full)}
+.combo-btn{width:100%;padding:12px;font-size:13px;font-weight:700;border-radius:10px;border:2px solid var(--text);background:transparent;color:var(--text);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px}
 .combo-btn:hover{background:var(--text);color:#fff}
 .combo-btn:active{transform:scale(.96)}
 .combo:nth-child(1){background:var(--orange-soft)}
@@ -112,25 +113,26 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 @media(min-width:900px){.grid{grid-template-columns:1fr 1fr 1fr;gap:20px}}
 
 /* CARD */
-.card{border-radius:var(--r-lg);overflow:hidden;transition:transform .3s cubic-bezier(.34,1.56,.64,1);position:relative}
-@media(hover:hover){.card:hover{transform:translateY(-6px)}}
-.card:active{transform:scale(.97)}
-.card-visual{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.card-visual img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.16,1,.3,1)}
-@media(hover:hover){.card:hover .card-visual img{transform:scale(1.06) rotate(-2deg)}}
-.card-num{position:absolute;top:12px;left:16px;font-family:'DM Serif Display',Georgia,serif;font-size:64px;opacity:.08;line-height:1;pointer-events:none}
-.card-badge{position:absolute;top:14px;right:14px;font-size:11px;font-weight:800;padding:6px 14px;background:var(--text);color:#fff;border-radius:var(--r-full)}
-.card-use{position:absolute;bottom:14px;left:14px;display:flex;gap:4px}
-.card-use span{font-size:10px;font-weight:700;padding:4px 10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);border-radius:var(--r-full);color:var(--text)}
-.card-body{padding:20px;background:var(--bg)}
-.card-cat{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
-.card-name{font-family:'DM Serif Display',Georgia,serif;font-size:22px;line-height:1.1;margin-bottom:4px}
-.card-copy{font-size:13px;color:var(--sub);line-height:1.5;margin-bottom:12px}
-.card-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:14px}
-.card-price{font-size:24px;font-weight:800;letter-spacing:-.02em}
-.card-unit{font-size:13px;color:var(--sub)}
-.card-stock{font-size:11px;color:var(--sub);margin-bottom:14px;display:flex;align-items:center;gap:5px}
-.card-stock::before{content:'';width:6px;height:6px;border-radius:50%}
+.card{border-radius:var(--r);overflow:hidden;transition:transform .25s ease,box-shadow .25s ease;position:relative;background:var(--bg);border:1.5px solid rgba(0,0,0,.06)}
+@media(hover:hover){.card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.08)}}
+.card:active{transform:scale(.98)}
+.card-visual{aspect-ratio:1/1;position:relative;overflow:hidden;background:rgba(0,0,0,.02)}
+.card-visual img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+@media(hover:hover){.card:hover .card-visual img{transform:scale(1.04)}}
+.card-num{display:none}
+.card-badge{position:absolute;top:12px;right:12px;font-size:10px;font-weight:700;padding:5px 12px;background:var(--text);color:#fff;border-radius:var(--r-full);letter-spacing:.02em}
+.card-use{display:none}
+.card-body{padding:16px}
+.card-cat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.card-name{font-size:16px;font-weight:800;line-height:1.2;margin-bottom:4px}
+.card-copy{font-size:12px;color:var(--sub);line-height:1.5;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-price-row{display:flex;align-items:baseline;gap:6px;margin-bottom:12px}
+.card-price{font-size:20px;font-weight:800;letter-spacing:-.02em}
+.card-unit{font-size:12px;color:var(--sub)}
+.card-stock{font-size:10px;color:var(--sub);margin-bottom:12px;display:flex;align-items:center;gap:5px}
+.card-stock::before{content:'';width:5px;height:5px;border-radius:50%}
+.card-stock.out{color:var(--red)}
+.card-stock.out::before{background:var(--red)}
 
 /* Color worlds */
 .card[data-color="orange"] .card-visual{background:var(--orange-soft)}
@@ -152,15 +154,16 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 .card[data-color="sand"] .card-cat{color:var(--sand)}
 .card[data-color="sand"] .card-stock::before{background:var(--sand)}
 
-.btn-add{width:100%;padding:14px;font-size:14px;font-weight:700;border-radius:14px;border:3px solid var(--text);background:transparent;color:var(--text);transition:all .2s cubic-bezier(.34,1.56,.64,1);display:flex;align-items:center;justify-content:center;gap:6px}
-.btn-add:hover{background:var(--text);color:#fff}
-.btn-add:active{transform:scale(.96)}
-.stepper{display:flex;width:100%;border:3px solid var(--text);border-radius:14px;overflow:hidden}
-.stp-btn{width:48px;height:44px;background:none;color:var(--text);font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:background .15s}
-.stp-btn:hover{background:rgba(0,0,0,.05)}
-.stp-btn:active{background:rgba(0,0,0,.1)}
+.btn-add{width:100%;padding:12px;font-size:13px;font-weight:700;border-radius:10px;border:2px solid var(--text);background:var(--text);color:#fff;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+@media(hover:hover){.btn-add:hover{opacity:.85}}
+.btn-add:active{transform:scale(.97)}
+.btn-add.out{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.06);color:var(--sub);pointer-events:none}
+.stepper{display:flex;width:100%;border:2px solid rgba(0,0,0,.1);border-radius:10px;overflow:hidden}
+.stp-btn{width:44px;height:40px;background:none;color:var(--text);font-size:18px;font-weight:600;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.stp-btn:hover{background:rgba(0,0,0,.04)}
+.stp-btn:active{background:rgba(0,0,0,.08)}
 .stp-btn:disabled{opacity:.2}
-.stp-val{flex:1;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;border-left:3px solid var(--text);border-right:3px solid var(--text)}
+.stp-val{flex:1;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border-left:2px solid rgba(0,0,0,.1);border-right:2px solid rgba(0,0,0,.1)}
 .card-subtotal{text-align:center;margin-top:8px;font-size:13px;font-weight:700;height:0;opacity:0;overflow:hidden;transition:all .3s}
 .card-subtotal.show{height:22px;opacity:1}
 
@@ -323,18 +326,11 @@ html{scroll-behavior:smooth}
   </div>
 </div>
 
-<!-- MARQUEE -->
+<!-- MARQUEE — 3 identical sets for seamless loop -->
 <div class="marquee"><div class="mq-track">
-  <span class="mq-item">Para la oficina</span><span class="mq-item">·</span>
-  <span class="mq-item">Para el estudio</span><span class="mq-item">·</span>
-  <span class="mq-item">Para el gym</span><span class="mq-item">·</span>
-  <span class="mq-item">Para la casa</span><span class="mq-item">·</span>
-  <span class="mq-item">Para compartir</span><span class="mq-item">·</span>
-  <span class="mq-item">Para la oficina</span><span class="mq-item">·</span>
-  <span class="mq-item">Para el estudio</span><span class="mq-item">·</span>
-  <span class="mq-item">Para el gym</span><span class="mq-item">·</span>
-  <span class="mq-item">Para la casa</span><span class="mq-item">·</span>
-  <span class="mq-item">Para compartir</span><span class="mq-item">·</span>
+  <div class="mq-set"><span class="mq-item">Para la oficina</span><span class="mq-dot">·</span><span class="mq-item">Para el estudio</span><span class="mq-dot">·</span><span class="mq-item">Para el gym</span><span class="mq-dot">·</span><span class="mq-item">Para la casa</span><span class="mq-dot">·</span><span class="mq-item">Para compartir</span><span class="mq-dot">·</span><span class="mq-item">Despacho martes y viernes</span><span class="mq-dot">·</span><span class="mq-item">WhatsApp 953 743 338</span><span class="mq-dot">·</span></div>
+  <div class="mq-set"><span class="mq-item">Para la oficina</span><span class="mq-dot">·</span><span class="mq-item">Para el estudio</span><span class="mq-dot">·</span><span class="mq-item">Para el gym</span><span class="mq-dot">·</span><span class="mq-item">Para la casa</span><span class="mq-dot">·</span><span class="mq-item">Para compartir</span><span class="mq-dot">·</span><span class="mq-item">Despacho martes y viernes</span><span class="mq-dot">·</span><span class="mq-item">WhatsApp 953 743 338</span><span class="mq-dot">·</span></div>
+  <div class="mq-set"><span class="mq-item">Para la oficina</span><span class="mq-dot">·</span><span class="mq-item">Para el estudio</span><span class="mq-dot">·</span><span class="mq-item">Para el gym</span><span class="mq-dot">·</span><span class="mq-item">Para la casa</span><span class="mq-dot">·</span><span class="mq-item">Para compartir</span><span class="mq-dot">·</span><span class="mq-item">Despacho martes y viernes</span><span class="mq-dot">·</span><span class="mq-item">WhatsApp 953 743 338</span><span class="mq-dot">·</span></div>
 </div></div>
 
 <!-- COMBOS -->
@@ -456,26 +452,37 @@ const fmt=n=>'$'+n.toLocaleString('es-CL');
 const total=()=>Object.entries(cart).reduce((s,[id,kg])=>s+(P.find(p=>p.id===id)?.price||0)*kg,0);
 const totalKg=()=>Object.values(cart).reduce((a,b)=>a+b,0);
 
+function stockLabel(p){
+  const left=p.stock-(cart[p.id]||0);
+  if(p.stock===0)return `<div class="card-stock out">Agotado</div>`;
+  if(left<=0)return `<div class="card-stock out">Stock reservado</div>`;
+  if(p.stock<=1)return `<div class="card-stock">Último kilo</div>`;
+  if(left<=2)return `<div class="card-stock">Quedan ${left} kg</div>`;
+  return `<div class="card-stock">${p.stock} kg disponibles</div>`;
+}
+
 function render(){
   document.getElementById('grid').innerHTML=P.map((p,i)=>{
     const kg=cart[p.id]||0;
+    const soldOut=p.stock===0;
     return `<article class="card reveal" data-color="${p.color}">
       <div class="card-visual">
-        <div class="card-num">0${i+1}</div>
-        ${p.badge?`<div class="card-badge">${p.badge}</div>`:''}
-        <div class="card-use">${p.uses.map(u=>`<span>${u}</span>`).join('')}</div>
-        <img src="${p.img}" alt="${p.name}" loading="lazy" width="280" height="350">
+        ${p.badge&&!soldOut?`<div class="card-badge">${p.badge}</div>`:''}
+        ${soldOut?`<div class="card-badge" style="background:var(--red)">Agotado</div>`:''}
+        <img src="${p.img}" alt="${p.name}" loading="lazy" width="800" height="800">
       </div>
       <div class="card-body">
         <div class="card-cat">${p.cat}</div>
         <div class="card-name">${p.name}</div>
         <div class="card-copy">${p.copy}</div>
         <div class="card-price-row"><span class="card-price">${fmt(p.price)}</span><span class="card-unit">/ kilo</span></div>
-        <div class="card-stock">${p.stock<=1?'Último kilo disponible':p.stock+' kg disponibles'}</div>
+        ${stockLabel(p)}
         <div id="a-${p.id}">
-        ${kg===0
-          ?`<button class="btn-add" onclick="add('${p.id}')">Lo quiero</button>`
-          :`<div class="stepper"><button class="stp-btn" onclick="setKg('${p.id}',${kg-1})">−</button><span class="stp-val">${kg} kg</span><button class="stp-btn" onclick="setKg('${p.id}',${kg+1})" ${kg>=p.stock?'disabled':''}>+</button></div>`}
+        ${soldOut
+          ?`<button class="btn-add out" disabled>Agotado</button>`
+          :kg===0
+            ?`<button class="btn-add" onclick="add('${p.id}')">Agregar</button>`
+            :`<div class="stepper"><button class="stp-btn" onclick="setKg('${p.id}',${kg-1})">−</button><span class="stp-val">${kg} kg</span><button class="stp-btn" onclick="setKg('${p.id}',${kg+1})" ${kg>=p.stock?'disabled':''}>+</button></div>`}
         </div>
         <div class="card-subtotal${kg?' show':''}" style="color:var(--${p.color})">${kg} kg = ${fmt(kg*p.price)}</div>
       </div>
@@ -495,7 +502,8 @@ function setKg(id,val){
 function updateCard(id){
   const p=P.find(x=>x.id===id),kg=cart[id]||0;
   const el=document.getElementById('a-'+id);if(!el)return;
-  if(kg===0)el.innerHTML=`<button class="btn-add" onclick="add('${id}')">Lo quiero</button>`;
+  if(p.stock===0)el.innerHTML=`<button class="btn-add out" disabled>Agotado</button>`;
+  else if(kg===0)el.innerHTML=`<button class="btn-add" onclick="add('${id}')">Agregar</button>`;
   else el.innerHTML=`<div class="stepper"><button class="stp-btn" onclick="setKg('${id}',${kg-1})">−</button><span class="stp-val">${kg} kg</span><button class="stp-btn" onclick="setKg('${id}',${kg+1})" ${kg>=p.stock?'disabled':''}>+</button></div>`;
   const sub=el.nextElementSibling;
   if(sub){sub.className='card-subtotal'+(kg?' show':'');sub.style.color='var(--'+p.color+')';sub.textContent=kg+' kg = '+fmt(kg*p.price);}
@@ -545,6 +553,14 @@ function send(){
   const n=document.getElementById('fN')?.value.trim(),d=document.getElementById('fD')?.value.trim(),no=document.getElementById('fNo')?.value.trim();
   if(!n){document.getElementById('fN').classList.add('err');showToast('Falta tu nombre');return;}
   if(!d){document.getElementById('fD').classList.add('err');showToast('Falta tu dirección');return;}
+  // Stock validation before send
+  let stockIssue=false;
+  Object.entries(cart).forEach(([id,kg])=>{
+    const p=P.find(x=>x.id===id);
+    if(kg>p.stock){cart[id]=p.stock;if(!p.stock)delete cart[id];stockIssue=true;}
+  });
+  if(stockIssue){saveCart();render();updateBadge();renderDrawer();showToast('Stock ajustado — revisa tu pedido');return;}
+  if(!Object.keys(cart).length){showToast('Tu pedido está vacío');return;}
   const L=['🌰 *PEDIDO ESTACIÓN SNACK*',''];
   Object.entries(cart).forEach(([id,kg])=>{const p=P.find(x=>x.id===id);L.push(`• ${p.name}: *${kg} kg* → ${fmt(kg*p.price)}`);});
   L.push('',`*TOTAL: ${fmt(total())}*`,'',`👤 ${n}`,`📍 ${d}`);if(no)L.push(`📝 ${no}`);L.push('','_Transferencia o efectivo ✅_');

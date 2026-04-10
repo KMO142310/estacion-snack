@@ -40,10 +40,14 @@ export default function Header({ onCartOpen }: HeaderProps) {
         href="/"
         style={{
           fontFamily: "'DM Serif Display', Georgia, serif",
-          fontSize: 22,
+          fontSize: "clamp(18px, 5vw, 22px)",
           display: "flex",
           alignItems: "center",
           gap: 8,
+          minWidth: 0,
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          textOverflow: "ellipsis",
         }}
         aria-label="Estación Snack — Inicio"
       >

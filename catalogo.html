@@ -3,216 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Estación Snack — Arma tu pedido</title>
-<meta name="theme-color" content="#FAF7F2">
+<title>Estación Snack</title>
+<meta name="theme-color" content="#0A0A08">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#FAF7F2;--text:#2C2416;--accent:#C8553D;--subtle:#A69580;--surface:#EEE8DF;--line:#DDD5CA;--green:#5C7A3E;--wa:#25D366}
-body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-h1,h2,h3,.serif{font-family:'DM Serif Display',Georgia,serif;font-weight:400}
+:root{--dark:#0A0A08;--light:#F5F0E6;--accent:#E8633B;--gold:#D4A853;--subtle:rgba(245,240,230,.4)}
+html{scroll-snap-type:y mandatory;overflow-x:hidden;scrollbar-width:none}
+html::-webkit-scrollbar{display:none}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--dark);color:var(--light);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,.serif{font-family:'DM Serif Display',Georgia,serif;font-weight:400}
 a{text-decoration:none;color:inherit}
-button{font-family:inherit;border:none;cursor:pointer}
+button{font-family:inherit;border:none;cursor:pointer;color:inherit}
 img{display:block;max-width:100%}
 
-/* NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,247,242,0);transition:background .3s,box-shadow .3s}
-.nav.scrolled{background:rgba(250,247,242,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line)}
-@media(min-width:768px){.nav{padding:20px 48px}}
-.nav-brand{font-family:'DM Serif Display',Georgia,serif;font-size:18px}
-@media(min-width:768px){.nav-brand{font-size:20px}}
-.nav-mid{display:none;gap:32px}
-@media(min-width:768px){.nav-mid{display:flex}}
-.nav-mid a{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--subtle);transition:color .2s}
-.nav-mid a:hover{color:var(--text)}
-.nav-right{display:flex;gap:12px;align-items:center}
-.nav-cart{position:relative;background:none;padding:8px;color:var(--text)}
-.nav-cart svg{width:22px;height:22px}
-.nav-badge{position:absolute;top:2px;right:2px;min-width:16px;height:16px;background:var(--accent);color:#fff;font-size:9px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;transform:scale(0);transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
-.nav-badge.show{transform:scale(1)}
+/* PANELS */
+.panel{min-height:100vh;min-height:100dvh;scroll-snap-align:start;position:relative;display:flex;overflow:hidden}
 
-/* HERO */
-.hero{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:80px 24px 48px;position:relative}
-.hero-top{font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--subtle);margin-bottom:24px}
-.hero h1{font-size:clamp(42px,10vw,90px);line-height:.95;letter-spacing:-.03em;margin-bottom:20px}
-.hero h1 em{font-style:italic;color:var(--accent)}
-.hero-sub{font-size:clamp(15px,2.5vw,19px);color:var(--subtle);max-width:460px;line-height:1.6;margin-bottom:36px}
-.hero-cta{display:inline-flex;align-items:center;gap:8px;padding:16px 40px;background:var(--text);color:var(--bg);font-size:14px;font-weight:600;letter-spacing:.03em;transition:all .2s}
-.hero-cta:hover{background:#1a1608;gap:12px}
-.hero-cta svg{width:16px;height:16px;transition:transform .2s}
-.hero-cta:hover svg{transform:translateX(2px)}
-.hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--subtle);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
-.hero-scroll::after{content:'';width:1px;height:40px;background:var(--line);animation:pulse 2s ease infinite}
-@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+/* ═══ INTRO PANEL ═══ */
+.intro{flex-direction:column;justify-content:flex-end;padding:0 24px 80px;background:var(--dark)}
+@media(min-width:768px){.intro{padding:0 64px 96px}}
+.intro-line{font-size:11px;text-transform:uppercase;letter-spacing:.2em;color:var(--subtle);margin-bottom:24px}
+.intro h1{font-size:clamp(48px,12vw,120px);line-height:.88;letter-spacing:-.04em;margin-bottom:16px}
+.intro h1 .line2{display:block;color:var(--accent)}
+.intro h1 .line3{display:block;font-style:italic;color:var(--gold)}
+.intro-sub{font-size:clamp(14px,2vw,18px);color:var(--subtle);max-width:440px;line-height:1.6;margin-bottom:32px}
+.intro-cta{display:inline-flex;align-items:center;gap:12px;font-size:14px;font-weight:600;color:var(--light);padding:16px 0;border-bottom:1px solid var(--subtle);transition:all .3s}
+.intro-cta:hover{border-color:var(--light);gap:16px}
+.intro-cta svg{width:16px;height:16px;transition:transform .3s}
+.intro-cta:hover svg{transform:translateX(4px)}
 
-/* PRODUCT SECTION */
-.prod{display:grid;grid-template-columns:1fr;border-top:1px solid var(--line)}
-@media(min-width:768px){.prod{grid-template-columns:1fr 1fr;min-height:85vh}}
-.prod:last-of-type{border-bottom:1px solid var(--line)}
+.intro-scroll{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px}
+.intro-scroll span{font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:var(--subtle)}
+.intro-scroll::after{content:'';width:1px;height:32px;background:var(--subtle);animation:breathe 2.5s ease infinite}
+@keyframes breathe{0%,100%{opacity:.2;height:24px}50%{opacity:.8;height:36px}}
 
-.prod-img{aspect-ratio:1/1;background:var(--surface);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
-@media(min-width:768px){.prod-img{aspect-ratio:auto}}
-.prod-img img{width:85%;height:85%;object-fit:contain;transition:transform .8s cubic-bezier(.32,.72,0,1)}
-.prod:hover .prod-img img{transform:scale(1.05)}
-.prod-img-badge{position:absolute;top:16px;left:16px;font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;padding:6px 14px;background:var(--accent);color:#fff}
-@media(min-width:768px){.prod-img-badge{top:24px;left:24px}}
+/* Corner info */
+.corner-tl{position:absolute;top:20px;left:24px;font-family:'DM Serif Display',Georgia,serif;font-size:16px}
+@media(min-width:768px){.corner-tl{top:28px;left:64px;font-size:18px}}
+.corner-tr{position:absolute;top:20px;right:24px;display:flex;gap:16px;align-items:center}
+@media(min-width:768px){.corner-tr{top:28px;right:64px}}
+.corner-tr a{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--subtle);transition:color .2s}
+.corner-tr a:hover{color:var(--light)}
+.cart-btn{position:relative;background:none;padding:4px}
+.cart-btn svg{width:22px;height:22px}
+.cart-badge{position:absolute;top:-4px;right:-6px;min-width:16px;height:16px;background:var(--accent);font-size:9px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;transform:scale(0);transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.cart-badge.show{transform:scale(1)}
 
-.prod-info{display:flex;flex-direction:column;justify-content:center;padding:32px 24px}
-@media(min-width:768px){.prod-info{padding:48px 56px}}
-@media(min-width:1024px){.prod-info{padding:64px 80px}}
-.prod-cat{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--subtle);margin-bottom:12px}
-.prod-name{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,4vw,44px);line-height:1.05;letter-spacing:-.02em;margin-bottom:8px}
-.prod-copy{font-size:15px;color:var(--subtle);line-height:1.6;margin-bottom:20px;max-width:360px}
-.prod-price{font-size:14px;color:var(--subtle);margin-bottom:24px}
-.prod-price b{font-family:'DM Serif Display',Georgia,serif;font-size:28px;color:var(--text);font-weight:400}
-.prod-stock{font-size:12px;color:var(--subtle);margin-bottom:20px;display:flex;align-items:center;gap:6px}
-.prod-stock::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green)}
+/* ═══ PRODUCT PANEL ═══ */
+.ppanel{flex-direction:column}
+@media(min-width:768px){.ppanel{flex-direction:row}}
 
-/* ADD / STEPPER */
-.prod-action{max-width:280px}
-.btn-add{width:100%;padding:14px 24px;font-size:13px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;background:none;border:1.5px solid var(--text);color:var(--text);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-add:hover{background:var(--text);color:var(--bg)}
-.stepper{display:flex;width:100%;border:1.5px solid var(--text)}
-.stp-btn{width:48px;height:46px;background:none;color:var(--text);font-size:20px;display:flex;align-items:center;justify-content:center;transition:background .15s}
-.stp-btn:hover{background:var(--surface)}
+.ppanel-img{flex:1;background:var(--light);display:flex;align-items:center;justify-content:center;position:relative;min-height:50vh}
+@media(min-width:768px){.ppanel-img{min-height:auto}}
+.ppanel-img img{width:75%;max-width:400px;height:auto;object-fit:contain;transition:transform 1s cubic-bezier(.16,1,.3,1);filter:drop-shadow(0 20px 40px rgba(0,0,0,.15))}
+.ppanel:hover .ppanel-img img{transform:scale(1.04) rotate(-1deg)}
+.ppanel-num{position:absolute;bottom:20px;left:24px;font-family:'DM Serif Display',Georgia,serif;font-size:clamp(80px,15vw,180px);color:rgba(10,10,8,.06);line-height:1;pointer-events:none}
+@media(min-width:768px){.ppanel-num{bottom:auto;top:50%;transform:translateY(-50%);left:32px}}
+.ppanel-badge{position:absolute;top:20px;right:20px;font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;padding:6px 16px;background:var(--accent);color:#fff}
+@media(min-width:768px){.ppanel-badge{top:32px;right:32px}}
+
+.ppanel-info{flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 24px 48px;background:var(--dark)}
+@media(min-width:768px){.ppanel-info{padding:48px 64px}}
+@media(min-width:1024px){.ppanel-info{padding:64px 96px}}
+.ppanel-cat{font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--subtle);margin-bottom:16px}
+.ppanel-name{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(32px,5vw,52px);line-height:1;letter-spacing:-.02em;margin-bottom:12px}
+.ppanel-copy{font-size:15px;color:var(--subtle);line-height:1.7;margin-bottom:24px;max-width:380px}
+@media(min-width:768px){.ppanel-copy{font-size:16px}}
+.ppanel-price{font-size:13px;color:var(--subtle);margin-bottom:6px}
+.ppanel-price b{font-family:'DM Serif Display',Georgia,serif;font-size:32px;color:var(--light);font-weight:400}
+.ppanel-stock{font-size:12px;color:var(--subtle);margin-bottom:28px;display:flex;align-items:center;gap:6px}
+.ppanel-stock::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold)}
+
+/* ACTIONS */
+.ppanel-action{max-width:300px}
+.btn-want{width:100%;padding:16px 24px;font-size:13px;text-transform:uppercase;letter-spacing:.1em;font-weight:600;background:none;border:1.5px solid var(--light);color:var(--light);transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-want:hover{background:var(--light);color:var(--dark)}
+.stepper{display:flex;width:100%;border:1.5px solid var(--light)}
+.stp-btn{width:52px;height:50px;background:none;font-size:20px;display:flex;align-items:center;justify-content:center;transition:background .15s;color:var(--light)}
+.stp-btn:hover{background:rgba(245,240,230,.08)}
 .stp-btn:disabled{opacity:.2}
-.stp-val{flex:1;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;border-left:1.5px solid var(--text);border-right:1.5px solid var(--text)}
-.prod-subtotal{margin-top:10px;font-size:13px;color:var(--green);font-weight:600;height:0;opacity:0;overflow:hidden;transition:all .3s}
-.prod-subtotal.show{height:20px;opacity:1}
+.stp-val{flex:1;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;border-left:1.5px solid var(--light);border-right:1.5px solid var(--light)}
+.ppanel-subtotal{margin-top:10px;font-size:13px;color:var(--gold);font-weight:600;opacity:0;transition:opacity .3s}
+.ppanel-subtotal.show{opacity:1}
 
-/* REVERSE ORDER on alternating */
+/* Alternate: image right on even */
 @media(min-width:768px){
-  .prod:nth-child(even) .prod-img{order:2}
-  .prod:nth-child(even) .prod-info{order:1}
+  .ppanel:nth-child(odd) .ppanel-img{order:2}
+  .ppanel:nth-child(odd) .ppanel-info{order:1}
 }
 
-/* BOTTOM BAR */
-.bar{position:fixed;bottom:0;left:0;right:0;z-index:60;background:var(--text);color:var(--bg);padding:14px 24px calc(14px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;transform:translateY(110%);transition:transform .4s cubic-bezier(.32,.72,0,1)}
-.bar.show{transform:translateY(0)}
-@media(min-width:768px){.bar{padding:16px 48px}}
-.bar-total{font-family:'DM Serif Display',Georgia,serif;font-size:22px}
-.bar-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;opacity:.5}
-.bar-btn{padding:12px 28px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.03em;transition:background .15s}
-.bar-btn:hover{background:var(--accent)cc}
+/* ═══ FINAL PANEL ═══ */
+.final{flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 24px;background:var(--dark)}
+.final h2{font-size:clamp(36px,8vw,72px);line-height:.92;letter-spacing:-.03em;margin-bottom:20px}
+.final h2 em{font-style:italic;color:var(--gold)}
+.final p{font-size:15px;color:var(--subtle);max-width:360px;line-height:1.6;margin-bottom:32px}
+.final-wa{display:inline-flex;align-items:center;gap:12px;padding:18px 40px;background:#25D366;color:#fff;font-size:15px;font-weight:700;transition:transform .2s cubic-bezier(.34,1.56,.64,1)}
+.final-wa:hover{transform:scale(1.04)}
+.final-wa svg{width:22px;height:22px}
+.final-links{display:flex;gap:32px;margin-top:48px}
+.final-links a{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--subtle);transition:color .2s}
+.final-links a:hover{color:var(--light)}
+.final-copy{margin-top:48px;font-size:11px;color:rgba(245,240,230,.15)}
 
-/* MOBILE NAV */
-.bnav{position:fixed;bottom:0;left:0;right:0;z-index:50;display:flex;justify-content:space-around;padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:rgba(250,247,242,.95);backdrop-filter:blur(12px);border-top:1px solid var(--line);transition:transform .3s}
-.bnav.hide{transform:translateY(110%)}
-@media(min-width:768px){.bnav{display:none}}
-.ni{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:600;color:var(--subtle);padding:4px 12px}
-.ni.cur{color:var(--accent)}
-.ni svg{width:18px;height:18px}
-
-/* OVERLAY + DRAWER */
-.overlay{position:fixed;inset:0;z-index:80;background:rgba(44,36,22,.4);opacity:0;pointer-events:none;transition:opacity .3s}
+/* ═══ DRAWER ═══ */
+.overlay{position:fixed;inset:0;z-index:200;background:rgba(10,10,8,.6);opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
 .overlay.on{opacity:1;pointer-events:all}
-.drawer{position:fixed;z-index:90;background:var(--bg);display:flex;flex-direction:column;transition:transform .4s cubic-bezier(.32,.72,0,1)}
-.drawer{bottom:0;left:0;right:0;max-height:90dvh;transform:translateY(105%);border-top:1px solid var(--line)}
-.drawer.on{transform:translateY(0)}
-@media(min-width:768px){.drawer{top:0;right:0;bottom:0;left:auto;width:440px;max-height:none;transform:translateX(105%);border-top:none;border-left:1px solid var(--line)}.drawer.on{transform:translateX(0)}}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:100%;max-width:420px;z-index:210;background:var(--dark);border-left:1px solid rgba(245,240,230,.08);transform:translateX(105%);transition:transform .4s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column}
+.drawer.on{transform:translateX(0)}
+.drw-head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid rgba(245,240,230,.08)}
+.drw-title{font-family:'DM Serif Display',Georgia,serif;font-size:20px}
+.drw-close{background:none;font-size:20px;padding:8px;color:var(--subtle)}
+.drw-body{flex:1;overflow-y:auto;padding:20px 24px}
+.drw-foot{padding:16px 24px calc(env(safe-area-inset-bottom,16px) + 16px);border-top:1px solid rgba(245,240,230,.08)}
 
-.drw-head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--line)}
-.drw-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px}
-.drw-close{background:none;font-size:20px;color:var(--subtle);padding:8px}
-.drw-body{flex:1;overflow-y:auto;padding:24px}
-.drw-foot{padding:16px 24px calc(env(safe-area-inset-bottom,16px) + 16px);border-top:1px solid var(--line)}
-
-.ci{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.ci{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid rgba(245,240,230,.06)}
 .ci:last-of-type{border:none}
-.ci-img{width:64px;height:72px;object-fit:contain;flex-shrink:0;background:var(--surface);padding:6px}
-.ci-info{flex:1;min-width:0}
-.ci-name{font-family:'DM Serif Display',Georgia,serif;font-size:16px;margin-bottom:2px}
-.ci-det{font-size:13px;color:var(--subtle)}
+.ci-img{width:56px;height:64px;object-fit:contain;flex-shrink:0;background:var(--light);padding:4px;border-radius:2px}
+.ci-info{flex:1}
+.ci-name{font-family:'DM Serif Display',Georgia,serif;font-size:15px;margin-bottom:2px}
+.ci-det{font-size:12px;color:var(--subtle)}
 .ci-right{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between}
-.ci-price{font-size:15px;font-weight:600}
-.ci-del{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--subtle);background:none;padding:4px 0;transition:color .15s}
+.ci-price{font-size:14px;font-weight:600}
+.ci-del{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--subtle);background:none;padding:2px 0;transition:color .15s}
 .ci-del:hover{color:var(--accent)}
 
-.tot{display:flex;justify-content:space-between;align-items:baseline;padding:20px 0 12px;border-top:1.5px solid var(--text);margin-top:12px}
-.tot-label{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--subtle)}
+.tot{display:flex;justify-content:space-between;align-items:baseline;padding:20px 0 12px;border-top:1.5px solid var(--light);margin-top:12px}
+.tot-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--subtle)}
 .tot-value{font-family:'DM Serif Display',Georgia,serif;font-size:32px}
 
-.del-box{background:var(--surface);padding:16px;margin:16px 0;font-size:13px;color:var(--subtle);line-height:1.5}
-.del-box strong{color:var(--text);display:block;margin-bottom:2px}
-
-.fl{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--subtle);font-weight:600;display:block;margin-bottom:5px}
-.fi{width:100%;padding:12px;background:var(--surface);border:1px solid var(--line);font-size:14px;color:var(--text);outline:none;margin-bottom:14px;transition:border-color .2s;font-family:inherit}
-.fi:focus{border-color:var(--text)}
+.del-box{background:rgba(245,240,230,.04);padding:14px;margin:14px 0;font-size:13px;color:var(--subtle);line-height:1.5;border:1px solid rgba(245,240,230,.06)}
+.del-box strong{color:var(--light);display:block;margin-bottom:2px}
+.fl{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--subtle);font-weight:600;display:block;margin-bottom:5px}
+.fi{width:100%;padding:12px;background:rgba(245,240,230,.04);border:1px solid rgba(245,240,230,.1);font-size:14px;color:var(--light);outline:none;margin-bottom:12px;transition:border-color .2s;font-family:inherit}
+.fi:focus{border-color:var(--light)}
 .fi.err{border-color:var(--accent)}
-
-.send-btn{width:100%;padding:16px;background:var(--wa);color:#fff;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;transition:opacity .15s}
+.send-btn{width:100%;padding:16px;background:#25D366;color:#fff;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;transition:opacity .15s}
 .send-btn:hover{opacity:.9}
 .send-btn svg{width:20px;height:20px}
-.send-note{text-align:center;font-size:12px;color:var(--subtle);margin-top:8px}
+.send-note{text-align:center;font-size:11px;color:var(--subtle);margin-top:8px}
+.empty{text-align:center;padding:64px 0}
+.empty p{font-family:'DM Serif Display',Georgia,serif;font-size:18px;margin-bottom:6px}
+.empty span{font-size:13px;color:var(--subtle)}
 
-.empty{text-align:center;padding:64px 0;color:var(--subtle)}
-.empty p{font-family:'DM Serif Display',Georgia,serif;font-size:20px;color:var(--text);margin-bottom:6px}
-
-.toast{position:fixed;top:72px;left:50%;transform:translateX(-50%) translateY(-10px);z-index:200;background:var(--text);color:var(--bg);padding:10px 24px;font-size:13px;opacity:0;transition:all .3s;white-space:nowrap}
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);z-index:300;background:var(--light);color:var(--dark);padding:12px 28px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;white-space:nowrap}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* FOOTER */
-.foot{padding:48px 24px;text-align:center;border-top:1px solid var(--line)}
-@media(min-width:768px){.foot{padding:64px 48px}}
-.foot-brand{font-family:'DM Serif Display',Georgia,serif;font-size:24px;margin-bottom:8px}
-.foot p{font-size:13px;color:var(--subtle)}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav" id="nav">
-  <a href="index.html" class="nav-brand">Estación Snack</a>
-  <div class="nav-mid">
-    <a href="index.html">Inicio</a>
-    <a href="catalogo.html">Catálogo</a>
-    <a href="como-pedir.html">Cómo pedir</a>
-    <a href="https://wa.me/56953743338" target="_blank">WhatsApp</a>
-  </div>
-  <div class="nav-right">
-    <button class="nav-cart" onclick="openDrawer()">
+<!-- ═══ PANEL 1: INTRO ═══ -->
+<section class="panel intro">
+  <div class="corner-tl">Estación Snack</div>
+  <div class="corner-tr">
+    <a href="como-pedir.html" class="hide-mobile">Cómo pedir</a>
+    <a href="https://wa.me/56953743338" target="_blank" class="hide-mobile">WhatsApp</a>
+    <button class="cart-btn" onclick="openDrawer()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-      <span class="nav-badge" id="badge">0</span>
+      <span class="cart-badge" id="badge">0</span>
     </button>
   </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-top">Santa Cruz · Por kilo · Sin vueltas</div>
-  <h1>Elige.<br><em>Pide.</em><br>Disfruta.</h1>
-  <p class="hero-sub">6 productos, cero envases innecesarios. Arma tu pedido y lo enviamos por WhatsApp.</p>
-  <a href="#productos" class="hero-cta">
-    Elegir mis snacks
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+  <div class="intro-line">Santa Cruz · Chile · Por kilo</div>
+  <h1>
+    Elige.
+    <span class="line2">Pide.</span>
+    <span class="line3">Disfruta.</span>
+  </h1>
+  <p class="intro-sub">6 productos. Cero envases. Todo por WhatsApp. Scrollea para armar tu pedido.</p>
+  <a href="#p0" class="intro-cta">
+    Empezar
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
   </a>
-  <div class="hero-scroll">Scroll<span></span></div>
+  <div class="intro-scroll"><span>Scroll</span></div>
 </section>
 
-<!-- PRODUCTS -->
-<div id="productos"></div>
+<!-- ═══ PRODUCT PANELS ═══ -->
+<div id="panels"></div>
 
-<!-- FOOTER -->
-<div class="foot">
-  <div class="foot-brand">Estación Snack</div>
-  <p>Frutos secos y dulces por kilo · Santa Cruz, Chile</p>
-</div>
-
-<!-- BAR -->
-<div class="bar" id="bar">
-  <div><div class="bar-label">Total</div><div class="bar-total" id="barTotal">$0</div></div>
-  <button class="bar-btn" onclick="openDrawer()">Ver pedido →</button>
-</div>
-
-<!-- MOBILE NAV -->
-<nav class="bnav" id="bnav">
-  <a href="index.html" class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Inicio</a>
-  <a href="catalogo.html" class="ni cur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Catálogo</a>
-  <a href="como-pedir.html" class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Info</a>
-  <a href="https://wa.me/56953743338" target="_blank" class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>Pedir</a>
-</nav>
+<!-- ═══ FINAL PANEL ═══ -->
+<section class="panel final">
+  <h2>¿Todo<br><em>listo?</em></h2>
+  <p>Revisa tu pedido y envíalo. Te confirmamos por WhatsApp en menos de una hora.</p>
+  <button class="final-wa" onclick="openDrawer()">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479c0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Enviar pedido
+  </button>
+  <div class="final-links">
+    <a href="como-pedir.html">Cómo funciona</a>
+    <a href="https://wa.me/56953743338" target="_blank">WhatsApp directo</a>
+  </div>
+  <div class="final-copy">Estación Snack · Santa Cruz, Chile · 2025</div>
+</section>
 
 <!-- DRAWER -->
 <div class="overlay" id="overlay" onclick="closeDrawer()"></div>
@@ -226,38 +209,39 @@ img{display:block;max-width:100%}
 <script>
 const WA='56953743338';
 const P=[
-  {id:'mix',cat:'Frutos secos',name:'Mix Europeo',copy:'Almendras, avellanas, nueces, maní y pasas. La mezcla que se termina primero.',price:13000,stock:5,badge:'Más vendido',img:'https://www.elpalomo.cl/3484-large_default/mix-europeo-x-kilo.jpg'},
-  {id:'tropical',cat:'Dulces',name:'Maní Confitado Tropical',copy:'Maní cubierto de azúcar cristalizada en todos los colores. Crujiente, dulce, adictivo.',price:5990,stock:5,badge:null,img:'https://www.elpalomo.cl/2744-large_default/mani-confitado-tropical-x-kilo.jpg'},
-  {id:'rojo',cat:'Dulces',name:'Maní Confitado Rojo',copy:'El confitado clásico. Rojo oscuro, crujiente por fuera, maní tostado por dentro.',price:5990,stock:5,badge:null,img:'https://www.elpalomo.cl/2748-large_default/mani-confitado-natural-rojo-x-kilo.jpg'},
-  {id:'chuby',cat:'Dulces',name:'Chuby Bardú',copy:'Confites de chocolate tipo lenteja en todos los colores. El favorito de los niños (y no tan niños).',price:9990,stock:5,badge:'Popular',img:'https://www.elpalomo.cl/2873-large_default/chuby-bardu-x-kilo-.jpg'},
-  {id:'gomita',cat:'Dulces',name:'Gomita Osito Docile',copy:'Ositos de goma clásicos. Suaves, dulces, de los que no puedes comer solo uno.',price:8500,stock:5,badge:null,img:'https://www.elpalomo.cl/3183-large_default/gomita-osito-docile-x-kg.jpg'},
-  {id:'almendra',cat:'Frutos secos',name:'Almendra Entera',copy:'Almendra natural con piel. Crujiente, nutritiva, premium. Queda 1 kilo.',price:16000,stock:1,badge:'Último kilo',img:'https://www.elpalomo.cl/3340-large_default/saco-almendra-enteras-x-10-kilos.jpg'},
+  {id:'mix',cat:'Frutos secos',name:'Mix Europeo',copy:'Almendras, avellanas, nueces, maní y pasas. La bolsa que se vacía primero en cualquier mesa.',price:13000,stock:5,badge:'Más vendido',img:'https://www.elpalomo.cl/3484-large_default/mix-europeo-x-kilo.jpg'},
+  {id:'tropical',cat:'Dulces',name:'Maní Confitado Tropical',copy:'Maní envuelto en azúcar cristalizada de colores. Crujiente por fuera. Imposible parar.',price:5990,stock:5,badge:null,img:'https://www.elpalomo.cl/2744-large_default/mani-confitado-tropical-x-kilo.jpg'},
+  {id:'rojo',cat:'Dulces',name:'Maní Confitado Rojo',copy:'El confitado de toda la vida. Rojo intenso, crujiente, adictivo. Clásico por algo.',price:5990,stock:5,badge:null,img:'https://www.elpalomo.cl/2748-large_default/mani-confitado-natural-rojo-x-kilo.jpg'},
+  {id:'chuby',cat:'Dulces',name:'Chuby Bardú',copy:'Confites de chocolate tipo lenteja en todos los colores. Los que desaparecen del bowl sin que nadie confiese.',price:9990,stock:5,badge:'Popular',img:'https://www.elpalomo.cl/2873-large_default/chuby-bardu-x-kilo-.jpg'},
+  {id:'gomita',cat:'Dulces',name:'Gomita Osito Docile',copy:'Ositos de goma suaves y dulces. Los comes de a uno y cuando te das cuenta se acabaron.',price:8500,stock:5,badge:null,img:'https://www.elpalomo.cl/3183-large_default/gomita-osito-docile-x-kg.jpg'},
+  {id:'almendra',cat:'Frutos secos',name:'Almendra Entera',copy:'Almendra natural con piel. Crujiente, nutritiva, premium. Solo queda un kilo.',price:16000,stock:1,badge:'Último kilo',img:'https://www.elpalomo.cl/3340-large_default/saco-almendra-enteras-x-10-kilos.jpg'},
 ];
-let cart={},prevTotal=0;
+let cart={};
 const fmt=n=>'$'+n.toLocaleString('es-CL');
 const total=()=>Object.entries(cart).reduce((s,[id,kg])=>s+(P.find(p=>p.id===id)?.price||0)*kg,0);
 const totalKg=()=>Object.values(cart).reduce((a,b)=>a+b,0);
 
-function renderProducts(){
-  document.getElementById('productos').innerHTML=P.map(p=>{
+function renderPanels(){
+  document.getElementById('panels').innerHTML=P.map((p,i)=>{
     const kg=cart[p.id]||0;
-    return `<section class="prod" id="p-${p.id}">
-      <div class="prod-img">
-        ${p.badge?`<div class="prod-img-badge">${p.badge}</div>`:''}
+    return `<section class="panel ppanel" id="p${i}">
+      <div class="ppanel-img">
+        <div class="ppanel-num">0${i+1}</div>
+        ${p.badge?`<div class="ppanel-badge">${p.badge}</div>`:''}
         <img src="${p.img}" alt="${p.name}">
       </div>
-      <div class="prod-info">
-        <div class="prod-cat">${p.cat}</div>
-        <h2 class="prod-name">${p.name}</h2>
-        <p class="prod-copy">${p.copy}</p>
-        <div class="prod-price"><b>${fmt(p.price)}</b> / kilo</div>
-        <div class="prod-stock">${p.stock<=1?'Último kilo disponible':p.stock+' kg disponibles'}</div>
-        <div class="prod-action" id="a-${p.id}">
+      <div class="ppanel-info">
+        <div class="ppanel-cat">${p.cat}</div>
+        <h2 class="ppanel-name">${p.name}</h2>
+        <p class="ppanel-copy">${p.copy}</p>
+        <div class="ppanel-price"><b>${fmt(p.price)}</b> / kilo</div>
+        <div class="ppanel-stock">${p.stock<=1?'Último kilo':p.stock+' kg disponibles'}</div>
+        <div class="ppanel-action" id="a-${p.id}">
         ${kg===0
-          ?`<button class="btn-add" onclick="add('${p.id}')">Lo quiero</button>`
+          ?`<button class="btn-want" onclick="add('${p.id}')">Lo quiero</button>`
           :`<div class="stepper"><button class="stp-btn" onclick="setKg('${p.id}',${kg-1})">−</button><span class="stp-val">${kg} kg</span><button class="stp-btn" onclick="setKg('${p.id}',${kg+1})" ${kg>=p.stock?'disabled':''}>+</button></div>`}
         </div>
-        <div class="prod-subtotal${kg?' show':''}" id="s-${p.id}">${kg} kg = ${fmt(kg*p.price)}</div>
+        <div class="ppanel-subtotal${kg?' show':''}">${kg} kg = ${fmt(kg*p.price)}</div>
       </div>
     </section>`;
   }).join('');
@@ -267,40 +251,31 @@ function add(id){setKg(id,1);}
 function setKg(id,val){
   const p=P.find(x=>x.id===id);val=Math.max(0,Math.min(p.stock,val));
   const was=cart[id]||0;if(!val)delete cart[id];else cart[id]=val;
-  if(val>was)showToast(`${p.name} — ${val} kg agregado`);
-  renderProducts();updateUI();
+  if(val>was)showToast(`${p.name} — ${val} kg`);
+  renderPanels();updateBadge();
+}
+function updateBadge(){
+  const b=document.getElementById('badge');b.textContent=totalKg();
+  b.classList.toggle('show',totalKg()>0);
 }
 
-function updateUI(){
-  const kg=totalKg(),t=total();
-  document.getElementById('badge').textContent=kg;
-  document.getElementById('badge').classList.toggle('show',kg>0);
-  document.getElementById('bar').classList.toggle('show',kg>0);
-  document.getElementById('bnav').classList.toggle('hide',kg>0);
-  animTotal(prevTotal,t);prevTotal=t;
-}
-function animTotal(from,to){if(from===to)return;const el=document.getElementById('barTotal'),dur=250,t0=performance.now();const tick=now=>{const p=Math.min((now-t0)/dur,1);el.textContent=fmt(Math.round(from+(to-from)*(1-Math.pow(1-p,3))));if(p<1)requestAnimationFrame(tick);};requestAnimationFrame(tick);}
-
-// Nav scroll effect
-window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);},{passive:true});
-
-// Drawer
 function openDrawer(){document.getElementById('drawer').classList.add('on');document.getElementById('overlay').classList.add('on');document.body.style.overflow='hidden';renderDrawer();}
 function closeDrawer(){document.getElementById('drawer').classList.remove('on');document.getElementById('overlay').classList.remove('on');document.body.style.overflow='';}
+
 function renderDrawer(){
   const body=document.getElementById('drwBody'),foot=document.getElementById('drwFoot'),keys=Object.keys(cart);
-  if(!keys.length){document.getElementById('drwTitle').textContent='Tu pedido';body.innerHTML=`<div class="empty"><p>Vacío por ahora</p><span>Elige algo del catálogo</span></div>`;foot.innerHTML='';return;}
+  if(!keys.length){document.getElementById('drwTitle').textContent='Tu pedido';body.innerHTML=`<div class="empty"><p>Vacío</p><span>Scrollea y elige tus snacks</span></div>`;foot.innerHTML='';return;}
   document.getElementById('drwTitle').textContent=totalKg()+' kg';
   body.innerHTML=keys.map(id=>{const p=P.find(x=>x.id===id),kg=cart[id];
     return `<div class="ci"><img class="ci-img" src="${p.img}" alt="${p.name}"><div class="ci-info"><div class="ci-name">${p.name}</div><div class="ci-det">${kg} kg × ${fmt(p.price)}</div></div><div class="ci-right"><div class="ci-price">${fmt(kg*p.price)}</div><button class="ci-del" onclick="del('${id}')">Quitar</button></div></div>`;
   }).join('')+`<div class="tot"><span class="tot-label">Total</span><span class="tot-value">${fmt(total())}</span></div>
-  <div class="del-box"><strong>🚗 Despacho en Santa Cruz</strong>Martes y viernes · Transferencia o efectivo</div>
+  <div class="del-box"><strong>Despacho en Santa Cruz</strong>Martes y viernes · Transferencia o efectivo</div>
   <label class="fl">Nombre</label><input class="fi" id="fN" type="text" placeholder="María González" autocomplete="name">
-  <label class="fl">Dirección</label><input class="fi" id="fD" type="text" placeholder="Los Aromos 234, Santa Cruz" autocomplete="street-address">
-  <label class="fl">Nota (opcional)</label><textarea class="fi" id="fNo" rows="2" placeholder="Horario preferido, instrucciones"></textarea>`;
+  <label class="fl">Dirección</label><input class="fi" id="fD" type="text" placeholder="Los Aromos 234" autocomplete="street-address">
+  <label class="fl">Nota (opcional)</label><textarea class="fi" id="fNo" rows="2" placeholder="Horario, instrucciones"></textarea>`;
   foot.innerHTML=`<button class="send-btn" onclick="send()"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479c0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Enviar por WhatsApp</button><div class="send-note">Respondemos en menos de 1 hora</div>`;
 }
-function del(id){delete cart[id];updateUI();renderProducts();renderDrawer();}
+function del(id){delete cart[id];updateBadge();renderPanels();renderDrawer();}
 function send(){
   const n=document.getElementById('fN')?.value.trim(),d=document.getElementById('fD')?.value.trim(),no=document.getElementById('fNo')?.value.trim();
   if(!n){document.getElementById('fN').classList.add('err');showToast('Falta tu nombre');return;}
@@ -312,7 +287,7 @@ function send(){
 }
 let _tt;function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('on'),2200);}
 
-renderProducts();
+renderPanels();
 </script>
 </body>
 </html>

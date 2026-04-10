@@ -15,6 +15,8 @@ interface ComboConfig {
   oldPrice: number;
   bg: string;
   emoji: string;
+  image?: string;
+  imageWebp?: string;
 }
 
 const COMBOS: ComboConfig[] = [
@@ -41,6 +43,8 @@ const COMBOS: ComboConfig[] = [
     oldPrice: 18490,
     bg: "var(--purple-soft)",
     emoji: "🍭🐻",
+    image: "/img/pack-dulce.jpg",
+    imageWebp: "/img/pack-dulce.webp",
   },
   {
     id: "pack_proteina",
@@ -117,8 +121,21 @@ export default function Combos({ products }: Props) {
                 fontSize: 48,
                 borderBottom: "1.5px solid rgba(0,0,0,.06)",
                 background: combo.bg,
+                overflow: "hidden",
               }}>
-                {combo.emoji}
+                {combo.image ? (
+                  <picture>
+                    {combo.imageWebp && <source srcSet={combo.imageWebp} type="image/webp" />}
+                    <img
+                      src={combo.image}
+                      alt={combo.title}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      loading="lazy"
+                    />
+                  </picture>
+                ) : (
+                  combo.emoji
+                )}
               </div>
               <span style={{
                 position: "absolute",

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://estacion-snack.vercel.app/sitemap.xml

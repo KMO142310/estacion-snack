@@ -3,7 +3,10 @@
   "trailingSlash": false,
   "routes": [
     { "src": "/", "dest": "/index.html" },
-    { "src": "/catalogo", "dest": "/catalogo.html" },
-    { "src": "/como-pedir", "dest": "/como-pedir.html" }
+    { "src": "/catalogo", "dest": "/catalogo.html" }
+  ],
+  "redirects": [
+    { "source": "/como-pedir.html", "destination": "/#faq", "permanent": true },
+    { "source": "/como-pedir", "destination": "/#faq", "permanent": true }
   ]
 }

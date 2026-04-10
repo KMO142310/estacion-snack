@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Estación Snack — Frutos secos y dulces por kilo</title>
-<meta name="description" content="Frutos secos, confites y dulces por kilo en Santa Cruz. Mix Europeo, maní confitado, gomitas y más. Pide por WhatsApp.">
-<meta property="og:title" content="Estación Snack — Snacks por kilo">
-<meta property="og:description" content="Frutos secos y dulces frescos por kilo. Despacho en Santa Cruz.">
+<title>Estación Snack — Snacks naturales por kilo · Santa Cruz</title>
+<meta name="description" content="Frutos secos y snacks naturales por kilo en Santa Cruz. Mix de nueces, almendras, maní confitado y más. Despacho martes y viernes. Pide por WhatsApp.">
+<meta property="og:title" content="Estación Snack — Snacks por kilo en Santa Cruz">
+<meta property="og:description" content="Frutos secos y dulces frescos por kilo. Sin envases, sin sobreprecio. Despacho en Santa Cruz.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#FFFDF9">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌰</text></svg>">
@@ -30,8 +30,10 @@ body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--
 a{text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent}
 button{font-family:inherit;border:none;cursor:pointer}
 img{display:block;max-width:100%}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+@media(min-width:768px){.wrap{padding:0 40px}}
 
-/* ═══ HEADER ═══ */
+/* HEADER */
 header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid rgba(0,0,0,.04)}
 @media(min-width:768px){header{padding:14px 40px}}
 .logo{font-family:'DM Serif Display',Georgia,serif;font-size:22px;display:flex;align-items:center;gap:8px}
@@ -51,7 +53,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 .cart-badge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 6px;background:var(--orange);color:#fff;font-size:11px;font-weight:800;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;border:2px solid var(--bg);transform:scale(0);transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
 .cart-badge.show{transform:scale(1)}
 
-/* ═══ HERO ═══ */
+/* HERO */
 .hero{text-align:center;padding:40px 20px 32px}
 @media(min-width:768px){.hero{padding:64px 40px 48px}}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:var(--orange-soft);color:var(--orange);font-size:13px;font-weight:700;border-radius:var(--r-full);margin-bottom:20px}
@@ -65,35 +67,59 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 .btn-secondary{padding:14px 28px;background:transparent;color:var(--text);font-size:15px;font-weight:700;border-radius:var(--r-full);border:3px solid var(--text);transition:all .2s}
 .btn-secondary:hover{background:var(--text);color:#fff}
 
-/* ═══ MARQUEE ═══ */
-.marquee{overflow:hidden;padding:14px 0;background:var(--text);margin-bottom:32px}
-@media(min-width:768px){.marquee{margin-bottom:48px}}
+/* BENEFITS */
+.benefits{display:grid;grid-template-columns:1fr;gap:12px;padding:0 0 40px}
+@media(min-width:520px){.benefits{grid-template-columns:1fr 1fr 1fr}}
+.benefit{background:var(--green-soft);border-radius:var(--r);padding:20px;text-align:center}
+.benefit-ico{font-size:28px;margin-bottom:8px}
+.benefit-title{font-size:15px;font-weight:800;margin-bottom:4px}
+.benefit-desc{font-size:12px;color:var(--sub);line-height:1.4}
+
+/* MARQUEE */
+.marquee{overflow:hidden;padding:14px 0;background:var(--text);margin-bottom:40px}
+@media(min-width:768px){.marquee{margin-bottom:56px}}
 .mq-track{display:flex;width:max-content;animation:scroll 25s linear infinite}
 @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .mq-item{white-space:nowrap;padding:0 20px;font-size:13px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:.03em}
 
-/* ═══ GRID ═══ */
-.section-title{padding:0 20px 20px;display:flex;align-items:baseline;justify-content:space-between}
-@media(min-width:768px){.section-title{padding:0 40px 24px;max-width:1200px;margin:0 auto}}
-.section-title h2{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(24px,4vw,36px);font-weight:400}
-.section-title span{font-size:13px;color:var(--sub)}
+/* SECTION HEADERS */
+.sec-hdr{padding:0 0 20px;display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.sec-hdr h2{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(24px,4vw,36px);font-weight:400}
+.sec-hdr span{font-size:13px;color:var(--sub)}
 
-.grid{display:grid;grid-template-columns:1fr;gap:16px;padding:0 20px 100px;max-width:1200px;margin:0 auto}
+/* COMBOS */
+.combos{display:grid;grid-template-columns:1fr;gap:14px;padding:0 0 48px}
+@media(min-width:520px){.combos{grid-template-columns:1fr 1fr 1fr}}
+.combo{border-radius:var(--r-lg);padding:24px;position:relative;overflow:hidden}
+.combo-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;display:inline-block;padding:4px 12px;background:rgba(0,0,0,.08);border-radius:var(--r-full)}
+.combo h3{font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-bottom:6px;line-height:1.1}
+.combo p{font-size:13px;color:var(--sub);line-height:1.5;margin-bottom:14px}
+.combo-prices{display:flex;align-items:baseline;gap:8px;margin-bottom:16px}
+.combo-price{font-size:22px;font-weight:900}
+.combo-old{font-size:14px;color:var(--sub);text-decoration:line-through}
+.combo-save{font-size:11px;font-weight:800;color:var(--green);background:var(--green-soft);padding:3px 10px;border-radius:var(--r-full)}
+.combo-btn{width:100%;padding:12px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid var(--text);background:transparent;color:var(--text);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.combo-btn:hover{background:var(--text);color:#fff}
+.combo:nth-child(1){background:var(--orange-soft)}
+.combo:nth-child(2){background:var(--purple-soft)}
+.combo:nth-child(3){background:var(--green-soft)}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:1fr;gap:16px;padding:0 0 48px}
 @media(min-width:520px){.grid{grid-template-columns:1fr 1fr;gap:18px}}
 @media(min-width:900px){.grid{grid-template-columns:1fr 1fr 1fr;gap:20px}}
-@media(min-width:768px){.grid{padding:0 40px 60px}}
 
-/* ═══ CARD ═══ */
+/* CARD */
 .card{border-radius:var(--r-lg);overflow:hidden;transition:transform .3s cubic-bezier(.34,1.56,.64,1);position:relative}
 .card:hover{transform:translateY(-6px)}
 .card:active{transform:scale(.98)}
-
 .card-visual{aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:24px}
 .card-visual img{width:80%;max-width:280px;object-fit:contain;filter:drop-shadow(0 12px 24px rgba(0,0,0,.1));transition:transform .6s cubic-bezier(.16,1,.3,1)}
 .card:hover .card-visual img{transform:scale(1.06) rotate(-2deg)}
 .card-num{position:absolute;top:12px;left:16px;font-family:'DM Serif Display',Georgia,serif;font-size:64px;opacity:.08;line-height:1;pointer-events:none}
 .card-badge{position:absolute;top:14px;right:14px;font-size:11px;font-weight:800;padding:6px 14px;background:var(--text);color:#fff;border-radius:var(--r-full)}
-
+.card-use{position:absolute;bottom:14px;left:14px;display:flex;gap:4px}
+.card-use span{font-size:10px;font-weight:700;padding:4px 10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);border-radius:var(--r-full);color:var(--text)}
 .card-body{padding:20px;background:var(--bg)}
 .card-cat{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
 .card-name{font-family:'DM Serif Display',Georgia,serif;font-size:22px;line-height:1.1;margin-bottom:4px}
@@ -104,7 +130,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 .card-stock{font-size:11px;color:var(--sub);margin-bottom:14px;display:flex;align-items:center;gap:5px}
 .card-stock::before{content:'';width:6px;height:6px;border-radius:50%}
 
-/* Card color worlds */
+/* Color worlds */
 .card[data-color="orange"] .card-visual{background:var(--orange-soft)}
 .card[data-color="orange"] .card-cat{color:var(--orange)}
 .card[data-color="orange"] .card-stock::before{background:var(--orange)}
@@ -124,24 +150,38 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 .card[data-color="sand"] .card-cat{color:var(--sand)}
 .card[data-color="sand"] .card-stock::before{background:var(--sand)}
 
-/* ADD BUTTON */
 .btn-add{width:100%;padding:14px;font-size:14px;font-weight:700;border-radius:14px;border:3px solid var(--text);background:transparent;color:var(--text);transition:all .2s cubic-bezier(.34,1.56,.64,1);display:flex;align-items:center;justify-content:center;gap:6px}
 .btn-add:hover{background:var(--text);color:#fff}
 .btn-add:active{transform:scale(.96)}
-
-/* STEPPER */
 .stepper{display:flex;width:100%;border:3px solid var(--text);border-radius:14px;overflow:hidden}
 .stp-btn{width:48px;height:44px;background:none;color:var(--text);font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:background .15s}
 .stp-btn:hover{background:rgba(0,0,0,.05)}
 .stp-btn:disabled{opacity:.2}
 .stp-val{flex:1;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;border-left:3px solid var(--text);border-right:3px solid var(--text)}
-
 .card-subtotal{text-align:center;margin-top:8px;font-size:13px;font-weight:700;height:0;opacity:0;overflow:hidden;transition:all .3s}
 .card-subtotal.show{height:22px;opacity:1}
 
-/* ═══ CTA SECTION ═══ */
+/* TESTIMONIALS */
+.testimonials{padding:0 0 48px;display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:640px){.testimonials{grid-template-columns:1fr 1fr 1fr}}
+.testimonial{background:var(--sand-soft);border-radius:var(--r);padding:24px}
+.testimonial-stars{font-size:14px;margin-bottom:10px;letter-spacing:2px}
+.testimonial-text{font-size:14px;line-height:1.6;margin-bottom:14px;font-style:italic;color:var(--text)}
+.testimonial-author{font-size:12px;font-weight:700;color:var(--sub)}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:1fr;gap:24px;padding:0 0 48px;align-items:center}
+@media(min-width:768px){.about{grid-template-columns:1fr 1fr;gap:48px}}
+.about-text h2{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(24px,4vw,36px);font-weight:400;margin-bottom:12px}
+.about-text p{font-size:15px;color:var(--sub);line-height:1.7;margin-bottom:12px}
+.about-stats{display:flex;gap:24px;margin-top:16px}
+.about-stat{text-align:center}
+.about-stat-num{font-size:28px;font-weight:900;color:var(--orange)}
+.about-stat-label{font-size:11px;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.06em}
+
+/* CTA */
 .cta-section{text-align:center;padding:48px 20px 56px;background:var(--text);color:#fff;border-radius:var(--r-lg) var(--r-lg) 0 0;margin-top:16px}
-@media(min-width:768px){.cta-section{padding:80px 40px;border-radius:40px 40px 0 0;margin:16px 20px 0}}
+@media(min-width:768px){.cta-section{padding:80px 40px;border-radius:40px 40px 0 0}}
 .cta-section h2{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,6vw,48px);font-weight:400;margin-bottom:12px;line-height:1}
 .cta-section h2 em{font-style:italic;color:var(--orange)}
 .cta-section p{font-size:15px;color:rgba(255,255,255,.5);max-width:380px;margin:0 auto 28px;line-height:1.6}
@@ -149,11 +189,11 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 .btn-wa:hover{transform:scale(1.05)}
 .btn-wa svg{width:22px;height:22px}
 .cta-links{display:flex;gap:24px;justify-content:center;margin-top:32px}
-.cta-links a{font-size:12px;font-weight:600;color:rgba(255,255,255,.35);transition:color .2s}
+.cta-links a{font-size:12px;font-weight:600;color:rgba(255,255,255,.5);transition:color .2s}
 .cta-links a:hover{color:#fff}
-.cta-copy{margin-top:40px;font-size:11px;color:rgba(255,255,255,.12)}
+.cta-copy{margin-top:40px;font-size:11px;color:rgba(255,255,255,.25)}
 
-/* ═══ DRAWER ═══ */
+/* DRAWER */
 .overlay{position:fixed;inset:0;z-index:200;background:rgba(26,24,22,.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .3s}
 .overlay.on{opacity:1;pointer-events:all}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:100%;max-width:400px;z-index:210;background:var(--bg);transform:translateX(105%);transition:transform .4s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;border-left:2px solid rgba(0,0,0,.06)}
@@ -164,7 +204,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 .drw-close:hover{background:rgba(0,0,0,.08)}
 .drw-body{flex:1;overflow-y:auto;padding:16px 20px}
 .drw-foot{padding:12px 20px calc(env(safe-area-inset-bottom,12px) + 12px);border-top:2px solid rgba(0,0,0,.04)}
-
 .ci{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid rgba(0,0,0,.05)}
 .ci:last-of-type{border:none}
 .ci-img{width:52px;height:60px;border-radius:10px;object-fit:contain;flex-shrink:0;background:var(--orange-soft);padding:4px}
@@ -173,13 +212,11 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 .ci-det{font-size:12px;color:var(--sub)}
 .ci-right{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between}
 .ci-price{font-size:15px;font-weight:800}
-.ci-del{font-size:12px;font-weight:600;color:var(--sub);background:none;padding:8px 12px;transition:color .15s;min-height:44px;display:flex;align-items:center}
+.ci-del{font-size:12px;font-weight:600;color:var(--sub);background:none;padding:8px 12px;min-height:44px;display:flex;align-items:center;transition:color .15s}
 .ci-del:hover{color:var(--red)}
-
 .tot{display:flex;justify-content:space-between;align-items:baseline;padding:16px 0 12px;border-top:3px solid var(--text);margin-top:8px}
 .tot-label{font-size:13px;font-weight:600;color:var(--sub)}
 .tot-value{font-size:28px;font-weight:900;letter-spacing:-.02em}
-
 .del-box{background:var(--green-soft);border-radius:14px;padding:14px;margin:12px 0;font-size:13px;color:var(--sub);line-height:1.5}
 .del-box strong{color:var(--text);display:block;margin-bottom:2px}
 .fl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sub);display:block;margin-bottom:5px}
@@ -194,38 +231,34 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 .empty-ico{font-size:48px;margin-bottom:8px}
 .empty p{font-size:16px;font-weight:700;margin-bottom:4px}
 .empty span{font-size:13px;color:var(--sub)}
-
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);z-index:300;background:var(--text);color:#fff;padding:12px 24px;border-radius:var(--r-full);font-size:14px;font-weight:600;opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ═══ MOBILE NAV ═══ */
+/* MOBILE NAV */
 .bnav{position:fixed;bottom:0;left:0;right:0;z-index:90;display:flex;justify-content:space-around;padding:6px 8px calc(6px + env(safe-area-inset-bottom));background:rgba(255,253,249,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:2px solid rgba(0,0,0,.04)}
 @media(min-width:768px){.bnav{display:none}}
 .ni{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:700;color:var(--sub);padding:6px 14px;border-radius:12px;transition:color .15s}
 .ni.cur{color:var(--orange)}
 .ni svg{width:20px;height:20px}
 
-/* Focus styles */
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal:nth-child(2){transition-delay:.08s}
+.reveal:nth-child(3){transition-delay:.16s}
+
+/* Focus + a11y */
 :focus-visible{outline:2px solid var(--orange);outline-offset:2px;border-radius:4px}
-button:focus-visible,.btn-add:focus-visible,.btn-primary:focus-visible,.btn-secondary:focus-visible,.stp-btn:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
-
-/* Reduced motion */
-@media(prefers-reduced-motion:reduce){.mq-track{animation:none}.card,.card-visual img,.btn-primary,.btn-wa,.cart-btn,.cart-badge{transition:none!important}}
-
-/* Fix low contrast */
-.cta-links a{color:rgba(255,255,255,.5)}
-.cta-copy{color:rgba(255,255,255,.25)}
+@media(prefers-reduced-motion:reduce){.mq-track{animation:none}.card,.card-visual img,.btn-primary,.btn-wa,.cart-btn,.cart-badge,.reveal{transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 
 <header>
-  <a href="index.html" class="logo">
-    <div class="logo-icon">🌰</div>
-    Estación Snack
-  </a>
+  <a href="index.html" class="logo"><div class="logo-icon">🌰</div>Estación Snack</a>
   <nav class="nav-desktop">
-    <a href="catalogo.html">Catálogo</a>
+    <a href="#combos">Packs</a>
+    <a href="#productos">Productos</a>
     <a href="como-pedir.html">Cómo pedir</a>
   </nav>
   <div class="header-right">
@@ -240,38 +273,116 @@ button:focus-visible,.btn-add:focus-visible,.btn-primary:focus-visible,.btn-seco
   </div>
 </header>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-badge">📍 Santa Cruz, Chile</div>
-  <h1>Snacks <em>de verdad,</em><br>por kilo</h1>
-  <p>Sin envases, sin sobreprecio. Elige tus favoritos, arma tu pedido y te lo llevamos.</p>
+  <h1>Tu snack <em>favorito,</em><br>sin la bolsa de más</h1>
+  <p>Frutos secos y dulces frescos por kilo. Elige lo que quieras, arma tu pedido y te lo llevamos a la puerta.</p>
   <div class="hero-ctas">
-    <a href="#productos" class="btn-primary">Elegir snacks ↓</a>
+    <a href="#productos" class="btn-primary">Ver productos ↓</a>
     <a href="https://wa.me/56953743338?text=Hola!%20Quiero%20pedir%20%F0%9F%8C%B0" target="_blank" class="btn-secondary">WhatsApp</a>
   </div>
 </section>
 
+<!-- BENEFITS -->
+<div class="wrap">
+  <div class="benefits">
+    <div class="benefit reveal"><div class="benefit-ico">⚖️</div><div class="benefit-title">Compra solo lo que necesitas</div><div class="benefit-desc">Por kilo, sin envases innecesarios. Pagas exacto lo que llevas.</div></div>
+    <div class="benefit reveal"><div class="benefit-ico">🚗</div><div class="benefit-title">Te lo llevamos</div><div class="benefit-desc">Despacho en Santa Cruz cada martes y viernes. Transferencia o efectivo.</div></div>
+    <div class="benefit reveal"><div class="benefit-ico">💬</div><div class="benefit-title">Pedido en 2 minutos</div><div class="benefit-desc">Arma tu pedido acá y se envía directo a nuestro WhatsApp. Sin app, sin registro.</div></div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
 <div class="marquee"><div class="mq-track">
-  <span class="mq-item">Despacho martes y viernes</span><span class="mq-item">·</span>
-  <span class="mq-item">Transferencia o efectivo</span><span class="mq-item">·</span>
-  <span class="mq-item">Santa Cruz y alrededores</span><span class="mq-item">·</span>
-  <span class="mq-item">WhatsApp 953 743 338</span><span class="mq-item">·</span>
-  <span class="mq-item">Despacho martes y viernes</span><span class="mq-item">·</span>
-  <span class="mq-item">Transferencia o efectivo</span><span class="mq-item">·</span>
-  <span class="mq-item">Santa Cruz y alrededores</span><span class="mq-item">·</span>
-  <span class="mq-item">WhatsApp 953 743 338</span><span class="mq-item">·</span>
+  <span class="mq-item">Para la oficina</span><span class="mq-item">·</span>
+  <span class="mq-item">Para el estudio</span><span class="mq-item">·</span>
+  <span class="mq-item">Para el gym</span><span class="mq-item">·</span>
+  <span class="mq-item">Para la casa</span><span class="mq-item">·</span>
+  <span class="mq-item">Para compartir</span><span class="mq-item">·</span>
+  <span class="mq-item">Para la oficina</span><span class="mq-item">·</span>
+  <span class="mq-item">Para el estudio</span><span class="mq-item">·</span>
+  <span class="mq-item">Para el gym</span><span class="mq-item">·</span>
+  <span class="mq-item">Para la casa</span><span class="mq-item">·</span>
+  <span class="mq-item">Para compartir</span><span class="mq-item">·</span>
 </div></div>
 
-<main id="productos">
-  <div class="section-title">
-    <h2>Nuestros productos</h2>
-    <span>6 disponibles</span>
+<!-- COMBOS -->
+<div class="wrap" id="combos">
+  <div class="sec-hdr"><h2>Packs armados</h2><span>Ahorra comprando juntos</span></div>
+  <div class="combos">
+    <div class="combo reveal">
+      <div class="combo-tag">🏢 Oficina</div>
+      <h3>Pack Pica</h3>
+      <p>Mix Europeo 1kg + Maní Tropical 1kg. Para la mesa de la oficina o la junta con amigos.</p>
+      <div class="combo-prices"><span class="combo-price">$17.500</span><span class="combo-old">$18.990</span><span class="combo-save">-8%</span></div>
+      <button class="combo-btn" onclick="addCombo('mix','tropical')">Agregar pack</button>
+    </div>
+    <div class="combo reveal">
+      <div class="combo-tag">📚 Estudio</div>
+      <h3>Pack Dulce</h3>
+      <p>Chuby Bardú 1kg + Gomita Osito 1kg. Para las sesiones de estudio o las tardes de Netflix.</p>
+      <div class="combo-prices"><span class="combo-price">$17.000</span><span class="combo-old">$18.490</span><span class="combo-save">-8%</span></div>
+      <button class="combo-btn" onclick="addCombo('chuby','gomita')">Agregar pack</button>
+    </div>
+    <div class="combo reveal">
+      <div class="combo-tag">💪 Gimnasio</div>
+      <h3>Pack Proteína</h3>
+      <p>Mix Europeo 1kg + Almendra Entera 1kg. Snack natural para antes o después de entrenar.</p>
+      <div class="combo-prices"><span class="combo-price">$27.000</span><span class="combo-old">$29.000</span><span class="combo-save">-7%</span></div>
+      <button class="combo-btn" onclick="addCombo('mix','almendra')">Agregar pack</button>
+    </div>
   </div>
+</div>
+
+<!-- PRODUCTS -->
+<main class="wrap" id="productos">
+  <div class="sec-hdr"><h2>Todos los productos</h2><span>6 disponibles</span></div>
   <div class="grid" id="grid"></div>
 </main>
 
+<!-- TESTIMONIALS -->
+<div class="wrap">
+  <div class="sec-hdr"><h2>Lo que dicen nuestros clientes</h2></div>
+  <div class="testimonials">
+    <div class="testimonial reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">"El Mix Europeo es adictivo. Pedí 2 kilos y en la oficina duraron 3 días."</div>
+      <div class="testimonial-author">— Camila R., Santa Cruz</div>
+    </div>
+    <div class="testimonial reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">"Me encanta que puedo pedir por WhatsApp y me llega a la casa. Super práctico."</div>
+      <div class="testimonial-author">— Tomás M., Santa Cruz</div>
+    </div>
+    <div class="testimonial reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">"Los confites Chuby Bardú son los favoritos de mis hijos. Siempre tengo un kilo en la casa."</div>
+      <div class="testimonial-author">— Francisca L., Santa Cruz</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="wrap">
+  <div class="about">
+    <div class="about-text">
+      <h2>Detrás de <em class="serif">Estación Snack</em></h2>
+      <p>Somos de Santa Cruz y nos cansamos de los snacks caros en envases chicos. Así que decidimos vender directo: por kilo, sin envases de más, a precio justo.</p>
+      <p>Trabajamos con El Palomo, uno de los distribuidores más grandes de Chile, para garantizar producto fresco y de calidad.</p>
+      <div class="about-stats">
+        <div class="about-stat"><div class="about-stat-num">6</div><div class="about-stat-label">Productos</div></div>
+        <div class="about-stat"><div class="about-stat-num">2</div><div class="about-stat-label">Despachos/semana</div></div>
+        <div class="about-stat"><div class="about-stat-num">1h</div><div class="about-stat-label">Respuesta</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
 <section class="cta-section">
-  <h2>¿Todo <em>listo?</em></h2>
-  <p>Revisa tu pedido y envíalo por WhatsApp. Te confirmamos en menos de una hora.</p>
+  <h2>¿Armaste <em>tu pedido?</em></h2>
+  <p>Revísalo y envíalo por WhatsApp. Te confirmamos en menos de una hora.</p>
   <button class="btn-wa" onclick="openDrawer()">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479c0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     Enviar pedido
@@ -300,12 +411,12 @@ button:focus-visible,.btn-add:focus-visible,.btn-primary:focus-visible,.btn-seco
 <script>
 const WA='56953743338';
 const P=[
-  {id:'mix',color:'orange',cat:'Frutos secos',name:'Mix Europeo',copy:'Maní sin sal, almendras, nueces y avellanas. La mezcla que desaparece primero de la mesa.',price:13000,stock:5,badge:'Top ventas',img:'img/mix-europeo-x-kilo.jpg'},
-  {id:'tropical',color:'green',cat:'Dulces',name:'Maní Confitado Tropical',copy:'Maní envuelto en azúcar de colores. Crujiente, dulce, imposible parar.',price:5990,stock:5,badge:null,img:'img/mani-confitado-tropical-x-kilo.jpg'},
-  {id:'rojo',color:'red',cat:'Dulces',name:'Maní Confitado Rojo',copy:'El confitado clásico. Rojo oscuro, crujiente por fuera, maní tostado por dentro.',price:5990,stock:5,badge:null,img:'img/mani-confitado-natural-rojo-x-kilo.jpg'},
-  {id:'chuby',color:'purple',cat:'Dulces',name:'Chuby Bardú',copy:'Confites de chocolate en todos los colores. Los que desaparecen del bowl sin que nadie confiese.',price:9990,stock:5,badge:'Popular',img:'img/chuby-bardu-x-kilo-.jpg'},
-  {id:'gomita',color:'yellow',cat:'Dulces',name:'Gomita Osito Docile',copy:'Ositos de goma suaves. Los comes de a uno y cuando cachái se acabaron.',price:8500,stock:5,badge:null,img:'img/gomita-osito-docile-x-kg.jpg'},
-  {id:'almendra',color:'sand',cat:'Frutos secos',name:'Almendra Entera',copy:'Almendra natural con piel. Crujiente, nutritiva, de primera. Solo queda un kilo.',price:16000,stock:1,badge:'Último kg',img:'img/saco-almendra-enteras-x-10-kilos.jpg'},
+  {id:'mix',color:'orange',cat:'Frutos secos',name:'Mix Europeo',copy:'Maní sin sal, almendras, nueces y avellanas. La mezcla que desaparece primero de la mesa.',price:13000,stock:5,badge:'Top ventas',uses:['Oficina','Gym'],img:'img/mix-europeo-x-kilo.jpg'},
+  {id:'tropical',color:'green',cat:'Dulces',name:'Maní Confitado Tropical',copy:'Maní envuelto en azúcar de colores. Crujiente, dulce, imposible parar.',price:5990,stock:5,badge:null,uses:['Picoteo','Casa'],img:'img/mani-confitado-tropical-x-kilo.jpg'},
+  {id:'rojo',color:'red',cat:'Dulces',name:'Maní Confitado Rojo',copy:'El confitado clásico. Rojo oscuro, crujiente por fuera, maní tostado por dentro.',price:5990,stock:5,badge:null,uses:['Clásico'],img:'img/mani-confitado-natural-rojo-x-kilo.jpg'},
+  {id:'chuby',color:'purple',cat:'Dulces',name:'Chuby Bardú',copy:'Confites de chocolate en todos los colores. Los que desaparecen del bowl sin que nadie confiese.',price:9990,stock:5,badge:'Popular',uses:['Estudio','Niños'],img:'img/chuby-bardu-x-kilo-.jpg'},
+  {id:'gomita',color:'yellow',cat:'Dulces',name:'Gomita Osito Docile',copy:'Ositos de goma suaves. Los comes de a uno y cuando cachái se acabaron.',price:8500,stock:5,badge:null,uses:['Estudio','Casa'],img:'img/gomita-osito-docile-x-kg.jpg'},
+  {id:'almendra',color:'sand',cat:'Frutos secos',name:'Almendra Entera',copy:'Almendra natural con piel. Crujiente, nutritiva, de primera. Solo queda un kilo.',price:16000,stock:1,badge:'Último kg',uses:['Gym','Salud'],img:'img/saco-almendra-enteras-x-10-kilos.jpg'},
 ];
 let cart={};
 try{cart=JSON.parse(localStorage.getItem('es_cart'))||{};}catch(e){}
@@ -317,11 +428,12 @@ const totalKg=()=>Object.values(cart).reduce((a,b)=>a+b,0);
 function render(){
   document.getElementById('grid').innerHTML=P.map((p,i)=>{
     const kg=cart[p.id]||0;
-    return `<div class="card" data-color="${p.color}">
+    return `<article class="card reveal" data-color="${p.color}">
       <div class="card-visual">
         <div class="card-num">0${i+1}</div>
         ${p.badge?`<div class="card-badge">${p.badge}</div>`:''}
-        <img src="${p.img}" alt="${p.name}" loading="lazy">
+        <div class="card-use">${p.uses.map(u=>`<span>${u}</span>`).join('')}</div>
+        <img src="${p.img}" alt="${p.name}" loading="lazy" width="280" height="350">
       </div>
       <div class="card-body">
         <div class="card-cat">${p.cat}</div>
@@ -336,31 +448,32 @@ function render(){
         </div>
         <div class="card-subtotal${kg?' show':''}" style="color:var(--${p.color})">${kg} kg = ${fmt(kg*p.price)}</div>
       </div>
-    </div>`;
+    </article>`;
   }).join('');
+  observeReveals();
 }
 
 function add(id){setKg(id,1);}
+function addCombo(a,b){setKg(a,Math.max(cart[a]||0,1));setKg(b,Math.max(cart[b]||0,1));showToast('Pack agregado ✓');}
 function setKg(id,val){
   const p=P.find(x=>x.id===id);val=Math.max(0,Math.min(p.stock,val));
-  const was=cart[id]||0;if(!val)delete cart[id];else cart[id]=val;
-  saveCart();
-  if(val>was)showToast(`${p.name} — ${val} kg ✓`);
+  const was=cart[id]||0;if(!val)delete cart[id];else cart[id]=val;saveCart();
+  if(val>was&&val===1)showToast(`${p.name} — ${val} kg ✓`);
   updateCard(p.id);updateBadge();
 }
 function updateCard(id){
   const p=P.find(x=>x.id===id),kg=cart[id]||0;
-  const actionEl=document.getElementById('a-'+id);
-  if(!actionEl)return;
-  if(kg===0){actionEl.innerHTML=`<button class="btn-add" onclick="add('${id}')">Lo quiero</button>`;}
-  else{actionEl.innerHTML=`<div class="stepper"><button class="stp-btn" onclick="setKg('${id}',${kg-1})">−</button><span class="stp-val">${kg} kg</span><button class="stp-btn" onclick="setKg('${id}',${kg+1})" ${kg>=p.stock?'disabled':''}>+</button></div>`;}
-  const sub=actionEl.nextElementSibling;
+  const el=document.getElementById('a-'+id);if(!el)return;
+  if(kg===0)el.innerHTML=`<button class="btn-add" onclick="add('${id}')">Lo quiero</button>`;
+  else el.innerHTML=`<div class="stepper"><button class="stp-btn" onclick="setKg('${id}',${kg-1})">−</button><span class="stp-val">${kg} kg</span><button class="stp-btn" onclick="setKg('${id}',${kg+1})" ${kg>=p.stock?'disabled':''}>+</button></div>`;
+  const sub=el.nextElementSibling;
   if(sub){sub.className='card-subtotal'+(kg?' show':'');sub.style.color='var(--'+p.color+')';sub.textContent=kg+' kg = '+fmt(kg*p.price);}
 }
 function updateBadge(){const b=document.getElementById('badge');b.textContent=totalKg();b.classList.toggle('show',totalKg()>0);}
 
 function openDrawer(){document.getElementById('drawer').classList.add('on');document.getElementById('overlay').classList.add('on');document.body.style.overflow='hidden';renderDrawer();}
 function closeDrawer(){document.getElementById('drawer').classList.remove('on');document.getElementById('overlay').classList.remove('on');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
 
 function renderDrawer(){
   const body=document.getElementById('drwBody'),foot=document.getElementById('drwFoot'),keys=Object.keys(cart);
@@ -376,7 +489,6 @@ function renderDrawer(){
   foot.innerHTML=`<button class="send-btn" onclick="send()"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479c0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Enviar por WhatsApp</button><div class="send-note">Respondemos en menos de 1 hora</div>`;
 }
 function del(id){delete cart[id];saveCart();updateBadge();render();renderDrawer();}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
 function send(){
   const n=document.getElementById('fN')?.value.trim(),d=document.getElementById('fD')?.value.trim(),no=document.getElementById('fNo')?.value.trim();
   if(!n){document.getElementById('fN').classList.add('err');showToast('Falta tu nombre');return;}
@@ -387,7 +499,12 @@ function send(){
   window.open(`https://wa.me/${WA}?text=${encodeURIComponent(L.join('\n'))}`,'_blank');
 }
 let _tt;function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('on'),2200);}
-render();
+
+// Scroll reveal
+const revealObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});},{threshold:.15});
+function observeReveals(){document.querySelectorAll('.reveal:not(.visible)').forEach(el=>revealObs.observe(el));}
+
+render();updateBadge();observeReveals();
 </script>
 </body>
 </html>

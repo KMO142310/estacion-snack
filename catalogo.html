@@ -216,8 +216,14 @@ header{position:sticky;top:0;z-index:100;background:rgba(255,253,249,.9);backdro
 .ci-det{font-size:12px;color:var(--sub)}
 .ci-right{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between}
 .ci-price{font-size:15px;font-weight:800}
-.ci-del{font-size:12px;font-weight:600;color:var(--sub);background:none;padding:8px 12px;min-height:44px;display:flex;align-items:center;transition:color .15s}
-.ci-del:hover{color:var(--red)}
+.ci-stepper{display:flex;align-items:center;gap:0;margin-top:8px;border:2px solid rgba(0,0,0,.1);border-radius:10px;overflow:hidden;width:fit-content}
+.ci-stp{width:36px;height:32px;background:none;color:var(--text);font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.ci-stp:hover{background:rgba(0,0,0,.05)}
+.ci-stp:active{background:rgba(0,0,0,.1)}
+.ci-stp:disabled{opacity:.2}
+.ci-qty{padding:0 10px;font-size:13px;font-weight:800;border-left:2px solid rgba(0,0,0,.1);border-right:2px solid rgba(0,0,0,.1);height:32px;display:flex;align-items:center}
+.ci-del{width:36px;height:36px;border-radius:10px;background:rgba(0,0,0,.04);color:var(--sub);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.ci-del:hover{background:var(--red-soft);color:var(--red)}
 .tot{display:flex;justify-content:space-between;align-items:baseline;padding:16px 0 12px;border-top:3px solid var(--text);margin-top:8px}
 .tot-label{font-size:13px;font-weight:600;color:var(--sub)}
 .tot-value{font-size:28px;font-weight:900;letter-spacing:-.02em}
@@ -505,13 +511,34 @@ function renderDrawer(){
   if(!keys.length){document.getElementById('drwTitle').textContent='Tu pedido';body.innerHTML=`<div class="empty"><div class="empty-ico">🛒</div><p>Vacío por ahora</p><span>Elige tus snacks favoritos</span></div>`;foot.innerHTML='';return;}
   document.getElementById('drwTitle').textContent=totalKg()+' kg';
   body.innerHTML=keys.map(id=>{const p=P.find(x=>x.id===id),kg=cart[id];
-    return `<div class="ci"><img class="ci-img" src="${p.img}" alt="${p.name}"><div class="ci-info"><div class="ci-name">${p.name}</div><div class="ci-det">${kg} kg × ${fmt(p.price)}</div></div><div class="ci-right"><div class="ci-price">${fmt(kg*p.price)}</div><button class="ci-del" onclick="del('${id}')">Quitar</button></div></div>`;
+    return `<div class="ci">
+      <img class="ci-img" src="${p.img}" alt="${p.name}">
+      <div class="ci-info">
+        <div class="ci-name">${p.name}</div>
+        <div class="ci-det">${fmt(p.price)} / kg</div>
+        <div class="ci-stepper">
+          <button class="ci-stp" onclick="cartQty('${id}',-1)" aria-label="Disminuir">−</button>
+          <span class="ci-qty">${kg} kg</span>
+          <button class="ci-stp" onclick="cartQty('${id}',1)" ${kg>=p.stock?'disabled':''} aria-label="Aumentar">+</button>
+        </div>
+      </div>
+      <div class="ci-right">
+        <div class="ci-price">${fmt(kg*p.price)}</div>
+        <button class="ci-del" onclick="del('${id}')" aria-label="Quitar ${p.name}">✕</button>
+      </div>
+    </div>`;
   }).join('')+`<div class="tot"><span class="tot-label">Total</span><span class="tot-value">${fmt(total())}</span></div>
   <div class="del-box"><strong>🚗 Despacho en Santa Cruz</strong>Martes y viernes · Transferencia o efectivo</div>
   <label class="fl" for="fN">Nombre</label><input class="fi" id="fN" type="text" placeholder="María González" autocomplete="name" onfocus="this.classList.remove('err')">
   <label class="fl" for="fD">Dirección</label><input class="fi" id="fD" type="text" placeholder="Los Aromos 234" autocomplete="street-address" onfocus="this.classList.remove('err')">
   <label class="fl" for="fNo">Nota (opcional)</label><textarea class="fi" id="fNo" rows="2" placeholder="Horario, instrucciones"></textarea>`;
   foot.innerHTML=`<button class="send-btn" onclick="send()"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479c0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Enviar por WhatsApp</button><div class="send-note">Respondemos en menos de 1 hora</div>`;
+}
+function cartQty(id,delta){
+  const p=P.find(x=>x.id===id),kg=cart[id]||0;
+  const newVal=Math.max(0,Math.min(p.stock,kg+delta));
+  if(newVal===0){del(id);return;}
+  cart[id]=newVal;saveCart();updateCard(id);updateBadge();renderDrawer();
 }
 function del(id){delete cart[id];saveCart();updateBadge();render();renderDrawer();}
 function send(){

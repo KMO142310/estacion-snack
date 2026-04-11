@@ -29,12 +29,12 @@ export default function CTA({ onCartOpen }: Props) {
           alignItems: "center",
           gap: 10,
           padding: "16px 36px",
-          background: "#25D366",
+          background: "#1A7A42",
           color: "#fff",
           fontSize: 16,
           fontWeight: 800,
           borderRadius: "var(--r-full)",
-          border: "3px solid #25D366",
+          border: "3px solid #1A7A42",
           cursor: "pointer",
         }}
       >

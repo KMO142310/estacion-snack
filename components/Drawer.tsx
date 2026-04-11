@@ -375,7 +375,7 @@ export default function Drawer({ open, onClose, products }: Props) {
               style={{
                 width: "100%",
                 padding: 16,
-                background: "#25D366",
+                background: "#1A7A42",
                 color: "#fff",
                 fontSize: 15,
                 fontWeight: 800,

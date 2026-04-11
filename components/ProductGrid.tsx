@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import ProductCard from "./ProductCard";
 import type { Product } from "@/lib/types";
 
@@ -17,7 +18,7 @@ interface Props {
 
 export default function ProductGrid({ products }: Props) {
   const [filter, setFilter] = useState("all");
-  const [visible, setVisible] = useState<Set<string>>(new Set());
+  const reduce = useReducedMotion();
 
   const filtered = products.filter((p) => {
     if (filter === "all")   return true;
@@ -25,21 +26,21 @@ export default function ProductGrid({ products }: Props) {
     return p.category === filter;
   });
 
-  // Scroll reveal
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            setVisible((s) => new Set(s).add(e.target.id));
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: { staggerChildren: reduce ? 0 : 0.07 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+    },
+  };
 
   return (
     <div className="wrap" id="productos">
@@ -87,19 +88,25 @@ export default function ProductGrid({ products }: Props) {
         ))}
       </div>
 
-      {/* Grid */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-        gap: 18,
-        paddingBottom: 48,
-      }}>
+      {/* Grid con stagger */}
+      <motion.div
+        key={filter}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+          gap: 18,
+          paddingBottom: 48,
+        }}
+      >
         {filtered.map((product) => (
-          <div key={product.id} className="reveal visible">
+          <motion.div key={product.id} variants={itemVariants}>
             <ProductCard product={product} />
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import { useCart } from "@/lib/cart-context";
 import { fmt } from "@/lib/products";
 import type { Product } from "@/lib/types";
@@ -30,6 +31,7 @@ interface Props {
 export default function ProductCard({ product }: Props) {
   const { items, addItem, updateQty } = useCart();
   const [loading, setLoading] = useState(false);
+  const reduce = useReducedMotion();
   const qty = items[product.id] ?? 0;
   const colors = COLOR_MAP[product.color] ?? COLOR_MAP.orange;
   const isOut = product.status === "agotado";
@@ -47,16 +49,16 @@ export default function ProductCard({ product }: Props) {
   };
 
   return (
-    <article
+    <motion.article
+      whileHover={reduce ? {} : { y: -4, boxShadow: "0 8px 24px rgba(0,0,0,.08)" }}
+      transition={{ type: "spring", stiffness: 400, damping: 30 }}
       style={{
         borderRadius: "var(--r)",
         overflow: "hidden",
         position: "relative",
         background: "var(--bg)",
         border: "1.5px solid rgba(0,0,0,.06)",
-        transition: "transform .25s ease, box-shadow .25s ease",
       }}
-      className="product-card"
     >
       {/* Image */}
       <Link
@@ -194,10 +196,6 @@ export default function ProductCard({ product }: Props) {
         )}
       </div>
 
-      <style>{`
-        .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
-        @media (hover: none) { .product-card:hover { transform: none; box-shadow: none; } }
-      `}</style>
-    </article>
+    </motion.article>
   );
 }

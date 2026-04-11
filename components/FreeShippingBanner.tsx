@@ -27,7 +27,7 @@ export default function FreeShippingBanner() {
       role="status"
       aria-live="polite"
       style={{
-        background: "var(--green)",
+        background: "#2D6822",
         color: "#fff",
         padding: "10px 16px",
         display: "flex",

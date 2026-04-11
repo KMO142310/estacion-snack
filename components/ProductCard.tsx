@@ -102,7 +102,7 @@ export default function ProductCard({ product, onCartOpen }: Props) {
 
       {/* Body */}
       <div style={{ padding: 16 }}>
-        <div style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4, color: colors.accent }}>
+        <div style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4, color: "var(--sub)" }}>
           {product.cat_label}
         </div>
         <Link href={`/producto/${product.slug}`}>

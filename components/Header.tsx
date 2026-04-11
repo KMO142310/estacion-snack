@@ -54,7 +54,7 @@ export default function Header({ onCartOpen }: HeaderProps) {
       >
         <img
           src="/img/logo-icon.svg"
-          alt="Estación Snack"
+          alt=""
           width={32}
           height={32}
           style={{ borderRadius: 8, flexShrink: 0 }}

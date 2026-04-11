@@ -23,7 +23,7 @@ export default function Bnav({ onCartOpen }: Props) {
         WebkitBackdropFilter: "blur(16px)",
         borderTop: "2px solid rgba(0,0,0,.04)",
       }} className="bnav-mobile">
-        <a href="/" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, fontSize: 10, fontWeight: 700, color: "var(--orange)", padding: "6px 14px", borderRadius: 12 }}>
+        <a href="/" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, fontSize: 10, fontWeight: 700, color: "var(--text)", padding: "6px 14px", borderRadius: 12 }}>
           <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
             <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
             <polyline points="9 22 9 12 15 12 15 22"/>

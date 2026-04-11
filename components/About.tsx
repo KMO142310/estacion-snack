@@ -19,7 +19,7 @@ export default function About() {
               { num: "0",   label: "Mínimo de compra" },
             ].map((s) => (
               <div key={s.label} style={{ textAlign: "center" }}>
-                <div style={{ fontSize: 28, fontWeight: 900, color: "var(--orange)" }}>{s.num}</div>
+                <div style={{ fontSize: 28, fontWeight: 900, color: "#C4511B" }}>{s.num}</div>
                 <div style={{ fontSize: 11, fontWeight: 600, color: "var(--sub)", textTransform: "uppercase", letterSpacing: ".06em" }}>{s.label}</div>
               </div>
             ))}

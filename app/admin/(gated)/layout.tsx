@@ -32,6 +32,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         <a href="/admin/productos" style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,.7)", padding: "4px 12px", borderRadius: 8 }}>Productos</a>
         <a href="/admin/pedidos"   style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,.7)", padding: "4px 12px", borderRadius: 8 }}>Pedidos</a>
         <a href="/admin/clientes"  style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,.7)", padding: "4px 12px", borderRadius: 8 }}>Clientes</a>
+        <a href="/admin/contacto"  style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,.7)", padding: "4px 12px", borderRadius: 8 }}>Contacto</a>
         <div style={{ flex: 1 }} />
         <span style={{ fontSize: 12, color: "rgba(255,255,255,.4)" }}>{user.email}</span>
         <form action="/admin/logout" method="POST">

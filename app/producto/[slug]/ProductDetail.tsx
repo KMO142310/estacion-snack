@@ -139,9 +139,26 @@ export default function ProductDetail({ product, related }: Props) {
                 {product.name}
               </h1>
 
-              <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 20 }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 12 }}>
                 <span style={{ fontSize: 36, fontWeight: 900, letterSpacing: "-.02em" }}>{fmt(product.price)}</span>
                 <span style={{ fontSize: 15, color: "var(--sub)" }}>/ kg</span>
+              </div>
+              <div style={{ marginBottom: 20 }}>
+                <span style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 5,
+                  fontSize: 11,
+                  fontWeight: 700,
+                  padding: "4px 10px",
+                  background: "var(--green-soft)",
+                  color: "var(--green)",
+                  borderRadius: "var(--r-full)",
+                  textTransform: "uppercase",
+                  letterSpacing: ".04em",
+                }}>
+                  🎉 Primera compra · envío gratis en Santa Cruz
+                </span>
               </div>
 
               <p style={{ fontSize: 16, lineHeight: 1.6, color: "var(--sub)", marginBottom: 20 }}>

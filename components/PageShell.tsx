@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Product } from "@/lib/types";
 import Announce from "./Announce";
+import FreeShippingBanner from "./FreeShippingBanner";
 import Header from "./Header";
 import Hero from "./Hero";
 import Benefits from "./Benefits";
@@ -27,6 +28,7 @@ export default function PageShell({ products }: Props) {
   return (
     <>
       <a href="#productos" className="skip">Saltar al contenido</a>
+      <FreeShippingBanner />
       <Announce />
       <Header onCartOpen={() => setDrawerOpen(true)} />
       <main>

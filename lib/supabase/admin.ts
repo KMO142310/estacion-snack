@@ -377,3 +377,25 @@ export async function adminLogOrderView(
     p_referer_host: refererHost,
   });
 }
+
+export interface ContactMessageRow {
+  id: string;
+  created_at: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  message: string;
+  read: boolean;
+}
+
+/** Admin list: últimos 100 mensajes de contacto, más recientes primero. */
+export async function adminListContactMessages(): Promise<ContactMessageRow[]> {
+  await assertAdmin();
+  const supabase = await createAdminSupabase();
+  const { data } = await supabase
+    .from("contact_messages")
+    .select("id, created_at, name, email, phone, message, read")
+    .order("created_at", { ascending: false })
+    .limit(100);
+  return (data ?? []) as ContactMessageRow[];
+}

@@ -1,14 +1,9 @@
-import { createAdminClient } from "@/lib/supabase/server";
+import { adminListCustomers } from "@/lib/supabase/admin";
 
 export const revalidate = 0;
 
 export default async function ClientesPage() {
-  const supabase = await createAdminClient();
-  const { data: customers } = await supabase
-    .from("customers")
-    .select("*")
-    .order("last_order_at", { ascending: false })
-    .limit(100);
+  const customers = await adminListCustomers();
 
   const fmt = (n: number) => "$" + n.toLocaleString("es-CL");
   const fmtDate = (d: string | null) =>

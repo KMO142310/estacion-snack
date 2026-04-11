@@ -1,37 +1,10 @@
-import { createAdminClient } from "@/lib/supabase/server";
+import { adminListOrders } from "@/lib/supabase/admin";
 import OrderRow from "./OrderRow";
-import type { OrderStatus } from "@/lib/types";
 
 export const revalidate = 0;
 
-interface OrderItemRow {
-  id: string;
-  product_name: string;
-  qty: number;
-  unit_price: number;
-  subtotal: number;
-}
-
-interface OrderRowData {
-  id: string;
-  created_at: string;
-  customer_name: string | null;
-  customer_phone: string | null;
-  total: number;
-  status: OrderStatus;
-  notes: string | null;
-  order_items: OrderItemRow[];
-}
-
 export default async function PedidosPage() {
-  const supabase = await createAdminClient();
-  const { data: orders } = await supabase
-    .from("orders")
-    .select("id, created_at, customer_name, customer_phone, total, status, notes, order_items(id, product_name, qty, unit_price, subtotal)")
-    .order("created_at", { ascending: false })
-    .limit(100);
-
-  const typed = (orders ?? []) as OrderRowData[];
+  const typed = await adminListOrders();
 
   return (
     <div>

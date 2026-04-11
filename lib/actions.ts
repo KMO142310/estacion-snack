@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "./supabase/server";
+import { adminGetOrderAccessToken } from "./supabase/admin";
 import { WA, PRODUCTS } from "./products";
 import type { Product } from "./types";
 
@@ -65,7 +66,13 @@ export async function placeOrder(params: {
   customerPhone: string;
   items: Array<{ product_id: string; qty: number }>;
   notes?: string;
-}): Promise<{ ok: boolean; orderId?: string; waUrl?: string; error?: string }> {
+}): Promise<{
+  ok: boolean;
+  orderId?: string;
+  accessToken?: string;
+  waUrl?: string;
+  error?: string;
+}> {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase.rpc("fn_place_order", {
@@ -77,6 +84,18 @@ export async function placeOrder(params: {
     });
 
     if (error) return { ok: false, error: error.message };
+
+    const orderId = data as string;
+
+    // Fetch the access_token that the 0002 migration generated for this row
+    // via the default expression on orders.access_token. The server action
+    // returns it to the client so the WhatsApp link can carry ?t=<token>.
+    // This is a server-to-server call inside the same checkout flow, so
+    // adminGetOrderAccessToken is NOT gated by assertAdmin.
+    const accessToken = await adminGetOrderAccessToken(orderId);
+    if (!accessToken) {
+      return { ok: false, error: "token lookup failed" };
+    }
 
     // Build WhatsApp message
     const products = await getProducts();
@@ -95,17 +114,16 @@ export async function placeOrder(params: {
       return acc + (p ? p.price * item.qty : 0);
     }, 0);
 
-    const site =
-      process.env.NEXT_PUBLIC_SITE_URL ?? "https://estacion-snack-next.vercel.app";
-    const orderUrl = `${site}/pedido/${data}`;
+    const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.estacionsnack.cl";
+    const orderUrl = `${site}/pedido/${orderId}?t=${encodeURIComponent(accessToken)}`;
 
     const msg = encodeURIComponent(
-      `¡Hola! Hago el siguiente pedido 🌰\n\n${lines}\n\nTotal: $${total.toLocaleString("es-CL")}\n\nNombre: ${params.customerName}\nTeléfono: ${params.customerPhone}${params.notes ? `\nNotas: ${params.notes}` : ""}\n\nVer estado del pedido: ${orderUrl}`
+      `¡Hola! Hago el siguiente pedido 🌰\n\n${lines}\n\nTotal: $${total.toLocaleString("es-CL")}\n\nNombre: ${params.customerName}\nTeléfono: ${params.customerPhone}${params.notes ? `\nNotas: ${params.notes}` : ""}\n\nVer estado del pedido: ${orderUrl}`,
     );
 
     const waUrl = `https://wa.me/${WA}?text=${msg}`;
-    return { ok: true, orderId: data, waUrl };
+    return { ok: true, orderId, accessToken, waUrl };
   } catch (e) {
-    return { ok: false, error: String(e) };
+    return { ok: false, error: e instanceof Error ? e.message : String(e) };
   }
 }

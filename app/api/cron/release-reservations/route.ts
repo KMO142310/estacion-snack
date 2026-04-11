@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { safeEqual } from "@/lib/crypto";
 
 export const dynamic = "force-dynamic";
@@ -34,7 +34,12 @@ export async function GET(request: Request) {
   }
 
   try {
-    const supabase = await createAdminClient();
+    // DOWNGRADED to anon client: fn_release_expired_reservations is
+    // SECURITY DEFINER with `GRANT EXECUTE TO anon`, so anon can invoke
+    // it and the function bypasses RLS internally. The CRON_SECRET bearer
+    // above is the real gate for who can reach this endpoint; the DB
+    // client role is not the auth layer.
+    const supabase = await createClient();
     const { data, error } = await supabase.rpc("fn_release_expired_reservations");
     if (error) {
       console.error("[cron:release-reservations] rpc error", error.message);

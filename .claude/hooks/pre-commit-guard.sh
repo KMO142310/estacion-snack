@@ -43,17 +43,25 @@ for pattern in "${SECRET_PATTERNS[@]}"; do
 done
 
 # 2. Archivos que NO deberían commitearse nunca
+# Patterns se matchean línea por línea contra `git diff --cached --name-only`.
+# Anclamos con ^ y $ para evitar matches parciales (p.ej. ".env.local" no
+# debe matchear ".env.local.example" que es el template público).
 FORBIDDEN_FILES=(
-  '\.env\.local'
-  '\.env\.production'
-  '\.env\.development\.local'
-  '/tmp/.*\.txt'
-  'rls_baseline\.txt'
-  'node_modules/'
-  '\.next/'
-  'tsconfig\.tsbuildinfo'
-  '\.DS_Store'
+  '^\.env\.local$'
+  '^\.env\.production$'
+  '^\.env\.production\.local$'
+  '^\.env\.development\.local$'
+  '^\.env\.test\.local$'
+  '^/tmp/.*\.txt$'
+  '^rls_baseline\.txt$'
+  '^node_modules/'
+  '^\.next/'
+  '^.*\.tsbuildinfo$'
+  '^\.DS_Store$'
 )
+# Intentional allowlist (templates, examples): `.env.local.example` — public
+# template with placeholder values, never secrets. The FORBIDDEN_FILES
+# patterns are anchored (`^...$`) so they won't match `.example` accidentally.
 
 staged_files=$(git diff --cached --name-only)
 for pattern in "${FORBIDDEN_FILES[@]}"; do
@@ -74,7 +82,28 @@ if [ "$added_lines" -gt 2000 ]; then
   FAIL=1
 fi
 
-# 4. TypeScript debe compilar (si existe tsconfig.json)
+# 4. service_role usage barrier — SUPABASE_SERVICE_ROLE_KEY can only be
+#    referenced from lib/supabase/admin.ts. Any other file importing it
+#    (or re-introducing createAdminClient) gets blocked.
+#    Ref: lib/supabase/admin.ts header comment + SECURITY_AUDIT.md.
+admin_wrapper="lib/supabase/admin.ts"
+for f in $(git diff --cached --name-only --diff-filter=AM | grep -E '\.(ts|tsx)$'); do
+  if [ "$f" = "$admin_wrapper" ]; then
+    continue
+  fi
+  if [ ! -f "$f" ]; then
+    continue
+  fi
+  if grep -qE 'SUPABASE_SERVICE_ROLE_KEY|createAdminClient' "$f"; then
+    REPORT+="\n🚫 service_role barrier violation en $f\n"
+    REPORT+="  createAdminClient y SUPABASE_SERVICE_ROLE_KEY solo pueden\n"
+    REPORT+="  vivir en $admin_wrapper. Agregá una función nombrada ahí\n"
+    REPORT+="  en vez de importar service_role directo.\n"
+    FAIL=1
+  fi
+done
+
+# 5. TypeScript debe compilar (si existe tsconfig.json)
 if [ -f tsconfig.json ] && command -v npx >/dev/null 2>&1; then
   if ! npx --no-install tsc --noEmit 2>/dev/null; then
     REPORT+="\n🚫 TypeScript no compila (npx tsc --noEmit falló).\n"

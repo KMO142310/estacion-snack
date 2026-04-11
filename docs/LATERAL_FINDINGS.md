@@ -158,3 +158,49 @@ lo que no debe commitearse.
 **Nota operativa**: este fix + LF-1 van en el mismo commit (separado del
 commit del audit) con mensaje `fix(hooks): pre-commit-guard regex fixes
 for PEM keys and service_role false positives`.
+
+---
+
+## 2026-04-11 · LF-3 · pre-commit-guard.sh: forbidden file patterns sin anclar
+
+**Status**: **fixed** (en el commit del Bloque 2C que incluye el
+`lib/supabase/admin.ts` wrapper).
+
+**Descubierto en**: Bloque 2 parte C — al intentar stagear
+`.env.local.example` (template público con placeholders, no secretos) el
+guard lo bloqueaba con el pattern `\.env\.local` matcheando parcialmente
+contra `.env.local.example`.
+
+**Causa raíz**: los patterns de `FORBIDDEN_FILES` en
+`.claude/hooks/pre-commit-guard.sh` usaban regex sin anclar (`^...$`). Un
+pattern como `\.env\.local` matchea:
+- `.env.local` ✓ (correcto)
+- `.env.local.example` ✗ (falso positivo — template público)
+- Cualquier otra cosa que contenga la secuencia literal
+
+**Fix aplicado**: anclar todos los patterns con `^` y `$` para matchear
+la línea completa contra el nombre completo del archivo. Enumeración
+explícita en vez de glob:
+
+```
+^\.env\.local$
+^\.env\.production$
+^\.env\.production\.local$
+^\.env\.development\.local$
+^\.env\.test\.local$
+```
+
+`.env.local.example` queda explícitamente fuera de la lista (comentario
+inline en el script lo aclara).
+
+**Verificación post-fix**:
+
+```bash
+git add .env.local.example .claude/hooks/pre-commit-guard.sh ...
+.claude/hooks/pre-commit-guard.sh  # exit 0
+```
+
+**Lección aprendida**: en regex de seguridad, anclar siempre (`^`/`$`)
+cuando matcheás contra filenames o líneas. Los falsos positivos en
+herramientas de guardrail son peores que los falsos negativos porque
+incentivan a los operadores a bypasear el guard con `--no-verify`.

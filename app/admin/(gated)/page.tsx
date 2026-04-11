@@ -1,27 +1,15 @@
 import Link from "next/link";
-import { createAdminClient } from "@/lib/supabase/server";
+import {
+  adminDashboardData,
+  type AdminOrderRow,
+  type AdminCustomerRow,
+} from "@/lib/supabase/admin";
 import type { OrderStatus } from "@/lib/types";
 
 export const revalidate = 0;
 
-interface OrderRow {
-  id: string;
-  total: number;
-  status: OrderStatus;
-  created_at: string;
-  customer_name: string | null;
-  customer_phone: string | null;
-  order_items: Array<{ product_name: string; qty: number; subtotal: number }>;
-}
-
-interface CustomerRow {
-  id: string;
-  name: string | null;
-  total_orders: number;
-  total_spent: number;
-  first_order_at: string | null;
-  last_order_at: string | null;
-}
+type OrderRow = AdminOrderRow;
+type CustomerRow = AdminCustomerRow;
 
 const fmt = (n: number) => "$" + n.toLocaleString("es-CL");
 const fmtDate = (d: string) =>
@@ -44,28 +32,14 @@ const STATUS_COLOR: Record<OrderStatus, string> = {
 };
 
 export default async function DashboardPage() {
-  const supabase = await createAdminClient();
+  const { orders: ordersRaw, customers } = await adminDashboardData();
 
   const now = new Date();
   const startToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
   const startWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString();
-  const startMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
 
-  const [{ data: ordersRaw }, { data: customers }] = await Promise.all([
-    supabase
-      .from("orders")
-      .select("id, total, status, created_at, customer_name, customer_phone, order_items(product_name, qty, subtotal)")
-      .gte("created_at", startMonth)
-      .order("created_at", { ascending: false }),
-    supabase
-      .from("customers")
-      .select("id, name, total_orders, total_spent, first_order_at, last_order_at")
-      .order("last_order_at", { ascending: false, nullsFirst: false })
-      .limit(100),
-  ]);
-
-  const orders = (ordersRaw ?? []) as OrderRow[];
-  const custs = (customers ?? []) as CustomerRow[];
+  const orders = ordersRaw ?? [];
+  const custs = customers ?? [];
 
   const sum = (arr: OrderRow[]) => arr.reduce((a, o) => a + o.total, 0);
   const nonCancelled = orders.filter((o) => o.status !== "cancelled");

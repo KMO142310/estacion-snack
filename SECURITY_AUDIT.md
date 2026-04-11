@@ -850,16 +850,455 @@ del descuento que esta investigación destapó.
   - `7a87a84` — migración 0002 escrita, sin aplicar (Bloque 2 parte A)
   - `5eba0db` — setup Claude Code protocol, hooks, subagents (cherry-picked)
 
+---
+
+## After — resultados literales (post-0002)
+
+**Migración aplicada**: `~2026-04-11T01:29Z` vía Supabase Dashboard → SQL
+Editor por el operador. Response del editor: *"Éxito. No se devolvió ninguna
+fila"* (respuesta standard de Supabase para DDL/DML sin SELECT).
+
+### Metadata — ejecución after
+
+| Campo | Valor |
+|---|---|
+| T_START | `2026-04-11T01:29:51Z` |
+| T_END | `2026-04-11T01:30:46Z` |
+| Duración del bloque completo | ~55 s |
+| Migración aplicada | **SÍ** — `0002_rls_hardening.sql` |
+| Commit del audit base | `712d0b4` |
+| Buffer local | `/tmp/rls_after.txt`, `umask 077`, `chmod 600` |
+| FL-1 session canary | `<REDACTED-FL1SESS>` (generado con `openssl rand -hex 8`) |
+| FL-1 producto target | `e0aa1424-4b85-418c-bd3c-8afd98d0778b` (chuby-bardu, stock 5.000) |
+
+### Repeats — A1 a A10b (comandos idénticos al baseline salvo donde se indica)
+
+#### A1 · SELECT anon `products`
+
+```
+GET /rest/v1/products?select=id,slug,name,price,stock_kg&order=sort_order
+→ HTTP/2 200
+  content-range: 0-5/*
+
+[6 productos, idénticos al baseline #1]
+```
+
+**Estado**: ✅ catálogo público sigue abierto por diseño (`products_public_read`).
+
+#### A2 · SELECT anon `orders`
+
+```
+GET /rest/v1/orders?select=*&limit=5
+→ HTTP/2 200
+  content-range: */*
+
+[]
+```
+
+**Estado**: ✅ cerrado. Sin cambio vs baseline (default-deny nativo ya cerraba;
+0002 agrega `orders_deny_all` explícito como documentación).
+
+#### A3 · SELECT anon `order_items`
+
+```
+GET /rest/v1/order_items?select=*&limit=5
+→ HTTP/2 200, content-range: */*, body: []
+```
+
+**Estado**: ✅ idem A2.
+
+#### A4 · SELECT anon `customers`
+
+```
+GET /rest/v1/customers?select=*&limit=5
+→ HTTP/2 200, content-range: */*, body: []
+```
+
+**Estado**: ✅ PII cerrada.
+
+#### A5 · SELECT anon `stock_reservations` (sigue no determinista sin datos)
+
+```
+GET /rest/v1/stock_reservations?select=*&limit=5
+→ HTTP/2 200, content-range: */*, body: []
+```
+
+**Estado**: ⚠️ `200 []`. Igual que baseline. **Pero esta vez el vacío no es por
+ausencia de datos** — es por `reservations_deny_all`. El test determinista
+para distinguirlo vive en la **secuencia FL-1 abajo**, donde insertamos una
+reserva con service_role antes del SELECT anon, y el anon aún así devuelve
+`[]`. Ese es el test que prueba H6 post-migración.
+
+#### A6 · INSERT anon `orders`
+
+```
+POST /rest/v1/orders
+Body: {"customer_name":"RLS_TEST_SHOULD_FAIL_AFTER","total":0}
+
+→ HTTP/2 401
+  proxy-status: PostgREST; error=42501
+
+{"code":"42501","details":null,"hint":null,"message":"new row violates row-level security policy for table \"orders\""}
+```
+
+**Estado**: ✅ bloqueado con `42501`. Sin cambio vs baseline — ambas
+policies (default-deny nativo del 0001 y `orders_deny_all` explícito del 0002)
+producen el mismo error al violar RLS en INSERT.
+
+#### A7 · PATCH anon `products` UUID-cero — **FL-2 aplicado** (`Prefer: return=representation`)
+
+```
+PATCH /rest/v1/products?id=eq.00000000-0000-0000-0000-000000000000
+Body: {"price":99999999}
+Prefer: return=representation
+
+→ HTTP/2 200
+  content-range: */*
+  preference-applied: return=representation
+
+[]
+```
+
+**Estado**: ⚠️ **FL-2 no logra discriminar con UUID-cero**. Ver nota abajo.
+
+**Análisis honesto del resultado de FL-2**:
+
+La promesa original de FL-2 era que `return=representation` discriminaría
+entre "RLS bloqueó" (esperábamos `401 42501`) y "WHERE matcheó 0 filas"
+(esperábamos `200 []`). En la práctica, PostgREST **no emite `42501` para
+UPDATE/DELETE cuando RLS filtra rows** — solo lo hace para INSERT con `WITH
+CHECK` que falla. Para UPDATE/DELETE, RLS filtra los rows visibles antes de
+aplicar la operación; si quedan 0 filas, la operación retorna `200 []` con
+`return=representation` (o `204` con `return=minimal`), sin distinguir si
+la reducción a 0 fue por RLS o por WHERE.
+
+Conclusión: **con WHERE = UUID-cero (que garantiza 0 filas por diseño), no
+hay ningún `Prefer` header de PostgREST que logre distinguir RLS-block vs
+WHERE-no-match**. La única forma de probar que RLS bloquea UPDATE/DELETE de
+`products` o `stock_reservations` por anon es:
+1. Usar un WHERE con un UUID real (modificando datos reales), o
+2. Insertar canary data con service_role, intentar la mutación anon con
+   WHERE matcheante, y verificar con service_role que la fila quedó intacta.
+
+La secuencia **FL-1 abajo implementa exactamente eso** para
+`stock_reservations` y cierra H6 de manera determinista. Para `products`, el
+riesgo es menor (H4: requiere WHERE real + mutation observable) y queda
+cubierto por inspección del SQL del 0002 (policy `products_deny_writes FOR
+ALL USING (false) WITH CHECK (false)` + default-deny nativo + `products_public_read`
+solo FOR SELECT).
+
+#### A8 · DELETE anon `stock_reservations` UUID-cero — **FL-2 aplicado**
+
+```
+DELETE /rest/v1/stock_reservations?session_id=eq.00000000-0000-0000-0000-000000000000
+Prefer: return=representation
+
+→ HTTP/2 200
+  content-range: */*
+  preference-applied: return=representation
+
+[]
+```
+
+**Estado**: ⚠️ mismo resultado ambiguo que A7. Ver nota de A7. El cierre
+real de H6 se verifica en FL-1 (#AFL1c abajo).
+
+#### A9 · SELECT service_role `products`
+
+```
+GET /rest/v1/products?select=id,slug,name,stock_kg&order=sort_order
+→ HTTP/2 200, content-range: 0-5/*, 6 products (idénticos al baseline #9)
+```
+
+**Estado**: ✅ service_role bypasea RLS, lee normalmente post-migración.
+
+#### A10a · GET service_role `products` pre-PATCH
+
+Target: `b5e1770c-fd2d-4ada-b8c0-1dfc3e61155b` (almendra-entera), mismo canary
+que el baseline. Este row conserva el bump del baseline #10b.
+
+```
+GET /rest/v1/products?id=eq.b5e1770c-...&select=id,slug,stock_kg,updated_at
+→ HTTP/2 200, content-range: 0-0/*
+
+[{"id":"b5e1770c-fd2d-4ada-b8c0-1dfc3e61155b","slug":"almendra-entera","stock_kg":1.000,"updated_at":"2026-04-11T00:14:47.534893+00:00"}]
+```
+
+El `updated_at` literal es **exactamente** el T2 que dejamos en baseline
+#10b, lo que confirma que entre el baseline y el after **ninguna otra
+operación tocó esta fila** (ni admin ni cron).
+
+#### A10b · PATCH service_role `products` no-op
+
+```
+PATCH /rest/v1/products?id=eq.b5e1770c-...&select=id,slug,stock_kg,updated_at
+Prefer: return=representation
+Body: {"stock_kg":1.000}
+
+→ HTTP/2 200
+
+[{"id":"b5e1770c-fd2d-4ada-b8c0-1dfc3e61155b","slug":"almendra-entera","stock_kg":1.000,"updated_at":"2026-04-11T01:30:20.802414+00:00"}]
+```
+
+**Análisis**:
+- `stock_kg` pre: `1.0` → post: `1.0` → delta `0.0` ✅ (tolerancia < 0.0001)
+- `updated_at` T2 (baseline) → T3 (after): `00:14:47.534893Z` → `01:30:20.802414Z`
+- `T3 − T2` = `4,533,268` ms ≈ 1h 15min 33s — el tiempo entre el bump del
+  baseline y el bump del after
+- Trigger `trg_products_updated_at` disparó ✅
+
+**Estado**: ✅ service_role write + trigger operativos post-0002.
+
+**Side-effect adicional documentado**:
+
+> Segundo bump de `almendra-entera.updated_at` en esta sesión: de
+> `2026-04-11T00:14:47.534893Z` → `2026-04-11T01:30:20.802414Z`. `stock_kg`
+> permanece en `1.000`. Cero cambio de valor de negocio. Segundo side-effect
+> intencional del test positivo post-migración.
+
+---
+
+### FL-1 · Secuencia determinista — cierre de H6 (stock griefing)
+
+**Objetivo**: demostrar que post-0002 un atacante anon NO puede leer ni
+borrar reservas de otras sesiones, incluso conociendo la existencia y el
+`session_id` exacto.
+
+**Setup**:
+- Session canary: `<REDACTED-FL1SESS>` (generado con `openssl rand -hex 8`)
+- Producto target: `e0aa1424-...` (chuby-bardu, stock 5.000 — abundante, no
+  crítico)
+- Cantidad reservada: `0.001 kg` (valor trivial, impacto cero)
+- TTL de la reserva: 15 min (auto-expira si el cleanup fallara)
+
+#### AFL1a · service_role INSERT `stock_reservations` (crear canary)
+
+```
+POST /rest/v1/stock_reservations
+Prefer: return=representation
+Body: {"product_id":"e0aa1424-4b85-418c-bd3c-8afd98d0778b",
+       "session_id":"<REDACTED-FL1SESS>","qty":0.001}
+
+→ HTTP/2 201
+  preference-applied: return=representation
+
+[{"id":"<REDACTED-20>","product_id":"e0aa1424-4b85-418c-bd3c-8afd98d0778b","qty":0.001,"session_id":"<REDACTED-FL1SESS>","expires_at":"2026-04-11T01:45:43.744893+00:00","created_at":"2026-04-11T01:30:43.744893+00:00"}]
+```
+
+**Estado**: ✅ service_role puede insertar en `stock_reservations` directamente
+(bypass RLS). El row canary está vivo con TTL hasta `01:45:43Z`.
+
+#### AFL1b · anon SELECT filtrado por `session_id` conocido
+
+```
+GET /rest/v1/stock_reservations?select=*&session_id=eq.<REDACTED-FL1SESS>
+Headers: apikey / Authorization = anon
+
+→ HTTP/2 200
+  content-range: */*
+
+[]
+```
+
+**Estado**: ✅ **H6 parcialmente cerrado**. A pesar de conocer el `session_id`
+exacto del row que acabamos de insertar con service_role, el anon no puede
+leerlo. La policy `reservations_deny_all FOR ALL USING (false)` del 0002
+bloquea el SELECT anon a `stock_reservations`.
+
+**Comparación vs baseline**: en el baseline, la policy del 0001 era
+`reservations_select_session USING (true)` — un SELECT anon con el mismo
+`session_id` habría devuelto el row. **Fuga cerrada.**
+
+#### AFL1c · anon DELETE attempt — el ataque directo de griefing
+
+```
+DELETE /rest/v1/stock_reservations?session_id=eq.<REDACTED-FL1SESS>
+Prefer: return=representation
+Headers: apikey / Authorization = anon
+
+→ HTTP/2 200
+  content-range: */*
+  preference-applied: return=representation
+
+[]
+```
+
+PostgREST retorna `200 []` con body vacío. Pero **un `[]` aquí es ambiguo**:
+puede significar "RLS filtró 0 rows" o "el anon pudo borrar y la representación
+del row borrado vino vacía". Para desambiguar, verificamos en AFL1d si el
+row sigue existiendo.
+
+#### AFL1d · service_role SELECT por `session_id` (verifica que el canary sigue vivo)
+
+```
+GET /rest/v1/stock_reservations?select=id,product_id,session_id,qty,expires_at&session_id=eq.<REDACTED-FL1SESS>
+Headers: apikey / Authorization = service_role
+
+→ HTTP/2 200
+  content-range: 0-0/*
+
+[{"id":"<REDACTED-20>","product_id":"e0aa1424-4b85-418c-bd3c-8afd98d0778b","session_id":"<REDACTED-FL1SESS>","qty":0.001,"expires_at":"2026-04-11T01:45:43.744893+00:00"}]
+```
+
+**Estado**: 🟢 **H6 completamente cerrado**. El row del canary **sigue
+existiendo** después de la tentativa de DELETE anon. El `id` es el mismo que
+en AFL1a (`<REDACTED-20>`). La tentativa del anon no borró nada.
+
+Esta es la evidencia definitiva de que:
+
+1. La policy `reservations_delete_session USING (true)` del 0001 está
+   revocada.
+2. La policy `reservations_deny_all` del 0002 bloquea el DELETE anon.
+3. El atacante de H6 (que intenta borrar reservas de otras sesiones para
+   provocar DoS de checkout o griefing selectivo) **no tiene vector directo
+   vía REST** contra `stock_reservations`.
+
+#### AFL1e · service_role DELETE cleanup
+
+```
+DELETE /rest/v1/stock_reservations?session_id=eq.<REDACTED-FL1SESS>
+Prefer: return=representation
+Headers: apikey / Authorization = service_role
+
+→ HTTP/2 200
+  preference-applied: return=representation
+
+[{"id":"<REDACTED-20>","product_id":"e0aa1424-4b85-418c-bd3c-8afd98d0778b","qty":0.001,"session_id":"<REDACTED-FL1SESS>","expires_at":"2026-04-11T01:45:43.744893+00:00","created_at":"2026-04-11T01:30:43.744893+00:00"}]
+```
+
+**Estado**: ✅ canary eliminado. Cero residuo. No dependemos del auto-expiry
+de 15 min.
+
+---
+
+### audit_log — default-deny + verificación de visibilidad
+
+#### AAUD1 · anon SELECT `audit_log`
+
+```
+GET /rest/v1/audit_log?select=*&limit=5
+→ HTTP/2 200, content-range: */*, body: []
+```
+
+**Estado**: ✅ `audit_log_deny_all` cierra el SELECT anon. Default-deny
+funcionando.
+
+#### AAUD2 · service_role SELECT `audit_log`
+
+```
+GET /rest/v1/audit_log?select=id,at,actor,action,target_table,target_id,meta&order=at.desc&limit=10
+→ HTTP/2 200, content-range: */*, body: []
+```
+
+**Estado**: ⚠️ **verificación diferida**. El audit_log está vacío porque:
+- El cron `fn_release_expired_reservations` corre solo una vez al día a las
+  `0 3 * * *` UTC (daily schedule por restricción del Hobby plan); todavía
+  no se disparó post-migración.
+- `fn_place_order` no se llamó desde la migración — cero pedidos nuevos.
+- Ninguna otra función de negocio escribe a `audit_log` por ahora.
+
+**Para verificar que el audit_log efectivamente recibe writes**, al menos
+uno de estos eventos tiene que ocurrir antes de cerrar el Bloque 2:
+1. Esperar al próximo run del cron (3 AM UTC).
+2. O hacer un test controlado: llamar `fn_place_order` con datos canary
+   desde service_role → verificar row en audit_log → limpiar con un DELETE
+   **que el trigger `fn_audit_log_immutable` va a rechazar** (append-only),
+   o usar `TRUNCATE` con superuser.
+
+**Decisión**: dejo esta verificación como **follow-up FL-4** post-Bloque 2
+parte B. No bloquea el cierre de parte B porque la policy + trigger de
+inmutabilidad están verificados por inspección del SQL y la configuración
+por API del 0002, y AAUD1 demuestra que al menos el default-deny para anon
+funciona.
+
+---
+
+## Análisis antes/después — hipótesis H1 a H6
+
+| # | Hipótesis | Baseline evidencia | After evidencia | Estado |
+|---|---|---|---|---|
+| H1 | Enumeración anon de `orders` | #2 `200 []` (default-deny nativo) | A2 `200 []` + policy `orders_deny_all` explícita | ✅ cerrado |
+| H2 | IDOR vía `/pedido/[id]` | N/A (columna `access_token` no existía) | 0002 agrega `access_token` + TTL + `fn_rotate_order_access_token` + `audit_log_order_views`. Refactor de la página pendiente en parte C. | 🟡 infraestructura lista, refactor pendiente |
+| H3 | Dump PII de `customers` | #4 `200 []` (default-deny nativo) | A4 `200 []` + `customers_deny_all` explícita | ✅ cerrado |
+| H4 | Tamper de `products` por anon | #7 `204` ambiguo (WHERE UUID-cero no discrimina) | A7 `200 []` ambiguo + inspección SQL del 0002 confirma `products_deny_writes FOR ALL` + `products_public_read FOR SELECT`. No testable por REST sin WHERE real. | ✅ cerrado por inspección SQL (test REST débil) |
+| H5 | Hijacking `search_path` SECURITY DEFINER (CVE-2018-1058) | No testable desde REST | Todas las 8 funciones SECURITY DEFINER tienen `SET search_path = public, pg_temp` en el 0002. Inspección de la migración aplicada. | ✅ preventivo aplicado |
+| H6 | Stock griefing via DELETE anon en `stock_reservations` | #5/#8 `[]`/`204` no determinista (sin datos vivos) | **AFL1b `200 []`** con canary conocido (cierra SELECT anon) + **AFL1c `200 []`** + **AFL1d fila intacta post-DELETE anon** (cierra DELETE anon) | 🟢 **cerrado determinísticamente** |
+
+---
+
+## Conclusión del Bloque 2 parte B
+
+**Éxitos cuantificables**:
+
+1. **H6 cerrado con evidencia determinista** (secuencia FL-1 completa).
+   Este era el agujero más concreto del 0001 — tres policies `USING (true)`
+   que permitían a cualquier anon leer, insertar y borrar reservas de otras
+   sesiones. Post-0002, el canary insertado con service_role fue:
+   (a) invisible al anon incluso con el `session_id` exacto (AFL1b), y
+   (b) intacto después del intento de DELETE anon (AFL1d).
+2. **Default-deny confirmado en 4 tablas** (`orders`, `order_items`,
+   `customers`, `stock_reservations`) vía REST — tests A2-A5.
+3. **INSERT anon a `orders` bloqueado** con `42501` tanto pre como post-0002
+   (A6).
+4. **service_role sigue operativo** (A9, A10a, A10b) — lee, escribe, triggers
+   disparan normalmente.
+5. **`audit_log` default-deny para anon** verificado (AAUD1).
+6. **Migración 0002 aplicada limpia** sin errores en el SQL Editor (reportado
+   por operador: *"Éxito. No se devolvió ninguna fila"*).
+7. **`updated_at` canary trazeable**: `almendra-entera` pasó por dos bumps
+   controlados (baseline 00:14:47Z → after 01:30:20Z), sin ningún bump
+   inesperado en el medio. Zero drift de datos de negocio.
+
+**Limitaciones honestas**:
+
+1. **FL-2 con UUID-cero no discrimina** — `return=representation` sobre
+   UPDATE/DELETE que matchean 0 filas retorna `200 []` tanto si RLS bloquea
+   como si el WHERE no matchea. Lo documentamos explícitamente en A7/A8.
+   La verdadera discriminación para `stock_reservations` la hace FL-1; para
+   `products` queda cubierto por inspección del SQL.
+2. **`audit_log` write verification diferida** (FL-4): el audit log está
+   vacío porque ningún evento auditable ocurrió entre la migración y el
+   after-run (sin cron, sin `fn_place_order`, sin admin actions). El
+   default-deny está verificado (AAUD1) pero la escritura efectiva no. Plan:
+   esperar al próximo cron run (3 AM UTC) o test controlado con service_role.
+3. **H2 (IDOR vía `/pedido/[id]`) todavía tiene la infraestructura en SQL
+   pero no el refactor de la página**. El acceso actual al route sigue
+   usando `createAdminClient` sin validación de token. Eso se cierra en la
+   parte C del Bloque 2 (refactor de `app/pedido/[id]/page.tsx`).
+
+**Follow-ups restantes**:
+
+- **FL-4** (nuevo): verificación de write al `audit_log` con evento
+  controlado.
+- **FL-3**: bug de integridad del descuento de packs — requiere plan propio
+  "Bloque 2.5". Exposición legal Ley 19.496. **Sin resolver.**
+- **LF-1**: bug de quoting en `pre-commit-guard.sh` que no escanea private
+  keys. Fix de 4 caracteres propuesto post-Bloque 2.
+
+**Estado final**: **Bloque 2 parte B COMPLETO**. Migración aplicada, baseline
+capturado, after verificado, H6 cerrado con evidencia determinista, audit
+doc completo.
+
+---
+
+## Housekeeping final
+
+- `/tmp/rls_baseline.txt`: puede borrarse ahora con `rm -P`. Ya no se
+  necesita.
+- `/tmp/rls_after.txt`: puede borrarse ahora con `rm -P`. Ya no se
+  necesita.
+- `.env.local`: queda hasta que se cierre la parte C (se reusa en el
+  refactor). Borrar con `rm -P` al cierre completo del Bloque 2.
+
 ## Próximo paso
 
-1. Aplicar `supabase/migrations/0002_rls_hardening.sql` vía Supabase
-   Dashboard → SQL Editor. **Lo ejecuta el operador, no el agente.** El
-   agente espera confirmación explícita "aplicada OK".
-2. Re-correr #1 – #10 + FL-1 + FL-2 como "after-migration" con los ajustes
-   discriminatorios aplicados. Capturar outputs en una nueva sección
-   `## After — resultados literales` de este documento.
-3. Completar resumen con antes/después y check de mitigaciones cumplidas.
-4. Commit + push (autorización explícita separada).
-5. Bloque 2 parte C: refactor de `app/pedido/[id]/page.tsx` con
-   access_token, masking, audit log (plan nuevo).
-6. Fuera del Bloque 2: abrir **Bloque 2.5** para FL-3 con plan propio.
+1. Commit + push del after (autorización explícita — corresponde al mismo
+   ciclo de push de `hardening/round-1`).
+2. **Merge de `hardening/round-1` a `main`** — checkpoint del operador.
+   Este es el único cambio irreversible pendiente del Bloque 2 parte B.
+3. Bloque 2 parte C: refactor de `app/pedido/[id]/page.tsx` con
+   `access_token`, validación Node `timingSafeEqual`, PII masking,
+   `Referrer-Policy: no-referrer`, audit log de vistas. Plan nuevo.
+4. Fuera del Bloque 2: abrir **Bloque 2.5** para FL-3 con plan propio.
+5. FL-4: verificación de write al `audit_log` con evento controlado.
+6. LF-1: fix del quoting de `pre-commit-guard.sh`.

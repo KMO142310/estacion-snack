@@ -75,7 +75,7 @@ export default function ProductDetail({ product, related }: Props) {
       <Header onCartOpen={() => setDrawerOpen(true)} />
       <main style={{ paddingTop: 24, paddingBottom: 48 }}>
         <div className="wrap">
-          <nav style={{ fontSize: 12, color: "var(--sub)", marginBottom: 20, display: "flex", gap: 6, flexWrap: "wrap" }}>
+          <nav aria-label="Ruta de navegación" style={{ fontSize: 12, color: "var(--sub)", marginBottom: 20, display: "flex", gap: 6, flexWrap: "wrap" }}>
             <Link href="/">Inicio</Link>
             <span>›</span>
             <Link href={`/#productos`}>{product.cat_label}</Link>

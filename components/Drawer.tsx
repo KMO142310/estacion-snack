@@ -181,7 +181,10 @@ export default function Drawer({ open, onClose, products }: Props) {
                 return (
                   <div key={productId} style={{ display: "flex", gap: 12, padding: "14px 0", borderBottom: "1px solid rgba(0,0,0,.05)" }}>
                     <div style={{ width: 52, height: 60, borderRadius: 10, flexShrink: 0, background: "var(--orange-soft)", overflow: "hidden" }}>
-                      <img src={product.image_url} alt={product.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      <picture>
+                        <source srcSet={product.image_webp_url} type="image/webp" />
+                        <img src={product.image_url} alt={product.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} loading="lazy" />
+                      </picture>
                     </div>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 2 }}>{product.name}</div>

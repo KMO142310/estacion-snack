@@ -9,7 +9,7 @@ interface Props {
 export default function Bnav({ onCartOpen }: Props) {
   return (
     <>
-      <nav style={{
+      <nav aria-label="Navegación principal" style={{
         position: "fixed",
         bottom: 0,
         left: 0,

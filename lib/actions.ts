@@ -5,6 +5,20 @@ import { adminGetOrderAccessToken } from "./supabase/admin";
 import { WA, PRODUCTS } from "./products";
 import type { Product } from "./types";
 
+const CAT_LABEL: Record<string, string> = {
+  frutos: "Frutos secos",
+  dulces: "Dulces",
+};
+
+// Supabase doesn't store cat_label (it's derived from category).
+// This function adds it so callers always get a complete Product.
+function withCatLabel(row: Record<string, unknown>): Product {
+  return {
+    ...row,
+    cat_label: CAT_LABEL[row.category as string] ?? String(row.category ?? ""),
+  } as Product;
+}
+
 export async function getProducts(): Promise<Product[]> {
   try {
     const supabase = await createClient();
@@ -17,7 +31,7 @@ export async function getProducts(): Promise<Product[]> {
       return PRODUCTS; // fallback to static seed
     }
 
-    return data as Product[];
+    return (data as Record<string, unknown>[]).map(withCatLabel);
   } catch {
     return PRODUCTS;
   }
@@ -34,7 +48,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     if (error || !data) {
       return PRODUCTS.find((p) => p.slug === slug) ?? null;
     }
-    return data as Product;
+    return withCatLabel(data as Record<string, unknown>);
   } catch {
     return PRODUCTS.find((p) => p.slug === slug) ?? null;
   }

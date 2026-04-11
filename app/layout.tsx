@@ -19,7 +19,7 @@ const dmSerif = DM_Serif_Display({
 });
 
 const SITE =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://estacion-snack-next.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.estacionsnack.cl";
 
 export const metadata: Metadata = {
   title: {

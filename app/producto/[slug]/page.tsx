@@ -51,6 +51,9 @@ export default async function ProductPage({ params }: Props) {
     .filter((p) => p.id !== product.id && p.category === product.category)
     .slice(0, 3);
 
+  const SITE =
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.estacionsnack.cl";
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -68,7 +71,7 @@ export default async function ProductPage({ params }: Props) {
         product.status === "agotado"
           ? "https://schema.org/OutOfStock"
           : "https://schema.org/InStock",
-      url: `https://estacion-snack-next.vercel.app/producto/${product.slug}`,
+      url: `${SITE}/producto/${product.slug}`,
     },
   };
 

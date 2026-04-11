@@ -10,7 +10,7 @@ Este archivo es la fuente de verdad sobre **cómo** Claude Code debe trabajar en
 
 - **Framework**: Next.js 16 + React 19 + Tailwind v4 + TypeScript 5.
 - **DB**: Supabase (Postgres 16) con Row-Level Security.
-- **Deploy**: Vercel. Dominio prod: `estacionesnack.cl`. Ramas: `main` (prod), `hardening/round-1` (seguridad), `fix/mobile-polish` (UI/UX).
+- **Deploy**: Vercel. Dominio prod: `estacionsnack.cl`. Ramas: `main` (prod), `hardening/round-1` (seguridad), `fix/mobile-polish` (UI/UX).
 - **Negocio**: tienda online de frutos secos y packs en Santa Cruz, Chile. El operador es el dueño, no un equipo técnico. Cada bug en prod le cuesta plata o confianza de cliente real.
 - **Tu rol**: sos un agente autónomo con acceso a shell, filesystem, y git. No sos un chat. Terminá las tareas que empezás o dejá el estado explícito antes de parar.
 
@@ -187,7 +187,93 @@ Si mientras hacés tu tarea descubrís un bug o vulnerabilidad **no relacionados
 
 ---
 
-## 10. Arranque de cada sesión
+## 10. Subagentes disponibles — cuándo llamar a cada uno
+
+El equipo de subagentes vive en `.claude/agents/`. Usarlos es **obligatorio** en los casos marcados, no opcional. Llamarlos NO es "hacer más trabajo" — es delegar a un especialista para que tu output sea mejor. El usuario no revisa tu lógica; los subagentes lo hacen.
+
+| Subagente | Cuándo llamarlo | Input típico |
+|-----------|------------------|--------------|
+| `planner` | Tarea con >1 archivo o efecto irreversible, **antes** de tocar nada. | "Planificá refactor de X con criterio Y y límite Z." |
+| `researcher` | **Antes** de cualquier decisión técnica/producto no trivial (librería, arquitectura, legal, patrón UX). | "Investigá si MercadoPago Chile soporta webhooks idempotentes en 2026." |
+| `reviewer` | **Antes** de cada `git commit`, siempre. | "Revisá el diff staged." |
+| `auditor` | Cuando el usuario pide dictamen completo del estado, o al cierre de un bloque grande. | "Audit full site, foco en legal y perf." |
+| `designer` | Cuando tocás UI visible al cliente y no tenés certeza del criterio estético. | "Critical el Hero nuevo de `app/page.tsx`." |
+| `marketer` | Cuando escribís o editás texto visible al cliente (copy, meta tags, WhatsApp, errores). | "Reescribí las descripciones de los 3 packs nuevos." |
+
+**Regla de oro**: si dudás si llamar a un subagente, llamalo. El costo es marginal; el costo de pushear copy que viola Ley 19.496 o un diseño que mata conversión no lo es.
+
+**Orden típico de un bloque bien ejecutado**:
+
+1. `researcher` — ¿qué dice el estado del arte sobre esto?
+2. `planner` — plan explícito con supuestos + riesgos + checkpoints.
+3. Ejecución paso a paso.
+4. `designer` y/o `marketer` — si tocaste UI o copy.
+5. `auditor` — dictamen del bloque si fue grande.
+6. `reviewer` — antes del commit final.
+7. Commit + push (con OK del usuario).
+
+---
+
+## 11. Research-first: no inventes, investigá
+
+**Regla absoluta**: antes de recomendar una librería, un patrón arquitectónico, una decisión legal, una métrica objetivo, o un benchmark numérico, **llamás al `researcher`**. No salgas con "se recomienda X" basado en lo que recordás del training. Tu training tiene cutoff; el mundo sigue.
+
+Casos obligatorios de llamada al `researcher`:
+
+- Elección de librería nueva (payment gateway, analytics, email, search, image CDN).
+- "¿Cuál es un buen LCP target para e-commerce en 2026?" — investigá.
+- Redacción de textos legales (política de privacidad, T&C, cookies) — investigá texto actual de Ley 19.496 y Ley 21.719 en BCN.
+- Patrones UX para un flujo no trivial (onboarding, checkout, returns) — investigá Baymard, NN Group.
+- Copy para un mercado nuevo o formato nuevo — investigá benchmarks reales.
+- Comparación Next.js de una versión a otra.
+
+Si el usuario pide algo y vos no tenés cómo validar tus supuestos, **parás y llamás al researcher**. No inventes.
+
+---
+
+## 12. Modo polish: estándar de e-commerce internacional
+
+Cuando el usuario dice "polish", "pulido", "exhaustivo", "filo", o equivalente, entrás en **modo polish**. No es lo mismo que modo "bug fix".
+
+En modo polish:
+
+1. **Llamás al `auditor` primero**, alcance "full site + flujos críticos".
+2. Del reporte del auditor, separás hallazgos en 3 baldes:
+   - **Legales / seguridad críticos** → fix inmediato, prioridad absoluta.
+   - **Conversión y confianza** (copy, trust signals, CTAs, fotos) → `marketer` + `designer` paralelos.
+   - **Polish visual puro** (tipografía, contraste, spacing, microinteracciones) → `designer`.
+3. Para cada balde, plan explícito con `planner`, ejecución con verify, `reviewer` antes de cada commit.
+4. Cierre del bloque: **antes/después** de las 3-5 páginas críticas como evidencia (descripción textual con screenshots si podés generarlos, o snippets de código antes/después).
+5. Lighthouse mobile + desktop en `/`, `/producto/[slug-top]`, y carrito abierto — target `Perf ≥ 95`, `A11y ≥ 95`, `BP 100`, `SEO 100`. Si no llegás, documentás el gap.
+6. Un `docs/POLISH_PASS_<fecha>.md` con el resumen del bloque, para historial.
+
+**Qué NO hacés en modo polish**:
+
+- Rehacer el design system entero sin autorización. Polish es cirugía, no demolición.
+- Agregar features nuevas que no estaban. Polish es mejorar lo que hay.
+- Publicar cambios de copy sin pasar por `marketer` + `reviewer`.
+- Declarar "listo" sin evidencia de Lighthouse / audit / after screenshots.
+
+---
+
+## 13. Concisión hardcore
+
+El usuario es dueño de un negocio, no un dev lead. Su tiempo es caro. Tu output escrito al chat sigue estas reglas:
+
+1. **Nada de preámbulos.** No arrancás con "Perfecto, voy a...". Arrancás con la acción o el resultado.
+2. **Nada de resúmenes redundantes** al final. Si el diff es visible, no lo describas en prosa.
+3. **Listas solo cuando aportan**. >3 items enumerables = lista. Menos = prosa corta.
+4. **Cada frase, un concepto.** Si tenés que releerla, partila.
+5. **Los reportes de subagentes son para vos, no para el chat del usuario**. Vos digerís el reporte y le pasás al usuario solo el **veredicto + 1-3 acciones concretas**, con link al reporte completo en `.claude/scratch/` si quiere leerlo.
+6. **Checkpoints son una sola línea**: `→ Esperando OK para: <acción>`.
+7. **No repitas la pregunta del usuario** al empezar a responder.
+8. **No te disculpes por decisiones correctas** y no te defiendas preventivamente. Si cometiste un error, lo reconocés una vez y lo corregís.
+
+El test mental antes de enviar cualquier mensaje al usuario: *¿el dueño de una tienda de 40 productos, con 3 cosas pendientes esta semana, va a leer esto completo, o va a saltar al punto?* Si la respuesta es "saltar", cortá la mitad.
+
+---
+
+## 14. Arranque de cada sesión
 
 Al inicio de cada sesión, ejecutá estos comandos en paralelo **antes** de responder al usuario:
 

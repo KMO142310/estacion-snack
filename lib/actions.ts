@@ -2,7 +2,8 @@
 
 import { createClient } from "./supabase/server";
 import { adminGetOrderAccessToken } from "./supabase/admin";
-import { WA, PRODUCTS } from "./products";
+import { PRODUCTS } from "./products";
+import { WA, BANK_INFO } from "./business-info";
 import type { Product } from "./types";
 
 const CAT_LABEL: Record<string, string> = {
@@ -131,8 +132,10 @@ export async function placeOrder(params: {
     const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.estacionsnack.cl";
     const orderUrl = `${site}/pedido/${orderId}?t=${encodeURIComponent(accessToken)}`;
 
+    const bankBlock = `\n\n💳 Datos para transferencia:\nBanco: ${BANK_INFO.bank}\nCuenta: ${BANK_INFO.accountType} ${BANK_INFO.accountNumber}\nRUT: ${BANK_INFO.rut}\nNombre: ${BANK_INFO.holder}\nEmail: ${BANK_INFO.email}`;
+
     const msg = encodeURIComponent(
-      `¡Hola! Hago el siguiente pedido 🌰\n\n${lines}\n\nTotal: $${total.toLocaleString("es-CL")}\n\nNombre: ${params.customerName}\nTeléfono: ${params.customerPhone}${params.notes ? `\nNotas: ${params.notes}` : ""}\n\nVer estado del pedido: ${orderUrl}`,
+      `¡Hola! Hago el siguiente pedido 🌰\n\n${lines}\n\nTotal: $${total.toLocaleString("es-CL")}\n\nNombre: ${params.customerName}\nTeléfono: ${params.customerPhone}${params.notes ? `\nNotas: ${params.notes}` : ""}${bankBlock}\n\nVer estado del pedido: ${orderUrl}`,
     );
 
     const waUrl = `https://wa.me/${WA}?text=${msg}`;

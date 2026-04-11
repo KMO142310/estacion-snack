@@ -5,11 +5,11 @@ const faqs = [
   },
   {
     q: "¿A qué comunas despachan?",
-    a: "Despachamos en Santa Cruz y comunas de la Región de O'Higgins: Palmilla, Peralillo, Nancagua, Chépica, Lolol, San Fernando, Chimbarongo, Placilla, Pumanque, Marchigüe, Pichilemu, Rancagua y más. Si vivís fuera, escríbenos y lo evaluamos.",
+    a: "Por ahora despachamos dentro de Santa Cruz. Si vivís en otra zona, escríbenos por WhatsApp y lo evaluamos juntos.",
   },
   {
     q: "¿Cuánto cuesta el envío?",
-    a: "Santa Cruz centro: gratis. Comunas vecinas inmediatas (Palmilla, Peralillo, Nancagua, Chépica, Lolol): $2.500. Resto de O'Higgins: $3.500. El costo se calcula automáticamente en el carrito según tu comuna.",
+    a: "El envío es gratis. Sin mínimo de compra y sin costo de despacho.",
   },
   {
     q: "¿Cuándo despachan?",
@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: "¿Qué medios de pago aceptan?",
-    a: "Transferencia bancaria o efectivo contra entrega. No cobramos online. Al confirmar tu pedido te pasamos los datos bancarios por WhatsApp.",
+    a: "Transferencia bancaria o efectivo contra entrega. No cobramos online. Al confirmar el pedido te pasamos los datos por WhatsApp: Banco Falabella, Cuenta Corriente 19823004262, RUT 20.690.128-4, a nombre de Omar Alexis.",
   },
   {
     q: "¿Cuál es el mínimo de compra?",

@@ -125,4 +125,5 @@ export function fmt(n: number): string {
   return "$" + n.toLocaleString("es-CL");
 }
 
-export const WA = "56953743338";
+// Re-exported from business-info — source of truth is there
+export { WA } from "./business-info";

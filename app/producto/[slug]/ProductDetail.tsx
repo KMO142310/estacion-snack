@@ -41,9 +41,10 @@ const STATUS_LABEL: Record<string, string> = {
 interface Props {
   product: Product;
   related: Product[];
+  allProducts: Product[];
 }
 
-export default function ProductDetail({ product, related }: Props) {
+export default function ProductDetail({ product, related, allProducts }: Props) {
   const { items, addItem, updateQty } = useCart();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [qty, setQty] = useState(0.5);
@@ -367,7 +368,7 @@ export default function ProductDetail({ product, related }: Props) {
       </main>
       <Footer />
       <Bnav onCartOpen={() => setDrawerOpen(true)} />
-      <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} products={[product, ...related]} />
+      <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} products={allProducts} />
     </>
   );
 }

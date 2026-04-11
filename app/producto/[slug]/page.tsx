@@ -88,7 +88,7 @@ export default async function ProductPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ProductDetail product={product} related={related} />
+      <ProductDetail product={product} related={related} allProducts={allProducts} />
     </CartProvider>
   );
 }

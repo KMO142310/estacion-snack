@@ -26,9 +26,10 @@ const STATUS_LABEL: Record<string, string> = {
 
 interface Props {
   product: Product;
+  onCartOpen?: () => void;
 }
 
-export default function ProductCard({ product }: Props) {
+export default function ProductCard({ product, onCartOpen }: Props) {
   const { items, addItem, updateQty } = useCart();
   const [loading, setLoading] = useState(false);
   const reduce = useReducedMotion();
@@ -40,6 +41,7 @@ export default function ProductCard({ product }: Props) {
     setLoading(true);
     await addItem(product, 0.5);
     setLoading(false);
+    onCartOpen?.();
   };
 
   const handleUpdate = async (newQty: number) => {

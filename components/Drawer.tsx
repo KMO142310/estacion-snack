@@ -36,6 +36,7 @@ export default function Drawer({ open, onClose, products }: Props) {
   const [notes, setNotes] = useState("");
   const [nameErr, setNameErr] = useState(false);
   const [phoneErr, setPhoneErr] = useState(false);
+  const [addressErr, setAddressErr] = useState(false);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
 
@@ -58,6 +59,7 @@ export default function Drawer({ open, onClose, products }: Props) {
     let valid = true;
     if (!name.trim()) { setNameErr(true); valid = false; }
     if (!isValidChileanPhone(phone)) { setPhoneErr(true); valid = false; }
+    if (address.trim().length < 4) { setAddressErr(true); valid = false; }
     if (!valid) return;
     if (!sessionId) { showToast("Recargá la página e intentá de nuevo"); return; }
     if (cartEntries.length === 0) return;
@@ -310,23 +312,30 @@ export default function Drawer({ open, onClose, products }: Props) {
               <input
                 id="drawer-address"
                 value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                onChange={(e) => { setAddress(e.target.value); setAddressErr(false); }}
                 placeholder="Calle, número, sector…"
                 autoComplete="street-address"
+                aria-invalid={addressErr}
+                aria-describedby={addressErr ? "drawer-address-err" : undefined}
                 style={{
                   width: "100%",
                   padding: 12,
                   background: "rgba(0,0,0,.03)",
-                  border: "2px solid rgba(0,0,0,.06)",
+                  border: `2px solid ${addressErr ? "var(--red)" : "rgba(0,0,0,.06)"}`,
                   borderRadius: 12,
                   fontSize: 14,
                   color: "var(--text)",
                   outline: "none",
-                  marginBottom: 12,
+                  marginBottom: addressErr ? 4 : 12,
                   fontFamily: "inherit",
                   boxSizing: "border-box",
                 }}
               />
+              {addressErr && (
+                <p id="drawer-address-err" role="alert" style={{ fontSize: 11, color: "var(--red)", marginBottom: 12 }}>
+                  Ingresa tu dirección de entrega
+                </p>
+              )}
 
               <label htmlFor="drawer-notes" style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--sub)", display: "block", marginBottom: 5 }}>
                 Notas (opcional)

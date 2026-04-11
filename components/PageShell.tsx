@@ -36,7 +36,7 @@ export default function PageShell({ products }: Props) {
         <Benefits />
         <Marquee />
         <Combos products={products} />
-        <ProductGrid products={products} />
+        <ProductGrid products={products} onCartOpen={() => setDrawerOpen(true)} />
         <Testimonials />
         <About />
         <FAQ />

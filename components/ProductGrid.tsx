@@ -14,9 +14,10 @@ const FILTERS = [
 
 interface Props {
   products: Product[];
+  onCartOpen?: () => void;
 }
 
-export default function ProductGrid({ products }: Props) {
+export default function ProductGrid({ products, onCartOpen }: Props) {
   const [filter, setFilter] = useState("all");
   const reduce = useReducedMotion();
 
@@ -104,7 +105,7 @@ export default function ProductGrid({ products }: Props) {
       >
         {filtered.map((product) => (
           <motion.div key={product.id} variants={itemVariants}>
-            <ProductCard product={product} />
+            <ProductCard product={product} onCartOpen={onCartOpen} />
           </motion.div>
         ))}
       </motion.div>

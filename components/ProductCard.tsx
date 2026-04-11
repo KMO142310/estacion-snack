@@ -67,6 +67,7 @@ export default function ProductCard({ product, onCartOpen }: Props) {
       {/* Image */}
       <Link
         href={`/producto/${product.slug}`}
+        aria-label={`Ver detalle de ${product.name}`}
         style={{ display: "block" }}
       >
         <div style={{
@@ -104,14 +105,12 @@ export default function ProductCard({ product, onCartOpen }: Props) {
 
       {/* Body */}
       <div style={{ padding: 16 }}>
-        <div style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4, color: "var(--sub)" }}>
+        <div style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 4, color: "var(--sub)" }}>
           {product.cat_label}
         </div>
-        <Link href={`/producto/${product.slug}`}>
-          <h3 style={{ fontSize: 16, fontWeight: 800, lineHeight: 1.2, marginBottom: 4 }}>
-            {product.name}
-          </h3>
-        </Link>
+        <h3 style={{ fontSize: 16, fontWeight: 800, lineHeight: 1.2, marginBottom: 4 }}>
+          {product.name}
+        </h3>
         <p style={{ fontSize: 12, color: "var(--sub)", lineHeight: 1.5, marginBottom: 10, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
           {product.copy}
         </p>
@@ -122,7 +121,7 @@ export default function ProductCard({ product, onCartOpen }: Props) {
 
         {/* Stock indicator */}
         <div style={{
-          fontSize: 10,
+          fontSize: 12,
           color: isOut ? "var(--red)" : "var(--sub)",
           marginBottom: 12,
           display: "flex",

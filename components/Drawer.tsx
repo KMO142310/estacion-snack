@@ -224,11 +224,11 @@ export default function Drawer({ open, onClose, products }: Props) {
                       <span style={{ fontSize: 15, fontWeight: 800 }}>{fmt(product.price * qty)}</span>
                       <div style={{ display: "flex", alignItems: "center", gap: 4, marginTop: 8 }}>
                         <div style={{ display: "flex", alignItems: "center", border: "2px solid rgba(0,0,0,.1)", borderRadius: 10, overflow: "hidden" }}>
-                          <button onClick={() => updateQty(product, Math.max(0, qty - pStep))} style={{ width: 36, height: 32, background: "none", border: "none", cursor: "pointer", fontSize: 16, fontWeight: 700, color: "var(--text)", display: "flex", alignItems: "center", justifyContent: "center" }}>−</button>
-                          <span style={{ padding: "0 10px", fontSize: 13, fontWeight: 800, borderLeft: "2px solid rgba(0,0,0,.1)", borderRight: "2px solid rgba(0,0,0,.1)", height: 32, display: "flex", alignItems: "center" }}>{qty} kg</span>
-                          <button onClick={() => updateQty(product, qty + pStep)} style={{ width: 36, height: 32, background: "none", border: "none", cursor: "pointer", fontSize: 16, fontWeight: 700, color: "var(--text)", display: "flex", alignItems: "center", justifyContent: "center" }}>+</button>
+                          <button onClick={() => updateQty(product, Math.max(0, qty - pStep))} style={{ width: 44, height: 44, background: "none", border: "none", cursor: "pointer", fontSize: 16, fontWeight: 700, color: "var(--text)", display: "flex", alignItems: "center", justifyContent: "center" }}>−</button>
+                          <span style={{ padding: "0 10px", fontSize: 13, fontWeight: 800, borderLeft: "2px solid rgba(0,0,0,.1)", borderRight: "2px solid rgba(0,0,0,.1)", height: 44, display: "flex", alignItems: "center" }}>{qty} kg</span>
+                          <button onClick={() => updateQty(product, qty + pStep)} style={{ width: 44, height: 44, background: "none", border: "none", cursor: "pointer", fontSize: 16, fontWeight: 700, color: "var(--text)", display: "flex", alignItems: "center", justifyContent: "center" }}>+</button>
                         </div>
-                        <button onClick={() => removeItem(productId)} style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(0,0,0,.04)", color: "var(--sub)", fontSize: 14, border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }} aria-label={`Quitar ${product.name}`}>
+                        <button onClick={() => removeItem(productId)} style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(0,0,0,.04)", color: "var(--sub)", fontSize: 14, border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }} aria-label={`Quitar ${product.name}`}>
                           ✕
                         </button>
                       </div>
@@ -260,7 +260,7 @@ export default function Drawer({ open, onClose, products }: Props) {
               </div>
 
               {/* Customer form */}
-              <label htmlFor="drawer-name" style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--sub)", display: "block", marginBottom: 5 }}>
+              <label htmlFor="drawer-name" style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--sub)", display: "block", marginBottom: 5 }}>
                 Tu nombre
               </label>
               <input
@@ -291,7 +291,7 @@ export default function Drawer({ open, onClose, products }: Props) {
                 </p>
               )}
 
-              <label htmlFor="drawer-phone" style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--sub)", display: "block", marginBottom: 5 }}>
+              <label htmlFor="drawer-phone" style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--sub)", display: "block", marginBottom: 5 }}>
                 Tu celular
               </label>
               <input
@@ -324,7 +324,7 @@ export default function Drawer({ open, onClose, products }: Props) {
                 </p>
               )}
 
-              <label htmlFor="drawer-address" style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--sub)", display: "block", marginBottom: 5 }}>
+              <label htmlFor="drawer-address" style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--sub)", display: "block", marginBottom: 5 }}>
                 Dirección de entrega
               </label>
               <input
@@ -355,7 +355,7 @@ export default function Drawer({ open, onClose, products }: Props) {
                 </p>
               )}
 
-              <label htmlFor="drawer-notes" style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--sub)", display: "block", marginBottom: 5 }}>
+              <label htmlFor="drawer-notes" style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--sub)", display: "block", marginBottom: 5 }}>
                 Notas (opcional)
               </label>
               <input

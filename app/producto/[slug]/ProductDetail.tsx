@@ -185,15 +185,17 @@ export default function ProductDetail({ product, related, allProducts }: Props) 
 
               {/* Qty selector */}
               {!isOut && inCart === 0 && (
-                <div style={{ marginBottom: 20 }}>
-                  <label style={{ display: "block", fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--sub)", marginBottom: 8 }}>
+                <fieldset style={{ border: "none", padding: 0, marginBottom: 20 }}>
+                  <legend style={{ display: "block", fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--sub)", marginBottom: 8 }}>
                     Cantidad
-                  </label>
+                  </legend>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                     {(step === 0.5 ? [0.5, 1, 1.5, 2, 3] : [1, 2, 3]).map((v) => (
                       <button
                         key={v}
                         onClick={() => setQty(v)}
+                        aria-label={`${v} kg`}
+                        aria-pressed={qty === v}
                         style={{
                           padding: "10px 16px",
                           fontSize: 13,
@@ -203,6 +205,7 @@ export default function ProductDetail({ product, related, allProducts }: Props) 
                           color: qty === v ? "#fff" : "var(--text)",
                           borderRadius: 10,
                           cursor: "pointer",
+                          minHeight: 44,
                         }}
                       >
                         {v} kg
@@ -212,7 +215,7 @@ export default function ProductDetail({ product, related, allProducts }: Props) 
                   <p style={{ marginTop: 8, fontSize: 13, color: "var(--sub)" }}>
                     Subtotal: <strong style={{ color: "var(--text)" }}>{fmt(product.price * qty)}</strong>
                   </p>
-                </div>
+                </fieldset>
               )}
 
               {/* Add to cart / update qty */}
@@ -298,7 +301,7 @@ export default function ProductDetail({ product, related, allProducts }: Props) 
                       <strong style={{ color: "var(--text)" }}>{value}</strong>
                     </div>
                   ))}
-                  <p style={{ fontSize: 10, color: "var(--sub)", marginTop: 8 }}>
+                  <p style={{ fontSize: 12, color: "var(--sub)", marginTop: 8 }}>
                     Valores aproximados. Vendido a granel sin garantía nutricional.
                   </p>
                 </div>

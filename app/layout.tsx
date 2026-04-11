@@ -29,7 +29,17 @@ export const metadata: Metadata = {
   description:
     "Frutos secos y snacks naturales por kilo en Santa Cruz. Mix de nueces, almendras, maní confitado y más. Despacho martes y viernes. Pide por WhatsApp.",
   metadataBase: new URL(SITE),
-  alternates: { canonical: "/" },
+  alternates: { canonical: SITE },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   keywords: [
     "frutos secos santa cruz",
     "snacks por kilo",

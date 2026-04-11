@@ -58,20 +58,27 @@ export default async function ProductPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
-    description: product.copy,
-    image: product.image_url,
+    description: product.copy || product.name,
+    image: product.image_url.startsWith("http")
+      ? product.image_url
+      : `${SITE}${product.image_url}`,
     sku: product.slug,
     category: product.cat_label,
     brand: { "@type": "Brand", name: "Estación Snack" },
     offers: {
       "@type": "Offer",
       priceCurrency: "CLP",
-      price: product.price,
+      price: String(product.price),
       availability:
         product.status === "agotado"
           ? "https://schema.org/OutOfStock"
           : "https://schema.org/InStock",
       url: `${SITE}/producto/${product.slug}`,
+      seller: {
+        "@type": "LocalBusiness",
+        "@id": `${SITE}/#business`,
+        name: "Estación Snack",
+      },
     },
   };
 

@@ -204,3 +204,36 @@ git add .env.local.example .claude/hooks/pre-commit-guard.sh ...
 cuando matcheás contra filenames o líneas. Los falsos positivos en
 herramientas de guardrail son peores que los falsos negativos porque
 incentivan a los operadores a bypasear el guard con `--no-verify`.
+
+---
+
+## 2026-04-11 · LF-4 · CLAUDE.md: typo en el dominio de prod
+
+**Status**: open
+
+**Descubierto en**: bloque de documentación (README.md, CONTRIBUTING.md, COMPONENTS.md),
+al revisar coherencia entre archivos con el subagente reviewer.
+
+**Impacto**: **bajo** (es documentación interna, no afecta al cliente ni al deploy).
+Sin embargo, el dominio incorrecto en CLAUDE.md podría confundir a futuros agentes
+que tomen ese archivo como fuente de verdad.
+
+**Evidencia**:
+
+`CLAUDE.md` línea 13:
+```
+Dominio prod: `estacionesnack.cl`
+```
+
+Debería ser `estacionsnack.cl` (sin "es" extra). El dominio correcto aparece
+consistente en:
+- `.env.local.example` → `NEXT_PUBLIC_SITE_URL=https://estacionsnack.cl`
+- `app/robots.ts` → fallback `"https://www.estacionsnack.cl"`
+- `docs/CUTOVER.md` → `www.estacionsnack.cl` en todos los registros DNS
+
+**Opciones de mitigación**:
+- Corregir el typo en CLAUDE.md: `estacionesnack.cl` → `estacionsnack.cl`.
+  Cambio de 1 línea, reversible. No requiere subagente.
+
+**Plan propuesto**: abrir plan `chore(docs): fix domain typo in CLAUDE.md`
+como commit independiente. Scope de 1 archivo, 1 línea.

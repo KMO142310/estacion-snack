@@ -37,9 +37,11 @@ export default function ProductCard({ product, onCartOpen }: Props) {
   const colors = COLOR_MAP[product.color] ?? COLOR_MAP.orange;
   const isOut = product.status === "agotado";
 
+  const step = product.min_unit_kg ?? 1;
+
   const handleAdd = async () => {
     setLoading(true);
-    await addItem(product, 0.5);
+    await addItem(product, step);
     setLoading(false);
     onCartOpen?.();
   };
@@ -161,7 +163,7 @@ export default function ProductCard({ product, onCartOpen }: Props) {
               opacity: loading ? 0.7 : 1,
             }}
           >
-            {isOut ? "Agotado" : "Agregar + 0.5 kg"}
+            {isOut ? "Agotado" : `Agregar + ${step} kg`}
           </button>
         ) : (
           <>
@@ -173,7 +175,7 @@ export default function ProductCard({ product, onCartOpen }: Props) {
               overflow: "hidden",
             }}>
               <button
-                onClick={() => handleUpdate(Math.max(0, qty - 0.5))}
+                onClick={() => handleUpdate(Math.max(0, qty - step))}
                 disabled={loading}
                 style={{ width: 44, height: 40, background: "none", color: "var(--text)", fontSize: 18, fontWeight: 600, cursor: "pointer", border: "none", display: "flex", alignItems: "center", justifyContent: "center" }}
               >
@@ -183,7 +185,7 @@ export default function ProductCard({ product, onCartOpen }: Props) {
                 {qty} kg
               </div>
               <button
-                onClick={() => handleUpdate(qty + 0.5)}
+                onClick={() => handleUpdate(qty + step)}
                 disabled={loading}
                 style={{ width: 44, height: 40, background: "none", color: "var(--text)", fontSize: 18, fontWeight: 600, cursor: "pointer", border: "none", display: "flex", alignItems: "center", justifyContent: "center" }}
               >

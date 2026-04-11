@@ -59,6 +59,7 @@ export default function ProductForm({ product, onClose, onSaved }: Props) {
     sort_order:       product?.sort_order        ?? 99,
     long_description: product?.long_description  ?? "",
     is_active:        product?.is_active         ?? true,
+    min_unit_kg:      product?.min_unit_kg       ?? 1,
   });
   const [error, setError] = useState<string | null>(null);
   const [pending, start] = useTransition();
@@ -90,6 +91,7 @@ export default function ProductForm({ product, onClose, onSaved }: Props) {
       sort_order:       Number(form.sort_order),
       long_description: form.long_description.trim() || null,
       is_active:        form.is_active,
+      min_unit_kg:      Number(form.min_unit_kg),
     };
     start(async () => {
       const result = await upsertProduct(payload);
@@ -158,6 +160,13 @@ export default function ProductForm({ product, onClose, onSaved }: Props) {
             {field("Stock (kg)", <input style={inputStyle} type="number" min={0} step={0.5} value={form.stock_kg} onChange={(e) => set("stock_kg", e.target.value)} />)}
 
             {field("Umbral bajo stock", <input style={inputStyle} type="number" min={0} step={0.5} value={form.low_threshold} onChange={(e) => set("low_threshold", e.target.value)} />)}
+
+            {field("Unidad mínima de venta",
+              <select style={{ ...inputStyle, cursor: "pointer" }} value={String(form.min_unit_kg)} onChange={(e) => set("min_unit_kg", parseFloat(e.target.value))}>
+                <option value="1">1 kg (por kilo)</option>
+                <option value="0.5">0,5 kg (desde medio kilo)</option>
+              </select>
+            )}
           </div>
 
           <div>

@@ -222,6 +222,7 @@ export interface ProductUpsertPayload {
   sort_order: number;
   long_description?: string | null;
   is_active: boolean;
+  min_unit_kg?: number;
 }
 
 /** Admin create or update a product. If payload.id is set → update; else → insert. */

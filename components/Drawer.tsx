@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useCart } from "@/lib/cart-context";
 import { placeOrder } from "@/lib/actions";
 import { trackBeginCheckout, trackPurchase } from "@/lib/analytics";
@@ -48,6 +48,23 @@ export default function Drawer({ open, onClose, products }: Props) {
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
+  // Silently round up any cart quantities that violate min_unit_kg
+  // (e.g. items added before this rule existed, stored in localStorage)
+  const correctedRef = useRef(false);
+  useEffect(() => {
+    if (!open || correctedRef.current) return;
+    correctedRef.current = true;
+    Object.entries(items).forEach(([productId, qty]) => {
+      const product = products.find((p) => p.id === productId);
+      if (!product || qty <= 0) return;
+      const step = product.min_unit_kg ?? 1;
+      if (qty < step || qty % step > 0.001) {
+        void updateQty(product, Math.ceil(qty / step) * step);
+      }
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const showToast = (msg: string) => {
@@ -190,6 +207,7 @@ export default function Drawer({ open, onClose, products }: Props) {
               {cartEntries.map(([productId, qty]) => {
                 const product = products.find((p) => p.id === productId);
                 if (!product) return null;
+                const pStep = product.min_unit_kg ?? 1;
                 return (
                   <div key={productId} style={{ display: "flex", gap: 12, padding: "14px 0", borderBottom: "1px solid rgba(0,0,0,.05)" }}>
                     <div style={{ width: 52, height: 60, borderRadius: 10, flexShrink: 0, background: "var(--orange-soft)", overflow: "hidden" }}>
@@ -206,9 +224,9 @@ export default function Drawer({ open, onClose, products }: Props) {
                       <span style={{ fontSize: 15, fontWeight: 800 }}>{fmt(product.price * qty)}</span>
                       <div style={{ display: "flex", alignItems: "center", gap: 4, marginTop: 8 }}>
                         <div style={{ display: "flex", alignItems: "center", border: "2px solid rgba(0,0,0,.1)", borderRadius: 10, overflow: "hidden" }}>
-                          <button onClick={() => updateQty(product, Math.max(0, qty - 0.5))} style={{ width: 36, height: 32, background: "none", border: "none", cursor: "pointer", fontSize: 16, fontWeight: 700, color: "var(--text)", display: "flex", alignItems: "center", justifyContent: "center" }}>−</button>
+                          <button onClick={() => updateQty(product, Math.max(0, qty - pStep))} style={{ width: 36, height: 32, background: "none", border: "none", cursor: "pointer", fontSize: 16, fontWeight: 700, color: "var(--text)", display: "flex", alignItems: "center", justifyContent: "center" }}>−</button>
                           <span style={{ padding: "0 10px", fontSize: 13, fontWeight: 800, borderLeft: "2px solid rgba(0,0,0,.1)", borderRight: "2px solid rgba(0,0,0,.1)", height: 32, display: "flex", alignItems: "center" }}>{qty} kg</span>
-                          <button onClick={() => updateQty(product, qty + 0.5)} style={{ width: 36, height: 32, background: "none", border: "none", cursor: "pointer", fontSize: 16, fontWeight: 700, color: "var(--text)", display: "flex", alignItems: "center", justifyContent: "center" }}>+</button>
+                          <button onClick={() => updateQty(product, qty + pStep)} style={{ width: 36, height: 32, background: "none", border: "none", cursor: "pointer", fontSize: 16, fontWeight: 700, color: "var(--text)", display: "flex", alignItems: "center", justifyContent: "center" }}>+</button>
                         </div>
                         <button onClick={() => removeItem(productId)} style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(0,0,0,.04)", color: "var(--sub)", fontSize: 14, border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }} aria-label={`Quitar ${product.name}`}>
                           ✕

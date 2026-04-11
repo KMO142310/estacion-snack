@@ -31,6 +31,7 @@ export interface Product {
   long_description?: string | null;
   nutrition?: NutritionInfo | null;
   is_active?: boolean;
+  min_unit_kg?: number; // minimum purchase unit in kg (default 1.0; Chuby Bardú = 0.5)
 }
 
 export interface CartItem {

@@ -47,7 +47,8 @@ interface Props {
 export default function ProductDetail({ product, related, allProducts }: Props) {
   const { items, addItem, updateQty } = useCart();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [qty, setQty] = useState(0.5);
+  const step = product.min_unit_kg ?? 1;
+  const [qty, setQty] = useState(step);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -189,7 +190,7 @@ export default function ProductDetail({ product, related, allProducts }: Props) 
                     Cantidad
                   </label>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                    {[0.5, 1, 1.5, 2, 3].map((v) => (
+                    {(step === 0.5 ? [0.5, 1, 1.5, 2, 3] : [1, 2, 3]).map((v) => (
                       <button
                         key={v}
                         onClick={() => setQty(v)}
@@ -244,11 +245,11 @@ export default function ProductDetail({ product, related, allProducts }: Props) 
                     overflow: "hidden",
                     marginBottom: 12,
                   }}>
-                    <button onClick={() => handleCartUpdate(inCart - 0.5)} disabled={loading} style={{ width: 56, height: 56, background: "#fff", fontSize: 22, fontWeight: 700, border: "none", cursor: "pointer" }}>−</button>
+                    <button onClick={() => handleCartUpdate(inCart - step)} disabled={loading} style={{ width: 56, height: 56, background: "#fff", fontSize: 22, fontWeight: 700, border: "none", cursor: "pointer" }}>−</button>
                     <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontWeight: 800, borderLeft: "2px solid var(--text)", borderRight: "2px solid var(--text)" }}>
                       {inCart} kg en el carrito
                     </div>
-                    <button onClick={() => handleCartUpdate(inCart + 0.5)} disabled={loading} style={{ width: 56, height: 56, background: "#fff", fontSize: 22, fontWeight: 700, border: "none", cursor: "pointer" }}>+</button>
+                    <button onClick={() => handleCartUpdate(inCart + step)} disabled={loading} style={{ width: 56, height: 56, background: "#fff", fontSize: 22, fontWeight: 700, border: "none", cursor: "pointer" }}>+</button>
                   </div>
                   <button
                     onClick={() => setDrawerOpen(true)}

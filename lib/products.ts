@@ -23,6 +23,7 @@ export const PRODUCTS: Product[] = [
     badge: "Top ventas",
     sort_order: 1,
     color: "orange",
+    min_unit_kg: 1,
   },
   {
     id: "2",
@@ -42,6 +43,7 @@ export const PRODUCTS: Product[] = [
     badge: null,
     sort_order: 2,
     color: "green",
+    min_unit_kg: 1,
   },
   {
     id: "3",
@@ -61,6 +63,7 @@ export const PRODUCTS: Product[] = [
     badge: null,
     sort_order: 3,
     color: "red",
+    min_unit_kg: 1,
   },
   {
     id: "4",
@@ -80,6 +83,7 @@ export const PRODUCTS: Product[] = [
     badge: "Popular",
     sort_order: 4,
     color: "purple",
+    min_unit_kg: 0.5, // exception: sold from 0.5 kg
   },
   {
     id: "5",
@@ -99,6 +103,7 @@ export const PRODUCTS: Product[] = [
     badge: null,
     sort_order: 5,
     color: "yellow",
+    min_unit_kg: 1,
   },
   {
     id: "6",
@@ -118,6 +123,7 @@ export const PRODUCTS: Product[] = [
     badge: "Último kg",
     sort_order: 6,
     color: "sand",
+    min_unit_kg: 1,
   },
 ];
 

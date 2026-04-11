@@ -3,6 +3,7 @@ import Link from "next/link";
 import StaticLayout from "@/components/StaticLayout";
 import BankCard from "./BankCard";
 
+export const revalidate = 3600; // 1h — contenido estático
 export const metadata: Metadata = {
   title: "Envíos y despacho",
   description:

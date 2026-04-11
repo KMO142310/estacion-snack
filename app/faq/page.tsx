@@ -3,6 +3,7 @@ import Link from "next/link";
 import StaticLayout from "@/components/StaticLayout";
 import FAQ from "@/components/FAQ";
 
+export const revalidate = 3600; // 1h — contenido estático
 export const metadata: Metadata = {
   title: "Preguntas frecuentes",
   description:

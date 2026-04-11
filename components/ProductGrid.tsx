@@ -73,6 +73,7 @@ export default function ProductGrid({ products }: Props) {
             style={{
               flexShrink: 0,
               padding: "8px 16px",
+              minHeight: 40,
               fontSize: 13,
               fontWeight: 700,
               background: filter === f.id ? "var(--text)" : "var(--bg)",

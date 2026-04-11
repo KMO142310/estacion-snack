@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import StaticLayout from "@/components/StaticLayout";
 
+export const revalidate = 3600; // 1h — contenido estático
 export const metadata: Metadata = {
   title: "Nuestra historia",
   description:

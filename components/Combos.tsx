@@ -4,6 +4,14 @@ import { useCart } from "@/lib/cart-context";
 import { PRODUCTS, fmt } from "@/lib/products";
 import type { Product } from "@/lib/types";
 
+// Packs armados = combinación sugerida de 2 SKUs base. El carrito agrega
+// los 2 productos base a precio completo; NO hay descuento aplicado en
+// ningún lado de la lógica. Por eso `price` acá es exactamente la suma
+// de los precios de `slugA` + `slugB`. Mostrar un `oldPrice` tachado o un
+// "Ahorrá $X" constituiría publicidad engañosa bajo Ley 19.496 (Chile)
+// porque el cliente nunca paga menos que la suma real. Ver FL-3 en
+// SECURITY_AUDIT.md y el plan del Bloque 2.5 si se quiere implementar
+// un descuento REAL en el carrito a futuro.
 interface ComboConfig {
   id: string;
   tag: string;
@@ -12,7 +20,6 @@ interface ComboConfig {
   slugA: string;
   slugB: string;
   price: number;
-  oldPrice: number;
   bg: string;
   emoji: string;
   image?: string;
@@ -27,8 +34,7 @@ const COMBOS: ComboConfig[] = [
     desc: "Para la mesa de la oficina o la junta con amigos. Salado + dulce.",
     slugA: "mix-europeo",
     slugB: "mani-confitado-tropical",
-    price: 17500,
-    oldPrice: 18990,
+    price: 18990, // 13000 (mix-europeo) + 5990 (mani-confitado-tropical)
     bg: "var(--orange-soft)",
     emoji: "🥜🍬",
     image: "/img/pack-pica.jpg",
@@ -41,8 +47,7 @@ const COMBOS: ComboConfig[] = [
     desc: "Para las sesiones de estudio o las tardes de Netflix con los amigos.",
     slugA: "chuby-bardu",
     slugB: "gomita-osito-docile",
-    price: 17000,
-    oldPrice: 18490,
+    price: 18490, // 9990 (chuby-bardu) + 8500 (gomita-osito-docile)
     bg: "var(--purple-soft)",
     emoji: "🍭🐻",
     image: "/img/pack-dulce.jpg",
@@ -55,8 +60,7 @@ const COMBOS: ComboConfig[] = [
     desc: "Snack natural para antes o después de entrenar. Energía pura.",
     slugA: "mix-europeo",
     slugB: "almendra-entera",
-    price: 27000,
-    oldPrice: 29000,
+    price: 29000, // 13000 (mix-europeo) + 16000 (almendra-entera)
     bg: "var(--green-soft)",
     emoji: "🥜🌰",
     image: "/img/pack-proteina.jpg",
@@ -100,10 +104,7 @@ export default function Combos({ products }: Props) {
         gap: 12,
         paddingBottom: 48,
       }}>
-        {COMBOS.map((combo) => {
-          const save = combo.oldPrice - combo.price;
-          const pct = Math.round((save / combo.oldPrice) * 100);
-          return (
+        {COMBOS.map((combo) => (
             <div
               key={combo.id}
               className="reveal"
@@ -142,19 +143,6 @@ export default function Combos({ products }: Props) {
                 )}
               </div>
               <span style={{
-                position: "absolute",
-                top: 14,
-                right: 14,
-                background: "var(--green)",
-                color: "#fff",
-                fontSize: 11,
-                fontWeight: 800,
-                padding: "5px 10px",
-                borderRadius: "var(--r-full)",
-              }}>
-                -{pct}%
-              </span>
-              <span style={{
                 fontSize: 10,
                 fontWeight: 700,
                 textTransform: "uppercase",
@@ -176,10 +164,6 @@ export default function Combos({ products }: Props) {
               </p>
               <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 16 }}>
                 <span style={{ fontSize: 20, fontWeight: 900 }}>{fmt(combo.price)}</span>
-                <span style={{ fontSize: 13, color: "var(--sub)", textDecoration: "line-through" }}>{fmt(combo.oldPrice)}</span>
-                <span style={{ fontSize: 10, fontWeight: 800, color: "var(--green)", background: "var(--green-soft)", padding: "3px 8px", borderRadius: "var(--r-full)" }}>
-                  Ahorra {fmt(save)}
-                </span>
               </div>
               <button
                 onClick={() => addCombo(combo)}
@@ -203,8 +187,7 @@ export default function Combos({ products }: Props) {
                 Agregar pack
               </button>
             </div>
-          );
-        })}
+        ))}
       </div>
     </div>
   );

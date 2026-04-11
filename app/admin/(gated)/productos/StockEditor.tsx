@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { updateStock } from "@/lib/admin-actions";
+import { useState, useTransition } from "react";
+import { updateStock, updateProductActive } from "@/lib/admin-actions";
 import { fmt } from "@/lib/products";
 import type { Product } from "@/lib/types";
 
@@ -28,6 +28,7 @@ export default function StockEditor({ products: initial }: Props) {
   const [editing, setEditing] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState<Record<string, boolean>>({});
   const [saved, setSaved] = useState<Record<string, boolean>>({});
+  const [, startToggle] = useTransition();
 
   const startEdit = (id: string, currentStock: number) => {
     setEditing((e) => ({ ...e, [id]: String(currentStock) }));
@@ -63,16 +64,29 @@ export default function StockEditor({ products: initial }: Props) {
     }
   };
 
+  const toggleActive = (product: Product) => {
+    const next = !(product.is_active ?? true);
+    setProducts((ps) => ps.map((p) => p.id === product.id ? { ...p, is_active: next } : p));
+    startToggle(async () => {
+      const result = await updateProductActive(product.id, next);
+      if (!result.ok) {
+        // Revert on error
+        setProducts((ps) => ps.map((p) => p.id === product.id ? { ...p, is_active: !next } : p));
+      }
+    });
+  };
+
   return (
     <div style={{ background: "#fff", borderRadius: 16, border: "1.5px solid rgba(0,0,0,.06)", overflow: "hidden" }}>
       {/* Table header */}
-      <div style={{ display: "grid", gridTemplateColumns: "48px 1fr 120px 160px 100px 80px", gap: 16, padding: "12px 20px", background: "#f8f8f6", borderBottom: "1.5px solid rgba(0,0,0,.06)", fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".06em", color: "#5F5A52" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "48px 1fr 120px 160px 100px 80px 60px", gap: 16, padding: "12px 20px", background: "#f8f8f6", borderBottom: "1.5px solid rgba(0,0,0,.06)", fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".06em", color: "#5F5A52" }}>
         <span></span>
         <span>Producto</span>
         <span>Precio</span>
         <span>Stock (kg)</span>
         <span>Estado</span>
         <span></span>
+        <span>Visible</span>
       </div>
 
       {products.map((p) => {
@@ -85,11 +99,12 @@ export default function StockEditor({ products: initial }: Props) {
             key={p.id}
             style={{
               display: "grid",
-              gridTemplateColumns: "48px 1fr 120px 160px 100px 80px",
+              gridTemplateColumns: "48px 1fr 120px 160px 100px 80px 60px",
               gap: 16,
               padding: "16px 20px",
               borderBottom: "1px solid rgba(0,0,0,.04)",
               alignItems: "center",
+              opacity: (p.is_active ?? true) ? 1 : 0.5,
             }}
           >
             {/* Thumb */}
@@ -188,6 +203,35 @@ export default function StockEditor({ products: initial }: Props) {
                 </button>
               )}
             </div>
+
+            {/* is_active toggle */}
+            <button
+              onClick={() => toggleActive(p)}
+              title={(p.is_active ?? true) ? "Ocultar del catálogo" : "Mostrar en catálogo"}
+              style={{
+                width: 40,
+                height: 24,
+                borderRadius: 12,
+                background: (p.is_active ?? true) ? "#4A8C3F" : "rgba(0,0,0,.15)",
+                border: "none",
+                cursor: "pointer",
+                position: "relative",
+                transition: "background .2s",
+                flexShrink: 0,
+              }}
+            >
+              <span style={{
+                position: "absolute",
+                top: 3,
+                left: (p.is_active ?? true) ? 19 : 3,
+                width: 18,
+                height: 18,
+                borderRadius: "50%",
+                background: "#fff",
+                transition: "left .2s",
+                display: "block",
+              }} />
+            </button>
           </div>
         );
       })}

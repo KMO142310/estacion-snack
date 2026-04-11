@@ -4,8 +4,58 @@ import { useState, useEffect } from "react";
 import { useCart } from "@/lib/cart-context";
 import { placeOrder } from "@/lib/actions";
 import { trackBeginCheckout, trackPurchase } from "@/lib/analytics";
-import { fmt, WA } from "@/lib/products";
+import { fmt } from "@/lib/products";
 import type { Product } from "@/lib/types";
+
+// Comunas Región de O'Higgins + grandes ciudades cercanas
+const COMUNAS = [
+  "Santa Cruz",
+  "Lolol",
+  "Nancagua",
+  "Palmilla",
+  "Peralillo",
+  "Placilla",
+  "Pumanque",
+  "Chépica",
+  "Pichilemu",
+  "Marchigüe",
+  "Paredones",
+  "Litueche",
+  "La Estrella",
+  "Peumo",
+  "Pichidegua",
+  "Las Cabras",
+  "San Fernando",
+  "Chimbarongo",
+  "Malloa",
+  "Rengo",
+  "Requínoa",
+  "Quinta de Tilcoco",
+  "San Vicente",
+  "Rancagua",
+  "Mostazal",
+  "Graneros",
+  "Codegua",
+  "Machalí",
+  "Olivar",
+  "Doñihue",
+  "Coinco",
+  "Coltauco",
+  "Otra comuna",
+];
+
+function normalizePhone(raw: string): string {
+  const digits = raw.replace(/\D/g, "");
+  if (digits.startsWith("569") && digits.length === 11) return `+${digits}`;
+  if (digits.startsWith("9") && digits.length === 9) return `+56${digits}`;
+  if (digits.startsWith("56") && digits.length === 11) return `+${digits}`;
+  return raw.trim();
+}
+
+function isValidChileanPhone(raw: string): boolean {
+  const normalized = normalizePhone(raw);
+  return /^\+569\d{8}$/.test(normalized);
+}
 
 interface Props {
   open: boolean;
@@ -17,6 +67,7 @@ export default function Drawer({ open, onClose, products }: Props) {
   const { items, sessionId, secondsLeft, updateQty, removeItem, clearCart, totalPrice } = useCart();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [comuna, setComuna] = useState("Santa Cruz");
   const [notes, setNotes] = useState("");
   const [nameErr, setNameErr] = useState(false);
   const [phoneErr, setPhoneErr] = useState(false);
@@ -42,7 +93,7 @@ export default function Drawer({ open, onClose, products }: Props) {
   const handleSend = async () => {
     let valid = true;
     if (!name.trim()) { setNameErr(true); valid = false; }
-    if (!phone.trim()) { setPhoneErr(true); valid = false; }
+    if (!isValidChileanPhone(phone)) { setPhoneErr(true); valid = false; }
     if (!valid) return;
     if (!sessionId) { showToast("Recargá la página e intentá de nuevo"); return; }
     if (cartEntries.length === 0) return;
@@ -58,12 +109,17 @@ export default function Drawer({ open, onClose, products }: Props) {
       .filter((x): x is NonNullable<typeof x> => x !== null);
     trackBeginCheckout(trackedItems, total);
 
+    const notesWithComuna = [
+      `Comuna: ${comuna}`,
+      notes.trim(),
+    ].filter(Boolean).join(" | ");
+
     const result = await placeOrder({
       sessionId,
       customerName: name.trim(),
-      customerPhone: phone.trim(),
+      customerPhone: normalizePhone(phone),
       items: itemsArr,
-      notes: notes.trim() || undefined,
+      notes: notesWithComuna || undefined,
     });
     setLoading(false);
 
@@ -227,6 +283,8 @@ export default function Drawer({ open, onClose, products }: Props) {
                 value={name}
                 onChange={(e) => { setName(e.target.value); setNameErr(false); }}
                 placeholder="Nombre completo"
+                autoComplete="name"
+                aria-invalid={nameErr}
                 style={{
                   width: "100%",
                   padding: 12,
@@ -236,10 +294,15 @@ export default function Drawer({ open, onClose, products }: Props) {
                   fontSize: 14,
                   color: "var(--text)",
                   outline: "none",
-                  marginBottom: 12,
+                  marginBottom: nameErr ? 4 : 12,
                   fontFamily: "inherit",
                 }}
               />
+              {nameErr && (
+                <p role="alert" style={{ fontSize: 11, color: "var(--red)", marginBottom: 12 }}>
+                  Ingresa tu nombre
+                </p>
+              )}
               <label style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--sub)", display: "block", marginBottom: 5 }}>
                 Tu teléfono
               </label>
@@ -248,6 +311,9 @@ export default function Drawer({ open, onClose, products }: Props) {
                 onChange={(e) => { setPhone(e.target.value); setPhoneErr(false); }}
                 placeholder="+56 9 XXXX XXXX"
                 type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                aria-invalid={phoneErr}
                 style={{
                   width: "100%",
                   padding: 12,
@@ -257,10 +323,44 @@ export default function Drawer({ open, onClose, products }: Props) {
                   fontSize: 14,
                   color: "var(--text)",
                   outline: "none",
-                  marginBottom: 12,
+                  marginBottom: phoneErr ? 4 : 12,
                   fontFamily: "inherit",
                 }}
               />
+              {phoneErr && (
+                <p role="alert" style={{ fontSize: 11, color: "var(--red)", marginBottom: 12 }}>
+                  Ingresa un celular chileno válido: +569XXXXXXXX
+                </p>
+              )}
+              <label style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--sub)", display: "block", marginBottom: 5 }}>
+                Comuna de entrega
+              </label>
+              <select
+                value={comuna}
+                onChange={(e) => setComuna(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: 12,
+                  background: "rgba(0,0,0,.03)",
+                  border: "2px solid rgba(0,0,0,.06)",
+                  borderRadius: 12,
+                  fontSize: 14,
+                  color: "var(--text)",
+                  outline: "none",
+                  marginBottom: 12,
+                  fontFamily: "inherit",
+                  cursor: "pointer",
+                  appearance: "none",
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 7L11 1' stroke='%235F5A52' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "right 12px center",
+                  paddingRight: 36,
+                }}
+              >
+                {COMUNAS.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
               <label style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--sub)", display: "block", marginBottom: 5 }}>
                 Notas (opcional)
               </label>

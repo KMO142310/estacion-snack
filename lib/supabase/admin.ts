@@ -24,7 +24,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { assertAdmin } from "@/lib/auth/assert-admin";
-import type { OrderStatus } from "@/lib/types";
+import type { OrderStatus, Product } from "@/lib/types";
 
 /**
  * PRIVATE factory. Do NOT export from this module. If a caller outside
@@ -145,6 +145,63 @@ export async function adminListCustomers(): Promise<AdminCustomerRow[]> {
     .order("last_order_at", { ascending: false, nullsFirst: false })
     .limit(100);
   return (data ?? []) as AdminCustomerRow[];
+}
+
+const CAT_LABEL: Record<string, string> = {
+  frutos: "Frutos secos",
+  dulces: "Dulces",
+};
+
+/** Admin list: todos los productos (incluyendo inactivos), con cat_label derivado. */
+export async function adminListProducts(): Promise<Product[]> {
+  await assertAdmin();
+  const supabase = await createAdminSupabase();
+  const { data } = await supabase
+    .from("products")
+    .select("*")
+    .order("sort_order");
+  return (data ?? []).map((row: Record<string, unknown>) => ({
+    ...row,
+    cat_label: CAT_LABEL[row.category as string] ?? String(row.category ?? ""),
+  })) as Product[];
+}
+
+/** Admin update: is_active de un producto. */
+export async function adminUpdateProductActive(
+  productId: string,
+  isActive: boolean,
+): Promise<{ ok: boolean; error?: string }> {
+  try {
+    await assertAdmin();
+    const supabase = await createAdminSupabase();
+    const { error } = await supabase
+      .from("products")
+      .update({ is_active: isActive })
+      .eq("id", productId);
+    if (error) return { ok: false, error: error.message };
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : String(e) };
+  }
+}
+
+/** Admin update: notas internas de una orden. */
+export async function adminUpdateOrderNotes(
+  orderId: string,
+  notes: string,
+): Promise<{ ok: boolean; error?: string }> {
+  try {
+    await assertAdmin();
+    const supabase = await createAdminSupabase();
+    const { error } = await supabase
+      .from("orders")
+      .update({ notes })
+      .eq("id", orderId);
+    if (error) return { ok: false, error: error.message };
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : String(e) };
+  }
 }
 
 /** Admin update: stock_kg de un producto. */

@@ -1,6 +1,15 @@
 export type ProductStatus = "disponible" | "pocas" | "ultimo_kg" | "agotado";
 export type ProductColor = "orange" | "green" | "red" | "purple" | "yellow" | "sand";
 
+export interface NutritionInfo {
+  energia_kcal?: number;
+  proteinas_g?: number;
+  grasas_g?: number;
+  carbohidratos_g?: number;
+  fibra_g?: number;
+  sodio_mg?: number;
+}
+
 export interface Product {
   id: string;
   slug: string;
@@ -19,6 +28,9 @@ export interface Product {
   badge: string | null;
   sort_order: number;
   color: ProductColor;
+  long_description?: string | null;
+  nutrition?: NutritionInfo | null;
+  is_active?: boolean;
 }
 
 export interface CartItem {

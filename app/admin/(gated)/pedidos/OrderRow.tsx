@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { updateOrderStatus } from "@/lib/admin-actions";
+import { updateOrderStatus, updateOrderNotes } from "@/lib/admin-actions";
 import type { OrderStatus } from "@/lib/types";
 
 const STATUS_LABEL: Record<OrderStatus, string> = {
@@ -48,8 +48,11 @@ const fmtDate = (d: string) =>
 export default function OrderRow({ order }: { order: Order }) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<OrderStatus>(order.status);
+  const [notes, setNotes] = useState(order.notes ?? "");
+  const [notesSaved, setNotesSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
+  const [notesPending, startNotesTrans] = useTransition();
 
   const changeStatus = (next: OrderStatus) => {
     setError(null);
@@ -57,6 +60,16 @@ export default function OrderRow({ order }: { order: Order }) {
       const result = await updateOrderStatus(order.id, next);
       if (result.ok) setStatus(next);
       else setError(result.error ?? "Error");
+    });
+  };
+
+  const saveNotes = () => {
+    startNotesTrans(async () => {
+      const result = await updateOrderNotes(order.id, notes);
+      if (result.ok) {
+        setNotesSaved(true);
+        setTimeout(() => setNotesSaved(false), 2000);
+      }
     });
   };
 
@@ -120,7 +133,7 @@ export default function OrderRow({ order }: { order: Order }) {
               <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".06em", color: "#5F5A52", marginBottom: 8 }}>
                 Cambiar estado
               </div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 16 }}>
                 {STATUSES.map((s) => (
                   <button
                     key={s}
@@ -142,7 +155,49 @@ export default function OrderRow({ order }: { order: Order }) {
                   </button>
                 ))}
               </div>
-              {error && <p style={{ marginTop: 8, fontSize: 12, color: "#D94B4B" }}>{error}</p>}
+              {error && <p style={{ marginTop: -8, marginBottom: 12, fontSize: 12, color: "#D94B4B" }}>{error}</p>}
+
+              <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".06em", color: "#5F5A52", marginBottom: 6 }}>
+                Nota interna
+              </div>
+              <textarea
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Anotaciones internas sobre este pedido…"
+                rows={3}
+                style={{
+                  width: "100%",
+                  padding: "10px 12px",
+                  background: "#fff",
+                  border: "2px solid rgba(0,0,0,.08)",
+                  borderRadius: 10,
+                  fontSize: 13,
+                  fontFamily: "inherit",
+                  resize: "vertical",
+                  outline: "none",
+                  marginBottom: 8,
+                }}
+              />
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <button
+                  onClick={saveNotes}
+                  disabled={notesPending}
+                  style={{
+                    padding: "8px 14px",
+                    background: "#1A1816",
+                    color: "#fff",
+                    fontSize: 12,
+                    fontWeight: 700,
+                    borderRadius: 8,
+                    border: "none",
+                    cursor: notesPending ? "not-allowed" : "pointer",
+                    opacity: notesPending ? 0.6 : 1,
+                  }}
+                >
+                  {notesPending ? "Guardando…" : "Guardar nota"}
+                </button>
+                {notesSaved && <span style={{ fontSize: 12, color: "#4A8C3F", fontWeight: 700 }}>Guardado</span>}
+              </div>
             </div>
           </div>
         </div>

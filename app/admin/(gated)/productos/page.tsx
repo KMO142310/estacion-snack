@@ -1,15 +1,10 @@
-import { createClient } from "@/lib/supabase/server";
+import { adminListProducts } from "@/lib/supabase/admin";
 import StockEditor from "./StockEditor";
-import type { Product } from "@/lib/types";
 
 export const revalidate = 0;
 
 export default async function ProductosPage() {
-  const supabase = await createClient();
-  const { data: products } = await supabase
-    .from("products")
-    .select("*")
-    .order("sort_order");
+  const products = await adminListProducts();
 
   return (
     <div>
@@ -18,10 +13,10 @@ export default async function ProductosPage() {
           Productos
         </h1>
         <p style={{ fontSize: 14, color: "#5F5A52" }}>
-          Edita el stock directamente. Los cambios se reflejan en la tienda al instante.
+          Edita stock y visibilidad. Los cambios se reflejan en la tienda al instante.
         </p>
       </div>
-      <StockEditor products={(products ?? []) as Product[]} />
+      <StockEditor products={products} />
     </div>
   );
 }

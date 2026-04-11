@@ -20,20 +20,23 @@ REPORT=""
 
 # 1. Detección de secretos en el diff staged
 SECRET_PATTERNS=(
-  'eyJ[A-Za-z0-9_-]{40,}'                    # JWT (Supabase keys, etc.)
-  'sk_live_[A-Za-z0-9]{20,}'                 # Stripe live
-  'sk_test_[A-Za-z0-9]{20,}'                 # Stripe test
-  'service_role[^a-z_]'                      # Literal service_role
-  'SUPABASE_SERVICE_ROLE_KEY[[:space:]]*=[[:space:]]*["\x27]?eyJ'
-  'POSTGRES_PASSWORD[[:space:]]*=[[:space:]]*["\x27]?[^$]'
-  '-----BEGIN[[:space:]]+(RSA|OPENSSH|PRIVATE)[[:space:]]+KEY'
-  'AKIA[0-9A-Z]{16}'                         # AWS access key
-  'ghp_[A-Za-z0-9]{36}'                      # GitHub PAT
+  'eyJ[A-Za-z0-9_-]{40,}'                                               # JWT (Supabase, Auth0, etc.)
+  'sk_live_[A-Za-z0-9]{20,}'                                            # Stripe live
+  'sk_test_[A-Za-z0-9]{20,}'                                            # Stripe test
+  'SUPABASE_SERVICE_ROLE_KEY[[:space:]]*=[[:space:]]*["\x27]?eyJ'       # Assignment of service role key to a var
+  'POSTGRES_PASSWORD[[:space:]]*=[[:space:]]*["\x27]?[^$]'              # Postgres password literal
+  '-----BEGIN [A-Z ]*PRIVATE KEY-----'                                  # PEM private key (any algorithm)
+  'AKIA[0-9A-Z]{16}'                                                    # AWS access key
+  'ghp_[A-Za-z0-9]{36}'                                                 # GitHub PAT
 )
 
+# NOTE: `-- "$pattern"` is REQUIRED so grep does not misparse a pattern
+# that starts with `-` (such as the PEM private key regex) as a flag.
+# Never remove the `--` without replacing patterns with alternatives
+# that cannot start with a dash.
 for pattern in "${SECRET_PATTERNS[@]}"; do
-  if git diff --cached | grep -qE "$pattern"; then
-    matches=$(git diff --cached | grep -nE "$pattern" | head -3)
+  if git diff --cached | grep -qE -- "$pattern"; then
+    matches=$(git diff --cached | grep -nE -- "$pattern" | head -3)
     REPORT+="\n🚫 Secreto detectado (patrón: $pattern)\n$matches\n"
     FAIL=1
   fi

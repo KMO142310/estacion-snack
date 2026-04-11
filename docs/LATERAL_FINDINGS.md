@@ -23,7 +23,16 @@ Formato de cada entry:
 
 ## 2026-04-10 · LF-1 · pre-commit-guard.sh: grep falla con pattern `-----BEGIN ... KEY`
 
-**Status**: open
+**Status**: **fixed** (en el commit de este mismo día que agrega la sección
+After del `SECURITY_AUDIT.md`, junto con LF-2 abajo). El fix está en
+`.claude/hooks/pre-commit-guard.sh`: se agregó `--` a las invocaciones de
+`grep` para que cualquier pattern que empiece con `-` sea parseado como
+pattern y no como flag, y el pattern PEM se simplificó a
+`-----BEGIN [A-Z ]*PRIVATE KEY-----` que cubre todos los formatos de PEM
+private key (RSA, EC, OPENSSH, PKCS#8) sin falsos negativos. Se agregó un
+comentario en el script advirtiendo a quien lo edite en el futuro que no
+remueva el `--`.
+
 **Descubierto en**: Bloque 2 parte B — cherry-pick de `chore/claude-code-setup`
 a `hardening/round-1`, al correr `.claude/hooks/pre-commit-guard.sh` manualmente
 como sustituto del hook automático (hooks no cargados en esta sesión porque
@@ -89,3 +98,63 @@ de seguridad.
 **Nota operativa**: mientras este bug esté abierto, cualquier revisión
 humana de diffs antes de commit debería hacer un `grep -E '-----BEGIN .*
 KEY'` adicional manualmente sobre `git diff --cached` como compensación.
+**Esta nota queda histórica — el fix ya está aplicado.**
+
+---
+
+## 2026-04-11 · LF-2 · pre-commit-guard.sh: falso positivo de `service_role`
+
+**Status**: **fixed** (en el mismo commit que LF-1, aplicado durante el
+intento de commit del audit post-migración).
+
+**Descubierto en**: Bloque 2 parte B — durante el intento de commit de
+la sección "After" del `SECURITY_AUDIT.md`. El hook bloqueó la operación
+con el siguiente output:
+
+```
+🚫 Secreto detectado (patrón: service_role[^a-z_])
+85:+reserva con service_role antes del SELECT anon, y el anon aún así devuelve
+136:+2. Insertar canary data con service_role, intentar la mutación anon con
+137:+   WHERE matcheante, y verificar con service_role que la fila quedó intacta.
+```
+
+**Impacto**: **alto** (falso positivo bloquea commits legítimos, ruido
+operacional, incentivo a bypasear el hook con `--no-verify`). Cualquier
+documento que hable sobre Supabase Row-Level Security va a mencionar la
+palabra `service_role` decenas de veces. El pattern del hook era
+`service_role[^a-z_]` — matchea la palabra literal seguida de cualquier
+carácter que no sea letra minúscula o underscore. Eso incluye espacios,
+puntos, comas, saltos de línea, paréntesis, etc. O sea: imposible escribir
+documentación técnica sobre RLS sin disparar el guard.
+
+**Causa raíz**: el pattern es redundante con
+`SUPABASE_SERVICE_ROLE_KEY[[:space:]]*=[[:space:]]*["\x27]?eyJ` que ya
+estaba en el array y cubre el caso real (asignación del valor del key a
+una variable). El pattern `service_role[^a-z_]` parece haber sido un
+intento de "detectar el nombre de la clave" pero el nombre de la clave
+(`SUPABASE_SERVICE_ROLE_KEY`) no es el secreto — el secreto es el JWT que
+se le asigna. Mencionar el nombre `service_role` en documentación o
+comentarios de código es normal y no constituye exposición.
+
+**Fix aplicado**: eliminar la línea `'service_role[^a-z_]'` del array
+`SECRET_PATTERNS` en `.claude/hooks/pre-commit-guard.sh`. El patrón
+específico `SUPABASE_SERVICE_ROLE_KEY[[:space:]]*=[[:space:]]*["\x27]?eyJ`
+permanece y sigue cubriendo el caso de un secreto literal asignado.
+
+**Verificación post-fix**:
+
+```bash
+cd "/Users/omaralexis/Desktop/Frutos secos/estacion-snack"
+git add SECURITY_AUDIT.md   # el mismo diff que estaba bloqueado
+.claude/hooks/pre-commit-guard.sh  # corre y retorna exit 0
+```
+
+**Lección aprendida**: patterns de detección de secretos deben apuntar al
+**valor** del secreto (eyJ..., sk_live..., AKIA..., etc.), no al **nombre**
+de la variable que lo contiene. El nombre es parte del contrato público
+del sistema y aparece en docs, comments, y el código mismo; el valor es
+lo que no debe commitearse.
+
+**Nota operativa**: este fix + LF-1 van en el mismo commit (separado del
+commit del audit) con mensaje `fix(hooks): pre-commit-guard regex fixes
+for PEM keys and service_role false positives`.

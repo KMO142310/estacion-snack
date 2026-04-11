@@ -6,10 +6,10 @@ import ContactForm from "./ContactForm";
 export const metadata: Metadata = {
   title: "Contacto",
   description:
-    "Escríbenos por WhatsApp o completa el formulario. Respondemos el mismo día hábil.",
+    "Escríbenos por WhatsApp o completa el formulario. Respondemos en menos de 24 horas hábiles.",
   openGraph: {
     title: "Contacto · Estación Snack",
-    description: "Contacta con Estación Snack. Respondemos el mismo día.",
+    description: "Contacta con Estación Snack. La vía más rápida es WhatsApp.",
   },
 };
 
@@ -41,7 +41,7 @@ export default function ContactoPage() {
               Hablamos
             </h1>
             <p style={{ fontSize: 16, color: "var(--sub)", lineHeight: 1.6 }}>
-              Respondemos el mismo día hábil. Si tu consulta es urgente o querés pedir,
+              Respondemos en menos de 24 horas hábiles. Para consultas urgentes o pedidos,
               la opción más rápida es WhatsApp.
             </p>
           </div>
@@ -98,7 +98,7 @@ export default function ContactoPage() {
                 <div style={{ display: "flex", flexDirection: "column", gap: 10, fontSize: 14, color: "var(--sub)" }}>
                   <div><strong style={{ color: "var(--text)" }}>Ubicación</strong><br />Santa Cruz, Región de O'Higgins</div>
                   <div><strong style={{ color: "var(--text)" }}>Horario de atención</strong><br />Martes y viernes · 10:00 – 19:00</div>
-                  <div><strong style={{ color: "var(--text)" }}>Despacho</strong><br />Santa Cruz y comunas de O'Higgins</div>
+                  <div><strong style={{ color: "var(--text)" }}>Despacho</strong><br />Santa Cruz · martes y viernes</div>
                 </div>
               </div>
             </div>

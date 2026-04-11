@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: "¿Qué medios de pago aceptan?",
-    a: "Transferencia bancaria o efectivo contra entrega. No cobramos online. Al confirmar el pedido te pasamos los datos por WhatsApp: Banco Falabella, Cuenta Corriente 19823004262, RUT 20.690.128-4, a nombre de Omar Alexis.",
+    a: "Transferencia bancaria o efectivo contra entrega. No cobramos online. Al confirmar el pedido te pasamos los datos bancarios por WhatsApp.",
   },
   {
     q: "¿Cuál es el mínimo de compra?",

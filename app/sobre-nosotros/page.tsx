@@ -145,7 +145,7 @@ export default function SobreNosotrosPage() {
               ¿Querés saber más?
             </h2>
             <p style={{ fontSize: 16, color: "var(--sub)", marginBottom: 24 }}>
-              Escribinos por WhatsApp o mandanos un mensaje. Respondemos el mismo día.
+              Escribinos por WhatsApp o mandanos un mensaje. Respondemos en menos de 24 horas hábiles.
             </p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
               <Link

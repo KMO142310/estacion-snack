@@ -250,8 +250,42 @@ export default function ProductDetail({ product, related }: Props) {
                 </div>
               )}
 
+              {/* Long description */}
+              {product.long_description && (
+                <div style={{ marginTop: 24, padding: "0 0 20px", borderBottom: "1px solid rgba(0,0,0,.06)" }}>
+                  <p style={{ fontSize: 15, lineHeight: 1.7, color: "var(--sub)", whiteSpace: "pre-line" }}>
+                    {product.long_description}
+                  </p>
+                </div>
+              )}
+
+              {/* Nutrition table */}
+              {product.nutrition && Object.keys(product.nutrition).length > 0 && (
+                <div style={{ marginTop: 20, padding: 16, background: "rgba(0,0,0,.02)", borderRadius: 12, marginBottom: 20 }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".06em", color: "var(--sub)", marginBottom: 10 }}>
+                    Info nutricional por 100g
+                  </div>
+                  {[
+                    ["Energía", `${product.nutrition.energia_kcal ?? "—"} kcal`],
+                    ["Proteínas", `${product.nutrition.proteinas_g ?? "—"} g`],
+                    ["Grasas", `${product.nutrition.grasas_g ?? "—"} g`],
+                    ["Carbohidratos", `${product.nutrition.carbohidratos_g ?? "—"} g`],
+                    ["Fibra", `${product.nutrition.fibra_g ?? "—"} g`],
+                    ["Sodio", `${product.nutrition.sodio_mg ?? "—"} mg`],
+                  ].map(([label, value]) => (
+                    <div key={label} style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", fontSize: 13, borderBottom: "1px dashed rgba(0,0,0,.06)" }}>
+                      <span style={{ color: "var(--sub)" }}>{label}</span>
+                      <strong style={{ color: "var(--text)" }}>{value}</strong>
+                    </div>
+                  ))}
+                  <p style={{ fontSize: 10, color: "var(--sub)", marginTop: 8 }}>
+                    Valores aproximados. Vendido a granel sin garantía nutricional.
+                  </p>
+                </div>
+              )}
+
               {/* Delivery info */}
-              <div style={{ marginTop: 24, padding: 16, background: "var(--green-soft)", borderRadius: 14, fontSize: 13, color: "var(--sub)" }}>
+              <div style={{ marginTop: 4, padding: 16, background: "var(--green-soft)", borderRadius: 14, fontSize: 13, color: "var(--sub)" }}>
                 <strong style={{ color: "var(--text)", display: "block", marginBottom: 4 }}>Despacho martes y viernes</strong>
                 Santa Cruz y alrededores. Coordinamos horario por WhatsApp.
               </div>

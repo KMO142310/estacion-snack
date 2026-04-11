@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { updateStock, updateProductActive } from "@/lib/admin-actions";
 import { fmt } from "@/lib/products";
 import type { Product } from "@/lib/types";
+import ProductForm from "./ProductForm";
 
 const STATUS_COLOR: Record<string, string> = {
   disponible: "#4A8C3F",
@@ -29,6 +30,7 @@ export default function StockEditor({ products: initial }: Props) {
   const [saving, setSaving] = useState<Record<string, boolean>>({});
   const [saved, setSaved] = useState<Record<string, boolean>>({});
   const [, startToggle] = useTransition();
+  const [formProduct, setFormProduct] = useState<Product | null | "new">(null);
 
   const startEdit = (id: string, currentStock: number) => {
     setEditing((e) => ({ ...e, [id]: String(currentStock) }));
@@ -77,6 +79,26 @@ export default function StockEditor({ products: initial }: Props) {
   };
 
   return (
+    <>
+    {formProduct !== null && (
+      <ProductForm
+        product={formProduct === "new" ? undefined : formProduct}
+        onClose={() => setFormProduct(null)}
+        onSaved={() => {
+          // Reload is triggered by revalidatePath on the server action
+          setFormProduct(null);
+          window.location.reload();
+        }}
+      />
+    )}
+    <div style={{ marginBottom: 16, display: "flex", justifyContent: "flex-end" }}>
+      <button
+        onClick={() => setFormProduct("new")}
+        style={{ padding: "10px 20px", fontSize: 13, fontWeight: 700, borderRadius: 12, background: "#FF6B35", color: "#fff", border: "none", cursor: "pointer" }}
+      >
+        + Nuevo producto
+      </button>
+    </div>
     <div style={{ background: "#fff", borderRadius: 16, border: "1.5px solid rgba(0,0,0,.06)", overflow: "hidden" }}>
       {/* Table header */}
       <div style={{ display: "grid", gridTemplateColumns: "48px 1fr 120px 160px 100px 80px 60px", gap: 16, padding: "12px 20px", background: "#f8f8f6", borderBottom: "1.5px solid rgba(0,0,0,.06)", fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".06em", color: "#5F5A52" }}>
@@ -112,9 +134,18 @@ export default function StockEditor({ products: initial }: Props) {
               <img src={p.image_url} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </div>
 
-            {/* Name */}
+            {/* Name + edit button */}
             <div>
-              <div style={{ fontWeight: 700, fontSize: 14 }}>{p.name}</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontWeight: 700, fontSize: 14 }}>{p.name}</span>
+                <button
+                  onClick={() => setFormProduct(p)}
+                  title="Editar producto"
+                  style={{ padding: "2px 8px", fontSize: 11, fontWeight: 700, borderRadius: 6, border: "1.5px solid rgba(0,0,0,.12)", background: "#fff", cursor: "pointer", color: "#5F5A52" }}
+                >
+                  Editar
+                </button>
+              </div>
               <div style={{ fontSize: 11, color: "#5F5A52", marginTop: 2 }}>{p.cat_label}</div>
             </div>
 
@@ -236,5 +267,6 @@ export default function StockEditor({ products: initial }: Props) {
         );
       })}
     </div>
+    </>
   );
 }

@@ -204,6 +204,48 @@ export async function adminUpdateOrderNotes(
   }
 }
 
+export interface ProductUpsertPayload {
+  id?: string;
+  slug: string;
+  name: string;
+  category: string;
+  price: number;
+  unit: string;
+  stock_kg: number;
+  low_threshold: number;
+  image_url: string;
+  image_webp_url: string;
+  image_400_url: string;
+  copy: string;
+  badge: string | null;
+  color: string;
+  sort_order: number;
+  long_description?: string | null;
+  is_active: boolean;
+}
+
+/** Admin create or update a product. If payload.id is set → update; else → insert. */
+export async function adminUpsertProduct(
+  payload: ProductUpsertPayload,
+): Promise<{ ok: boolean; id?: string; error?: string }> {
+  try {
+    await assertAdmin();
+    const supabase = await createAdminSupabase();
+    const { id, ...fields } = payload;
+    if (id) {
+      const { error } = await supabase.from("products").update(fields).eq("id", id);
+      if (error) return { ok: false, error: error.message };
+      return { ok: true, id };
+    } else {
+      const { data, error } = await supabase.from("products").insert(fields).select("id").maybeSingle();
+      if (error) return { ok: false, error: error.message };
+      return { ok: true, id: (data as { id: string } | null)?.id };
+    }
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : String(e) };
+  }
+}
+
 /** Admin update: stock_kg de un producto. */
 export async function adminUpdateStock(
   productId: string,

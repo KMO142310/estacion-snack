@@ -6,6 +6,8 @@ import {
   adminUpdateOrderStatus,
   adminUpdateProductActive,
   adminUpdateOrderNotes,
+  adminUpsertProduct,
+  type ProductUpsertPayload,
 } from "./supabase/admin";
 import type { OrderStatus } from "./types";
 
@@ -51,6 +53,18 @@ export async function updateOrderNotes(
   const result = await adminUpdateOrderNotes(orderId, notes);
   if (result.ok) {
     revalidatePath("/admin/pedidos");
+  }
+  return result;
+}
+
+export async function upsertProduct(
+  payload: ProductUpsertPayload,
+): Promise<{ ok: boolean; id?: string; error?: string }> {
+  const result = await adminUpsertProduct(payload);
+  if (result.ok) {
+    revalidatePath("/admin/productos");
+    revalidatePath("/");
+    revalidatePath("/sitemap.xml");
   }
   return result;
 }

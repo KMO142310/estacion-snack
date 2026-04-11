@@ -29,11 +29,21 @@ const faqSchema = {
   ],
 };
 
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: "https://www.estacionsnack.cl" },
+    { "@type": "ListItem", position: 2, name: "Preguntas frecuentes", item: "https://www.estacionsnack.cl/faq" },
+  ],
+};
+
 export default function FaqPage() {
   return (
     <StaticLayout>
       <main style={{ paddingTop: 48, paddingBottom: 80 }}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
         <div className="wrap">
           <nav aria-label="Ruta de navegación" style={{ fontSize: 12, color: "var(--sub)", marginBottom: 32, display: "flex", gap: 6 }}>
             <Link href="/">Inicio</Link>

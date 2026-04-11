@@ -15,10 +15,20 @@ export const metadata: Metadata = {
 
 const WA_LINK = "https://wa.me/56953743338?text=Hola!%20Tengo%20una%20consulta";
 
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: "https://www.estacionsnack.cl" },
+    { "@type": "ListItem", position: 2, name: "Contacto", item: "https://www.estacionsnack.cl/contacto" },
+  ],
+};
+
 export default function ContactoPage() {
   return (
     <StaticLayout>
       <main style={{ paddingTop: 48, paddingBottom: 80 }}>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
         <div className="wrap">
           {/* Breadcrumb */}
           <nav aria-label="Ruta de navegación" style={{ fontSize: 12, color: "var(--sub)", marginBottom: 32, display: "flex", gap: 6 }}>

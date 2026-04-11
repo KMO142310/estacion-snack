@@ -5,12 +5,13 @@ import { useState, useEffect } from "react";
 const COOKIE_KEY = "fsb_dismissed";
 
 export default function FreeShippingBanner() {
-  const [visible, setVisible] = useState(false);
+  // Start visible so SSR renders the banner height, preventing CLS on first visits.
+  // After mount, we hide it if the user already dismissed it (cookie check).
+  const [visible, setVisible] = useState(true);
 
-  // Check cookie on mount — avoids SSR mismatch
   useEffect(() => {
     const dismissed = document.cookie.split(";").some((c) => c.trim().startsWith(`${COOKIE_KEY}=1`));
-    if (!dismissed) setVisible(true);
+    if (dismissed) setVisible(false);
   }, []);
 
   const dismiss = () => {

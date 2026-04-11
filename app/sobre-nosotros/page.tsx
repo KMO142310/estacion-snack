@@ -33,10 +33,20 @@ const values = [
   },
 ];
 
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: "https://www.estacionsnack.cl" },
+    { "@type": "ListItem", position: 2, name: "Nuestra historia", item: "https://www.estacionsnack.cl/sobre-nosotros" },
+  ],
+};
+
 export default function SobreNosotrosPage() {
   return (
     <StaticLayout>
       <main style={{ paddingTop: 48, paddingBottom: 80 }}>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
         <div className="wrap">
           {/* Breadcrumb */}
           <nav aria-label="Ruta de navegación" style={{ fontSize: 12, color: "var(--sub)", marginBottom: 32, display: "flex", gap: 6 }}>

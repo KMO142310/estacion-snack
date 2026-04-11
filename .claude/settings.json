@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "_comment": "Settings de Claude Code para Estación Snack. Ver CLAUDE.md para el protocolo completo. Este archivo define permisos deterministas + hooks que corren automáticamente en cada tool call. Los hooks son la red de seguridad — el LLM puede equivocarse, los hooks no.",
+
+  "permissions": {
+    "_comment": "allow = auto-aprobado (no pide confirmación). ask = pide OK al usuario cada vez. deny = bloqueado absolutamente.",
+
+    "allow": [
+      "Read(**)",
+      "Glob(**)",
+      "Grep(**)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(file *)",
+      "Bash(git status *)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git branch *)",
+      "Bash(git show *)",
+      "Bash(git rev-parse *)",
+      "Bash(git blame *)",
+      "Bash(npm run lint *)",
+      "Bash(npm run typecheck *)",
+      "Bash(npm run test *)",
+      "Bash(npm run build *)",
+      "Bash(npx tsc *)",
+      "Bash(npx eslint *)",
+      "Bash(npx next build *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(find *)",
+      "Edit(**/*.ts)",
+      "Edit(**/*.tsx)",
+      "Edit(**/*.md)",
+      "Edit(**/*.css)",
+      "Edit(**/*.json)",
+      "Write(docs/**)",
+      "Write(.claude/scratch/**)"
+    ],
+
+    "ask": [
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git merge *)",
+      "Bash(git rebase *)",
+      "Bash(git reset *)",
+      "Bash(git checkout *)",
+      "Bash(git stash *)",
+      "Bash(git tag *)",
+      "Bash(git cherry-pick *)",
+      "Bash(npm install *)",
+      "Bash(npm uninstall *)",
+      "Bash(npm update *)",
+      "Bash(npx supabase *)",
+      "Bash(vercel *)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(psql *)",
+      "Bash(rm *)",
+      "Bash(mv *)",
+      "Bash(chmod *)",
+      "Bash(chown *)",
+      "Edit(supabase/migrations/**)",
+      "Edit(.env*)",
+      "Edit(next.config.ts)",
+      "Edit(vercel.json)",
+      "Edit(package.json)",
+      "Edit(tsconfig.json)",
+      "Write(supabase/migrations/**)"
+    ],
+
+    "deny": [
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(git reset --hard origin/main *)",
+      "Bash(git commit * --no-verify *)",
+      "Bash(git commit * -n *)",
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~*)",
+      "Bash(sudo *)",
+      "Bash(curl * | sh*)",
+      "Bash(curl * | bash*)",
+      "Bash(wget * | sh*)",
+      "Bash(wget * | bash*)",
+      "Read(.env.local)",
+      "Read(.env.production)",
+      "Write(.env.local)",
+      "Write(.env.production)",
+      "Write(.git/**)"
+    ]
+  },
+
+  "hooks": {
+    "_comment": "Los hooks corren antes/después de cada tool call. Si un hook sale con exit code != 0, el tool call se aborta. Esta es la red de seguridad determinista.",
+
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/block-dangerous.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash(git commit*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/pre-commit-guard.sh"
+          }
+        ]
+      }
+    ],
+
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/post-edit-verify.sh"
+          }
+        ]
+      }
+    ],
+
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/stop-checkpoint.sh"
+          }
+        ]
+      }
+    ]
+  },
+
+  "env": {
+    "CLAUDE_PROJECT_NAME": "estacion-snack",
+    "CLAUDE_PROD_DOMAIN": "estacionesnack.cl"
+  }
+}

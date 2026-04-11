@@ -25,7 +25,7 @@ export default function Benefits() {
             }}
           >
             <div style={{ fontSize: 24, marginBottom: 10 }}>{it.ico}</div>
-            <h3 style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>{it.title}</h3>
+            <p style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>{it.title}</p>
             <p style={{ fontSize: 12, color: "var(--sub)", lineHeight: 1.5 }}>{it.desc}</p>
           </div>
         ))}

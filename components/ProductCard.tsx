@@ -65,7 +65,6 @@ export default function ProductCard({ product, onCartOpen }: Props) {
       {/* Image */}
       <Link
         href={`/producto/${product.slug}`}
-        aria-label={`Ver detalle de ${product.name}`}
         style={{ display: "block" }}
       >
         <div style={{

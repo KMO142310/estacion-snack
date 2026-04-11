@@ -50,7 +50,7 @@ export default function Header({ onCartOpen }: HeaderProps) {
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
         }}
-        aria-label="Estación Snack — Inicio"
+        aria-label="Estación Snack"
       >
         <img
           src="/img/logo-icon.svg"

@@ -38,7 +38,7 @@ export default function Announce() {
         position: "relative",
       }}
     >
-      <span>📦 Próximo despacho: <strong style={{ fontWeight: 800, color: "var(--orange)" }}>{nextDispatch()}</strong></span>
+      <span>📦 Próximo despacho: <strong style={{ fontWeight: 800, color: "var(--text)" }}>{nextDispatch()}</strong></span>
       <button
         aria-label="Cerrar aviso"
         onClick={() => setVisible(false)}

@@ -62,7 +62,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: ".08em", color: "#fff", marginBottom: 14, fontWeight: 700 }}>Tienda</h4>
+            <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: ".08em", color: "#fff", marginBottom: 14, fontWeight: 700 }}>Tienda</p>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8, fontSize: 13 }}>
               <li><a href="/#productos" style={{ color: "rgba(255,255,255,.65)" }}>Productos</a></li>
               <li><a href="/#combos" style={{ color: "rgba(255,255,255,.65)" }}>Packs</a></li>
@@ -72,7 +72,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: ".08em", color: "#fff", marginBottom: 14, fontWeight: 700 }}>Nosotros</h4>
+            <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: ".08em", color: "#fff", marginBottom: 14, fontWeight: 700 }}>Nosotros</p>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8, fontSize: 13 }}>
               <li><Link href="/sobre-nosotros" style={{ color: "rgba(255,255,255,.65)" }}>Nuestra historia</Link></li>
               <li><Link href="/contacto" style={{ color: "rgba(255,255,255,.65)" }}>Contacto</Link></li>
@@ -85,7 +85,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: ".08em", color: "#fff", marginBottom: 14, fontWeight: 700 }}>Despacho</h4>
+            <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: ".08em", color: "#fff", marginBottom: 14, fontWeight: 700 }}>Despacho</p>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8, fontSize: 13 }}>
               <li>+56 9 5374 3338</li>
               <li>Santa Cruz, Chile</li>

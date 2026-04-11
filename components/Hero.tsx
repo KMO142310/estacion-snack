@@ -11,7 +11,7 @@ export default function Hero() {
           gap: 6,
           padding: "8px 18px",
           background: "var(--orange-soft)",
-          color: "var(--orange)",
+          color: "var(--text)",
           fontSize: 13,
           fontWeight: 700,
           borderRadius: "var(--r-full)",
@@ -32,7 +32,7 @@ export default function Hero() {
           fontWeight: 400,
         }}
       >
-        Tu snack <em style={{ fontStyle: "italic", color: "var(--orange)" }}>favorito,</em>
+        Tu snack <em style={{ fontStyle: "italic", color: "#C4511B" }}>favorito,</em>
         <br />sin la bolsa de más
       </h1>
 

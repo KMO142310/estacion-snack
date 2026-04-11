@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -97,14 +98,14 @@ export default function ProductDetail({ product, related }: Props) {
                 background: soft,
                 position: "relative",
               }}>
-                <picture>
-                  <source srcSet={product.image_webp_url} type="image/webp" />
-                  <img
-                    src={product.image_url}
-                    alt={product.name}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                </picture>
+                <Image
+                  src={product.image_url}
+                  alt={product.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ objectFit: "cover" }}
+                  priority
+                />
                 {product.badge && (
                   <span style={{
                     position: "absolute",
@@ -316,11 +317,15 @@ export default function ProductDetail({ product, related }: Props) {
                       transition: "transform .2s",
                     }}
                   >
-                    <div style={{ aspectRatio: "1/1", background: COLOR_SOFT[r.color] ?? "var(--orange-soft)", overflow: "hidden" }}>
-                      <picture>
-                        <source srcSet={r.image_webp_url} type="image/webp" />
-                        <img src={r.image_url} alt={r.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                      </picture>
+                    <div style={{ aspectRatio: "1/1", background: COLOR_SOFT[r.color] ?? "var(--orange-soft)", overflow: "hidden", position: "relative" }}>
+                      <Image
+                        src={r.image_url}
+                        alt={r.name}
+                        fill
+                        sizes="(max-width: 640px) 50vw, 220px"
+                        style={{ objectFit: "cover" }}
+                        loading="lazy"
+                      />
                     </div>
                     <div style={{ padding: 14 }}>
                       <div style={{ fontWeight: 800, fontSize: 15, marginBottom: 4 }}>{r.name}</div>

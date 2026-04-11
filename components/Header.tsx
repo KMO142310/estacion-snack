@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
 import { WA } from "@/lib/products";
 
@@ -62,9 +63,10 @@ export default function Header({ onCartOpen }: HeaderProps) {
       </a>
 
       <nav style={{ display: "none" }} className="nav-desktop-show">
-        <a href="#combos" style={{ fontSize: 14, fontWeight: 600, color: "var(--sub)", borderRadius: "var(--r-full)", padding: "8px 16px" }}>Packs</a>
-        <a href="#productos" style={{ fontSize: 14, fontWeight: 600, color: "var(--sub)", borderRadius: "var(--r-full)", padding: "8px 16px" }}>Productos</a>
-        <a href="#faq" style={{ fontSize: 14, fontWeight: 600, color: "var(--sub)", borderRadius: "var(--r-full)", padding: "8px 16px" }}>Preguntas</a>
+        <a href="/#combos" style={{ fontSize: 14, fontWeight: 600, color: "var(--sub)", borderRadius: "var(--r-full)", padding: "8px 16px" }}>Packs</a>
+        <a href="/#productos" style={{ fontSize: 14, fontWeight: 600, color: "var(--sub)", borderRadius: "var(--r-full)", padding: "8px 16px" }}>Productos</a>
+        <Link href="/envios" style={{ fontSize: 14, fontWeight: 600, color: "var(--sub)", borderRadius: "var(--r-full)", padding: "8px 16px" }}>Envíos</Link>
+        <Link href="/sobre-nosotros" style={{ fontSize: 14, fontWeight: 600, color: "var(--sub)", borderRadius: "var(--r-full)", padding: "8px 16px" }}>Nosotros</Link>
       </nav>
 
       <div style={{ display: "flex", gap: 8, alignItems: "center" }}>

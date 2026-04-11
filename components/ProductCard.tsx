@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
 import { fmt } from "@/lib/products";
@@ -69,15 +70,14 @@ export default function ProductCard({ product }: Props) {
           overflow: "hidden",
           background: colors.soft,
         }}>
-          <picture>
-            <source srcSet={product.image_webp_url} type="image/webp" />
-            <img
-              src={product.image_url}
-              alt={product.name}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              loading="lazy"
-            />
-          </picture>
+          <Image
+            src={product.image_url}
+            alt={product.name}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 280px"
+            style={{ objectFit: "cover" }}
+            loading="lazy"
+          />
           {product.badge && (
             <span style={{
               position: "absolute",

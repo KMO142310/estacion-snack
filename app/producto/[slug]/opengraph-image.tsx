@@ -1,21 +1,10 @@
 import { ImageResponse } from "next/og";
-import { getProductBySlug } from "@/lib/actions";
+import productsData from "@/data/products.json";
 
 export const runtime = "nodejs";
 export const alt = "Estación Snack";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.estacionsnack.cl";
-
-const BG_MAP: Record<string, { bg: string; accent: string }> = {
-  orange: { bg: "#FFF3E0", accent: "#E8721C" },
-  green:  { bg: "#E8F5E9", accent: "#2E7D32" },
-  red:    { bg: "#FFEBEE", accent: "#C62828" },
-  purple: { bg: "#F3E5F5", accent: "#6A1B9A" },
-  yellow: { bg: "#FFFDE7", accent: "#F9A825" },
-  sand:   { bg: "#FBF6EE", accent: "#8D6E53" },
-};
 
 export default async function OgImage({
   params,
@@ -23,20 +12,15 @@ export default async function OgImage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = await getProductBySlug(slug);
+  const product = (productsData as { slug: string; name: string; price: number; copy: string }[]).find(
+    (p) => p.slug === slug,
+  );
 
-  const colors = BG_MAP[product?.color ?? "orange"] ?? BG_MAP.orange;
   const name = product?.name ?? "Frutos secos frescos";
   const price = product?.price
     ? `$${product.price.toLocaleString("es-CL")} / kg`
     : "";
   const copy = product?.copy ?? "Por kilo, sin envases innecesarios.";
-
-  const imageUrl = product?.image_url
-    ? product.image_url.startsWith("http")
-      ? product.image_url
-      : `${SITE}${product.image_url}`
-    : null;
 
   return new ImageResponse(
     (
@@ -46,7 +30,7 @@ export default async function OgImage({
           height: 630,
           display: "flex",
           fontFamily: "Georgia, serif",
-          background: colors.bg,
+          background: "#5A1F1A",
         }}
       >
         {/* Left — text */}
@@ -56,26 +40,23 @@ export default async function OgImage({
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            padding: "60px 64px",
+            padding: "60px 80px",
           }}
         >
           {/* Brand badge */}
           <div
             style={{
               display: "flex",
-              alignItems: "center",
-              gap: 8,
               marginBottom: 32,
             }}
           >
             <div
               style={{
+                display: "flex",
                 fontSize: 13,
                 fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.1em",
-                color: colors.accent,
-                background: `${colors.accent}18`,
+                color: "#D0551F",
+                background: "rgba(208,85,31,0.18)",
                 padding: "6px 16px",
                 borderRadius: 100,
               }}
@@ -87,10 +68,11 @@ export default async function OgImage({
           {/* Product name */}
           <div
             style={{
+              display: "flex",
               fontSize: 64,
               fontWeight: 800,
               lineHeight: 1.05,
-              color: "#1A1816",
+              color: "#F4EADB",
               marginBottom: 20,
               maxWidth: 520,
             }}
@@ -101,8 +83,9 @@ export default async function OgImage({
           {/* Copy */}
           <div
             style={{
+              display: "flex",
               fontSize: 22,
-              color: "#5F5A52",
+              color: "rgba(244,234,219,0.72)",
               lineHeight: 1.5,
               maxWidth: 480,
               marginBottom: 40,
@@ -117,42 +100,22 @@ export default async function OgImage({
               style={{
                 display: "flex",
                 alignItems: "baseline",
-                gap: 8,
               }}
             >
-              <span
+              <div
                 style={{
+                  display: "flex",
                   fontSize: 48,
                   fontWeight: 900,
-                  color: colors.accent,
+                  color: "#D0551F",
                   letterSpacing: "-0.02em",
                 }}
               >
                 {price}
-              </span>
+              </div>
             </div>
           )}
         </div>
-
-        {/* Right — image */}
-        {imageUrl && (
-          <div
-            style={{
-              width: 420,
-              height: 630,
-              display: "flex",
-              overflow: "hidden",
-              flexShrink: 0,
-            }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={imageUrl}
-              alt={name}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-        )}
 
         {/* Bottom bar */}
         <div
@@ -162,7 +125,8 @@ export default async function OgImage({
             left: 0,
             right: 0,
             height: 6,
-            background: colors.accent,
+            background: "#D0551F",
+            display: "flex",
           }}
         />
       </div>

@@ -1,33 +1,32 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit, DM_Serif_Display } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import AnalyticsScripts from "@/components/AnalyticsScripts";
 import "./globals.css";
 
-const outfit = Outfit({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  display: "swap",
-  variable: "--font-outfit",
-});
-
-const dmSerif = DM_Serif_Display({
-  subsets: ["latin"],
-  weight: ["400"],
+  weight: ["500", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
-  variable: "--font-dm-serif",
+  variable: "--font-fraunces",
 });
 
-const SITE =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.estacionsnack.cl";
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.estacionsnack.cl";
 
 export const metadata: Metadata = {
   title: {
-    default: "Estación Snack — Snacks naturales por kilo · Santa Cruz",
+    default: "Estación Snack — Frutos secos por kilo · Santa Cruz",
     template: "%s · Estación Snack",
   },
   description:
-    "Frutos secos y snacks naturales por kilo en Santa Cruz. Mix de nueces, almendras, maní confitado y más. Despacho martes y viernes. Pide por WhatsApp.",
+    "Frutos secos y dulces del Valle de Colchagua, pesados al momento. Mix de nueces, almendras, maní confitado y más. Despacho martes y viernes en Santa Cruz y alrededores. Pide por WhatsApp.",
   metadataBase: new URL(SITE),
   alternates: { canonical: SITE },
   robots: {
@@ -42,31 +41,36 @@ export const metadata: Metadata = {
   },
   keywords: [
     "frutos secos santa cruz",
-    "snacks por kilo",
-    "mix de frutos secos",
-    "maní confitado",
-    "almendras",
-    "delivery snacks chile",
+    "frutos secos por kilo",
+    "mix frutos secos colchagua",
+    "mani confitado",
+    "almendras por kilo",
+    "snacks chile santa cruz",
     "estacion snack",
+    "despacho frutos secos colchagua",
   ],
   openGraph: {
-    title: "Estación Snack — Snacks por kilo",
-    description: "Frutos secos y dulces frescos por kilo en Santa Cruz.",
+    title: "Estación Snack — Frutos secos por kilo",
+    description:
+      "Frutos secos del Valle de Colchagua, pesados al momento. Despacho martes y viernes.",
     url: SITE,
     siteName: "Estación Snack",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Estación Snack" }],
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Estación Snack — Frutos secos por kilo" }],
     locale: "es_CL",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Estación Snack — Snacks por kilo",
-    description: "Frutos secos y dulces frescos por kilo en Santa Cruz.",
+    title: "Estación Snack — Frutos secos por kilo",
+    description: "Frutos secos del Valle de Colchagua, pesados al momento.",
     images: ["/og-image.jpg"],
   },
   manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", type: "image/x-icon" },
+    ],
     apple: "/apple-touch-icon.png",
   },
 };
@@ -75,7 +79,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#FFFDF9",
+  themeColor: "#F4EADB",
 };
 
 const orgJsonLd = {
@@ -84,7 +88,7 @@ const orgJsonLd = {
   "@id": `${SITE}/#business`,
   name: "Estación Snack",
   description:
-    "Frutos secos y snacks naturales por kilo en Santa Cruz, Chile. Despacho martes y viernes.",
+    "Frutos secos y dulces del Valle de Colchagua, pesados al momento. Despacho martes y viernes en Santa Cruz y alrededores.",
   url: SITE,
   image: `${SITE}/og-image.jpg`,
   telephone: "+56953743338",
@@ -95,17 +99,22 @@ const orgJsonLd = {
     addressRegion: "Región de O'Higgins",
     addressCountry: "CL",
   },
-  areaServed: "Santa Cruz, Chile",
+  areaServed: [
+    { "@type": "City", name: "Santa Cruz" },
+    { "@type": "City", name: "Peralillo" },
+    { "@type": "City", name: "Palmilla" },
+    { "@type": "City", name: "Nancagua" },
+  ],
   openingHours: "Tu,Fr 10:00-19:00",
+  servesCuisine: "Frutos secos y snacks naturales",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={`${outfit.variable} ${dmSerif.variable} ${outfit.className}`}>
+    <html
+      lang="es"
+      className={`${fraunces.variable} ${inter.variable}`}
+    >
       <body>
         <script
           type="application/ld+json"

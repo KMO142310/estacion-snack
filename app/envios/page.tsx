@@ -1,17 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import StaticLayout from "@/components/StaticLayout";
-import BankCard from "./BankCard";
 
-export const revalidate = 3600; // 1h — contenido estático
+export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Envíos y despacho",
   description:
-    "Despachamos en Santa Cruz. Entrega coordinada por WhatsApp, martes y viernes. Envío gratis.",
+    "Despachamos martes y viernes en Santa Cruz, Peralillo, Palmilla y Nancagua. Entrega coordinada por WhatsApp. Siempre gratis.",
   openGraph: {
     title: "Envíos y despacho · Estación Snack",
-    description:
-      "Despacho en Santa Cruz, entrega coordinada y gratuita.",
+    description: "Despacho gratis, martes y viernes, coordinado por WhatsApp.",
   },
 };
 
@@ -24,73 +22,123 @@ const breadcrumbJsonLd = {
   ],
 };
 
+const zonas = [
+  { nombre: "Santa Cruz", desc: "Zona principal. Coordinamos el horario exacto por WhatsApp." },
+  { nombre: "Peralillo", desc: "Disponible martes y viernes según ruta." },
+  { nombre: "Palmilla", desc: "Disponible martes y viernes según ruta." },
+  { nombre: "Nancagua", desc: "Disponible martes y viernes según ruta." },
+];
+
 export default function EnviosPage() {
   return (
     <StaticLayout>
-      <main style={{ paddingTop: 48, paddingBottom: 80 }}>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <main style={{ paddingTop: "3rem", paddingBottom: "5rem" }}>
         <div className="wrap">
-          {/* Breadcrumb */}
-          <nav aria-label="Ruta de navegación" style={{ fontSize: 12, color: "var(--sub)", marginBottom: 32, display: "flex", gap: 6 }}>
-            <Link href="/">Inicio</Link>
+          <nav
+            aria-label="Ruta de navegación"
+            style={{ fontSize: "0.8125rem", color: "#7A8457", marginBottom: "2rem", display: "flex", gap: "0.375rem", fontFamily: "var(--font-body)" }}
+          >
+            <Link href="/" style={{ color: "#7A8457" }}>Inicio</Link>
             <span>›</span>
-            <span style={{ color: "var(--text)", fontWeight: 600 }}>Envíos y despacho</span>
+            <span style={{ color: "#5A1F1A", fontWeight: 600 }}>Envíos</span>
           </nav>
 
-          <div style={{ maxWidth: 640, marginBottom: 48 }}>
-            <p style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".1em", color: "var(--orange)", marginBottom: 12 }}>
+          <div style={{ maxWidth: 640, marginBottom: "3rem" }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#D0551F", marginBottom: "0.75rem" }}>
               Despacho
             </p>
-            <h1 style={{
-              fontFamily: "var(--font-dm-serif), Georgia, serif",
-              fontSize: "clamp(32px, 5vw, 48px)",
-              lineHeight: 1.05,
-              fontWeight: 400,
-              marginBottom: 16,
-            }}>
-              Entrega en Santa Cruz
+            <h1
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(2rem, 5vw, 3rem)",
+                lineHeight: 1.1,
+                fontWeight: 600,
+                color: "#5A1F1A",
+                marginBottom: "1rem",
+              }}
+            >
+              Entrega en el valle
             </h1>
-            <p style={{ fontSize: 17, lineHeight: 1.7, color: "var(--sub)" }}>
-              Despachamos los <strong>martes y viernes</strong>. Coordinamos el día y horario exacto
-              por WhatsApp una vez confirmado el pedido. Sin tarifas de envío: la entrega es siempre gratis.
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "#7A8457", lineHeight: 1.7 }}>
+              Despachamos los <strong style={{ color: "#5A1F1A" }}>martes y viernes</strong>. Coordinamos el día y horario exacto
+              por WhatsApp una vez confirmado el pedido. El envío es siempre gratis.
             </p>
           </div>
 
-          {/* Zona */}
-          <h2 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: 28, fontWeight: 400, marginBottom: 20 }}>
-            Zona de cobertura
-          </h2>
-          <div
+          {/* Zona de cobertura */}
+          <h2
             style={{
-              display: "grid",
-              gridTemplateColumns: "12px 1fr auto",
-              gap: 16,
-              padding: 24,
-              background: "var(--green-soft)",
-              borderRadius: "var(--r)",
-              alignItems: "start",
-              marginBottom: 48,
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: "clamp(1.375rem, 4vw, 1.75rem)",
+              color: "#5A1F1A",
+              marginBottom: "1.25rem",
             }}
           >
-            <div style={{ width: 12, height: 12, borderRadius: "50%", background: "var(--green)", marginTop: 4 }} />
-            <div>
-              <div style={{ fontWeight: 800, fontSize: 16, marginBottom: 4 }}>Santa Cruz</div>
-              <div style={{ fontSize: 13, color: "var(--sub)", lineHeight: 1.5 }}>
-                Coordinamos horario de entrega por WhatsApp tras confirmar el pedido.
+            Zona de cobertura
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem", marginBottom: "3rem", maxWidth: 560 }}>
+            {zonas.map((z) => (
+              <div
+                key={z.nombre}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "1rem",
+                  padding: "1rem 1.25rem",
+                  background: "rgba(122,132,87,0.08)",
+                  borderRadius: "12px",
+                  border: "1px solid rgba(122,132,87,0.15)",
+                }}
+              >
+                <div
+                  style={{
+                    width: 10,
+                    height: 10,
+                    borderRadius: "50%",
+                    background: "#7A8457",
+                    flexShrink: 0,
+                    marginTop: 5,
+                  }}
+                />
+                <div>
+                  <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.25rem" }}>
+                    {z.nombre}
+                    <span style={{ marginLeft: "0.5rem", fontSize: "0.75rem", fontWeight: 700, color: "#7A8457", background: "rgba(122,132,87,0.15)", padding: "2px 8px", borderRadius: "9999px" }}>
+                      Gratis
+                    </span>
+                  </p>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", lineHeight: 1.55 }}>
+                    {z.desc}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div style={{ textAlign: "right", flexShrink: 0 }}>
-              <div style={{ fontSize: 22, fontWeight: 900, color: "var(--green)" }}>Gratis</div>
-              <div style={{ fontSize: 11, color: "var(--sub)", marginTop: 2 }}>Siempre</div>
-            </div>
+            ))}
           </div>
 
           {/* Fuera de cobertura */}
-          <div style={{ padding: 20, background: "rgba(0,0,0,.03)", borderRadius: "var(--r)", marginBottom: 48, borderLeft: "3px solid rgba(0,0,0,.12)" }}>
-            <strong style={{ fontSize: 14 }}>¿Vivís fuera de Santa Cruz?</strong>
-            <p style={{ fontSize: 14, color: "var(--sub)", marginTop: 4, lineHeight: 1.6 }}>
-              Por ahora solo despachamos dentro de Santa Cruz. Si querés algo, escríbenos por{" "}
-              <a href={`https://wa.me/56953743338`} target="_blank" rel="noopener noreferrer" style={{ color: "var(--orange)", fontWeight: 700 }}>
+          <div
+            style={{
+              padding: "1.25rem",
+              background: "rgba(90,31,26,0.04)",
+              borderRadius: "12px",
+              borderLeft: "3px solid rgba(90,31,26,0.20)",
+              marginBottom: "3rem",
+              maxWidth: 560,
+            }}
+          >
+            <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.375rem" }}>
+              ¿Vivís fuera de estas comunas?
+            </p>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9rem", color: "#7A8457", lineHeight: 1.65 }}>
+              Escríbenos por{" "}
+              <a
+                href="https://wa.me/56953743338"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#D0551F", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}
+              >
                 WhatsApp
               </a>{" "}
               y lo evaluamos juntos.
@@ -98,47 +146,100 @@ export default function EnviosPage() {
           </div>
 
           {/* Medios de pago */}
-          <h2 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: 28, fontWeight: 400, marginBottom: 20 }}>
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: "clamp(1.375rem, 4vw, 1.75rem)",
+              color: "#5A1F1A",
+              marginBottom: "1.25rem",
+            }}
+          >
             Medios de pago
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16, marginBottom: 40 }}>
-            <div style={{ padding: 24, background: "#fff", borderRadius: "var(--r)", border: "1.5px solid rgba(0,0,0,.06)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                <span style={{ fontWeight: 800, fontSize: 15 }}>Transferencia bancaria</span>
-                <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 8px", background: "var(--green-soft)", color: "var(--green)", borderRadius: "var(--r-full)", textTransform: "uppercase", letterSpacing: ".04em" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "0.875rem", marginBottom: "3rem", maxWidth: 620 }}>
+            <div
+              style={{
+                padding: "1.25rem",
+                background: "#fff",
+                borderRadius: "14px",
+                border: "1.5px solid rgba(90,31,26,0.08)",
+                boxShadow: "0 2px 12px rgba(90,31,26,0.06)",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "0.625rem" }}>
+                <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A" }}>
+                  Transferencia bancaria
+                </p>
+                <span
+                  style={{
+                    fontSize: "0.6875rem",
+                    fontWeight: 700,
+                    padding: "2px 8px",
+                    background: "rgba(122,132,87,0.15)",
+                    color: "#7A8457",
+                    borderRadius: "9999px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.04em",
+                    whiteSpace: "nowrap",
+                  }}
+                >
                   Recomendado
                 </span>
               </div>
-              <p style={{ fontSize: 14, color: "var(--sub)", lineHeight: 1.6 }}>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", lineHeight: 1.65 }}>
                 Te pasamos los datos por WhatsApp. Al confirmar la transferencia preparamos el pedido.
               </p>
             </div>
-            <div style={{ padding: 24, background: "#fff", borderRadius: "var(--r)", border: "1.5px solid rgba(0,0,0,.06)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                <span style={{ fontWeight: 800, fontSize: 15 }}>Efectivo contra entrega</span>
-              </div>
-              <p style={{ fontSize: 14, color: "var(--sub)", lineHeight: 1.6 }}>
-                Pagás al recibir el pedido.
+            <div
+              style={{
+                padding: "1.25rem",
+                background: "#fff",
+                borderRadius: "14px",
+                border: "1.5px solid rgba(90,31,26,0.08)",
+                boxShadow: "0 2px 12px rgba(90,31,26,0.06)",
+              }}
+            >
+              <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.625rem" }}>
+                Efectivo contra entrega
+              </p>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", lineHeight: 1.65 }}>
+                Pagás al recibir el pedido. Sin comisión.
               </p>
             </div>
           </div>
 
-          {/* Datos bancarios — client component para botón copiar */}
-          <BankCard />
-
           {/* CTA */}
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 48 }}>
+          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
             <Link
               href="/"
-              style={{ padding: "14px 28px", fontSize: 15, fontWeight: 700, borderRadius: 12, background: "var(--text)", color: "#fff", textDecoration: "none" }}
+              style={{
+                fontFamily: "var(--font-body)",
+                fontWeight: 600,
+                fontSize: "0.9375rem",
+                padding: "0.875rem 1.75rem",
+                borderRadius: "10px",
+                background: "#D0551F",
+                color: "#F4EADB",
+                textDecoration: "none",
+              }}
             >
-              Ver productos
+              Ver las mezclas
             </Link>
             <Link
-              href="/contacto"
-              style={{ padding: "14px 28px", fontSize: 15, fontWeight: 700, borderRadius: 12, border: "2px solid var(--text)", color: "var(--text)", textDecoration: "none" }}
+              href="/faq"
+              style={{
+                fontFamily: "var(--font-body)",
+                fontWeight: 600,
+                fontSize: "0.9375rem",
+                padding: "0.875rem 1.75rem",
+                borderRadius: "10px",
+                border: "2px solid rgba(90,31,26,0.20)",
+                color: "#5A1F1A",
+                textDecoration: "none",
+              }}
             >
-              Consultar
+              Ver preguntas frecuentes
             </Link>
           </div>
         </div>

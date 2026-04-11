@@ -1,11 +1,15 @@
+"use client";
+
+import { useState } from "react";
+
 const faqs = [
   {
     q: "¿Cómo hago mi pedido?",
-    a: 'Agrega los productos al carrito, ingresa tu nombre, celular y comuna, y tocá "Pedir por WhatsApp". Se abre un mensaje con todo tu pedido listo para enviar. Confirmamos por WhatsApp y coordinamos la entrega.',
+    a: 'Elige los productos en el catálogo, selecciona la cantidad y tocá "Agregar al pedido". Cuando estés listo, tocá "Confirmar por WhatsApp". Se abre un mensaje con todo tu pedido listo para enviar. Confirmamos por WhatsApp y coordinamos la entrega.',
   },
   {
     q: "¿A qué comunas despachan?",
-    a: "Por ahora despachamos dentro de Santa Cruz. Si vivís en otra zona, escríbenos por WhatsApp y lo evaluamos juntos.",
+    a: "Despachamos en Santa Cruz, Peralillo, Palmilla y Nancagua. Si vivís en otra zona, escríbenos por WhatsApp y lo evaluamos juntos.",
   },
   {
     q: "¿Cuánto cuesta el envío?",
@@ -21,7 +25,7 @@ const faqs = [
   },
   {
     q: "¿Cuál es el mínimo de compra?",
-    a: "No hay mínimo. Podés pedir desde 0.5 kg de un solo producto.",
+    a: "No hay mínimo. Podés pedir desde 500 g de un solo producto (o 250 g en el caso de Chuby Bardú).",
   },
   {
     q: "¿Puedo agregar más productos después de enviar el pedido?",
@@ -34,44 +38,75 @@ const faqs = [
 ];
 
 export default function FAQ() {
+  const [open, setOpen] = useState<number | null>(null);
+
   return (
-    <section className="wrap" id="faq" style={{ padding: "48px 0" }}>
-      <div style={{ paddingBottom: 20, display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
-        <h2 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: "clamp(24px,4vw,36px)", fontWeight: 400 }}>
-          Preguntas frecuentes
-        </h2>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 8, maxWidth: 720, margin: "0 auto" }}>
-        {faqs.map((item) => (
-          <details
+    <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", maxWidth: 720 }}>
+      {faqs.map((item, i) => {
+        const isOpen = open === i;
+        return (
+          <div
             key={item.q}
             style={{
-              background: "var(--bg)",
-              border: "1.5px solid rgba(0,0,0,.08)",
-              borderRadius: 14,
+              background: "#fff",
+              border: `1.5px solid ${isOpen ? "#D0551F" : "rgba(90,31,26,0.10)"}`,
+              borderRadius: "14px",
               overflow: "hidden",
+              transition: "border-color 0.15s",
             }}
           >
-            <summary style={{
-              padding: "18px 20px",
-              fontSize: 15,
-              fontWeight: 700,
-              cursor: "pointer",
-              listStyle: "none",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 12,
-            }}>
-              {item.q}
-              <span style={{ fontSize: 22, fontWeight: 400, color: "var(--sub)", flexShrink: 0 }}>+</span>
-            </summary>
-            <p style={{ padding: "0 20px 18px", fontSize: 14, color: "var(--sub)", lineHeight: 1.6, margin: 0 }}>
-              {item.a}
-            </p>
-          </details>
-        ))}
-      </div>
-    </section>
+            <button
+              onClick={() => setOpen(isOpen ? null : i)}
+              aria-expanded={isOpen}
+              style={{
+                width: "100%",
+                padding: "1.125rem 1.25rem",
+                fontSize: "0.9375rem",
+                fontWeight: 600,
+                fontFamily: "var(--font-body)",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "0.75rem",
+                background: "none",
+                border: "none",
+                color: "#5A1F1A",
+                textAlign: "left",
+              }}
+            >
+              <span>{item.q}</span>
+              <span
+                style={{
+                  fontSize: "1.25rem",
+                  fontWeight: 300,
+                  color: "#D0551F",
+                  flexShrink: 0,
+                  transition: "transform 0.2s",
+                  transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+                  display: "inline-block",
+                }}
+              >
+                +
+              </span>
+            </button>
+            {isOpen && (
+              <p
+                style={{
+                  padding: "0 1.25rem 1.125rem",
+                  fontSize: "0.9rem",
+                  color: "#7A8457",
+                  lineHeight: 1.7,
+                  margin: 0,
+                  fontFamily: "var(--font-body)",
+                }}
+              >
+                {item.a}
+              </p>
+            )}
+          </div>
+        );
+      })}
+    </div>
   );
 }

@@ -1,0 +1,57 @@
+"use client";
+
+import { useState } from "react";
+import PackCard from "./PackCard";
+import PackSheet from "./PackSheet";
+import packsData from "@/data/packs.json";
+import type { Pack } from "@/lib/pack-utils";
+
+export default function PackSection() {
+  const [selected, setSelected] = useState<Pack | null>(null);
+  const packs = packsData as Pack[];
+
+  return (
+    <section id="packs" aria-label="Packs armados" style={{ padding: "5rem 1.25rem 3rem" }}>
+      <div style={{ marginBottom: "1.75rem" }}>
+        <h2
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(1.75rem, 6vw, 2.5rem)",
+            color: "#5A1F1A",
+            lineHeight: 1.15,
+            marginBottom: "0.625rem",
+          }}
+        >
+          Packs armados
+        </h2>
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: "0.9375rem",
+            color: "#7A8457",
+            lineHeight: 1.6,
+            maxWidth: 480,
+          }}
+        >
+          Para cuando no quieres decidir. Mezclas que funcionan juntas, con el ahorro ya calculado.
+        </p>
+      </div>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr",
+          gap: "1rem",
+          maxWidth: 720,
+        }}
+      >
+        {packs.map((pack) => (
+          <PackCard key={pack.id} pack={pack} onOpen={() => setSelected(pack)} />
+        ))}
+      </div>
+
+      {selected && <PackSheet pack={selected} onClose={() => setSelected(null)} />}
+    </section>
+  );
+}

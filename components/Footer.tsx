@@ -1,108 +1,58 @@
 import Link from "next/link";
 
-const WA_LINK = "https://wa.me/56953743338?text=Hola!%20Quiero%20pedir%20%F0%9F%8C%B0";
-
 export default function Footer() {
   return (
-    <footer style={{ background: "var(--text)", color: "rgba(255,255,255,.65)", padding: "48px 0 24px", marginTop: 24 }}>
+    <footer style={{ background: "#5A1F1A", color: "rgba(244,234,219,0.65)", padding: "3rem 0 1.5rem" }}>
       <div className="wrap">
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
-          gap: 32,
-          paddingBottom: 32,
-          borderBottom: "1px solid rgba(255,255,255,.08)",
-        }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "2rem", paddingBottom: "2rem", borderBottom: "1px solid rgba(244,234,219,0.10)" }}>
+          {/* Marca */}
           <div>
-            <div style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: 24, color: "#fff", marginBottom: 8 }}>
-              Estación Snack
-            </div>
-            <p style={{ fontSize: 13, lineHeight: 1.6, maxWidth: 320, marginBottom: 16 }}>
-              Frutos secos y dulces frescos por kilo en Santa Cruz. Sin envases innecesarios, a precio justo.
+            <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.25rem", color: "#F4EADB", marginBottom: "0.625rem" }}>
+              estación snack
             </p>
-            {/* Redes sociales */}
-            <div style={{ display: "flex", gap: 12 }}>
-              <a
-                href="https://instagram.com/estacionsnack"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Estación Snack en Instagram"
-                style={{ color: "rgba(255,255,255,.65)", transition: "color .2s" }}
-                className="social-link"
-              >
-                <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", lineHeight: 1.65, maxWidth: 260, marginBottom: "1rem" }}>
+              Frutos secos y dulces del Valle de Colchagua, pesados al momento. Sin envases industriales.
+            </p>
+            <div style={{ display: "flex", gap: "0.75rem" }}>
+              <a href="https://instagram.com/estacionsnack" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ color: "rgba(244,234,219,0.55)", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#F4EADB"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(244,234,219,0.55)"; }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               </a>
-              <a
-                href="https://tiktok.com/@estacionsnack"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Estación Snack en TikTok"
-                style={{ color: "rgba(255,255,255,.65)", transition: "color .2s" }}
-                className="social-link"
-              >
-                <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.67a8.24 8.24 0 004.83 1.54V6.74a4.85 4.85 0 01-1.06-.05z"/>
-                </svg>
-              </a>
-              <a
-                href="https://wa.me/56953743338"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Contactar por WhatsApp"
-                style={{ color: "rgba(255,255,255,.65)", transition: "color .2s" }}
-                className="social-link"
-              >
-                <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479c0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                </svg>
+              <a href="https://wa.me/56953743338" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" style={{ color: "rgba(244,234,219,0.55)", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#F4EADB"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(244,234,219,0.55)"; }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479c0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
               </a>
             </div>
           </div>
 
+          {/* Tienda */}
           <div>
-            <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: ".08em", color: "#fff", marginBottom: 14, fontWeight: 700 }}>Tienda</p>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8, fontSize: 13 }}>
-              <li><a href="/#productos" style={{ color: "rgba(255,255,255,.65)" }}>Productos</a></li>
-              <li><a href="/#combos" style={{ color: "rgba(255,255,255,.65)" }}>Packs</a></li>
-              <li><Link href="/envios" style={{ color: "rgba(255,255,255,.65)" }}>Envíos</Link></li>
-              <li><Link href="/faq" style={{ color: "rgba(255,255,255,.65)" }}>Preguntas frecuentes</Link></li>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.6875rem", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, color: "#F4EADB", marginBottom: "0.875rem" }}>Tienda</p>
+            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              {[["#productos", "Mezclas"], ["#packs", "Packs"], ["/envios", "Envíos"], ["/faq", "FAQ"]].map(([href, label]) => (
+                <li key={label}>
+                  <a href={href} style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "rgba(244,234,219,0.65)", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#F4EADB"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(244,234,219,0.65)"; }}>
+                    {label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* Contacto */}
           <div>
-            <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: ".08em", color: "#fff", marginBottom: 14, fontWeight: 700 }}>Nosotros</p>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8, fontSize: 13 }}>
-              <li><Link href="/sobre-nosotros" style={{ color: "rgba(255,255,255,.65)" }}>Nuestra historia</Link></li>
-              <li><Link href="/contacto" style={{ color: "rgba(255,255,255,.65)" }}>Contacto</Link></li>
-              <li>
-                <a href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255,255,255,.65)" }}>
-                  WhatsApp directo
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: ".08em", color: "#fff", marginBottom: 14, fontWeight: 700 }}>Despacho</p>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8, fontSize: 13 }}>
-              <li>+56 9 5374 3338</li>
-              <li>Santa Cruz, Chile</li>
-              <li>Mar y Vie · 10:00 – 19:00</li>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.6875rem", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, color: "#F4EADB", marginBottom: "0.875rem" }}>Contacto</p>
+            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.5rem", fontFamily: "var(--font-body)", fontSize: "0.8125rem" }}>
+              <li><a href="https://wa.me/56953743338" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(244,234,219,0.65)", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#F4EADB"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(244,234,219,0.65)"; }}>+56 9 5374 3338</a></li>
+              <li style={{ color: "rgba(244,234,219,0.65)" }}>Santa Cruz, O'Higgins</li>
+              <li style={{ color: "rgba(244,234,219,0.65)" }}>Despacho mar. y vie.</li>
             </ul>
           </div>
         </div>
 
-        <div style={{ paddingTop: 24, display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: 8, fontSize: 11 }}>
-          <span>© 2026 Estación Snack · Santa Cruz, Chile</span>
-          <span>Hecho con cariño en O'Higgins</span>
+        <div style={{ paddingTop: "1.25rem", display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: "0.5rem" }}>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem" }}>© 2026 Estación Snack · Santa Cruz, Chile</p>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem" }}>Hecho con cariño en O'Higgins</p>
         </div>
       </div>
-
-      <style>{`
-        .social-link:hover { color: #fff !important; }
-      `}</style>
     </footer>
   );
 }

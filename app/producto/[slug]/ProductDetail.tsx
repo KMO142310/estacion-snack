@@ -1,42 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Bnav from "@/components/Bnav";
-import Drawer from "@/components/Drawer";
-import Announce from "@/components/Announce";
-import { useCart } from "@/lib/cart-context";
-import { trackViewItem } from "@/lib/analytics";
-import { fmt } from "@/lib/products";
+import OrderSheet from "@/components/OrderSheet";
+import ToastStack from "@/components/Toast";
+import { useCartStore } from "@/lib/store";
+import { fmt, fmtKg, getChips } from "@/lib/cart-utils";
+import { hapticSuccess } from "@/lib/haptics";
 import type { Product } from "@/lib/types";
-
-const COLOR_ACCENT: Record<string, string> = {
-  orange: "var(--orange)",
-  green:  "var(--green)",
-  red:    "var(--red)",
-  purple: "var(--purple)",
-  yellow: "var(--yellow)",
-  sand:   "var(--sand)",
-};
-
-const COLOR_SOFT: Record<string, string> = {
-  orange: "var(--orange-soft)",
-  green:  "var(--green-soft)",
-  red:    "var(--red-soft)",
-  purple: "var(--purple-soft)",
-  yellow: "var(--yellow-soft)",
-  sand:   "var(--sand-soft)",
-};
-
-const STATUS_LABEL: Record<string, string> = {
-  disponible: "En stock",
-  pocas:      "Pocas unidades",
-  ultimo_kg:  "Último kg",
-  agotado:    "Agotado",
-};
 
 interface Props {
   product: Product;
@@ -44,314 +18,120 @@ interface Props {
   allProducts: Product[];
 }
 
-export default function ProductDetail({ product, related, allProducts }: Props) {
-  const { items, addItem, updateQty } = useCart();
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const step = product.min_unit_kg ?? 1;
-  const [qty, setQty] = useState(step);
-  const [loading, setLoading] = useState(false);
+export default function ProductDetail({ product, related }: Props) {
+  const [orderOpen, setOrderOpen] = useState(false);
+  const [selectedQty, setSelectedQty] = useState<number>(() => {
+    const chips = getChips(product.min_unit_kg ?? 1);
+    return chips[1];
+  });
+  const [adding, setAdding] = useState(false);
 
-  useEffect(() => {
-    trackViewItem({ id: product.id, name: product.name, price: product.price, category: product.cat_label });
-  }, [product.id, product.name, product.price, product.cat_label]);
-  const inCart = items[product.id] ?? 0;
-  const accent = COLOR_ACCENT[product.color] ?? "var(--orange)";
-  const soft = COLOR_SOFT[product.color] ?? "var(--orange-soft)";
+  const addItem = useCartStore((s) => s.addItem);
+  const addToast = useCartStore((s) => s.addToast);
+
+  const chips = getChips(product.min_unit_kg ?? 1);
   const isOut = product.status === "agotado";
+  const price = product.price * selectedQty;
 
   const handleAdd = async () => {
-    setLoading(true);
-    await addItem(product, qty);
-    setLoading(false);
-    setDrawerOpen(true);
-  };
-
-  const handleCartUpdate = async (newQty: number) => {
-    setLoading(true);
-    await updateQty(product, Math.max(0, newQty));
-    setLoading(false);
+    if (adding || isOut) return;
+    setAdding(true);
+    hapticSuccess();
+    addItem({ kind: "product", id: product.id, qty: selectedQty, name: product.name, pricePerUnit: product.price });
+    addToast(`${product.name} agregado · ${fmtKg(selectedQty)}`);
+    await new Promise((r) => setTimeout(r, 300));
+    setAdding(false);
+    setOrderOpen(true);
   };
 
   return (
     <>
-      <Announce />
-      <Header onCartOpen={() => setDrawerOpen(true)} />
-      <main style={{ paddingTop: 24, paddingBottom: 48 }}>
+      <Header onOrderOpen={() => setOrderOpen(true)} />
+      <main style={{ paddingTop: 24, paddingBottom: 80 }}>
         <div className="wrap">
-          <nav aria-label="Ruta de navegación" style={{ fontSize: 12, color: "var(--sub)", marginBottom: 20, display: "flex", gap: 6, flexWrap: "wrap" }}>
-            <Link href="/">Inicio</Link>
+          {/* Breadcrumb */}
+          <nav aria-label="Ruta de navegación" style={{ fontSize: 13, color: "#7A8457", marginBottom: 20, display: "flex", gap: 6, flexWrap: "wrap", fontFamily: "var(--font-body)" }}>
+            <Link href="/" style={{ color: "#7A8457" }}>Inicio</Link>
             <span>›</span>
-            <Link href={`/#productos`}>{product.cat_label}</Link>
+            <Link href="/#productos" style={{ color: "#7A8457" }}>{product.cat_label}</Link>
             <span>›</span>
-            <span style={{ color: "var(--text)", fontWeight: 600 }}>{product.name}</span>
+            <span style={{ color: "#5A1F1A", fontWeight: 600 }}>{product.name}</span>
           </nav>
 
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "minmax(0, 1fr)",
-            gap: 32,
-          }} className="product-detail-grid">
-            {/* Image */}
-            <div>
-              <div style={{
-                aspectRatio: "1/1",
-                borderRadius: "var(--r-lg)",
-                overflow: "hidden",
-                background: soft,
-                position: "relative",
-              }}>
-                <Image
-                  src={product.image_url}
-                  alt={product.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  style={{ objectFit: "cover" }}
-                  priority
-                />
-                {product.badge && (
-                  <span style={{
-                    position: "absolute",
-                    top: 16,
-                    right: 16,
-                    fontSize: 11,
-                    fontWeight: 700,
-                    padding: "6px 14px",
-                    background: "var(--text)",
-                    color: "#fff",
-                    borderRadius: "var(--r-full)",
-                  }}>
-                    {product.badge}
-                  </span>
-                )}
-              </div>
+          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr)", gap: 32 }} className="product-detail-grid">
+            {/* Imagen */}
+            <div style={{ aspectRatio: "1/1", borderRadius: "16px", overflow: "hidden", background: "#F4EADB", position: "relative" }}>
+              <Image src={product.image_webp_url || product.image_url} alt={product.name} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover" }} priority />
+              {product.badge && (
+                <span style={{ position: "absolute", top: 12, left: 12, background: "#D0551F", color: "#F4EADB", fontSize: 12, fontWeight: 700, padding: "4px 10px", borderRadius: 8, fontFamily: "var(--font-body)" }}>
+                  {product.badge}
+                </span>
+              )}
             </div>
 
             {/* Info */}
             <div>
-              <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: accent, marginBottom: 8 }}>
-                {product.cat_label}
-              </div>
-              <h1 style={{
-                fontFamily: "var(--font-dm-serif), Georgia, serif",
-                fontSize: "clamp(32px, 5vw, 48px)",
-                lineHeight: 1.05,
-                marginBottom: 16,
-                fontWeight: 400,
-              }}>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#7A8457", marginBottom: 8 }}>{product.cat_label}</p>
+              <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(1.75rem, 5vw, 3rem)", color: "#5A1F1A", lineHeight: 1.1, marginBottom: 16 }}>
                 {product.name}
               </h1>
 
-              <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 12 }}>
-                <span style={{ fontSize: 36, fontWeight: 900, letterSpacing: "-.02em" }}>{fmt(product.price)}</span>
-                <span style={{ fontSize: 15, color: "var(--sub)" }}>/ kg</span>
-              </div>
-              <div style={{ marginBottom: 20 }}>
-                <span style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 5,
-                  fontSize: 11,
-                  fontWeight: 700,
-                  padding: "4px 10px",
-                  background: "var(--green-soft)",
-                  color: "var(--green)",
-                  borderRadius: "var(--r-full)",
-                  textTransform: "uppercase",
-                  letterSpacing: ".04em",
-                }}>
-                  🎉 Primera compra · envío gratis en Santa Cruz
-                </span>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 16 }}>
+                <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "2rem", color: "#5A1F1A" }}>{fmt(product.price)}</span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#7A8457" }}>/ kg</span>
               </div>
 
-              <p style={{ fontSize: 16, lineHeight: 1.6, color: "var(--sub)", marginBottom: 20 }}>
-                {product.copy}
-              </p>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#7A8457", lineHeight: 1.7, marginBottom: 24 }}>{product.copy}</p>
 
-              <div style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                padding: "8px 14px",
-                background: soft,
-                borderRadius: "var(--r-full)",
-                fontSize: 12,
-                fontWeight: 700,
-                color: accent,
-                marginBottom: 24,
-              }}>
-                <span style={{ width: 8, height: 8, borderRadius: "50%", background: accent, display: "inline-block" }} />
-                {STATUS_LABEL[product.status]}
-              </div>
-
-              {/* Qty selector */}
-              {!isOut && inCart === 0 && (
-                <fieldset style={{ border: "none", padding: 0, marginBottom: 20 }}>
-                  <legend style={{ display: "block", fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--sub)", marginBottom: 8 }}>
-                    Cantidad
-                  </legend>
-                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                    {(step === 0.5 ? [0.5, 1, 1.5, 2, 3] : [1, 2, 3]).map((v) => (
-                      <button
-                        key={v}
-                        onClick={() => setQty(v)}
-                        aria-label={`${v} kg`}
-                        aria-pressed={qty === v}
-                        style={{
-                          padding: "10px 16px",
-                          fontSize: 13,
-                          fontWeight: 700,
-                          border: `2px solid ${qty === v ? "var(--text)" : "rgba(0,0,0,.1)"}`,
-                          background: qty === v ? "var(--text)" : "#fff",
-                          color: qty === v ? "#fff" : "var(--text)",
-                          borderRadius: 10,
-                          cursor: "pointer",
-                          minHeight: 44,
-                        }}
-                      >
-                        {v} kg
+              {/* Chips de cantidad */}
+              {!isOut && (
+                <div style={{ marginBottom: 24 }}>
+                  <p style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem", color: "#5A1F1A", marginBottom: "0.75rem" }}>¿Cuánto vas a pedir?</p>
+                  <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
+                    {chips.map((kg) => (
+                      <button key={kg} onClick={() => setSelectedQty(kg)} aria-pressed={selectedQty === kg} style={{ fontFamily: "var(--font-body)", fontWeight: selectedQty === kg ? 600 : 500, fontSize: "0.9375rem", padding: "0.625rem 1.125rem", borderRadius: "9999px", border: `2px solid ${selectedQty === kg ? "#D0551F" : "rgba(90,31,26,0.15)"}`, background: selectedQty === kg ? "#D0551F" : "transparent", color: selectedQty === kg ? "#F4EADB" : "#5A1F1A", cursor: "pointer" }}>
+                        {fmtKg(kg)}
                       </button>
                     ))}
                   </div>
-                  <p style={{ marginTop: 8, fontSize: 13, color: "var(--sub)" }}>
-                    Subtotal: <strong style={{ color: "var(--text)" }}>{fmt(product.price * qty)}</strong>
-                  </p>
-                </fieldset>
-              )}
-
-              {/* Add to cart / update qty */}
-              {inCart === 0 ? (
-                <button
-                  onClick={handleAdd}
-                  disabled={isOut || loading}
-                  style={{
-                    width: "100%",
-                    maxWidth: 360,
-                    padding: 18,
-                    fontSize: 16,
-                    fontWeight: 800,
-                    borderRadius: 14,
-                    background: isOut ? "rgba(0,0,0,.08)" : "var(--text)",
-                    color: isOut ? "var(--sub)" : "#fff",
-                    border: "none",
-                    cursor: isOut || loading ? "not-allowed" : "pointer",
-                    opacity: loading ? 0.7 : 1,
-                  }}
-                >
-                  {isOut ? "Agotado" : `Agregar ${qty} kg al pedido`}
-                </button>
-              ) : (
-                <div style={{ maxWidth: 360 }}>
-                  <div style={{
-                    display: "flex",
-                    border: "2px solid var(--text)",
-                    borderRadius: 14,
-                    overflow: "hidden",
-                    marginBottom: 12,
-                  }}>
-                    <button onClick={() => handleCartUpdate(inCart - step)} disabled={loading} style={{ width: 56, height: 56, background: "#fff", fontSize: 22, fontWeight: 700, border: "none", cursor: "pointer" }}>−</button>
-                    <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontWeight: 800, borderLeft: "2px solid var(--text)", borderRight: "2px solid var(--text)" }}>
-                      {inCart} kg en el carrito
-                    </div>
-                    <button onClick={() => handleCartUpdate(inCart + step)} disabled={loading} style={{ width: 56, height: 56, background: "#fff", fontSize: 22, fontWeight: 700, border: "none", cursor: "pointer" }}>+</button>
-                  </div>
-                  <button
-                    onClick={() => setDrawerOpen(true)}
-                    style={{
-                      width: "100%",
-                      padding: 16,
-                      fontSize: 15,
-                      fontWeight: 800,
-                      borderRadius: 14,
-                      background: "var(--text)",
-                      color: "#fff",
-                      border: "none",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Ver pedido ({fmt(product.price * inCart)})
-                  </button>
-                </div>
-              )}
-
-              {/* Long description */}
-              {product.long_description && (
-                <div style={{ marginTop: 24, padding: "0 0 20px", borderBottom: "1px solid rgba(0,0,0,.06)" }}>
-                  <p style={{ fontSize: 15, lineHeight: 1.7, color: "var(--sub)", whiteSpace: "pre-line" }}>
-                    {product.long_description}
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457" }}>
+                    Subtotal: <strong style={{ color: "#5A1F1A", fontFamily: "var(--font-display)", fontSize: "1.125rem" }}>{fmt(price)}</strong>
                   </p>
                 </div>
               )}
 
-              {/* Nutrition table */}
-              {product.nutrition && Object.keys(product.nutrition).length > 0 && (
-                <div style={{ marginTop: 20, padding: 16, background: "rgba(0,0,0,.02)", borderRadius: 12, marginBottom: 20 }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".06em", color: "var(--sub)", marginBottom: 10 }}>
-                    Info nutricional por 100g
-                  </div>
-                  {[
-                    ["Energía", `${product.nutrition.energia_kcal ?? "—"} kcal`],
-                    ["Proteínas", `${product.nutrition.proteinas_g ?? "—"} g`],
-                    ["Grasas", `${product.nutrition.grasas_g ?? "—"} g`],
-                    ["Carbohidratos", `${product.nutrition.carbohidratos_g ?? "—"} g`],
-                    ["Fibra", `${product.nutrition.fibra_g ?? "—"} g`],
-                    ["Sodio", `${product.nutrition.sodio_mg ?? "—"} mg`],
-                  ].map(([label, value]) => (
-                    <div key={label} style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", fontSize: 13, borderBottom: "1px dashed rgba(0,0,0,.06)" }}>
-                      <span style={{ color: "var(--sub)" }}>{label}</span>
-                      <strong style={{ color: "var(--text)" }}>{value}</strong>
-                    </div>
-                  ))}
-                  <p style={{ fontSize: 12, color: "var(--sub)", marginTop: 8 }}>
-                    Valores aproximados. Vendido a granel sin garantía nutricional.
-                  </p>
-                </div>
-              )}
+              {/* CTA */}
+              <button
+                onClick={handleAdd}
+                disabled={isOut || adding}
+                style={{ width: "100%", maxWidth: 360, fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "1rem", color: "#F4EADB", background: isOut ? "#C0B0A8" : adding ? "#A84019" : "#D0551F", border: "none", borderRadius: "12px", padding: "1rem 1.5rem", cursor: isOut || adding ? "not-allowed" : "pointer" }}
+              >
+                {isOut ? "Agotado" : adding ? "Agregando..." : `Agregar ${fmtKg(selectedQty)} al pedido`}
+              </button>
 
-              {/* Delivery info */}
-              <div style={{ marginTop: 4, padding: 16, background: "var(--green-soft)", borderRadius: 14, fontSize: 13, color: "var(--sub)" }}>
-                <strong style={{ color: "var(--text)", display: "block", marginBottom: 4 }}>Despacho martes y viernes</strong>
-                Santa Cruz y alrededores. Coordinamos horario por WhatsApp.
+              {/* Info despacho */}
+              <div style={{ marginTop: 20, padding: 16, background: "rgba(122,132,87,0.10)", borderRadius: 12, fontFamily: "var(--font-body)", fontSize: 13, color: "#5A1F1A" }}>
+                <strong style={{ display: "block", marginBottom: 4, color: "#5A1F1A" }}>Despacho martes y viernes</strong>
+                Santa Cruz, Peralillo, Palmilla y Nancagua. Coordinamos por WhatsApp.
               </div>
             </div>
           </div>
 
-          {/* Related */}
+          {/* Productos relacionados */}
           {related.length > 0 && (
             <section style={{ marginTop: 64 }}>
-              <h2 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: 28, fontWeight: 400, marginBottom: 20 }}>
+              <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.75rem", color: "#5A1F1A", marginBottom: 20 }}>
                 También te puede gustar
               </h2>
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-                gap: 18,
-              }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 16 }}>
                 {related.map((r) => (
-                  <Link
-                    key={r.id}
-                    href={`/producto/${r.slug}`}
-                    style={{
-                      display: "block",
-                      borderRadius: "var(--r)",
-                      overflow: "hidden",
-                      background: "var(--bg)",
-                      border: "1.5px solid rgba(0,0,0,.06)",
-                      transition: "transform .2s",
-                    }}
-                  >
-                    <div style={{ aspectRatio: "1/1", background: COLOR_SOFT[r.color] ?? "var(--orange-soft)", overflow: "hidden", position: "relative" }}>
-                      <Image
-                        src={r.image_url}
-                        alt={r.name}
-                        fill
-                        sizes="(max-width: 640px) 50vw, 220px"
-                        style={{ objectFit: "cover" }}
-                        loading="lazy"
-                      />
+                  <Link key={r.id} href={`/producto/${r.slug}`} style={{ display: "block", borderRadius: "16px", overflow: "hidden", background: "#fff", boxShadow: "0 2px 12px rgba(90,31,26,0.07)", textDecoration: "none" }}>
+                    <div style={{ aspectRatio: "1/1", background: "#F4EADB", position: "relative" }}>
+                      <Image src={r.image_webp_url || r.image_url} alt={r.name} fill sizes="200px" style={{ objectFit: "cover" }} loading="lazy" />
                     </div>
                     <div style={{ padding: 14 }}>
-                      <div style={{ fontWeight: 800, fontSize: 15, marginBottom: 4 }}>{r.name}</div>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: COLOR_ACCENT[r.color] ?? "var(--orange)" }}>{fmt(r.price)} / kg</div>
+                      <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: 4 }}>{r.name}</p>
+                      <p style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem", color: "#7A8457" }}>{fmt(r.price)} / kg</p>
                     </div>
                   </Link>
                 ))}
@@ -362,17 +142,13 @@ export default function ProductDetail({ product, related, allProducts }: Props) 
 
         <style>{`
           @media (min-width: 768px) {
-            .product-detail-grid {
-              grid-template-columns: 1fr 1fr !important;
-              gap: 48px !important;
-              align-items: start;
-            }
+            .product-detail-grid { grid-template-columns: 1fr 1fr !important; gap: 48px !important; align-items: start; }
           }
         `}</style>
       </main>
       <Footer />
-      <Bnav onCartOpen={() => setDrawerOpen(true)} />
-      <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} products={allProducts} />
+      <OrderSheet open={orderOpen} onClose={() => setOrderOpen(false)} />
+      <ToastStack />
     </>
   );
 }

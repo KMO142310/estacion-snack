@@ -16,7 +16,7 @@ export default function OgImage() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "flex-start",
-          background: "#FFF3EC",
+          background: "#5A1F1A",
           padding: "80px 100px",
           fontFamily: "Georgia, serif",
           position: "relative",
@@ -27,48 +27,46 @@ export default function OgImage() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 8,
             marginBottom: 40,
             fontSize: 16,
             fontWeight: 700,
-            textTransform: "uppercase",
-            letterSpacing: "0.12em",
-            color: "#E8721C",
-            background: "rgba(232,114,28,0.12)",
+            color: "#D0551F",
+            background: "rgba(208,85,31,0.18)",
             padding: "10px 24px",
             borderRadius: 100,
           }}
         >
-          📍 Santa Cruz, Chile
+          Santa Cruz · Valle de Colchagua
         </div>
 
         {/* Main headline */}
         <div
           style={{
-            fontSize: 88,
+            display: "flex",
+            fontSize: 80,
             fontWeight: 800,
-            lineHeight: 1.0,
-            color: "#1A1816",
+            lineHeight: 1.05,
+            color: "#F4EADB",
             marginBottom: 28,
-            letterSpacing: "-0.03em",
+            letterSpacing: "-0.02em",
             maxWidth: 900,
           }}
         >
-          Estación{" "}
-          <span style={{ color: "#E8721C", fontStyle: "italic" }}>Snack</span>
+          Estación Snack
         </div>
 
         {/* Tagline */}
         <div
           style={{
+            display: "flex",
             fontSize: 28,
-            color: "#5F5A52",
+            color: "rgba(244,234,219,0.72)",
             lineHeight: 1.5,
             maxWidth: 680,
             marginBottom: 52,
           }}
         >
-          Frutos secos y snacks frescos por kilo. Elige, pide y te lo llevamos a tu puerta.
+          Frutos secos frescos por kilo. Pedís por WhatsApp y llega martes o viernes.
         </div>
 
         {/* Pills row */}
@@ -78,15 +76,16 @@ export default function OgImage() {
             gap: 16,
           }}
         >
-          {["Envío gratis", "Sin mínimo", "Martes y viernes"].map((label) => (
+          {["Sin mínimo de compra", "Martes y viernes", "Pesado al momento"].map((label) => (
             <div
               key={label}
               style={{
-                fontSize: 16,
+                display: "flex",
+                fontSize: 15,
                 fontWeight: 700,
-                padding: "10px 24px",
-                background: "#1A1816",
-                color: "#fff",
+                padding: "10px 22px",
+                background: "#D0551F",
+                color: "#F4EADB",
                 borderRadius: 100,
               }}
             >
@@ -102,8 +101,9 @@ export default function OgImage() {
             bottom: 0,
             left: 0,
             right: 0,
-            height: 8,
-            background: "#E8721C",
+            height: 6,
+            background: "#D0551F",
+            display: "flex",
           }}
         />
       </div>

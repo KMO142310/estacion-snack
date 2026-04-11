@@ -2,35 +2,22 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import StaticLayout from "@/components/StaticLayout";
 
-export const revalidate = 3600; // 1h — contenido estático
+export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Nuestra historia",
   description:
-    "Estación Snack nació en Santa Cruz, en el corazón del Valle de Colchagua. Conoce la historia detrás de tus frutos secos favoritos.",
+    "Estación Snack nació en Santa Cruz, en el corazón del Valle de Colchagua. Frutos secos frescos por kilo, pesados al momento.",
   openGraph: {
     title: "Nuestra historia · Estación Snack",
-    description:
-      "Frutos secos frescos por kilo desde el corazón del Valle de Colchagua.",
+    description: "Frutos secos frescos por kilo desde el corazón del Valle de Colchagua.",
   },
 };
 
 const values = [
-  {
-    title: "Frescura real",
-    body: "Compramos en lotes chicos y rotamos stock constantemente. Nada de bodegas llenas de producto viejo.",
-  },
-  {
-    title: "Sin envases innecesarios",
-    body: "Vendemos a granel. El cliente trae su recipiente o le entregamos en bolsa kraft. Menos plástico, mismo sabor.",
-  },
-  {
-    title: "Precio justo",
-    body: "Margen honesto. Sin tiendas gourmet de por medio. El precio que ves es lo que cuesta, sin sorpresas.",
-  },
-  {
-    title: "Local de verdad",
-    body: "Somos de Santa Cruz. Despachamos en las comunas que conocemos. No prometemos lo que no podemos cumplir.",
-  },
+  { title: "Frescura real", body: "Compramos en lotes chicos y rotamos stock constantemente. Nada de bodegas llenas de producto viejo." },
+  { title: "Sin envases innecesarios", body: "Vendemos a granel, en bolsa kraft. Menos plástico, mismo sabor." },
+  { title: "Precio justo", body: "Margen honesto. Sin tiendas gourmet de por medio. El precio que ves es lo que cuesta." },
+  { title: "Local de verdad", body: "Somos de Santa Cruz. Despachamos en las comunas que conocemos. No prometemos lo que no podemos cumplir." },
 ];
 
 const breadcrumbJsonLd = {
@@ -45,31 +32,36 @@ const breadcrumbJsonLd = {
 export default function SobreNosotrosPage() {
   return (
     <StaticLayout>
-      <main style={{ paddingTop: 48, paddingBottom: 80 }}>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <main style={{ paddingTop: "3rem", paddingBottom: "5rem" }}>
         <div className="wrap">
-          {/* Breadcrumb */}
-          <nav aria-label="Ruta de navegación" style={{ fontSize: 12, color: "var(--sub)", marginBottom: 32, display: "flex", gap: 6 }}>
-            <Link href="/">Inicio</Link>
+          <nav
+            aria-label="Ruta de navegación"
+            style={{ fontSize: "0.8125rem", color: "#7A8457", marginBottom: "2rem", display: "flex", gap: "0.375rem", fontFamily: "var(--font-body)" }}
+          >
+            <Link href="/" style={{ color: "#7A8457" }}>Inicio</Link>
             <span>›</span>
-            <span style={{ color: "var(--text)", fontWeight: 600 }}>Nuestra historia</span>
+            <span style={{ color: "#5A1F1A", fontWeight: 600 }}>Nuestra historia</span>
           </nav>
 
           {/* Hero */}
-          <div style={{ maxWidth: 680, marginBottom: 64 }}>
-            <p style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".1em", color: "var(--orange)", marginBottom: 12 }}>
+          <div style={{ maxWidth: 680, marginBottom: "4rem" }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#D0551F", marginBottom: "0.75rem" }}>
               Quiénes somos
             </p>
-            <h1 style={{
-              fontFamily: "var(--font-dm-serif), Georgia, serif",
-              fontSize: "clamp(36px, 6vw, 56px)",
-              lineHeight: 1.05,
-              fontWeight: 400,
-              marginBottom: 24,
-            }}>
+            <h1
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(2rem, 6vw, 3.5rem)",
+                lineHeight: 1.08,
+                fontWeight: 600,
+                color: "#5A1F1A",
+                marginBottom: "1.25rem",
+              }}
+            >
               Del Valle de Colchagua a tu mesa
             </h1>
-            <p style={{ fontSize: 18, lineHeight: 1.7, color: "var(--sub)" }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "1.0625rem", lineHeight: 1.75, color: "#7A8457" }}>
               Estación Snack nació en Santa Cruz con una idea simple: traer frutos secos
               frescos, de calidad, sin los márgenes inflados de las tiendas gourmet.
               Vendemos por kilo porque así tiene más sentido — pagás lo que necesitás,
@@ -77,62 +69,67 @@ export default function SobreNosotrosPage() {
             </p>
           </div>
 
-          {/* Historia */}
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "minmax(0, 1fr)",
-            gap: 48,
-            marginBottom: 64,
-          }} className="about-grid">
+          {/* Historia + valores */}
+          <div
+            style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr)", gap: "3rem", marginBottom: "4rem" }}
+            className="about-grid"
+          >
             <div>
-              <h2 style={{
-                fontFamily: "var(--font-dm-serif), Georgia, serif",
-                fontSize: 32,
-                fontWeight: 400,
-                marginBottom: 20,
-              }}>
-                El Valle que nos inspira
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 600,
+                  fontSize: "clamp(1.375rem, 4vw, 2rem)",
+                  color: "#5A1F1A",
+                  marginBottom: "1.25rem",
+                }}
+              >
+                El valle que nos inspira
               </h2>
-              <p style={{ fontSize: 16, lineHeight: 1.75, color: "var(--sub)", marginBottom: 16 }}>
-                Vivimos en uno de los valles más reconocidos de Chile.
-                La tierra aquí tiene historia, los productores cuidan lo que hacen,
-                y los vecinos valoran lo artesanal. Eso lo sentimos todos los días.
-              </p>
-              <p style={{ fontSize: 16, lineHeight: 1.75, color: "var(--sub)", marginBottom: 16 }}>
-                No somos una cadena ni un marketplace. Somos una persona eligiendo
-                qué entra al catálogo, probando cada lote, decidiendo qué merece
-                tu tiempo y tu plata.
-              </p>
-              <p style={{ fontSize: 16, lineHeight: 1.75, color: "var(--sub)" }}>
-                Despachamos los martes y viernes en Santa Cruz y comunas cercanas de O'Higgins.
-                Lo coordinamos por WhatsApp porque así funciona acá — con nombre y apellido,
-                sin apps raras.
-              </p>
+              {[
+                "Vivimos en uno de los valles más reconocidos de Chile. La tierra aquí tiene historia, los productores cuidan lo que hacen, y los vecinos valoran lo artesanal. Eso lo sentimos todos los días.",
+                "No somos una cadena ni un marketplace. Somos una persona eligiendo qué entra al catálogo, probando cada lote, decidiendo qué merece tu tiempo y tu plata.",
+                "Despachamos los martes y viernes en Santa Cruz y comunas cercanas de O'Higgins. Lo coordinamos por WhatsApp porque así funciona acá — con nombre y apellido, sin apps raras.",
+              ].map((p, i) => (
+                <p key={i} style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", lineHeight: 1.8, color: "#7A8457", marginBottom: "1rem" }}>{p}</p>
+              ))}
             </div>
 
-            <div style={{ background: "var(--orange-soft)", borderRadius: "var(--r-lg)", padding: 32 }}>
-              <h2 style={{
-                fontFamily: "var(--font-dm-serif), Georgia, serif",
-                fontSize: 28,
-                fontWeight: 400,
-                marginBottom: 24,
-              }}>
+            <div
+              style={{
+                background: "rgba(208,85,31,0.06)",
+                borderRadius: "20px",
+                padding: "2rem",
+                border: "1px solid rgba(208,85,31,0.12)",
+              }}
+            >
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 600,
+                  fontSize: "1.5rem",
+                  color: "#5A1F1A",
+                  marginBottom: "1.5rem",
+                }}
+              >
                 Lo que nos mueve
               </h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
                 {values.map((v) => (
-                  <div key={v.title} style={{ display: "flex", gap: 16 }}>
-                    <span style={{
-                      width: 8,
-                      height: 8,
-                      borderRadius: "50%",
-                      background: "var(--orange)",
-                      flexShrink: 0,
-                      marginTop: 8,
-                    }} />
+                  <div key={v.title} style={{ display: "flex", gap: "1rem" }}>
+                    <span
+                      style={{
+                        width: 8,
+                        height: 8,
+                        borderRadius: "50%",
+                        background: "#D0551F",
+                        flexShrink: 0,
+                        marginTop: 7,
+                      }}
+                    />
                     <div>
-                      <div style={{ fontWeight: 800, fontSize: 15, marginBottom: 4 }}>{v.title}</div>
-                      <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--sub)" }}>{v.body}</p>
+                      <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.25rem" }}>{v.title}</p>
+                      <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", lineHeight: 1.65, color: "#7A8457" }}>{v.body}</p>
                     </div>
                   </div>
                 ))}
@@ -141,51 +138,61 @@ export default function SobreNosotrosPage() {
           </div>
 
           {/* CTA */}
-          <div style={{
-            textAlign: "center",
-            padding: "48px 24px",
-            background: "var(--green-soft)",
-            borderRadius: "var(--r-lg)",
-          }}>
-            <h2 style={{
-              fontFamily: "var(--font-dm-serif), Georgia, serif",
-              fontSize: 32,
-              fontWeight: 400,
-              marginBottom: 12,
-            }}>
+          <div
+            style={{
+              textAlign: "center",
+              padding: "3rem 1.5rem",
+              background: "rgba(122,132,87,0.08)",
+              borderRadius: "20px",
+              border: "1px solid rgba(122,132,87,0.15)",
+            }}
+          >
+            <h2
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: "clamp(1.375rem, 4vw, 2rem)",
+                color: "#5A1F1A",
+                marginBottom: "0.75rem",
+              }}
+            >
               ¿Querés saber más?
             </h2>
-            <p style={{ fontSize: 16, color: "var(--sub)", marginBottom: 24 }}>
-              Escribinos por WhatsApp o mandanos un mensaje. Respondemos en menos de 24 horas hábiles.
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#7A8457", marginBottom: "1.75rem", lineHeight: 1.65 }}>
+              Escribinos por WhatsApp o a través del formulario. Respondemos en menos de 24 horas hábiles.
             </p>
-            <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-              <Link
-                href="/contacto"
+            <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
+              <a
+                href="https://wa.me/56953743338"
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
-                  padding: "14px 28px",
-                  fontSize: 15,
-                  fontWeight: 700,
-                  borderRadius: 12,
-                  background: "var(--text)",
-                  color: "#fff",
+                  fontFamily: "var(--font-body)",
+                  fontWeight: 600,
+                  fontSize: "0.9375rem",
+                  padding: "0.875rem 1.75rem",
+                  borderRadius: "10px",
+                  background: "#D0551F",
+                  color: "#F4EADB",
                   textDecoration: "none",
                 }}
               >
-                Contacto
-              </Link>
+                Escribir por WhatsApp
+              </a>
               <Link
                 href="/"
                 style={{
-                  padding: "14px 28px",
-                  fontSize: 15,
-                  fontWeight: 700,
-                  borderRadius: 12,
-                  border: "2px solid var(--text)",
-                  color: "var(--text)",
+                  fontFamily: "var(--font-body)",
+                  fontWeight: 600,
+                  fontSize: "0.9375rem",
+                  padding: "0.875rem 1.75rem",
+                  borderRadius: "10px",
+                  border: "2px solid rgba(90,31,26,0.20)",
+                  color: "#5A1F1A",
                   textDecoration: "none",
                 }}
               >
-                Ver productos
+                Ver las mezclas
               </Link>
             </div>
           </div>

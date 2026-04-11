@@ -1,114 +1,31 @@
 "use client";
 
 import { useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import ProductCard from "./ProductCard";
-import type { Product } from "@/lib/types";
+import ProductSheet from "./ProductSheet";
+import productsData from "@/data/products.json";
 
-const FILTERS = [
-  { id: "all",    label: "Todos" },
-  { id: "frutos", label: "Frutos Secos" },
-  { id: "dulces", label: "Dulces" },
-  { id: "cheap",  label: "Menos de $10.000/kg" },
-];
+type Product = typeof productsData[number];
 
-interface Props {
-  products: Product[];
-  onCartOpen?: () => void;
-}
-
-export default function ProductGrid({ products, onCartOpen }: Props) {
-  const [filter, setFilter] = useState("all");
-  const reduce = useReducedMotion();
-
-  const filtered = products.filter((p) => {
-    if (filter === "all")   return true;
-    if (filter === "cheap") return p.price < 10000;
-    return p.category === filter;
-  });
-
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: { staggerChildren: reduce ? 0 : 0.07 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-    },
-  };
+export default function ProductGrid() {
+  const [selected, setSelected] = useState<Product | null>(null);
 
   return (
-    <div className="wrap" id="productos">
-      <div style={{
-        padding: "0 0 20px",
-        display: "flex",
-        alignItems: "baseline",
-        justifyContent: "space-between",
-        flexWrap: "wrap",
-        gap: 8,
-      }}>
-        <h2 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: "clamp(24px,4vw,36px)", fontWeight: 400 }}>
-          Todos los productos
+    <section id="productos" aria-label="Mezclas" style={{ padding: "5rem 1.25rem 3rem" }}>
+      <div style={{ marginBottom: "1.75rem" }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(1.75rem, 6vw, 2.5rem)", color: "#5A1F1A", lineHeight: 1.15, marginBottom: "0.625rem" }}>
+          Las mezclas
         </h2>
-        <span style={{ fontSize: 13, color: "var(--sub)" }}>{filtered.length} disponibles</span>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#7A8457", lineHeight: 1.6, maxWidth: 480 }}>
+          Seis recetas. Las probamos todas, muchas veces, hasta dejar solo las que uno se termina sin darse cuenta.
+        </p>
       </div>
-
-      {/* Filter chips */}
-      <div
-        role="tablist"
-        aria-label="Filtrar productos"
-        style={{ display: "flex", gap: 8, paddingBottom: 20, overflowX: "auto", scrollbarWidth: "none" }}
-      >
-        {FILTERS.map((f) => (
-          <button
-            key={f.id}
-            role="tab"
-            aria-selected={filter === f.id}
-            onClick={() => setFilter(f.id)}
-            style={{
-              flexShrink: 0,
-              padding: "8px 16px",
-              minHeight: 40,
-              fontSize: 13,
-              fontWeight: 700,
-              background: filter === f.id ? "var(--text)" : "var(--bg)",
-              border: `2px solid ${filter === f.id ? "var(--text)" : "rgba(0,0,0,.1)"}`,
-              color: filter === f.id ? "#fff" : "var(--sub)",
-              borderRadius: "var(--r-full)",
-              cursor: "pointer",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {f.label}
-          </button>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", maxWidth: 720 }}>
+        {productsData.map((product) => (
+          <ProductCard key={product.id} {...product} onOpen={() => setSelected(product)} />
         ))}
       </div>
-
-      {/* Grid con stagger */}
-      <motion.div
-        key={filter}
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-          gap: 18,
-          paddingBottom: 48,
-        }}
-      >
-        {filtered.map((product) => (
-          <motion.div key={product.id} variants={itemVariants}>
-            <ProductCard product={product} onCartOpen={onCartOpen} />
-          </motion.div>
-        ))}
-      </motion.div>
-    </div>
+      {selected && <ProductSheet product={selected} onClose={() => setSelected(null)} />}
+    </section>
   );
 }

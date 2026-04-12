@@ -172,17 +172,23 @@ export default function PackCard({ pack, products, onOpen }: Props) {
           </div>
         </div>
 
-        <p
-          style={{
-            fontFamily: "var(--font-body)",
-            fontSize: "0.8125rem",
-            color: isAgotado ? "#5E6B3E" : "#D0551F",
-            fontWeight: 600,
-            textAlign: "center",
-          }}
-        >
-          {isAgotado ? "Momentáneamente agotado" : "Ver contenido y pedir →"}
-        </p>
+        {!isAgotado ? (
+          <button
+            style={{
+              width: "100%", fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 13,
+              color: "#F4EADB", background: "#D0551F",
+              border: "none", borderRadius: 10, padding: "10px 0",
+              cursor: "pointer", minHeight: 42,
+              WebkitTapHighlightColor: "transparent",
+            }}
+          >
+            Agregar pack · {fmt(pack.price)}
+          </button>
+        ) : (
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#5E6B3E", fontWeight: 600, textAlign: "center" }}>
+            Momentáneamente agotado
+          </p>
+        )}
       </div>
     </article>
   );

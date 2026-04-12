@@ -53,7 +53,7 @@ export default function PageShell() {
         <TrustBar />
 
         {/* Productos */}
-        <section id="productos" style={{ background: "#F4EADB", padding: "20px 16px 24px" }}>
+        <section id="productos" style={{ background: "#F4EADB", padding: "2.5rem 16px 3rem" }}>
           <div className="container">
             <div className="product-grid">
               {products.map((p) => (
@@ -73,11 +73,11 @@ export default function PageShell() {
         <ComoFunciona />
 
         {/* FAQ — solo 5 preguntas clave */}
-        <section style={{ background: "#F4EADB", padding: "40px 16px 32px" }}>
+        <section style={{ background: "#F9F3E8", padding: "3.5rem 16px 3rem" }}>
           <div className="container" style={{ maxWidth: 680 }}>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#5E6B3E", marginBottom: 16 }}>
+            <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(1.5rem, 4vw, 2rem)", color: "#5A1F1A", marginBottom: "1.5rem" }}>
               Preguntas frecuentes
-            </p>
+            </h2>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {TOP_FAQ.map((item) => (
                 <details key={item.q} style={{
@@ -106,7 +106,7 @@ export default function PageShell() {
         </section>
 
         {/* CTA cierre */}
-        <section style={{ background: "#5A1F1A", padding: "48px 20px", textAlign: "center" }}>
+        <section style={{ background: "#5A1F1A", padding: "4rem 20px", textAlign: "center" }}>
           <div className="container">
             <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(22px, 5vw, 36px)", color: "#F4EADB", lineHeight: 1.15, marginBottom: 8 }}>
               Arma tu pedido.
@@ -163,8 +163,8 @@ export default function PageShell() {
 
       <style>{`
         .container { max-width: 1100px; margin: 0 auto; }
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
         .pcard { transition: transform .2s ease; }
         .pcard .hover-copy { display: none; }
         @media (min-width: 768px) and (hover:hover) {

@@ -11,7 +11,7 @@ export default function Footer() {
               estación snack
             </p>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", lineHeight: 1.65, maxWidth: 260, marginBottom: "1rem" }}>
-              Frutos secos y dulces del Valle de Colchagua, vendidos por kilo. Vendidos por kilo en el Valle de Colchagua.
+              Frutos secos y dulces del Valle de Colchagua, vendidos por kilo.
             </p>
             <div style={{ display: "flex", gap: "0.75rem" }}>
               <a href="https://instagram.com/estacionsnack" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ color: "rgba(244,234,219,0.55)", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#F4EADB"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(244,234,219,0.55)"; }}>

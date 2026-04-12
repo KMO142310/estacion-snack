@@ -7,7 +7,7 @@ export default function About() {
             Detrás de <em className="serif">Estación Snack</em>
           </h2>
           <p style={{ fontSize: 15, color: "var(--sub)", lineHeight: 1.7, marginBottom: 12 }}>
-            Somos de Santa Cruz y nos cansamos de los snacks caros en envases chicos. Así que decidimos vender directo: por kilo, sin envases de más, a precio justo.
+            Somos de Santa Cruz y nos cansamos de los snacks caros en envases chicos. Así que decidimos vender directo: por kilo, por kilo, a precio justo.
           </p>
           <p style={{ fontSize: 15, color: "var(--sub)", lineHeight: 1.7, marginBottom: 12 }}>
             Seleccionamos cada producto con criterio artesanal: buscamos frescura, sabor real y calidad consistente para que cada kilo valga la pena.

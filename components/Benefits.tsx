@@ -1,6 +1,6 @@
 export default function Benefits() {
   const items = [
-    { ico: "⚖️", title: "Compra solo lo que necesitas", desc: "Por kilo, sin envases innecesarios. Stock rotativo: lo que llega esta semana no estuvo meses en una bodega." },
+    { ico: "⚖️", title: "Compra solo lo que necesitas", desc: "Por kilo, directo, por kilo. Stock rotativo: lo que llega esta semana no estuvo meses en una bodega." },
     { ico: "🚗", title: "Te lo llevamos",                desc: "Despacho en Santa Cruz cada martes a sábado. Transferencia o efectivo." },
     { ico: "💬", title: "Pedido en 2 minutos",           desc: "Arma tu pedido acá y se envía directo a nuestro WhatsApp. En 2 minutos, sin crear cuenta." },
   ];

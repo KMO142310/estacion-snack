@@ -51,7 +51,7 @@ export default function DetrasDe() {
               lineHeight: 1.75,
             }}
           >
-            Estación Snack partió en 2024 en una bodega chica de Santa Cruz, con una pesa, tres mezclas y la convicción de que los frutos secos no tenían por qué venir en bolsas industriales con más envase que contenido.
+            Estación Snack partió en 2024 en una bodega chica de Santa Cruz, con una pesa, tres mezclas y la convicción de que los frutos secos merecían venderse bien, por kilo, sin pagar de más por el envase.
           </p>
           <p
             style={{

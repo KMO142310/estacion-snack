@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 const values = [
   { title: "Frescura real", body: "Compramos en lotes chicos y rotamos stock constantemente. Nada de bodegas llenas de producto viejo." },
-  { title: "Sin envases innecesarios", body: "Vendemos a granel, en bolsa kraft. Menos plástico, mismo sabor." },
+  { title: "Directo, por kilo", body: "Vendemos por kilo. Sin vueltas." },
   { title: "Precio justo", body: "Margen honesto. Sin tiendas gourmet de por medio. El precio que ves es lo que cuesta." },
   { title: "Local de verdad", body: "Somos de Santa Cruz. Despachamos en las comunas que conocemos. No prometemos lo que no podemos cumplir." },
 ];

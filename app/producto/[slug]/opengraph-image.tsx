@@ -20,7 +20,7 @@ export default async function OgImage({
   const price = product?.price
     ? `$${product.price.toLocaleString("es-CL")} / kg`
     : "";
-  const copy = product?.copy ?? "Por kilo, sin envases innecesarios.";
+  const copy = product?.copy ?? "Por kilo, directo.";
 
   return new ImageResponse(
     (

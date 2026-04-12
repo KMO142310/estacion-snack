@@ -1,7 +1,8 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { fmt } from "@/lib/cart-utils";
 import { useCartStore } from "@/lib/store";
 import { hapticSuccess } from "@/lib/haptics";
@@ -32,6 +33,10 @@ const fadeUp = {
 };
 
 export default function ProductEditorial({ product, index, onOpenSheet }: Props) {
+  const photoRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: photoRef, offset: ["start end", "end start"] });
+  const photoY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
   const isOut = product.status === "agotado";
@@ -72,8 +77,9 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
         }}
         data-align={align}
       >
-        {/* Foto */}
+        {/* Foto con parallax */}
         <div
+          ref={photoRef}
           style={{
             position: "relative",
             aspectRatio: "4/5",
@@ -87,14 +93,16 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
           aria-label={`Ver detalles de ${product.name}`}
           onKeyDown={(e) => { if (!isOut && (e.key === "Enter" || e.key === " ")) onOpenSheet(); }}
         >
-          <Image
-            src={product.image_webp_url}
-            alt={product.name}
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            style={{ objectFit: "cover" }}
-            priority={index < 2}
-          />
+          <motion.div style={{ y: photoY, position: "absolute", inset: "-12% 0", width: "100%", height: "124%" }}>
+            <Image
+              src={product.image_webp_url}
+              alt={product.name}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              style={{ objectFit: "cover" }}
+              priority={index < 2}
+            />
+          </motion.div>
           {(product.badge || isLast) && (
             <span
               style={{

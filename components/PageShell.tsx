@@ -142,8 +142,26 @@ export default function PageShell() {
           );
         })}
 
-        {/* Packs */}
+        {/* Separador editorial */}
+        <div style={{ background: "#F4EADB", padding: "2.5rem 0" }}>
+          <div className="editorial-sep" style={{ color: "#5A1F1A" }}>
+            <span style={{ fontFamily: "var(--font-display)", fontSize: "0.6875rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.4, whiteSpace: "nowrap" }}>
+              packs armados
+            </span>
+          </div>
+        </div>
+
+        {/* Packs — scroll horizontal */}
         <PackSection />
+
+        {/* Separador editorial */}
+        <div style={{ background: "#F4EADB", padding: "2rem 0" }}>
+          <div className="editorial-sep" style={{ color: "#5A1F1A" }}>
+            <span style={{ fontFamily: "var(--font-display)", fontSize: "0.6875rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.4, whiteSpace: "nowrap" }}>
+              preguntas
+            </span>
+          </div>
+        </div>
 
         {/* FAQ inline */}
         <section

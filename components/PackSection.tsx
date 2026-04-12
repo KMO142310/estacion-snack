@@ -42,19 +42,24 @@ export default function PackSection() {
 
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "1fr",
+          display: "flex",
           gap: "1rem",
-          maxWidth: 720,
+          overflowX: "auto",
+          scrollSnapType: "x mandatory",
+          scrollPaddingLeft: "1.25rem",
+          paddingBottom: "0.75rem",
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
         }}
       >
         {packs.map((pack) => (
-          <PackCard
-            key={pack.id}
-            pack={pack}
-            products={products}
-            onOpen={() => setSelected(pack)}
-          />
+          <div key={pack.id} style={{ flexShrink: 0, width: "82vw", maxWidth: 360, scrollSnapAlign: "start" }}>
+            <PackCard
+              pack={pack}
+              products={products}
+              onOpen={() => setSelected(pack)}
+            />
+          </div>
         ))}
       </div>
 

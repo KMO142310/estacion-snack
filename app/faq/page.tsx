@@ -48,9 +48,9 @@ export default function FaqPage() {
         <div className="wrap">
           <nav
             aria-label="Ruta de navegación"
-            style={{ fontSize: "0.8125rem", color: "#7A8457", marginBottom: "2rem", display: "flex", gap: "0.375rem", fontFamily: "var(--font-body)" }}
+            style={{ fontSize: "0.8125rem", color: "#5E6B3E", marginBottom: "2rem", display: "flex", gap: "0.375rem", fontFamily: "var(--font-body)" }}
           >
-            <Link href="/" style={{ color: "#7A8457" }}>Inicio</Link>
+            <Link href="/" style={{ color: "#5E6B3E" }}>Inicio</Link>
             <span>›</span>
             <span style={{ color: "#5A1F1A", fontWeight: 600 }}>FAQ</span>
           </nav>
@@ -71,7 +71,7 @@ export default function FaqPage() {
             >
               Preguntas frecuentes
             </h1>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "#7A8457", lineHeight: 1.65 }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "#5E6B3E", lineHeight: 1.65 }}>
               Si no encontrás tu respuesta acá, escribinos por{" "}
               <a
                 href="https://wa.me/56953743338"

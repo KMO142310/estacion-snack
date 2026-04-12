@@ -149,7 +149,7 @@ export default function Header({ onOrderOpen }: HeaderProps) {
           font-family: var(--font-body);
           font-size: 0.875rem;
           font-weight: 500;
-          color: #7A8457;
+          color: #5E6B3E;
           padding: 8px 12px;
           border-radius: 8px;
           text-decoration: none;

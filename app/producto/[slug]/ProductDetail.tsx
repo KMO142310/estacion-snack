@@ -50,10 +50,10 @@ export default function ProductDetail({ product, related }: Props) {
       <main style={{ paddingTop: 24, paddingBottom: 80 }}>
         <div className="wrap">
           {/* Breadcrumb */}
-          <nav aria-label="Ruta de navegación" style={{ fontSize: 13, color: "#7A8457", marginBottom: 20, display: "flex", gap: 6, flexWrap: "wrap", fontFamily: "var(--font-body)" }}>
-            <Link href="/" style={{ color: "#7A8457" }}>Inicio</Link>
+          <nav aria-label="Ruta de navegación" style={{ fontSize: 13, color: "#5E6B3E", marginBottom: 20, display: "flex", gap: 6, flexWrap: "wrap", fontFamily: "var(--font-body)" }}>
+            <Link href="/" style={{ color: "#5E6B3E" }}>Inicio</Link>
             <span>›</span>
-            <Link href="/#productos" style={{ color: "#7A8457" }}>{product.cat_label}</Link>
+            <Link href="/#productos" style={{ color: "#5E6B3E" }}>{product.cat_label}</Link>
             <span>›</span>
             <span style={{ color: "#5A1F1A", fontWeight: 600 }}>{product.name}</span>
           </nav>
@@ -71,17 +71,17 @@ export default function ProductDetail({ product, related }: Props) {
 
             {/* Info */}
             <div>
-              <p style={{ fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#7A8457", marginBottom: 8 }}>{product.cat_label}</p>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#5E6B3E", marginBottom: 8 }}>{product.cat_label}</p>
               <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(1.75rem, 5vw, 3rem)", color: "#5A1F1A", lineHeight: 1.1, marginBottom: 16 }}>
                 {product.name}
               </h1>
 
               <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 16 }}>
                 <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "2rem", color: "#5A1F1A" }}>{fmt(product.price)}</span>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#7A8457" }}>/ kg</span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#5E6B3E" }}>/ kg</span>
               </div>
 
-              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#7A8457", lineHeight: 1.7, marginBottom: 24 }}>{product.copy}</p>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", lineHeight: 1.7, marginBottom: 24 }}>{product.copy}</p>
 
               {/* Chips de cantidad */}
               {!isOut && (
@@ -94,7 +94,7 @@ export default function ProductDetail({ product, related }: Props) {
                       </button>
                     ))}
                   </div>
-                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457" }}>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E" }}>
                     Subtotal: <strong style={{ color: "#5A1F1A", fontFamily: "var(--font-display)", fontSize: "1.125rem" }}>{fmt(price)}</strong>
                   </p>
                 </div>
@@ -131,7 +131,7 @@ export default function ProductDetail({ product, related }: Props) {
                     </div>
                     <div style={{ padding: 14 }}>
                       <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: 4 }}>{r.name}</p>
-                      <p style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem", color: "#7A8457" }}>{fmt(r.price)} / kg</p>
+                      <p style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem", color: "#5E6B3E" }}>{fmt(r.price)} / kg</p>
                     </div>
                   </Link>
                 ))}

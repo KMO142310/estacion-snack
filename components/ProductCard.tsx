@@ -48,7 +48,7 @@ export default function ProductCard({ name, price, image_webp_url, badge, status
       </div>
       <div style={{ padding: "0.875rem 0.875rem 1rem" }}>
         <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1rem", color: "#5A1F1A", lineHeight: 1.25, marginBottom: "0.375rem" }}>{name}</p>
-        <p style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "0.875rem", color: "#7A8457" }}>
+        <p style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "0.875rem", color: "#5E6B3E" }}>
           {agotado ? "Agotado" : `${fmt(price)} / kg`}
         </p>
       </div>

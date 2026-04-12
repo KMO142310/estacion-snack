@@ -61,9 +61,9 @@ export default function ContactoPage() {
         <div className="wrap">
           <nav
             aria-label="Ruta de navegación"
-            style={{ fontSize: "0.8125rem", color: "#7A8457", marginBottom: "2rem", display: "flex", gap: "0.375rem", fontFamily: "var(--font-body)" }}
+            style={{ fontSize: "0.8125rem", color: "#5E6B3E", marginBottom: "2rem", display: "flex", gap: "0.375rem", fontFamily: "var(--font-body)" }}
           >
-            <Link href="/" style={{ color: "#7A8457" }}>Inicio</Link>
+            <Link href="/" style={{ color: "#5E6B3E" }}>Inicio</Link>
             <span>›</span>
             <span style={{ color: "#5A1F1A", fontWeight: 600 }}>Contacto</span>
           </nav>
@@ -84,7 +84,7 @@ export default function ContactoPage() {
             >
               Hablamos
             </h1>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "#7A8457", lineHeight: 1.7 }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "#5E6B3E", lineHeight: 1.7 }}>
               Respondemos rápido. Lo más fácil es escribirnos por WhatsApp —
               lo atiende una persona, no un bot.
             </p>
@@ -130,7 +130,7 @@ export default function ContactoPage() {
                     style={{
                       fontFamily: "var(--font-body)",
                       fontSize: "0.875rem",
-                      color: op.primary ? "rgba(244,234,219,0.80)" : "#7A8457",
+                      color: op.primary ? "rgba(244,234,219,0.80)" : "#5E6B3E",
                       lineHeight: 1.6,
                       marginBottom: "0.75rem",
                     }}
@@ -168,19 +168,19 @@ export default function ContactoPage() {
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
               <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", minWidth: 80 }}>WhatsApp</span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", minWidth: 80 }}>WhatsApp</span>
                 <a href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", fontWeight: 600, color: "#5A1F1A", textDecoration: "none" }}>
                   +56 9 5374 3338
                 </a>
               </div>
               <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", minWidth: 80 }}>Instagram</span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", minWidth: 80 }}>Instagram</span>
                 <a href="https://instagram.com/estacionsnack" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", fontWeight: 600, color: "#5A1F1A", textDecoration: "none" }}>
                   @estacionsnack
                 </a>
               </div>
               <div style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", minWidth: 80 }}>Despacho</span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", minWidth: 80 }}>Despacho</span>
                 <span style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5A1F1A" }}>
                   Martes y viernes · Santa Cruz y alrededores
                 </span>

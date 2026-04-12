@@ -118,7 +118,7 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
               fontWeight: 600,
               letterSpacing: "0.18em",
               textTransform: "uppercase",
-              color: "#7A8457",
+              color: "#5E6B3E",
               marginBottom: "0.75rem",
             }}
           >

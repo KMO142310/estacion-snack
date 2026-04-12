@@ -99,7 +99,7 @@ export default function FAQ() {
                 style={{
                   padding: "0 1.25rem 1.125rem",
                   fontSize: "0.9rem",
-                  color: "#7A8457",
+                  color: "#5E6B3E",
                   lineHeight: 1.7,
                   margin: 0,
                   fontFamily: "var(--font-body)",

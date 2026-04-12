@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import FocusTrap from "focus-trap-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCartStore } from "@/lib/store";
 import { fmt, fmtKg } from "@/lib/cart-utils";
@@ -94,7 +95,7 @@ export default function OrderSheet({ open, onClose }: Props) {
   return (
     <AnimatePresence>
       {open && (
-        <>
+        <FocusTrap focusTrapOptions={{ allowOutsideClick: true, escapeDeactivates: true, onDeactivate: onClose }}>
           <motion.div
             key="order-backdrop"
             initial={{ opacity: 0 }}
@@ -152,7 +153,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                   <p style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", color: "#5A1F1A", marginBottom: "0.5rem" }}>
                     Tu carrito está tranquilo.
                   </p>
-                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#7A8457", lineHeight: 1.6 }}>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", lineHeight: 1.6 }}>
                     Cuando agregues algo, acá va a aparecer el resumen antes de mandarlo por WhatsApp.
                   </p>
                 </div>
@@ -180,7 +181,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                           <p style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.125rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                             {getItemLabel(item)}
                           </p>
-                          <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "#7A8457" }}>
+                          <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "#5E6B3E" }}>
                             {item.kind === "product" ? fmtKg(item.qty) : `x${item.qty}`}
                           </p>
                         </div>
@@ -208,7 +209,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                     <p style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "1rem", color: "#5A1F1A" }}>Total estimado</p>
                     <p style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.625rem", color: "#5A1F1A" }}>{fmt(total)}</p>
                   </div>
-                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "#7A8457", lineHeight: 1.5, marginBottom: "1.25rem" }}>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "#5E6B3E", lineHeight: 1.5, marginBottom: "1.25rem" }}>
                     El precio final puede variar levemente según el peso exacto. Confirmamos antes de despachar.
                   </p>
 
@@ -314,7 +315,7 @@ export default function OrderSheet({ open, onClose }: Props) {
               )}
             </div>
           </motion.div>
-        </>
+        </FocusTrap>
       )}
     </AnimatePresence>
   );

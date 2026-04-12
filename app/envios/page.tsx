@@ -37,9 +37,9 @@ export default function EnviosPage() {
         <div className="wrap">
           <nav
             aria-label="Ruta de navegación"
-            style={{ fontSize: "0.8125rem", color: "#7A8457", marginBottom: "2rem", display: "flex", gap: "0.375rem", fontFamily: "var(--font-body)" }}
+            style={{ fontSize: "0.8125rem", color: "#5E6B3E", marginBottom: "2rem", display: "flex", gap: "0.375rem", fontFamily: "var(--font-body)" }}
           >
-            <Link href="/" style={{ color: "#7A8457" }}>Inicio</Link>
+            <Link href="/" style={{ color: "#5E6B3E" }}>Inicio</Link>
             <span>›</span>
             <span style={{ color: "#5A1F1A", fontWeight: 600 }}>Envíos</span>
           </nav>
@@ -60,7 +60,7 @@ export default function EnviosPage() {
             >
               Entrega en el valle
             </h1>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "#7A8457", lineHeight: 1.7 }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "#5E6B3E", lineHeight: 1.7 }}>
               Despachamos los <strong style={{ color: "#5A1F1A" }}>martes y viernes</strong>. Coordinamos el día y horario exacto
               por WhatsApp una vez confirmado el pedido. El envío es siempre gratis.
             </p>
@@ -97,7 +97,7 @@ export default function EnviosPage() {
                     width: 10,
                     height: 10,
                     borderRadius: "50%",
-                    background: "#7A8457",
+                    background: "#5E6B3E",
                     flexShrink: 0,
                     marginTop: 5,
                   }}
@@ -105,11 +105,11 @@ export default function EnviosPage() {
                 <div>
                   <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.25rem" }}>
                     {z.nombre}
-                    <span style={{ marginLeft: "0.5rem", fontSize: "0.75rem", fontWeight: 700, color: "#7A8457", background: "rgba(122,132,87,0.15)", padding: "2px 8px", borderRadius: "9999px" }}>
+                    <span style={{ marginLeft: "0.5rem", fontSize: "0.75rem", fontWeight: 700, color: "#5E6B3E", background: "rgba(122,132,87,0.15)", padding: "2px 8px", borderRadius: "9999px" }}>
                       Gratis
                     </span>
                   </p>
-                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", lineHeight: 1.55 }}>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", lineHeight: 1.55 }}>
                     {z.desc}
                   </p>
                 </div>
@@ -131,7 +131,7 @@ export default function EnviosPage() {
             <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.375rem" }}>
               ¿Vivís fuera de estas comunas?
             </p>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9rem", color: "#7A8457", lineHeight: 1.65 }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9rem", color: "#5E6B3E", lineHeight: 1.65 }}>
               Escribinos por{" "}
               <a
                 href="https://wa.me/56953743338"
@@ -170,7 +170,7 @@ export default function EnviosPage() {
               <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.5rem" }}>
                 Plazo de entrega
               </p>
-              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", lineHeight: 1.65 }}>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", lineHeight: 1.65 }}>
                 Despachamos el martes o viernes siguiente a la confirmación del pedido. Coordinamos la franja horaria por WhatsApp el día del despacho.
               </p>
             </div>
@@ -186,7 +186,7 @@ export default function EnviosPage() {
               <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.5rem" }}>
                 Derecho a retracto
               </p>
-              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", lineHeight: 1.65 }}>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", lineHeight: 1.65 }}>
                 Según la Ley 19.496, tenés 10 días hábiles desde la recepción para retractarte. Escribinos por WhatsApp con el producto sin abrir y coordinamos la devolución y restitución del pago.
               </p>
             </div>
@@ -202,7 +202,7 @@ export default function EnviosPage() {
               <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.5rem" }}>
                 Producto en mal estado
               </p>
-              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", lineHeight: 1.65 }}>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", lineHeight: 1.65 }}>
                 Si algo llega con problema, escribinos dentro de las 24 horas con foto y lo reemplazamos o devolvemos el pago en la próxima ruta.
               </p>
             </div>
@@ -240,7 +240,7 @@ export default function EnviosPage() {
                     fontWeight: 700,
                     padding: "2px 8px",
                     background: "rgba(122,132,87,0.15)",
-                    color: "#7A8457",
+                    color: "#5E6B3E",
                     borderRadius: "9999px",
                     textTransform: "uppercase",
                     letterSpacing: "0.04em",
@@ -250,7 +250,7 @@ export default function EnviosPage() {
                   Recomendado
                 </span>
               </div>
-              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", lineHeight: 1.65 }}>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", lineHeight: 1.65 }}>
                 Te pasamos los datos por WhatsApp. Al confirmar la transferencia preparamos el pedido.
               </p>
             </div>
@@ -266,7 +266,7 @@ export default function EnviosPage() {
               <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.625rem" }}>
                 Efectivo contra entrega
               </p>
-              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", lineHeight: 1.65 }}>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", lineHeight: 1.65 }}>
                 Pagás al recibir el pedido. Sin comisión.
               </p>
             </div>

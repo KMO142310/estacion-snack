@@ -20,7 +20,7 @@ export default function ComoFunciona() {
   return (
     <section
       aria-label="Cómo funciona"
-      style={{ background: "#7A8457", padding: "5rem 0" }}
+      style={{ background: "#5E6B3E", padding: "5rem 0" }}
     >
       <div className="wrap">
         <h2

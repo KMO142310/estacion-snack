@@ -9,13 +9,13 @@
   --color-crema-dark:      #E6D4BE;
   --color-burdeo:          #5A1F1A;
   --color-burdeo-light:    #7A3028;
-  --color-oliva:           #7A8457;
+  --color-oliva:           #5E6B3E;
   --color-oliva-light:     #9DAB75;
 
   /* === Semánticos === */
   --color-bg:              #F4EADB;
   --color-text:            #5A1F1A;
-  --color-text-secondary:  #7A8457;
+  --color-text-secondary:  #5E6B3E;
   --color-border:          rgba(90,31,26,0.12);
   --color-surface:         rgba(244,234,219,0.96);
 
@@ -48,7 +48,7 @@
   --terracota:   #D0551F;
   --crema:       #F4EADB;
   --burdeo:      #5A1F1A;
-  --oliva:       #7A8457;
+  --oliva:       #5E6B3E;
 }
 
 /* === Reset base === */

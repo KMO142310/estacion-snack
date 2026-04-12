@@ -37,9 +37,9 @@ export default function SobreNosotrosPage() {
         <div className="wrap">
           <nav
             aria-label="Ruta de navegación"
-            style={{ fontSize: "0.8125rem", color: "#7A8457", marginBottom: "2rem", display: "flex", gap: "0.375rem", fontFamily: "var(--font-body)" }}
+            style={{ fontSize: "0.8125rem", color: "#5E6B3E", marginBottom: "2rem", display: "flex", gap: "0.375rem", fontFamily: "var(--font-body)" }}
           >
-            <Link href="/" style={{ color: "#7A8457" }}>Inicio</Link>
+            <Link href="/" style={{ color: "#5E6B3E" }}>Inicio</Link>
             <span>›</span>
             <span style={{ color: "#5A1F1A", fontWeight: 600 }}>Nuestra historia</span>
           </nav>
@@ -61,7 +61,7 @@ export default function SobreNosotrosPage() {
             >
               Del Valle de Colchagua a tu mesa
             </h1>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "1.0625rem", lineHeight: 1.75, color: "#7A8457" }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "1.0625rem", lineHeight: 1.75, color: "#5E6B3E" }}>
               Estación Snack nació en Santa Cruz con una idea simple: traer frutos secos
               frescos, de calidad, sin los márgenes inflados de las tiendas gourmet.
               Vendemos por kilo porque así tiene más sentido — pagás lo que necesitás,
@@ -91,7 +91,7 @@ export default function SobreNosotrosPage() {
                 "No somos una cadena ni un marketplace. Somos una persona eligiendo qué entra al catálogo, probando cada lote, decidiendo qué merece tu tiempo y tu plata.",
                 "Despachamos los martes y viernes en Santa Cruz y comunas cercanas de O'Higgins. Lo coordinamos por WhatsApp porque así funciona acá — con nombre y apellido, sin apps raras.",
               ].map((p, i) => (
-                <p key={i} style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", lineHeight: 1.8, color: "#7A8457", marginBottom: "1rem" }}>{p}</p>
+                <p key={i} style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", lineHeight: 1.8, color: "#5E6B3E", marginBottom: "1rem" }}>{p}</p>
               ))}
             </div>
 
@@ -129,7 +129,7 @@ export default function SobreNosotrosPage() {
                     />
                     <div>
                       <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.25rem" }}>{v.title}</p>
-                      <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", lineHeight: 1.65, color: "#7A8457" }}>{v.body}</p>
+                      <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", lineHeight: 1.65, color: "#5E6B3E" }}>{v.body}</p>
                     </div>
                   </div>
                 ))}
@@ -158,7 +158,7 @@ export default function SobreNosotrosPage() {
             >
               ¿Querés saber más?
             </h2>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#7A8457", marginBottom: "1.75rem", lineHeight: 1.65 }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", marginBottom: "1.75rem", lineHeight: 1.65 }}>
               Escribinos por WhatsApp o a través del formulario. Respondemos en menos de 24 horas hábiles.
             </p>
             <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>

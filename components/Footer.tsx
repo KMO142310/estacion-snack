@@ -42,15 +42,30 @@ export default function Footer() {
             <p style={{ fontFamily: "var(--font-body)", fontSize: "0.6875rem", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, color: "#F4EADB", marginBottom: "0.875rem" }}>Contacto</p>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.5rem", fontFamily: "var(--font-body)", fontSize: "0.8125rem" }}>
               <li><a href="https://wa.me/56953743338" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(244,234,219,0.65)", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#F4EADB"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(244,234,219,0.65)"; }}>+56 9 5374 3338</a></li>
-              <li style={{ color: "rgba(244,234,219,0.65)" }}>Santa Cruz, O'Higgins</li>
+              <li><a href="https://instagram.com/estacionsnack.sc" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(244,234,219,0.65)", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#F4EADB"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(244,234,219,0.65)"; }}>@estacionsnack.sc</a></li>
+              <li style={{ color: "rgba(244,234,219,0.65)" }}>Santa Cruz, O&apos;Higgins</li>
               <li style={{ color: "rgba(244,234,219,0.65)" }}>Despacho mar. y vie.</li>
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.6875rem", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, color: "#F4EADB", marginBottom: "0.875rem" }}>Legal</p>
+            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              {[["/terminos", "Términos y condiciones"], ["/privacidad", "Privacidad"], ["/cambios-devoluciones", "Cambios y devoluciones"]].map(([href, label]) => (
+                <li key={label}>
+                  <Link href={href} style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "rgba(244,234,219,0.65)", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#F4EADB"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(244,234,219,0.65)"; }}>
+                    {label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
         <div style={{ paddingTop: "1.25rem", display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: "0.5rem" }}>
           <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem" }}>© 2026 Estación Snack · Santa Cruz, Chile</p>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem" }}>Hecho con cariño en O'Higgins</p>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem" }}>Hecho con cariño en O&apos;Higgins</p>
         </div>
       </div>
     </footer>

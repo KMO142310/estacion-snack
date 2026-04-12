@@ -31,7 +31,7 @@ export default function PackSection() {
           style={{
             fontFamily: "var(--font-body)",
             fontSize: "0.9375rem",
-            color: "#7A8457",
+            color: "#5E6B3E",
             lineHeight: 1.6,
             maxWidth: 480,
           }}

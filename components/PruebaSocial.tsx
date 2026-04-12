@@ -45,7 +45,7 @@ export default function PruebaSocial() {
             style={{
               fontFamily: "var(--font-body)",
               fontSize: "1rem",
-              color: "#7A8457",
+              color: "#5E6B3E",
               lineHeight: 1.55,
             }}
           >
@@ -92,7 +92,7 @@ export default function PruebaSocial() {
                   <p style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem", color: "#5A1F1A", lineHeight: 1 }}>
                     {name}
                   </p>
-                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", color: "#7A8457", lineHeight: 1 }}>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", color: "#5E6B3E", lineHeight: 1 }}>
                     {location}
                   </p>
                 </div>
@@ -128,7 +128,7 @@ export default function PruebaSocial() {
                 style={{
                   fontFamily: "var(--font-body)",
                   fontSize: "0.6875rem",
-                  color: "#7A8457",
+                  color: "#5E6B3E",
                   marginTop: "0.625rem",
                   fontStyle: "italic",
                 }}

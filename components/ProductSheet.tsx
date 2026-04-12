@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import FocusTrap from "focus-trap-react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCartStore } from "@/lib/store";
@@ -103,6 +104,7 @@ export default function ProductSheet({ product, onClose }: Props) {
   };
 
   return (
+    <FocusTrap focusTrapOptions={{ allowOutsideClick: true, escapeDeactivates: true, onDeactivate: onClose }}>
     <AnimatePresence>
       {/* Backdrop */}
       <motion.div
@@ -230,7 +232,7 @@ export default function ProductSheet({ product, onClose }: Props) {
             style={{
               fontFamily: "var(--font-body)",
               fontSize: "0.9375rem",
-              color: "#7A8457",
+              color: "#5E6B3E",
               lineHeight: 1.65,
               marginBottom: "0.5rem",
             }}
@@ -315,7 +317,7 @@ export default function ProductSheet({ product, onClose }: Props) {
                 borderRadius: "9999px",
                 border: `2px solid ${showStepper ? "#5A1F1A" : "rgba(90,31,26,0.15)"}`,
                 background: showStepper ? "#5A1F1A" : "transparent",
-                color: showStepper ? "#F4EADB" : "#7A8457",
+                color: showStepper ? "#F4EADB" : "#5E6B3E",
                 cursor: "pointer",
                 transition: "all 0.15s ease",
                 WebkitTapHighlightColor: "transparent",
@@ -382,7 +384,7 @@ export default function ProductSheet({ product, onClose }: Props) {
                       style={{
                         fontFamily: "var(--font-body)",
                         fontSize: "0.75rem",
-                        color: "#7A8457",
+                        color: "#5E6B3E",
                         marginTop: "2px",
                       }}
                     >
@@ -435,7 +437,7 @@ export default function ProductSheet({ product, onClose }: Props) {
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "0.75rem",
-                color: "#7A8457",
+                color: "#5E6B3E",
                 fontWeight: 500,
               }}
             >
@@ -479,5 +481,6 @@ export default function ProductSheet({ product, onClose }: Props) {
         </div>
       </motion.div>
     </AnimatePresence>
+    </FocusTrap>
   );
 }

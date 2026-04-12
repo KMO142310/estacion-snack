@@ -1,8 +1,19 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Script from "next/script";
+import { getTrackingConsent } from "./ConsentBanner";
 
 export default function AnalyticsScripts() {
   const GA4 = process.env.NEXT_PUBLIC_GA4_ID;
   const FB = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+  const [consented, setConsented] = useState(false);
+
+  useEffect(() => {
+    setConsented(getTrackingConsent() === "accepted");
+  }, []);
+
+  if (!consented) return null;
 
   return (
     <>
@@ -18,6 +29,7 @@ export default function AnalyticsScripts() {
               function gtag(){dataLayer.push(arguments);}
               window.gtag = gtag;
               gtag('js', new Date());
+              gtag('consent', 'default', { analytics_storage: 'granted' });
               gtag('config', '${GA4}', { anonymize_ip: true });
             `}
           </Script>

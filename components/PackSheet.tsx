@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import FocusTrap from "focus-trap-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCartStore } from "@/lib/store";
 import { fmt, fmtKg } from "@/lib/cart-utils";
@@ -57,6 +58,7 @@ export default function PackSheet({ pack, products, onClose }: Props) {
   };
 
   return (
+    <FocusTrap focusTrapOptions={{ allowOutsideClick: true, escapeDeactivates: true, onDeactivate: onClose }}>
     <AnimatePresence>
       <motion.div
         key="pack-backdrop"
@@ -109,7 +111,7 @@ export default function PackSheet({ pack, products, onClose }: Props) {
           <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.625rem", color: "#5A1F1A", marginBottom: "0.375rem" }}>
             {pack.name}
           </h2>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#7A8457", lineHeight: 1.55, marginBottom: isLow ? "0.75rem" : "1.5rem" }}>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", lineHeight: 1.55, marginBottom: isLow ? "0.75rem" : "1.5rem" }}>
             {pack.tagline}
           </p>
 
@@ -131,7 +133,7 @@ export default function PackSheet({ pack, products, onClose }: Props) {
                 <span style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5A1F1A" }}>
                   {item.name}
                 </span>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", fontWeight: 500, color: "#7A8457" }}>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", fontWeight: 500, color: "#5E6B3E" }}>
                   {fmtKg(item.kg)}
                 </span>
               </div>
@@ -146,8 +148,8 @@ export default function PackSheet({ pack, products, onClose }: Props) {
           {savings > 0 && (
             <div style={{ background: "rgba(208,85,31,0.08)", border: "1px solid rgba(208,85,31,0.20)", borderRadius: "12px", padding: "1rem", marginBottom: "1.5rem" }}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.375rem" }}>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457" }}>Si lo armaras suelto:</span>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", textDecoration: "line-through" }}>{fmt(sueltoTotal)}</span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E" }}>Si lo armaras suelto:</span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", textDecoration: "line-through" }}>{fmt(sueltoTotal)}</span>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.375rem" }}>
                 <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "1rem", color: "#5A1F1A" }}>Precio armado:</span>
@@ -192,5 +194,6 @@ export default function PackSheet({ pack, products, onClose }: Props) {
         </div>
       </motion.div>
     </AnimatePresence>
+    </FocusTrap>
   );
 }

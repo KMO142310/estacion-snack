@@ -127,7 +127,7 @@ export default function PackCard({ pack, products, onOpen }: Props) {
           style={{
             fontFamily: "var(--font-body)",
             fontSize: "0.875rem",
-            color: "#7A8457",
+            color: "#5E6B3E",
             lineHeight: 1.5,
             marginBottom: "0.875rem",
           }}
@@ -163,7 +163,7 @@ export default function PackCard({ pack, products, onOpen }: Props) {
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "0.75rem",
-                color: "#7A8457",
+                color: "#5E6B3E",
                 marginTop: "2px",
               }}
             >
@@ -194,7 +194,7 @@ export default function PackCard({ pack, products, onOpen }: Props) {
           style={{
             fontFamily: "var(--font-body)",
             fontSize: "0.8125rem",
-            color: isAgotado ? "#7A8457" : "#D0551F",
+            color: isAgotado ? "#5E6B3E" : "#D0551F",
             fontWeight: 600,
             textAlign: "center",
           }}

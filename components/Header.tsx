@@ -15,10 +15,7 @@ export default function Header({ onOrderOpen }: HeaderProps) {
   const lastY = useRef(0);
   const items = useCartStore((s) => s.items);
 
-  useEffect(() => {
-    setHydrated(true);
-    useCartStore.persist.rehydrate();
-  }, []);
+  useEffect(() => { setHydrated(true); useCartStore.persist.rehydrate(); }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -36,63 +33,63 @@ export default function Header({ onOrderOpen }: HeaderProps) {
   return (
     <header style={{
       position: "sticky", top: 0, zIndex: 200,
-      background: scrolled ? "rgba(244,234,219,0.96)" : "rgba(90,31,26,0.95)",
-      backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
-      padding: "0 16px", height: 56,
-      display: "flex", alignItems: "center", justifyContent: "space-between",
-      borderBottom: scrolled ? "1px solid rgba(90,31,26,0.08)" : "none",
+      background: "#5A1F1A",
+      padding: "0 16px",
       transform: visible ? "translateY(0)" : "translateY(-100%)",
-      transition: "transform 0.25s ease, background 0.3s ease",
+      transition: "transform 0.25s ease",
     }}>
-      {/* Logo tipo marca — nombre estilizado, no ícono genérico */}
-      <a href="/" style={{
-        textDecoration: "none", display: "flex", alignItems: "center", gap: 8,
+      {/* Línea superior — marca + carrito */}
+      <div style={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        height: 52,
       }}>
-        <span style={{
-          fontFamily: "var(--font-display)", fontWeight: 700,
-          fontSize: 18, letterSpacing: "-0.02em",
-          color: scrolled ? "#5A1F1A" : "#F4EADB",
-          transition: "color 0.3s ease",
-        }}>
-          Estación
-        </span>
-        <span style={{
-          fontFamily: "var(--font-display)", fontWeight: 400,
-          fontSize: 18, letterSpacing: "-0.02em",
-          color: scrolled ? "#D0551F" : "rgba(244,234,219,0.6)",
-          transition: "color 0.3s ease",
-        }}>
-          Snack
-        </span>
-      </a>
-
-      {/* Carrito */}
-      <button
-        onClick={onOrderOpen}
-        aria-label={`Ver pedido${itemCount > 0 ? ` (${itemCount})` : ""}`}
-        style={{
-          position: "relative", width: 40, height: 40,
-          background: scrolled ? "#5A1F1A" : "rgba(244,234,219,0.12)",
-          color: "#F4EADB", borderRadius: 12,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          border: "none", cursor: "pointer",
-          transition: "background 0.3s ease",
-        }}
-      >
-        <ShoppingBag size={18} />
-        {itemCount > 0 && (
-          <span style={{
-            position: "absolute", top: -3, right: -3,
-            minWidth: 18, height: 18, padding: "0 5px",
-            background: "#D0551F", color: "#F4EADB",
-            fontSize: 10, fontWeight: 700, borderRadius: 999,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontFamily: "var(--font-body)",
-          }}>
-            {itemCount}
+        <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "baseline", gap: 6 }}>
+          <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 17, color: "#F4EADB" }}>
+            Estación
           </span>
-        )}
-      </button>
+          <span style={{ fontFamily: "var(--font-display)", fontWeight: 400, fontSize: 17, color: "rgba(244,234,219,0.5)" }}>
+            Snack
+          </span>
+        </a>
+
+        <button onClick={onOrderOpen}
+          aria-label={`Ver pedido${itemCount > 0 ? ` (${itemCount})` : ""}`}
+          style={{
+            position: "relative", width: 36, height: 36,
+            background: "rgba(244,234,219,0.1)", color: "#F4EADB",
+            borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center",
+            border: "none", cursor: "pointer",
+          }}>
+          <ShoppingBag size={17} />
+          {itemCount > 0 && (
+            <span style={{
+              position: "absolute", top: -3, right: -3, minWidth: 16, height: 16, padding: "0 4px",
+              background: "#D0551F", color: "#F4EADB", fontSize: 9, fontWeight: 700,
+              borderRadius: 999, display: "flex", alignItems: "center", justifyContent: "center",
+              fontFamily: "var(--font-body)",
+            }}>{itemCount}</span>
+          )}
+        </button>
+      </div>
+
+      {/* Subtítulo integrado — reemplaza la apertura enorme */}
+      {!scrolled && (
+        <div style={{ paddingBottom: 16 }}>
+          <p style={{
+            fontFamily: "var(--font-display)", fontWeight: 600,
+            fontSize: "clamp(20px, 5vw, 28px)", color: "#F4EADB",
+            lineHeight: 1.15, letterSpacing: "-0.01em", marginBottom: 4,
+          }}>
+            Frutos secos y dulces por kilo.
+          </p>
+          <p style={{
+            fontFamily: "var(--font-body)", fontSize: 12,
+            color: "rgba(244,234,219,0.4)",
+          }}>
+            Santa Cruz · Despacho martes y viernes
+          </p>
+        </div>
+      )}
     </header>
   );
 }

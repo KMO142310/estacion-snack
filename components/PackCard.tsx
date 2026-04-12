@@ -88,7 +88,7 @@ export default function PackCard({ pack, products, onOpen }: Props) {
               borderRadius: "6px",
             }}
           >
-            Últimas {units} unidades
+            {units === 1 ? "Última unidad" : `Últimas ${units} unidades`}
           </span>
         ) : pack.badge ? (
           <span

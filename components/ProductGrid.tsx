@@ -22,7 +22,7 @@ export default function ProductGrid() {
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", maxWidth: 720 }}>
         {productsData.map((product) => (
-          <ProductCard key={product.id} {...product} onOpen={() => setSelected(product)} />
+          <ProductCard key={product.id} product={product} onOpen={() => setSelected(product)} />
         ))}
       </div>
       {selected && <ProductSheet product={selected} onClose={() => setSelected(null)} />}

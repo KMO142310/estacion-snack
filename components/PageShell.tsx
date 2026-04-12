@@ -27,36 +27,21 @@ export default function PageShell() {
       <Header onOrderOpen={() => setOrderOpen(true)} />
 
       <main>
-        {/* Apertura */}
-        <section style={{ background: "#5A1F1A", padding: "5rem 1.5rem 2.5rem" }}>
+        {/* Productos DIRECTAMENTE — sin apertura grande */}
+        <section id="productos" style={{ background: "#F4EADB", padding: "20px 16px 24px" }}>
           <div className="container">
-            <p style={{ fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(244,234,219,0.3)", marginBottom: 12 }}>
-              Santa Cruz · Valle de Colchagua
-            </p>
-            <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(26px, 7vw, 44px)", color: "#F4EADB", lineHeight: 1.08, letterSpacing: "-0.02em" }}>
-              Frutos secos y dulces<br />por kilo.
-            </h1>
-          </div>
-        </section>
-
-        {/* Productos */}
-        <section id="productos" style={{ background: "#F4EADB", padding: "24px 16px 16px" }}>
-          <div className="container">
-            <p style={{ fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#5E6B3E", marginBottom: 16 }}>
-              Nuestras mezclas
-            </p>
             <div className="product-grid">
               {products.map((p) => (
-                <ProductCard key={p.id} id={p.id} slug={p.slug} name={p.name} price={p.price}
-                  image_webp_url={p.image_webp_url} image_url={p.image_url}
-                  badge={p.badge} status={p.status} onOpen={() => setSheetProduct(p)} />
+                <ProductCard key={p.id} product={p} onOpen={() => setSheetProduct(p)} />
               ))}
             </div>
           </div>
         </section>
 
-        {/* Packs */}
-        <PackSection />
+        {/* Packs con fondo distinto para contraste */}
+        <section style={{ background: "#fff" }}>
+          <PackSection />
+        </section>
 
         {/* FAQ */}
         <section style={{ background: "#F4EADB", padding: "40px 16px 32px" }}>
@@ -127,7 +112,6 @@ export default function PageShell() {
         .container { max-width: 1100px; margin: 0 auto; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         @media (min-width: 640px) { .product-grid { grid-template-columns: 1fr 1fr 1fr; gap: 16px; } }
-        @media (min-width: 1024px) { .product-grid { gap: 20px; } }
         .pcard { transition: transform .2s ease; }
         @media (hover:hover) { .pcard:hover { transform: translateY(-3px); } }
         @media (min-width: 768px) { .sticky-bar { display:none !important; } }

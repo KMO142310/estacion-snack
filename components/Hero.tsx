@@ -23,75 +23,17 @@ export default function Hero({ onOrderOpen }: HeroProps) {
         justifyContent: "flex-end",
       }}
     >
-      <svg
-        viewBox="0 0 390 780"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="xMidYMid slice"
+      {/* Fondo limpio — sin ilustración vectorial. Tipografía dominante hasta que haya foto real (§DIRECCION-CREATIVA 2.6). */}
+      <div
         aria-hidden="true"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
-      >
-        <defs>
-          <radialGradient id="hero-bg" cx="55%" cy="65%" r="85%">
-            <stop offset="0%" stopColor="#4A1610" />
-            <stop offset="100%" stopColor="#180806" />
-          </radialGradient>
-          <linearGradient id="hero-text-fade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="transparent" />
-            <stop offset="45%" stopColor="rgba(18,5,3,0.55)" />
-            <stop offset="100%" stopColor="rgba(18,5,3,0.93)" />
-          </linearGradient>
-          <radialGradient id="hero-light" cx="8%" cy="38%" r="55%">
-            <stop offset="0%" stopColor="#E8A04022" />
-            <stop offset="100%" stopColor="transparent" />
-          </radialGradient>
-        </defs>
-        <rect width="390" height="780" fill="url(#hero-bg)" />
-        {/* Nuez grande — centro derecha */}
-        <g transform="translate(235, 270) rotate(14)">
-          <ellipse rx="68" ry="54" fill="#B87840" opacity="0.72" />
-          <ellipse rx="60" ry="47" fill="#9E6428" opacity="0.65" />
-          <ellipse rx="26" ry="22" transform="translate(-14, 2)" fill="#7A4E20" opacity="0.8" />
-          <ellipse rx="24" ry="20" transform="translate(14, 0)" fill="#6A3E18" opacity="0.75" />
-          <path d="M0,-54 Q4,-28 0,0 Q-4,28 0,54" stroke="#5A2E10" strokeWidth="2.5" fill="none" opacity="0.7" />
-          <path d="M-40,-10 Q-20,-22 0,-8 Q20,6 40,-4" stroke="#8B5A28" strokeWidth="1.5" fill="none" opacity="0.45" />
-        </g>
-        {/* Almendra izquierda */}
-        <g transform="translate(92, 310) rotate(-22)">
-          <ellipse rx="20" ry="38" fill="#C49050" opacity="0.68" />
-          <ellipse rx="15" ry="32" fill="#A87838" opacity="0.55" />
-          <path d="M0,-36 Q2,-15 0,36" stroke="#8A5E28" strokeWidth="1.5" fill="none" opacity="0.5" />
-        </g>
-        {/* Almendra derecha baja */}
-        <g transform="translate(320, 410) rotate(8)">
-          <ellipse rx="17" ry="30" fill="#B88040" opacity="0.55" />
-          <ellipse rx="12" ry="24" fill="#9A6830" opacity="0.45" />
-        </g>
-        {/* Avellana izquierda baja */}
-        <g transform="translate(58, 480) rotate(0)">
-          <ellipse rx="24" ry="22" fill="#C89050" opacity="0.5" />
-          <ellipse rx="18" ry="16" fill="#A87838" opacity="0.42" />
-        </g>
-        {/* Maní arriba izquierda */}
-        <g transform="translate(145, 175) rotate(-10)">
-          <ellipse rx="14" ry="10" transform="translate(-10, 0)" fill="#D4A868" opacity="0.55" />
-          <ellipse rx="14" ry="10" transform="translate(10, 0)" fill="#C4986A" opacity="0.5" />
-          <rect x="-3" y="-6" width="6" height="12" rx="3" fill="#B88848" opacity="0.4" />
-        </g>
-        {/* Pasas */}
-        <circle cx="165" cy="435" r="10" fill="#4A2018" opacity="0.65" />
-        <circle cx="180" cy="450" r="8" fill="#3E1812" opacity="0.6" />
-        <circle cx="150" cy="452" r="7" fill="#5A2820" opacity="0.55" />
-        <circle cx="190" cy="438" r="6" fill="#3A1410" opacity="0.5" />
-        <circle cx="158" cy="466" r="5" fill="#4E2016" opacity="0.45" />
-        {/* Nuez pequeña arriba derecha */}
-        <g transform="translate(310, 195) rotate(-5)">
-          <ellipse rx="30" ry="25" fill="#B87838" opacity="0.48" />
-          <ellipse rx="24" ry="19" fill="#9A6228" opacity="0.4" />
-          <path d="M0,-24 Q2,-10 0,24" stroke="#7A4818" strokeWidth="1.5" fill="none" opacity="0.38" />
-        </g>
-        <rect width="390" height="780" fill="url(#hero-light)" />
-        <rect width="390" height="780" fill="url(#hero-text-fade)" />
-      </svg>
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "#5A1F1A",
+          backgroundImage:
+            "radial-gradient(ellipse 70% 50% at 25% 15%, rgba(232,160,64,0.10) 0%, transparent 60%), radial-gradient(ellipse 90% 60% at 70% 90%, rgba(18,5,3,0.75) 0%, transparent 65%)",
+        }}
+      />
 
       {/* Contenido */}
       <div style={{
@@ -116,13 +58,13 @@ export default function Hero({ onOrderOpen }: HeroProps) {
           fontFamily: "var(--font-display)",
           color: "#F4EADB",
           fontWeight: 600,
-          fontSize: "clamp(2.4rem, 10vw, 4.5rem)",
-          lineHeight: 1.08,
-          letterSpacing: "-0.02em",
+          fontSize: "clamp(2.75rem, 12vw, 5rem)",
+          lineHeight: 1.04,
+          letterSpacing: "-0.025em",
           marginBottom: "1rem",
           textShadow: "0 2px 24px rgba(0,0,0,0.35)",
         }}>
-          Tu snack favorito,<br />sin la bolsa de más.
+          Frutos secos del valle,<br />sin la bolsa de más.
         </h1>
 
         <p style={{
@@ -132,8 +74,8 @@ export default function Hero({ onOrderOpen }: HeroProps) {
           lineHeight: 1.55,
           marginBottom: "2rem",
         }}>
-          Mezclas pesadas al momento en Santa Cruz.<br />
-          Llegan martes y viernes.
+          Pesados al momento en Santa Cruz.<br />
+          Despacho martes y viernes en el valle.
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>

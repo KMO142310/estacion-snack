@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /admin
-Sitemap: https://estacion-snack-next.vercel.app/sitemap.xml

@@ -2,87 +2,251 @@
 
 import { useState, useEffect } from "react";
 import { useCartStore } from "@/lib/store";
+import productsData from "@/data/products.json";
 import Header from "./Header";
-import Hero from "./Hero";
-import TrustBar from "./TrustBar";
-import ProductGrid from "./ProductGrid";
-import TopVentas from "./TopVentas";
+import ProductEditorial from "./ProductEditorial";
+import ProductSheet from "./ProductSheet";
+import TextBreak from "./TextBreak";
 import PackSection from "./PackSection";
-import ComoFunciona from "./ComoFunciona";
-import PruebaSocial from "./PruebaSocial";
-import DetrasDe from "./DetrasDe";
-import CierreCTA from "./CierreCTA";
+import FAQ from "./FAQ";
 import Footer from "./Footer";
 import OrderSheet from "./OrderSheet";
 import ToastStack from "./Toast";
 
+const products = productsData
+  .slice()
+  .sort((a, b) => a.sort_order - b.sort_order);
+
+const editorialOrder = [
+  { type: "product" as const, index: 0 },
+  { type: "break" as const, text: "Pesamos al momento.", bg: "#5A1F1A", color: "#F4EADB" },
+  { type: "product" as const, index: 1 },
+  { type: "product" as const, index: 2 },
+  { type: "break" as const, text: "Despacho martes y viernes\nen el valle." },
+  { type: "product" as const, index: 3 },
+  { type: "product" as const, index: 4 },
+  { type: "break" as const, text: "Sin envases.\nSolo lo que pedís.", bg: "#D0551F", color: "#F4EADB" },
+  { type: "product" as const, index: 5 },
+];
+
 export default function PageShell() {
   const [orderOpen, setOrderOpen] = useState(false);
+  const [sheetProduct, setSheetProduct] = useState<typeof products[number] | null>(null);
+  const itemCount = useCartStore((s) =>
+    s.items.reduce((n, i) => n + (i.kind === "product" ? 1 : 1), 0)
+  );
 
-  // Rehydrate Zustand persisted cart on client
   useEffect(() => {
     useCartStore.persist.rehydrate();
   }, []);
+
+  let productCounter = 0;
 
   return (
     <>
       <a href="#productos" className="skip">Saltar al contenido</a>
       <Header onOrderOpen={() => setOrderOpen(true)} />
-      <main>
-        <Hero onOrderOpen={() => setOrderOpen(true)} />
-        <TrustBar />
-        <ProductGrid />
-        <TopVentas />
-        <PackSection />
-        <ComoFunciona />
-        <PruebaSocial />
-        <DetrasDe />
-        <CierreCTA onOrderOpen={() => setOrderOpen(true)} />
-      </main>
-      <Footer />
 
-      {/* Sticky CTA mobile — visible mientras no hay sheet abierto */}
-      {!orderOpen && (
-        <div style={{
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          zIndex: 100,
-          padding: "0.75rem 1.25rem",
-          paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom, 0px))",
-          background: "rgba(244,234,219,0.94)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          borderTop: "1px solid rgba(90,31,26,0.10)",
-        }} aria-hidden="false" className="sticky-cta-mobile">
+      <main id="productos">
+        {/* Apertura — no hero, solo marca + una línea */}
+        <div
+          style={{
+            background: "#5A1F1A",
+            padding: "8rem 1.5rem 5rem",
+            textAlign: "center",
+          }}
+        >
+          <h1
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: "clamp(3rem, 14vw, 6rem)",
+              color: "#F4EADB",
+              lineHeight: 0.95,
+              letterSpacing: "-0.03em",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Estación<br />Snack
+          </h1>
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "1rem",
+              color: "rgba(244,234,219,0.60)",
+              letterSpacing: "0.06em",
+            }}
+          >
+            Frutos secos por kilo · Santa Cruz
+          </p>
+        </div>
+
+        {/* Flow editorial */}
+        {editorialOrder.map((item, i) => {
+          if (item.type === "break") {
+            return (
+              <TextBreak
+                key={`break-${i}`}
+                text={item.text}
+                bg={item.bg}
+                color={item.color}
+              />
+            );
+          }
+
+          const product = products[item.index];
+          if (!product) return null;
+          const pIdx = productCounter++;
+
+          return (
+            <ProductEditorial
+              key={product.id}
+              product={product}
+              index={pIdx}
+              onOpenSheet={() => setSheetProduct(product)}
+            />
+          );
+        })}
+
+        {/* Packs */}
+        <PackSection />
+
+        {/* FAQ inline */}
+        <section
+          style={{
+            background: "#F4EADB",
+            padding: "5rem 1.25rem 3rem",
+          }}
+        >
+          <div style={{ maxWidth: 720, margin: "0 auto" }}>
+            <h2
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: "clamp(1.5rem, 5vw, 2rem)",
+                color: "#5A1F1A",
+                marginBottom: "1.5rem",
+              }}
+            >
+              Preguntas frecuentes
+            </h2>
+            <FAQ />
+          </div>
+        </section>
+
+        {/* CTA cierre */}
+        <div
+          style={{
+            background: "#D0551F",
+            padding: "4rem 1.25rem",
+            textAlign: "center",
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 500,
+              fontSize: "clamp(1.5rem, 6vw, 2.5rem)",
+              color: "#F4EADB",
+              lineHeight: 1.2,
+              marginBottom: "1.5rem",
+            }}
+          >
+            ¿Te animás?
+          </p>
           <button
             onClick={() => setOrderOpen(true)}
             style={{
-              width: "100%",
               fontFamily: "var(--font-body)",
-              fontWeight: 600,
-              fontSize: "1rem",
-              color: "#F4EADB",
-              background: "#D0551F",
+              fontWeight: 700,
+              fontSize: "1.0625rem",
+              color: "#D0551F",
+              background: "#F4EADB",
               border: "none",
               borderRadius: "12px",
-              padding: "0.9375rem",
+              padding: "1.125rem 2rem",
               cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "0.5rem",
-              boxShadow: "0 4px 16px rgba(208,85,31,0.32)",
+              boxShadow: "0 6px 24px rgba(18,5,3,0.25)",
               WebkitTapHighlightColor: "transparent",
             }}
           >
-            <svg width={18} height={18} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479c0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
             Pedir por WhatsApp
           </button>
         </div>
+      </main>
+
+      <Footer />
+
+      {/* Sticky bottom bar */}
+      {!orderOpen && !sheetProduct && (
+        <div
+          className="sticky-bottom"
+          style={{
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 100,
+            padding: "0.625rem 1.25rem",
+            paddingBottom: "calc(0.625rem + env(safe-area-inset-bottom, 0px))",
+            background: "rgba(90,31,26,0.96)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "0.75rem",
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "0.8125rem",
+              color: "rgba(244,234,219,0.70)",
+              margin: 0,
+            }}
+          >
+            {itemCount > 0
+              ? `${itemCount} ${itemCount === 1 ? "producto" : "productos"} en tu pedido`
+              : "Tu pedido está vacío"}
+          </p>
+          <button
+            onClick={() => setOrderOpen(true)}
+            style={{
+              fontFamily: "var(--font-body)",
+              fontWeight: 600,
+              fontSize: "0.875rem",
+              color: "#5A1F1A",
+              background: "#F4EADB",
+              border: "none",
+              borderRadius: "8px",
+              padding: "0.625rem 1.25rem",
+              cursor: "pointer",
+              flexShrink: 0,
+              WebkitTapHighlightColor: "transparent",
+            }}
+          >
+            Ver pedido
+          </button>
+        </div>
+      )}
+
+      {/* Product sheet */}
+      {sheetProduct && (
+        <ProductSheet
+          product={{
+            id: sheetProduct.id,
+            slug: sheetProduct.slug,
+            name: sheetProduct.name,
+            price: sheetProduct.price,
+            image_webp_url: sheetProduct.image_webp_url,
+            image_url: sheetProduct.image_url,
+            copy: sheetProduct.copy,
+            status: sheetProduct.status,
+            min_unit_kg: sheetProduct.min_unit_kg,
+          }}
+          onClose={() => setSheetProduct(null)}
+        />
       )}
 
       <OrderSheet open={orderOpen} onClose={() => setOrderOpen(false)} />
@@ -90,10 +254,7 @@ export default function PageShell() {
 
       <style>{`
         @media (min-width: 768px) {
-          .sticky-cta-mobile { display: none !important; }
-        }
-        @keyframes spin {
-          to { transform: rotate(360deg); }
+          .sticky-bottom { display: none !important; }
         }
       `}</style>
     </>

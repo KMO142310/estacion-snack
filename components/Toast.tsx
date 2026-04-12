@@ -12,54 +12,50 @@ export default function ToastStack() {
     if (toasts.length === 0) return;
     const timer = setTimeout(() => {
       removeToast(toasts[0].id);
-    }, 2200);
+    }, 1400);
     return () => clearTimeout(timer);
   }, [toasts, removeToast]);
+
+  const latest = toasts.length > 0 ? toasts[toasts.length - 1] : null;
 
   return (
     <div
       aria-live="polite"
-      aria-atomic="false"
       style={{
         position: "fixed",
-        bottom: "calc(84px + env(safe-area-inset-bottom, 0px))",
+        bottom: "calc(70px + env(safe-area-inset-bottom, 0px))",
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 9000,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "0.5rem",
         pointerEvents: "none",
-        width: "calc(100% - 2.5rem)",
-        maxWidth: 380,
+        width: "calc(100% - 2rem)",
+        maxWidth: 340,
       }}
     >
-      <AnimatePresence mode="popLayout">
-        {toasts.map((toast) => (
+      <AnimatePresence mode="wait">
+        {latest && (
           <motion.div
-            key={toast.id}
+            key={latest.id}
             role="status"
-            initial={{ opacity: 0, y: 16, scale: 0.94 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 300, damping: 28 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
             style={{
               background: "#5A1F1A",
               color: "#F4EADB",
-              padding: "0.75rem 1.25rem",
-              borderRadius: "10px",
+              padding: "10px 16px",
+              borderRadius: 10,
               fontFamily: "var(--font-body)",
-              fontSize: "0.9rem",
+              fontSize: 14,
               fontWeight: 500,
-              boxShadow: "0 4px 24px rgba(90,31,26,0.25)",
-              width: "100%",
+              boxShadow: "0 4px 20px rgba(90,31,26,0.25)",
               textAlign: "center",
             }}
           >
-            {toast.message}
+            {latest.message}
           </motion.div>
-        ))}
+        )}
       </AnimatePresence>
     </div>
   );

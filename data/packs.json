@@ -36,9 +36,9 @@
     "tagline": "Almendra entera + Mix Europeo. 1 kg de cada uno.",
     "badge": "Mejor ahorro",
     "price": 25990,
-    "image_url": "/img/pack-proteina.jpg",
-    "image_webp_url": "/img/pack-proteina.webp",
-    "image_400_url": "/img/pack-proteina-400.webp",
+    "image_url": "/img/mix-europeo-x-kilo.jpg",
+    "image_webp_url": "/img/mix-europeo-x-kilo.webp",
+    "image_400_url": "/img/mix-europeo-x-kilo-400.webp",
     "items": [
       { "name": "Almendra Entera", "productId": "6", "kg": 1, "pricePerKg": 14990 },
       { "name": "Mix Europeo",     "productId": "1", "kg": 1, "pricePerKg": 13000 }

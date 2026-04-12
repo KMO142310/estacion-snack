@@ -170,24 +170,6 @@ export default function PackCard({ pack, products, onOpen }: Props) {
               {kg} kg en total
             </p>
           </div>
-          {savings > 0 && !isAgotado && (
-            <div
-              style={{
-                background: "#D0551F",
-                color: "#F4EADB",
-                padding: "5px 10px",
-                borderRadius: "8px",
-                textAlign: "center",
-              }}
-            >
-              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", fontWeight: 700, lineHeight: 1.2 }}>
-                Ahorras
-              </p>
-              <p style={{ fontFamily: "var(--font-display)", fontSize: "1rem", fontWeight: 700, lineHeight: 1 }}>
-                {fmt(savings)}
-              </p>
-            </div>
-          )}
         </div>
 
         <p

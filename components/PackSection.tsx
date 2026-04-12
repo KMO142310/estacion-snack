@@ -36,7 +36,7 @@ export default function PackSection() {
             maxWidth: 480,
           }}
         >
-          Para cuando quieres probar de todo sin comprar 1 kilo de cada uno. El ahorro viene solo.
+          Dos productos juntos, 1 kilo de cada uno, en bolsas separadas. Sale más barato que comprarlos por separado.
         </p>
       </div>
 

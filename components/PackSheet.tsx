@@ -146,7 +146,7 @@ export default function PackSheet({ pack, products, onClose }: Props) {
           </div>
           {savings > 0 && (
             <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "#D0551F", fontWeight: 600, marginBottom: "1rem" }}>
-              Ahorrás {fmt(savings)} vs comprar por separado
+              Ahorras {fmt(savings)} vs comprar por separado
             </p>
           )}
         </div>

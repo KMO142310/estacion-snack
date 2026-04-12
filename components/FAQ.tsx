@@ -52,8 +52,8 @@ export default function FAQ() {
           <div
             key={item.q}
             style={{
-              background: "rgba(244,234,219,0.08)",
-              border: `1.5px solid ${isOpen ? "#D0551F" : "rgba(244,234,219,0.12)"}`,
+              background: "#fff",
+              border: `1.5px solid ${isOpen ? "#D0551F" : "rgba(90,31,26,0.10)"}`,
               borderRadius: "14px",
               overflow: "hidden",
               transition: "border-color 0.15s",
@@ -75,7 +75,7 @@ export default function FAQ() {
                 gap: "0.75rem",
                 background: "none",
                 border: "none",
-                color: "#F4EADB",
+                color: "#5A1F1A",
                 textAlign: "left",
               }}
             >
@@ -99,7 +99,7 @@ export default function FAQ() {
                 style={{
                   padding: "0 1.25rem 1.125rem",
                   fontSize: "0.9rem",
-                  color: "rgba(244,234,219,0.7)",
+                  color: "#5E6B3E",
                   lineHeight: 1.7,
                   margin: 0,
                   fontFamily: "var(--font-body)",

@@ -4,9 +4,8 @@ import { useState, useEffect } from "react";
 import { useCartStore } from "@/lib/store";
 import productsData from "@/data/products.json";
 import Header from "./Header";
-import ProductEditorial from "./ProductEditorial";
+import ProductCard from "./ProductCard";
 import ProductSheet from "./ProductSheet";
-import TextBreak from "./TextBreak";
 import PackSection from "./PackSection";
 import FAQ from "./FAQ";
 import Footer from "./Footer";
@@ -31,63 +30,62 @@ export default function PageShell() {
       <a href="#productos" className="skip">Saltar al contenido</a>
       <Header onOrderOpen={() => setOrderOpen(true)} />
 
-      <main id="productos">
-        {/* Apertura burdeo */}
+      <main>
+        {/* Apertura corta */}
         <div style={{
           background: "#5A1F1A",
-          padding: "5.5rem 1.5rem 3rem",
+          padding: "5rem 1.25rem 2.5rem",
         }}>
-          <p style={{
-            fontFamily: "var(--font-body)", fontSize: "0.6875rem", fontWeight: 500,
-            letterSpacing: "0.2em", textTransform: "uppercase",
-            color: "rgba(244,234,219,0.35)", marginBottom: "1rem",
-          }}>
-            Santa Cruz · Valle de Colchagua
-          </p>
           <h1 style={{
             fontFamily: "var(--font-display)", fontWeight: 600,
-            fontSize: "clamp(2.25rem, 9vw, 4rem)", color: "#F4EADB",
-            lineHeight: 1.0, letterSpacing: "-0.025em", marginBottom: "0.75rem",
+            fontSize: "clamp(1.75rem, 7vw, 2.75rem)", color: "#F4EADB",
+            lineHeight: 1.1, letterSpacing: "-0.02em", marginBottom: "0.5rem",
           }}>
-            Frutos secos<br />y dulces por kilo.
+            Frutos secos y dulces por kilo.
           </h1>
           <p style={{
-            fontFamily: "var(--font-body)", fontSize: "0.9375rem",
-            color: "rgba(244,234,219,0.5)", lineHeight: 1.5,
+            fontFamily: "var(--font-body)", fontSize: "0.875rem",
+            color: "rgba(244,234,219,0.5)",
           }}>
-            Despacho martes y viernes en el valle.
+            Santa Cruz · Despacho martes y viernes
           </p>
         </div>
 
-        {/* Producto 0 — crema (post apertura burdeo) */}
-        <ProductEditorial product={products[0]} index={0} onOpenSheet={() => setSheetProduct(products[0])} />
-        {/* Producto 1 — burdeo */}
-        <ProductEditorial product={products[1]} index={1} onOpenSheet={() => setSheetProduct(products[1])} />
-        {/* Producto 2 — crema */}
-        <ProductEditorial product={products[2]} index={2} onOpenSheet={() => setSheetProduct(products[2])} />
+        {/* Todos los productos visibles de una — grid 2 columnas */}
+        <section id="productos" style={{ background: "#F4EADB", padding: "1.5rem 1rem 2rem" }}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "0.75rem",
+            maxWidth: 700,
+            margin: "0 auto",
+          }}>
+            {products.map((p) => (
+              <ProductCard
+                key={p.id}
+                id={p.id}
+                slug={p.slug}
+                name={p.name}
+                price={p.price}
+                image_webp_url={p.image_webp_url}
+                image_url={p.image_url}
+                badge={p.badge}
+                status={p.status}
+                onOpen={() => setSheetProduct(p)}
+              />
+            ))}
+          </div>
+        </section>
 
-        {/* TextBreak burdeo (post crema) */}
-        <TextBreak text="Pesamos al momento." bg="#5A1F1A" color="#F4EADB" />
-
-        {/* Producto 3 — crema (post burdeo TextBreak) */}
-        <ProductEditorial product={products[3]} index={0} onOpenSheet={() => setSheetProduct(products[3])} />
-        {/* Producto 4 — burdeo */}
-        <ProductEditorial product={products[4]} index={1} onOpenSheet={() => setSheetProduct(products[4])} />
-        {/* Producto 5 — crema */}
-        <ProductEditorial product={products[5]} index={2} onOpenSheet={() => setSheetProduct(products[5])} />
-
-        {/* TextBreak burdeo (post crema) */}
-        <TextBreak text="Despacho martes y viernes en el valle." bg="#5A1F1A" color="#F4EADB" />
-
-        {/* Packs — crema (post burdeo) */}
+        {/* Packs */}
         <PackSection />
 
-        {/* FAQ — burdeo para no repetir crema */}
-        <section style={{ background: "#5A1F1A", padding: "4rem 1.25rem 3rem" }}>
+        {/* FAQ compacto */}
+        <section style={{ background: "#F4EADB", padding: "3rem 1.25rem 2.5rem" }}>
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
             <h2 style={{
               fontFamily: "var(--font-display)", fontWeight: 600,
-              fontSize: "clamp(1.5rem, 5vw, 2rem)", color: "#F4EADB", marginBottom: "1.5rem",
+              fontSize: "1.375rem", color: "#5A1F1A", marginBottom: "1rem",
             }}>
               Preguntas frecuentes
             </h2>
@@ -95,25 +93,21 @@ export default function PageShell() {
           </div>
         </section>
 
-        {/* CTA — terracota */}
-        <div style={{ background: "#D0551F", padding: "4rem 1.25rem", textAlign: "center" }}>
+        {/* CTA */}
+        <div style={{ background: "#D0551F", padding: "3rem 1.25rem", textAlign: "center" }}>
           <p style={{
             fontFamily: "var(--font-display)", fontWeight: 500,
-            fontSize: "clamp(1.5rem, 6vw, 2.5rem)", color: "#F4EADB",
-            lineHeight: 1.2, marginBottom: "1.5rem",
+            fontSize: "clamp(1.25rem, 5vw, 2rem)", color: "#F4EADB",
+            lineHeight: 1.2, marginBottom: "1.25rem",
           }}>
             ¿Te animás?
           </p>
-          <button
-            onClick={() => setOrderOpen(true)}
-            style={{
-              fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "1.0625rem",
-              color: "#D0551F", background: "#F4EADB", border: "none",
-              borderRadius: "12px", padding: "1.125rem 2rem", cursor: "pointer",
-              boxShadow: "0 6px 24px rgba(18,5,3,0.25)",
-              WebkitTapHighlightColor: "transparent",
-            }}
-          >
+          <button onClick={() => setOrderOpen(true)} style={{
+            fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "1rem",
+            color: "#D0551F", background: "#F4EADB", border: "none",
+            borderRadius: "12px", padding: "1rem 2rem", cursor: "pointer",
+            WebkitTapHighlightColor: "transparent",
+          }}>
             Pedir por WhatsApp
           </button>
         </div>
@@ -132,7 +126,7 @@ export default function PageShell() {
           display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem",
         }}>
           <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "rgba(244,234,219,0.70)", margin: 0 }}>
-            {itemCount > 0 ? `${itemCount} ${itemCount === 1 ? "producto" : "productos"} en tu pedido` : "Tu pedido está vacío"}
+            {itemCount > 0 ? `${itemCount} ${itemCount === 1 ? "producto" : "productos"}` : "Pedido vacío"}
           </p>
           <button onClick={() => setOrderOpen(true)} style={{
             fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem",

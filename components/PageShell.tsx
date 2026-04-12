@@ -4,15 +4,26 @@ import { useState, useEffect } from "react";
 import { useCartStore } from "@/lib/store";
 import productsData from "@/data/products.json";
 import Header from "./Header";
+import TrustBar from "./TrustBar";
 import ProductCard from "./ProductCard";
 import ProductSheet from "./ProductSheet";
 import PackSection from "./PackSection";
+import ComoFunciona from "./ComoFunciona";
+import PruebaSocial from "./PruebaSocial";
 import FAQ from "./FAQ";
 import Footer from "./Footer";
 import OrderSheet from "./OrderSheet";
 import ToastStack from "./Toast";
 
 const products = productsData.slice().sort((a, b) => a.sort_order - b.sort_order);
+
+const TOP_FAQ = [
+  { q: "¿Cómo hago mi pedido?", a: 'Elegí los productos, tocá "Agregar" y confirmá por WhatsApp. Te respondemos y coordinamos la entrega.' },
+  { q: "¿A qué comunas despachan?", a: "Santa Cruz, Peralillo, Palmilla y Nancagua." },
+  { q: "¿Cuánto cuesta el envío?", a: "Primer envío gratis. Después, gratis en compras sobre $20.000. Bajo ese monto, $2.000." },
+  { q: "¿Cuál es el mínimo de compra?", a: "1 kg por producto. Podés combinar varios." },
+  { q: "¿Qué medios de pago aceptan?", a: "Transferencia bancaria o efectivo contra entrega." },
+];
 
 export default function PageShell() {
   const [orderOpen, setOrderOpen] = useState(false);
@@ -27,7 +38,22 @@ export default function PageShell() {
       <Header onOrderOpen={() => setOrderOpen(true)} />
 
       <main>
-        {/* Productos DIRECTAMENTE — sin apertura grande */}
+        {/* Promo banner */}
+        <div style={{
+          background: "#D0551F", padding: "10px 16px", textAlign: "center",
+        }}>
+          <p style={{
+            fontFamily: "var(--font-body)", fontSize: 13, fontWeight: 600,
+            color: "#F4EADB", letterSpacing: "0.02em",
+          }}>
+            Tu primer envío es gratis
+          </p>
+        </div>
+
+        {/* Trust — por qué comprarnos */}
+        <TrustBar />
+
+        {/* Productos */}
         <section id="productos" style={{ background: "#F4EADB", padding: "20px 16px 24px" }}>
           <div className="container">
             <div className="product-grid">
@@ -38,36 +64,66 @@ export default function PageShell() {
           </div>
         </section>
 
-        {/* Packs con fondo distinto para contraste */}
+        {/* Packs */}
         <section style={{ background: "#fff" }}>
           <PackSection />
         </section>
 
-        {/* FAQ */}
+        {/* Cómo funciona */}
+        <ComoFunciona />
+
+        {/* Prueba social */}
+        <PruebaSocial />
+
+        {/* FAQ — solo 5 preguntas clave */}
         <section style={{ background: "#F4EADB", padding: "40px 16px 32px" }}>
           <div className="container" style={{ maxWidth: 680 }}>
             <p style={{ fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#5E6B3E", marginBottom: 16 }}>
               Preguntas frecuentes
             </p>
-            <FAQ />
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              {TOP_FAQ.map((item) => (
+                <details key={item.q} style={{
+                  background: "#fff", border: "1px solid rgba(90,31,26,0.08)",
+                  borderRadius: 14, overflow: "hidden",
+                }}>
+                  <summary style={{
+                    padding: "14px 16px", fontSize: 15, fontWeight: 600,
+                    fontFamily: "var(--font-body)", color: "#5A1F1A",
+                    cursor: "pointer", listStyle: "none",
+                    display: "flex", justifyContent: "space-between", alignItems: "center",
+                  }}>
+                    {item.q}
+                    <span style={{ color: "#D0551F", fontSize: 18, fontWeight: 300, flexShrink: 0, marginLeft: 8 }}>+</span>
+                  </summary>
+                  <p style={{
+                    padding: "0 16px 14px", fontSize: 14, color: "#5E6B3E",
+                    lineHeight: 1.6, fontFamily: "var(--font-body)",
+                  }}>
+                    {item.a}
+                  </p>
+                </details>
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* CTA */}
+        {/* CTA cierre */}
         <section style={{ background: "#5A1F1A", padding: "48px 20px", textAlign: "center" }}>
           <div className="container">
-            <p style={{ fontFamily: "var(--font-display)", fontWeight: 500, fontSize: "clamp(22px, 5vw, 36px)", color: "#F4EADB", lineHeight: 1.15, marginBottom: 8 }}>
-              ¿Querés probar?
+            <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(22px, 5vw, 36px)", color: "#F4EADB", lineHeight: 1.15, marginBottom: 8 }}>
+              Armá tu pedido.
             </p>
             <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "rgba(244,234,219,0.45)", marginBottom: 24 }}>
-              Armá tu pedido y te lo llevamos martes a sábado.
+              Martes a sábado · 19:30 a 21:00 · Santa Cruz y alrededores
             </p>
             <button onClick={() => setOrderOpen(true)} style={{
               fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 15,
               color: "#5A1F1A", background: "#F4EADB", border: "none",
-              borderRadius: 30, padding: "12px 32px", cursor: "pointer",
+              borderRadius: 30, padding: "14px 32px", cursor: "pointer",
+              WebkitTapHighlightColor: "transparent",
             }}>
-              Ver mi pedido
+              Pedir por WhatsApp
             </button>
           </div>
         </section>
@@ -91,7 +147,7 @@ export default function PageShell() {
             color: "#5A1F1A", background: "#F4EADB", border: "none",
             borderRadius: 30, padding: "8px 20px", cursor: "pointer",
           }}>
-            Ver pedido
+            {itemCount > 0 ? `Confirmar pedido` : "Ver pedido"}
           </button>
         </div>
       )}
@@ -115,6 +171,7 @@ export default function PageShell() {
         .pcard { transition: transform .2s ease; }
         @media (hover:hover) { .pcard:hover { transform: translateY(-3px); } }
         @media (min-width: 768px) { .sticky-bar { display:none !important; } }
+        details summary::-webkit-details-marker { display: none; }
       `}</style>
     </>
   );

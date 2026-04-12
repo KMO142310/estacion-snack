@@ -1,4 +1,4 @@
-// Pesa de platillos — ícono "pesado al momento"
+// Pesa de platillos — ícono "vendido por kilo"
 // Trazo deliberadamente irregular (pluma a mano, no Heroicons).
 export default function Scale({ size = 32, className = "" }: { size?: number; className?: string }) {
   return (

@@ -5,18 +5,18 @@ import Chat from "./icons/Chat";
 const items = [
   {
     Icon: Scale,
-    title: "Pesado al momento",
-    desc: "Sin envases industriales.\nSolo lo que pides.",
+    title: "Por kilo",
+    desc: "Bolsas de 1 kg.\nSin envases chicos.",
   },
   {
     Icon: Truck,
-    title: "Martes a sábado",
-    desc: "Santa Cruz y\nalrededores del valle.",
+    title: "Primer envío gratis",
+    desc: "Martes a sábado\n19:30 a 21:00.",
   },
   {
     Icon: Chat,
-    title: "Pedido por WhatsApp",
-    desc: "Responde una persona,\nno un bot.",
+    title: "Pedís por WhatsApp",
+    desc: "Te respondemos\nnosotros mismos.",
   },
 ];
 

@@ -74,7 +74,7 @@ export default function Hero({ onOrderOpen }: HeroProps) {
           lineHeight: 1.55,
           marginBottom: "2rem",
         }}>
-          Pesados al momento en Santa Cruz.<br />
+          Por kilo, desde Santa Cruz.<br />
           Despacho martes a sábado en el valle.
         </p>
 

@@ -6,7 +6,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Nuestra historia",
   description:
-    "Estación Snack nació en Santa Cruz, en el corazón del Valle de Colchagua. Frutos secos frescos por kilo, pesados al momento.",
+    "Estación Snack nació en Santa Cruz, en el corazón del Valle de Colchagua. Frutos secos frescos por kilo, vendidos por kilo.",
   openGraph: {
     title: "Nuestra historia · Estación Snack",
     description: "Frutos secos frescos por kilo desde el corazón del Valle de Colchagua.",

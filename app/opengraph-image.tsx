@@ -76,7 +76,7 @@ export default function OgImage() {
             gap: 16,
           }}
         >
-          {["Sin mínimo de compra", "Martes a sábado", "Pesado al momento"].map((label) => (
+          {["Sin mínimo de compra", "Martes a sábado", "Vendido por kilo"].map((label) => (
             <div
               key={label}
               style={{

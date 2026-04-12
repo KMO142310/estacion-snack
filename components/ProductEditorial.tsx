@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { fmt } from "@/lib/cart-utils";
 import { useCartStore } from "@/lib/store";
 import { hapticSuccess } from "@/lib/haptics";
@@ -36,6 +36,7 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
   const photoRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: photoRef, offset: ["start end", "end start"] });
   const photoY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+  const [justAdded, setJustAdded] = useState(false);
 
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
@@ -51,7 +52,7 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
   const photoBg = dark ? "#3A1410" : "#E6D4BE";
 
   const handleQuickAdd = () => {
-    if (isOut) return;
+    if (isOut || justAdded) return;
     hapticSuccess();
     addItem({
       kind: "product",
@@ -61,6 +62,8 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
       pricePerUnit: product.price,
     });
     addToast(`${product.name} · 1 kg agregado`);
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1500);
   };
 
   return (
@@ -195,26 +198,52 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
           {!product.occasion && <div style={{ height: "1.5rem" }} />}
 
           <div style={{ display: "flex", gap: "0.875rem", alignItems: "center", flexWrap: "wrap" }}>
-            <button
+            <motion.button
               onClick={handleQuickAdd}
               disabled={isOut}
+              whileTap={isOut ? undefined : { scale: 0.93 }}
+              whileHover={isOut ? undefined : { scale: 1.03 }}
               style={{
                 fontFamily: "var(--font-body)",
                 fontWeight: 600,
                 fontSize: "0.9375rem",
-                color: dark ? "#5A1F1A" : "#F4EADB",
-                background: dark ? "#F4EADB" : "#D0551F",
+                color: justAdded ? (dark ? "#5A1F1A" : "#F4EADB") : dark ? "#5A1F1A" : "#F4EADB",
+                background: justAdded ? "#5E6B3E" : dark ? "#F4EADB" : "#D0551F",
                 border: "none",
                 borderRadius: "10px",
                 padding: "0.9375rem 1.75rem",
                 cursor: isOut ? "not-allowed" : "pointer",
                 opacity: isOut ? 0.5 : 1,
                 WebkitTapHighlightColor: "transparent",
-                transition: "transform 0.15s ease",
+                minWidth: 160,
               }}
             >
-              {isOut ? "Agotado" : "Agregar 1 kg"}
-            </button>
+              <AnimatePresence mode="wait">
+                {isOut ? (
+                  <span>Agotado</span>
+                ) : justAdded ? (
+                  <motion.span
+                    key="added"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.8, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Agregado
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="add"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    Agregar 1 kg
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </motion.button>
 
             {!isOut && (
               <button
@@ -242,14 +271,21 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
       <style>{`
         @media (min-width: 768px) {
           .editorial-grid {
-            grid-template-columns: 1fr 1fr !important;
-            min-height: 85svh !important;
+            grid-template-columns: 1.15fr 0.85fr !important;
+            min-height: 90svh !important;
+          }
+          .editorial-grid[data-align="right"] {
+            grid-template-columns: 0.85fr 1.15fr !important;
           }
           .editorial-grid[data-align="right"] > div:first-child {
             order: 2;
           }
           .editorial-grid[data-align="right"] > div:last-child {
             order: 1;
+            padding-right: 3rem !important;
+          }
+          .editorial-grid[data-align="left"] > div:last-child {
+            padding-left: 3rem !important;
           }
         }
       `}</style>

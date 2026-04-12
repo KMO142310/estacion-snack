@@ -8,6 +8,7 @@ import Header from "./Header";
 import ProductEditorial from "./ProductEditorial";
 import ProductSheet from "./ProductSheet";
 import TextBreak from "./TextBreak";
+import EditorialMarquee from "./EditorialMarquee";
 import PackSection from "./PackSection";
 import FAQ from "./FAQ";
 import Footer from "./Footer";
@@ -20,15 +21,15 @@ const products = productsData
 
 const editorialOrder = [
   { type: "product" as const, index: 0 },
-  { type: "break" as const, text: "Pesamos al momento.", bg: "#5A1F1A", color: "#F4EADB" },
+  { type: "marquee" as const, text: "Pesamos al momento", bg: "#5A1F1A", color: "#F4EADB" },
   { type: "product" as const, index: 1 },
   { type: "product" as const, index: 2 },
   { type: "break" as const, text: "Despacho martes y viernes\nen el valle.", italic: true },
   { type: "product" as const, index: 3 },
-  { type: "break" as const, text: "Sin envases.\nSolo lo que pedís.", bg: "#D0551F", color: "#F4EADB" },
+  { type: "marquee" as const, text: "Sin envases, solo lo que pedís", bg: "#D0551F", color: "#F4EADB" },
   { type: "product" as const, index: 4 },
   { type: "product" as const, index: 5 },
-  { type: "break" as const, text: "Santa Cruz · Peralillo\nPalmilla · Nancagua", bg: "#5A1F1A", color: "rgba(244,234,219,0.45)", italic: true },
+  { type: "marquee" as const, text: "Santa Cruz · Peralillo · Palmilla · Nancagua", bg: "#5A1F1A", color: "rgba(244,234,219,0.55)" },
 ];
 
 export default function PageShell() {
@@ -68,13 +69,11 @@ export default function PageShell() {
               backgroundImage: "radial-gradient(ellipse 80% 60% at 30% 20%, rgba(208,85,31,0.08) 0%, transparent 50%)",
             }}
           />
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-            style={{ position: "relative" }}
-          >
-            <p
+          <div style={{ position: "relative" }}>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "0.6875rem",
@@ -86,7 +85,7 @@ export default function PageShell() {
               }}
             >
               Santa Cruz · Valle de Colchagua
-            </p>
+            </motion.p>
             <h1
               style={{
                 fontFamily: "var(--font-display)",
@@ -96,11 +95,34 @@ export default function PageShell() {
                 lineHeight: 0.92,
                 letterSpacing: "-0.04em",
                 marginBottom: "2rem",
+                overflow: "hidden",
               }}
             >
-              Estación<br />Snack
+              {/* Tipografía cinemática — letra por letra */}
+              {"Estación".split("").map((char, i) => (
+                <motion.span
+                  key={`e-${i}`}
+                  initial={{ y: "110%", opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.3 + i * 0.05, duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+                  style={{ display: "inline-block" }}
+                >{char}</motion.span>
+              ))}
+              <br />
+              {"Snack".split("").map((char, i) => (
+                <motion.span
+                  key={`s-${i}`}
+                  initial={{ y: "110%", opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.7 + i * 0.05, duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+                  style={{ display: "inline-block" }}
+                >{char}</motion.span>
+              ))}
             </h1>
-            <p
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.8 }}
               style={{
                 fontFamily: "var(--font-display)",
                 fontStyle: "italic",
@@ -110,12 +132,22 @@ export default function PageShell() {
               }}
             >
               Frutos secos y dulces por kilo
-            </p>
-          </motion.div>
+            </motion.p>
+          </div>
         </div>
 
         {/* Flow editorial */}
         {editorialOrder.map((item, i) => {
+          if (item.type === "marquee") {
+            return (
+              <EditorialMarquee
+                key={`marquee-${i}`}
+                text={item.text}
+                bg={item.bg}
+                color={item.color}
+              />
+            );
+          }
           if (item.type === "break") {
             return (
               <TextBreak

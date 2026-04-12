@@ -96,7 +96,7 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
             }}>
               {product.name}
             </h2>
-            <p style={{
+            <p className="price" style={{
               fontFamily: "var(--font-body)", fontSize: "0.8125rem",
               color: text2,
             }}>

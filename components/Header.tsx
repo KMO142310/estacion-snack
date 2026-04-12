@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ShoppingBag from "./icons/ShoppingBag";
 import { useCartStore } from "@/lib/store";
 
@@ -9,8 +9,10 @@ interface HeaderProps {
 }
 
 export default function Header({ onOrderOpen }: HeaderProps) {
+  const [visible, setVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  const lastY = useRef(0);
   const items = useCartStore((s) => s.items);
 
   useEffect(() => {
@@ -19,7 +21,12 @@ export default function Header({ onOrderOpen }: HeaderProps) {
   }, []);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 10);
+      setVisible(y < 10 || y < lastY.current);
+      lastY.current = y;
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -42,42 +49,41 @@ export default function Header({ onOrderOpen }: HeaderProps) {
         alignItems: "center",
         justifyContent: "space-between",
         borderBottom: scrolled ? "1px solid rgba(90,31,26,0.10)" : "1px solid transparent",
-        transition: "background 0.3s ease, border-color 0.3s ease",
+        transform: visible ? "translateY(0)" : "translateY(-100%)",
+        transition: "transform 0.25s ease, background 0.25s ease, border-color 0.25s ease",
       }}
     >
-      {/* Isotipo — el sello de la marca, escalable a cadena */}
       <a href="/" aria-label="Estación Snack — inicio" style={{ display: "flex", alignItems: "center", gap: "0.5rem", textDecoration: "none" }}>
-        <svg width={32} height={32} viewBox="0 0 40 40" fill="none" aria-hidden="true" style={{ transition: "all 0.3s ease" }}>
-          <ellipse cx="20" cy="20" rx="17" ry="13" stroke={fg} strokeWidth="2.2" transform="rotate(-8 20 20)" />
-          <path d="M8,17 C11,11 17,10 20,20 C23,30 27,29 32,23" stroke={accent} strokeWidth="2" strokeLinecap="round" />
+        <svg width={28} height={28} viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <ellipse cx="20" cy="20" rx="17" ry="13" stroke={fg} strokeWidth="2.2" transform="rotate(-8 20 20)" style={{ transition: "stroke 0.25s ease" }} />
+          <path d="M8,17 C11,11 17,10 20,20 C23,30 27,29 32,23" stroke={accent} strokeWidth="2" strokeLinecap="round" style={{ transition: "stroke 0.25s ease" }} />
         </svg>
         {scrolled && (
           <span style={{
-            fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "0.9375rem",
-            color: fg, transition: "opacity 0.3s ease",
+            fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "0.875rem",
+            color: fg, transition: "opacity 0.25s ease",
           }}>
             estación snack
           </span>
         )}
       </a>
 
-      {/* Carrito */}
       <button
         onClick={onOrderOpen}
         aria-label={`Ver pedido${itemCount > 0 ? ` (${itemCount} productos)` : ""}`}
         style={{
           position: "relative",
-          width: 40, height: 40,
+          width: 38, height: 38,
           background: scrolled ? "#5A1F1A" : "rgba(244,234,219,0.15)",
-          color: scrolled ? "#F4EADB" : "#F4EADB",
+          color: "#F4EADB",
           borderRadius: "10px",
           display: "flex", alignItems: "center", justifyContent: "center",
           border: "none", cursor: "pointer",
-          transition: "background 0.3s ease",
+          transition: "background 0.25s ease",
           flexShrink: 0,
         }}
       >
-        <ShoppingBag size={18} />
+        <ShoppingBag size={17} />
         {itemCount > 0 && (
           <span aria-hidden="true" style={{
             position: "absolute", top: -4, right: -4,

@@ -8,6 +8,7 @@ import TrustBar from "./TrustBar";
 import ProductCard from "./ProductCard";
 import ProductSheet from "./ProductSheet";
 import PackSection from "./PackSection";
+import ComoFunciona from "./ComoFunciona";
 import FAQ from "./FAQ";
 import Footer from "./Footer";
 import OrderSheet from "./OrderSheet";
@@ -67,6 +68,9 @@ export default function PageShell() {
           <PackSection />
         </section>
 
+
+        {/* Cómo funciona */}
+        <ComoFunciona />
 
         {/* FAQ — solo 5 preguntas clave */}
         <section style={{ background: "#F4EADB", padding: "40px 16px 32px" }}>

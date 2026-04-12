@@ -31,24 +31,25 @@ export default function Header({ onOrderOpen }: HeaderProps) {
   const itemCount = hydrated ? items.length : 0;
 
   return (
-    <header style={{
+    <header className="brand-header" style={{
       position: "sticky", top: 0, zIndex: 200,
       background: "#5A1F1A",
       padding: "0 16px",
       transform: visible ? "translateY(0)" : "translateY(-100%)",
       transition: "transform 0.25s ease",
     }}>
-      {/* Línea superior — marca + carrito */}
-      <div style={{
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        height: 52,
-      }}>
-        <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "baseline", gap: 6 }}>
-          <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 17, color: "#F4EADB" }}>
-            Estación
-          </span>
-          <span style={{ fontFamily: "var(--font-display)", fontWeight: 400, fontSize: 17, color: "rgba(244,234,219,0.5)" }}>
-            Snack
+      {/* Logo: isotipo almendra + wordmark con peso diferencial */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 52 }}>
+        <a href="/" className="logo-link" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
+          {/* Isotipo almendra */}
+          <svg width={26} height={26} viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <ellipse cx="20" cy="20" rx="17" ry="13" stroke="#F4EADB" strokeWidth="2.2" transform="rotate(-8 20 20)" />
+            <path d="M8,17 C11,11 17,10 20,20 C23,30 27,29 32,23" stroke="#D0551F" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+          {/* Wordmark: peso 800 vs 300 */}
+          <span style={{ fontFamily: "var(--font-display)", fontSize: 17, letterSpacing: "-0.02em", lineHeight: 1 }}>
+            <span style={{ fontWeight: 800, color: "#F4EADB" }}>estación</span>
+            <span style={{ fontWeight: 300, color: "rgba(244,234,219,0.5)", marginLeft: 4 }}>snack</span>
           </span>
         </a>
 
@@ -72,24 +73,29 @@ export default function Header({ onOrderOpen }: HeaderProps) {
         </button>
       </div>
 
-      {/* Subtítulo integrado — reemplaza la apertura enorme */}
+      {/* Tagline — solo visible arriba */}
       {!scrolled && (
-        <div style={{ paddingBottom: 16 }}>
+        <div style={{ paddingBottom: 14 }}>
           <p style={{
             fontFamily: "var(--font-display)", fontWeight: 600,
-            fontSize: "clamp(20px, 5vw, 28px)", color: "#F4EADB",
+            fontSize: "clamp(18px, 4.5vw, 26px)", color: "#F4EADB",
             lineHeight: 1.15, letterSpacing: "-0.01em", marginBottom: 4,
           }}>
             Frutos secos y dulces por kilo.
           </p>
-          <p style={{
-            fontFamily: "var(--font-body)", fontSize: 12,
-            color: "rgba(244,234,219,0.4)",
-          }}>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(244,234,219,0.4)" }}>
             Santa Cruz · Martes a sábado · 19:30 a 21:00
           </p>
         </div>
       )}
+
+      <style>{`
+        .brand-header {
+          background-image: radial-gradient(circle, rgba(244,234,219,0.04) 1px, transparent 1px);
+          background-size: 14px 14px;
+        }
+        .logo-link:hover svg { transform: rotate(4deg); transition: transform 0.3s ease; }
+      `}</style>
     </header>
   );
 }

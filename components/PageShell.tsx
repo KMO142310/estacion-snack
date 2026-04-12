@@ -164,13 +164,10 @@ export default function PageShell() {
       <style>{`
         .container { max-width: 1100px; margin: 0 auto; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        @media (min-width: 640px) {
-          .product-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
-          .product-grid > :first-child { grid-column: span 2; }
-        }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
         .pcard { transition: transform .2s ease; }
         .pcard .hover-copy { display: none; }
-        @media (hover:hover) {
+        @media (min-width: 768px) and (hover:hover) {
           .pcard:hover { transform: translateY(-3px); }
           .pcard:hover .hover-copy { display: block; }
         }

@@ -30,10 +30,10 @@
     ]
   },
   {
-    "id": "pack-premium",
-    "slug": "pack-premium",
-    "name": "Pack Premium",
-    "tagline": "1 kg de Almendra + 1 kg de Mix Europeo. Cada uno en su bolsa.",
+    "id": "pack-mix",
+    "slug": "pack-mix",
+    "name": "Pack Almendra + Europeo",
+    "tagline": "1 kg de cada uno. Cada uno en su bolsa.",
     "badge": "Mejor ahorro",
     "price": 25990,
     "image_url": "/img/pack-proteina.jpg",

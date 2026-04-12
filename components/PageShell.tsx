@@ -128,8 +128,8 @@ export default function PageShell() {
 
       <Footer />
 
-      {/* Sticky bar mobile */}
-      {!orderOpen && !sheetProduct && (
+      {/* Sticky bar mobile — solo visible con items en carrito */}
+      {!orderOpen && !sheetProduct && itemCount > 0 && (
         <div className="sticky-bar" style={{
           position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100,
           padding: "8px 16px", paddingBottom: "calc(8px + env(safe-area-inset-bottom, 0px))",
@@ -164,9 +164,16 @@ export default function PageShell() {
       <style>{`
         .container { max-width: 1100px; margin: 0 auto; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        @media (min-width: 640px) { .product-grid { grid-template-columns: 1fr 1fr 1fr; gap: 16px; } }
+        @media (min-width: 640px) {
+          .product-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+          .product-grid > :first-child { grid-column: span 2; }
+        }
         .pcard { transition: transform .2s ease; }
-        @media (hover:hover) { .pcard:hover { transform: translateY(-3px); } }
+        .pcard .hover-copy { display: none; }
+        @media (hover:hover) {
+          .pcard:hover { transform: translateY(-3px); }
+          .pcard:hover .hover-copy { display: block; }
+        }
         @media (min-width: 768px) { .sticky-bar { display:none !important; } }
         details summary::-webkit-details-marker { display: none; }
       `}</style>

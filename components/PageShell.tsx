@@ -32,7 +32,7 @@ export default function PageShell() {
       <Header onOrderOpen={() => setOrderOpen(true)} />
 
       <main id="productos">
-        {/* Apertura — marca + propuesta, directo */}
+        {/* Apertura burdeo */}
         <div style={{
           background: "#5A1F1A",
           padding: "5.5rem 1.5rem 3rem",
@@ -52,37 +52,42 @@ export default function PageShell() {
             Frutos secos<br />y dulces por kilo.
           </h1>
           <p style={{
-            fontFamily: "var(--font-body)",
-            fontSize: "0.9375rem",
-            color: "rgba(244,234,219,0.5)",
-            lineHeight: 1.5,
+            fontFamily: "var(--font-body)", fontSize: "0.9375rem",
+            color: "rgba(244,234,219,0.5)", lineHeight: 1.5,
           }}>
             Despacho martes y viernes en el valle.
           </p>
         </div>
 
-        {/* Productos */}
-        {products.slice(0, 3).map((p, i) => (
-          <ProductEditorial key={p.id} product={p} index={i} onOpenSheet={() => setSheetProduct(p)} />
-        ))}
+        {/* Producto 0 — crema (post apertura burdeo) */}
+        <ProductEditorial product={products[0]} index={0} onOpenSheet={() => setSheetProduct(products[0])} />
+        {/* Producto 1 — burdeo */}
+        <ProductEditorial product={products[1]} index={1} onOpenSheet={() => setSheetProduct(products[1])} />
+        {/* Producto 2 — crema */}
+        <ProductEditorial product={products[2]} index={2} onOpenSheet={() => setSheetProduct(products[2])} />
 
+        {/* TextBreak burdeo (post crema) */}
         <TextBreak text="Pesamos al momento." bg="#5A1F1A" color="#F4EADB" />
 
-        {products.slice(3, 6).map((p, i) => (
-          <ProductEditorial key={p.id} product={p} index={i + 3} onOpenSheet={() => setSheetProduct(p)} />
-        ))}
+        {/* Producto 3 — crema (post burdeo TextBreak) */}
+        <ProductEditorial product={products[3]} index={0} onOpenSheet={() => setSheetProduct(products[3])} />
+        {/* Producto 4 — burdeo */}
+        <ProductEditorial product={products[4]} index={1} onOpenSheet={() => setSheetProduct(products[4])} />
+        {/* Producto 5 — crema */}
+        <ProductEditorial product={products[5]} index={2} onOpenSheet={() => setSheetProduct(products[5])} />
 
-        <TextBreak text="Despacho martes y viernes en el valle." />
+        {/* TextBreak burdeo (post crema) */}
+        <TextBreak text="Despacho martes y viernes en el valle." bg="#5A1F1A" color="#F4EADB" />
 
-        {/* Packs */}
+        {/* Packs — crema (post burdeo) */}
         <PackSection />
 
-        {/* FAQ */}
-        <section style={{ background: "#F4EADB", padding: "4rem 1.25rem 3rem" }}>
+        {/* FAQ — burdeo para no repetir crema */}
+        <section style={{ background: "#5A1F1A", padding: "4rem 1.25rem 3rem" }}>
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
             <h2 style={{
               fontFamily: "var(--font-display)", fontWeight: 600,
-              fontSize: "clamp(1.5rem, 5vw, 2rem)", color: "#5A1F1A", marginBottom: "1.5rem",
+              fontSize: "clamp(1.5rem, 5vw, 2rem)", color: "#F4EADB", marginBottom: "1.5rem",
             }}>
               Preguntas frecuentes
             </h2>
@@ -90,7 +95,7 @@ export default function PageShell() {
           </div>
         </section>
 
-        {/* CTA cierre */}
+        {/* CTA — terracota */}
         <div style={{ background: "#D0551F", padding: "4rem 1.25rem", textAlign: "center" }}>
           <p style={{
             fontFamily: "var(--font-display)", fontWeight: 500,

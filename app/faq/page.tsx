@@ -7,7 +7,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Preguntas frecuentes",
   description:
-    "Dudas sobre cómo pedir, envíos, pagos y productos. Todo lo que necesitás saber para comprar en Estación Snack.",
+    "Dudas sobre cómo pedir, envíos, pagos y productos. Todo lo que necesitas saber para comprar en Estación Snack.",
   openGraph: {
     title: "Preguntas frecuentes · Estación Snack",
     description: "Cómo pedir, envíos, pagos y más sobre Estación Snack.",
@@ -72,7 +72,7 @@ export default function FaqPage() {
               Preguntas frecuentes
             </h1>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "#5E6B3E", lineHeight: 1.65 }}>
-              Si no encontrás tu respuesta acá, escríbenos por{" "}
+              Si no encuentras tu respuesta acá, escríbenos por{" "}
               <a
                 href="https://wa.me/56953743338"
                 target="_blank"

@@ -76,10 +76,15 @@ export default function ProductCard({ product, onOpen }: Props) {
 
       {/* Info + botón */}
       <div style={{ padding: "12px 12px 14px" }}>
-        <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 16, color: "#5A1F1A", lineHeight: 1.2, marginBottom: 6 }}>
+        <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 16, color: "#5A1F1A", lineHeight: 1.2, marginBottom: 4 }}>
           {name}
         </p>
-        <p className="price" style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: 15, color: agotado ? "#aaa" : "#D0551F", marginBottom: 12 }}>
+        {copy && (
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 11, color: "#5E6B3E", lineHeight: 1.4, marginBottom: 6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as const, overflow: "hidden" }}>
+            {copy}
+          </p>
+        )}
+        <p className="price" style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: 15, color: agotado ? "#aaa" : "#D0551F", marginBottom: 10 }}>
           {agotado ? "Agotado" : fmt(price)}
           {!agotado && <span style={{ fontWeight: 400, fontSize: 11, color: "#5E6B3E", marginLeft: 2 }}>/kg</span>}
         </p>

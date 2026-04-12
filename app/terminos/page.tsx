@@ -21,7 +21,7 @@ export default function TerminosPage() {
           <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(1.75rem, 5vw, 2.5rem)", color: "#5A1F1A", marginBottom: "0.5rem" }}>Términos y Condiciones</h1>
           <p style={{ ...S.p, fontSize: "0.8125rem", color: "#5E6B3E" }}>Última actualización: abril 2026</p>
 
-          <p style={S.p}>Estos términos regulan la compra de productos en Estación Snack (estacionsnack.cl), operada desde Santa Cruz, Región de O&apos;Higgins, Chile. Al hacer un pedido, aceptás estas condiciones.</p>
+          <p style={S.p}>Estos términos regulan la compra de productos en Estación Snack (estacionsnack.cl), operada desde Santa Cruz, Región de O&apos;Higgins, Chile. Al hacer un pedido, aceptas estas condiciones.</p>
 
           <h2 style={S.h2}>Qué es Estación Snack</h2>
           <p style={S.p}>Somos una tienda de frutos secos, snacks y mezclas que vende a granel, por kilo. Nuestros productos se pesan al momento del pedido y no vienen en envase sellado de fábrica.</p>

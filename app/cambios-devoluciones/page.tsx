@@ -53,7 +53,7 @@ export default function CambiosDevolucionesPage() {
             <li style={S.li}>Te ofrecemos reemplazo o devolución del dinero, lo que prefieras.</li>
             <li style={S.li}>El reemplazo o reembolso se hace en la siguiente ruta de despacho.</li>
           </ol>
-          <p style={S.p}>No necesitás devolver el producto dañado para recibir el reemplazo.</p>
+          <p style={S.p}>No necesitas devolver el producto dañado para recibir el reemplazo.</p>
 
           <h2 style={S.h2}>Cambios de producto</h2>
           <ul style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>

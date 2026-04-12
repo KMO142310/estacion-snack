@@ -16,9 +16,9 @@ import ToastStack from "./Toast";
 const products = productsData.slice().sort((a, b) => a.sort_order - b.sort_order);
 
 const TOP_FAQ = [
-  { q: "¿Cómo hago mi pedido?", a: 'Elige los productos, toca "Agregar" y confirmá por WhatsApp. Te respondemos y coordinamos la entrega.' },
+  { q: "¿Cómo hago mi pedido?", a: 'Elige los productos, toca "Agregar" y confirma por WhatsApp. Te respondemos y coordinamos la entrega.' },
   { q: "¿A qué comunas despachan?", a: "Santa Cruz, Peralillo, Palmilla y Nancagua." },
-  { q: "¿Cuánto cuesta el envío?", a: "Primer envío gratis. Después, gratis en compras sobre $20.000. Bajo ese monto, $2.000." },
+  { q: "¿Cuánto cuesta el envío?", a: "Primer envío gratis. Después, gratis en compras sobre $25.000. Bajo ese monto, $2.000 (Santa Cruz) o $2.500 (comunas cercanas)." },
   { q: "¿Cuál es el mínimo de compra?", a: "1 kg por producto. Puedes combinar varios." },
   { q: "¿Qué medios de pago aceptan?", a: "Transferencia bancaria o efectivo contra entrega." },
 ];
@@ -167,11 +167,11 @@ export default function PageShell() {
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
         @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
         .pcard { transition: transform .2s ease; }
-        .pcard .hover-copy { display: none; }
         @media (min-width: 768px) and (hover:hover) {
           .pcard:hover { transform: translateY(-3px); }
-          .pcard:hover .hover-copy { display: block; }
         }
+        .pack-grid { display: grid; grid-template-columns: 1fr; gap: 14px; max-width: 400px; }
+        @media (min-width: 640px) { .pack-grid { grid-template-columns: 1fr 1fr 1fr; max-width: none; } }
         @media (min-width: 768px) { .sticky-bar { display:none !important; } }
         details summary::-webkit-details-marker { display: none; }
       `}</style>

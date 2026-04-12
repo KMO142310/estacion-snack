@@ -36,31 +36,11 @@ export default function PageShell() {
       <Header onOrderOpen={() => setOrderOpen(true)} />
 
       <main>
-        {/* Bienvenida + promo */}
-        <div style={{ background: "#5A1F1A", padding: "2rem 1.25rem 1.75rem" }}>
-          <div className="container">
-            <h1 style={{
-              fontFamily: "var(--font-display)", fontWeight: 600,
-              fontSize: "clamp(1.5rem, 5vw, 2.25rem)", color: "#F4EADB",
-              lineHeight: 1.15, marginBottom: 8,
-            }}>
-              Frutos secos y dulces por kilo.
-            </h1>
-            <p style={{
-              fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(244,234,219,0.5)",
-              marginBottom: 14,
-            }}>
-              Santa Cruz · Martes a sábado · 19:30 a 21:00
-            </p>
-            <span style={{
-              fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 600,
-              color: "#F4EADB", background: "#D0551F",
-              padding: "5px 14px", borderRadius: 30,
-              display: "inline-block",
-            }}>
-              Tu primer envío es gratis
-            </span>
-          </div>
+        {/* Entrada */}
+        <div style={{ background: "#D0551F", padding: "8px 16px", textAlign: "center" }}>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 600, color: "#F4EADB" }}>
+            Primer envío gratis · Compras sobre $25.000 envío gratis
+          </p>
         </div>
 
         {/* Productos */}

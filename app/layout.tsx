@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import AnalyticsScripts from "@/components/AnalyticsScripts";
 import ConsentBanner from "@/components/ConsentBanner";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -121,6 +122,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
         {children}
+        <WhatsAppFloat />
         <AnalyticsScripts />
         <ConsentBanner />
       </body>

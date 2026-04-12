@@ -126,6 +126,9 @@ img { display: block; max-width: 100%; }
 /* Precios no saltan al cambiar de valor */
 .price { font-variant-numeric: tabular-nums; }
 
+/* WhatsApp float se sube cuando hay sticky bar */
+.wa-float { transition: bottom 0.2s ease; }
+
 /* === Hover solo en dispositivos con hover real (evita sticky en mobile) === */
 .card-lift {
   transition: transform 0.15s ease, box-shadow 0.15s ease;

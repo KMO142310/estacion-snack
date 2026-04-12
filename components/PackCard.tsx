@@ -1,7 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { fmt } from "@/lib/cart-utils";
+import { useCartStore } from "@/lib/store";
+import { hapticSuccess } from "@/lib/haptics";
 import { computeSavings, totalKg, getPackAvailability, type Pack, type ProductStock } from "@/lib/pack-utils";
 
 interface Props {
@@ -16,6 +19,19 @@ export default function PackCard({ pack, products, onOpen }: Props) {
   const { units, limitingComponent } = getPackAvailability(pack, products);
   const isAgotado = units === 0;
   const isLast = units <= 2 && units > 0;
+  const [added, setAdded] = useState(false);
+  const addItem = useCartStore((s) => s.addItem);
+  const addToast = useCartStore((s) => s.addToast);
+
+  const handleAdd = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isAgotado || added) return;
+    hapticSuccess();
+    addItem({ kind: "pack", id: pack.id, qty: 1, name: pack.name, pricePerUnit: pack.price });
+    addToast(`${pack.name} agregado al pedido`);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1200);
+  };
 
   return (
     <article
@@ -174,15 +190,18 @@ export default function PackCard({ pack, products, onOpen }: Props) {
 
         {!isAgotado ? (
           <button
+            onClick={handleAdd}
             style={{
               width: "100%", fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 13,
-              color: "#F4EADB", background: "#D0551F",
+              color: added ? "#F4EADB" : "#F4EADB",
+              background: added ? "#5E6B3E" : "#D0551F",
               border: "none", borderRadius: 10, padding: "10px 0",
               cursor: "pointer", minHeight: 42,
               WebkitTapHighlightColor: "transparent",
+              transition: "background 0.2s ease",
             }}
           >
-            Agregar pack · {fmt(pack.price)}
+            {added ? "Listo" : `Agregar pack · ${fmt(pack.price)}`}
           </button>
         ) : (
           <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#5E6B3E", fontWeight: 600, textAlign: "center" }}>

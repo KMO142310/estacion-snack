@@ -123,43 +123,31 @@ export default function PackSheet({ pack, products, onClose }: Props) {
             </div>
           )}
 
-          {/* Contenido del pack */}
-          <h3 style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem", color: "#5A1F1A", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>
-            Contiene
-          </h3>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.25rem" }}>
+          {/* Qué incluye */}
+          <div style={{ marginBottom: "1.5rem" }}>
             {pack.items.map((item, i) => (
-              <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.625rem 0", borderBottom: "1px solid rgba(90,31,26,0.08)" }}>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5A1F1A" }}>
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.75rem 0", borderBottom: i < pack.items.length - 1 ? "1px solid rgba(90,31,26,0.06)" : "none" }}>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5A1F1A", flex: 1 }}>
                   {item.name}
                 </span>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", fontWeight: 500, color: "#5E6B3E" }}>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", fontWeight: 600, color: "#5E6B3E" }}>
                   {fmtKg(item.kg)}
                 </span>
               </div>
             ))}
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "0.625rem" }}>
-              <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.9375rem", color: "#5A1F1A" }}>Peso total</span>
-              <span style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "1rem", color: "#5A1F1A" }}>{fmtKg(kg)}</span>
-            </div>
           </div>
 
-          {/* Ahorro */}
+          {/* Precio — simple y directo */}
+          <div style={{ display: "flex", alignItems: "baseline", gap: "0.625rem", marginBottom: "0.25rem" }}>
+            <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.75rem", color: "#5A1F1A" }}>{fmt(pack.price)}</span>
+            {savings > 0 && (
+              <span style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "#5E6B3E", textDecoration: "line-through" }}>{fmt(sueltoTotal)}</span>
+            )}
+          </div>
           {savings > 0 && (
-            <div style={{ background: "rgba(208,85,31,0.08)", border: "1px solid rgba(208,85,31,0.20)", borderRadius: "12px", padding: "1rem", marginBottom: "1.5rem" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.375rem" }}>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E" }}>Si lo armaras suelto:</span>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", textDecoration: "line-through" }}>{fmt(sueltoTotal)}</span>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.375rem" }}>
-                <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "1rem", color: "#5A1F1A" }}>Precio armado:</span>
-                <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.25rem", color: "#5A1F1A" }}>{fmt(pack.price)}</span>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem", color: "#D0551F" }}>Ahorras:</span>
-                <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1rem", color: "#D0551F" }}>{fmt(savings)}</span>
-              </div>
-            </div>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "#D0551F", fontWeight: 600, marginBottom: "1rem" }}>
+              Ahorrás {fmt(savings)} vs comprar por separado
+            </p>
           )}
         </div>
 

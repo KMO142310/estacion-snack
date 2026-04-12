@@ -86,15 +86,16 @@ export default function ProductCard({ product, onOpen }: Props) {
           <button
             onClick={handleAdd}
             style={{
-              width: "100%", fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 12,
+              width: "100%", fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 13,
               color: added ? "#F4EADB" : "#F4EADB",
               background: added ? "#5E6B3E" : "#D0551F",
-              border: "none", borderRadius: 8, padding: "8px 0",
+              border: "none", borderRadius: 10, padding: "10px 0",
               cursor: "pointer", WebkitTapHighlightColor: "transparent",
               transition: "background 0.2s ease",
+              minHeight: 42,
             }}
           >
-            {added ? "Listo" : "+ Agregar 1 kg"}
+            {added ? "Listo" : "Agregar 1 kg"}
           </button>
         )}
       </div>

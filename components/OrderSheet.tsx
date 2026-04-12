@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import FocusTrap from "focus-trap-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCartStore } from "@/lib/store";
 import { fmt, fmtKg } from "@/lib/cart-utils";
@@ -95,8 +94,7 @@ export default function OrderSheet({ open, onClose }: Props) {
   return (
     <AnimatePresence>
       {open && (
-        <FocusTrap focusTrapOptions={{ allowOutsideClick: true, escapeDeactivates: true, onDeactivate: onClose, fallbackFocus: "[data-order-sheet]" }}>
-          <div data-order-sheet>
+        <>
           <motion.div
             key="order-backdrop"
             initial={{ opacity: 0 }}
@@ -316,8 +314,7 @@ export default function OrderSheet({ open, onClose }: Props) {
               )}
             </div>
           </motion.div>
-        </div>
-        </FocusTrap>
+        </>
       )}
     </AnimatePresence>
   );

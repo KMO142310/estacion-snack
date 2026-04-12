@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import FocusTrap from "focus-trap-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCartStore } from "@/lib/store";
 import { fmt, fmtKg } from "@/lib/cart-utils";
@@ -58,8 +57,7 @@ export default function PackSheet({ pack, products, onClose }: Props) {
   };
 
   return (
-    <FocusTrap focusTrapOptions={{ allowOutsideClick: true, escapeDeactivates: true, onDeactivate: onClose, fallbackFocus: "[data-pack-sheet]" }}>
-    <div data-pack-sheet>
+    
     <AnimatePresence>
       <motion.div
         key="pack-backdrop"
@@ -183,7 +181,5 @@ export default function PackSheet({ pack, products, onClose }: Props) {
         </div>
       </motion.div>
     </AnimatePresence>
-    </div>
-    </FocusTrap>
   );
 }

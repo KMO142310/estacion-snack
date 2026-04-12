@@ -3,45 +3,45 @@
     "id": "pack-pica",
     "slug": "pack-pica",
     "name": "Pack Pica",
-    "tagline": "Mix Europeo y Tropical juntos. Para picar sin parar.",
+    "tagline": "1 kg de Mix Europeo + 1 kg de Tropical. Cada uno en su bolsa.",
     "badge": "Más pedido",
     "price": 16990,
     "image_url": "/img/pack-pica.jpg",
     "image_webp_url": "/img/pack-pica.webp",
     "image_400_url": "/img/pack-pica-400.webp",
     "items": [
-      { "name": "Mix Europeo",             "productId": "1", "kg": 0.5, "pricePerKg": 13000 },
-      { "name": "Maní Confitado Tropical",  "productId": "2", "kg": 0.5, "pricePerKg": 5990  }
+      { "name": "Mix Europeo",             "productId": "1", "kg": 1, "pricePerKg": 13000 },
+      { "name": "Maní Confitado Tropical",  "productId": "2", "kg": 1, "pricePerKg": 5990  }
     ]
   },
   {
     "id": "pack-dulce",
     "slug": "pack-dulce",
     "name": "Pack Dulce",
-    "tagline": "Chuby Bardú y gomitas. El que desaparece de la mesa.",
+    "tagline": "1 kg de Chuby Bardú + 1 kg de gomitas. Cada uno en su bolsa.",
     "badge": null,
-    "price": 15990,
+    "price": 16490,
     "image_url": "/img/pack-dulce.jpg",
     "image_webp_url": "/img/pack-dulce.webp",
     "image_400_url": "/img/pack-dulce-400.webp",
     "items": [
-      { "name": "Chuby Bardú",         "productId": "4", "kg": 0.5, "pricePerKg": 9990  },
-      { "name": "Gomita Osito Docile",  "productId": "5", "kg": 0.5, "pricePerKg": 8500  }
+      { "name": "Chuby Bardú",         "productId": "4", "kg": 1, "pricePerKg": 9990  },
+      { "name": "Gomita Osito Docile",  "productId": "5", "kg": 1, "pricePerKg": 8500  }
     ]
   },
   {
     "id": "pack-premium",
     "slug": "pack-premium",
     "name": "Pack Premium",
-    "tagline": "Almendra entera y Mix Europeo. Para los que saben.",
+    "tagline": "1 kg de Almendra + 1 kg de Mix Europeo. Cada uno en su bolsa.",
     "badge": "Mejor ahorro",
-    "price": 24990,
+    "price": 25990,
     "image_url": "/img/pack-proteina.jpg",
     "image_webp_url": "/img/pack-proteina.webp",
     "image_400_url": "/img/pack-proteina-400.webp",
     "items": [
-      { "name": "Almendra Entera", "productId": "6", "kg": 0.5, "pricePerKg": 14990 },
-      { "name": "Mix Europeo",     "productId": "1", "kg": 0.5, "pricePerKg": 13000 }
+      { "name": "Almendra Entera", "productId": "6", "kg": 1, "pricePerKg": 14990 },
+      { "name": "Mix Europeo",     "productId": "1", "kg": 1, "pricePerKg": 13000 }
     ]
   }
 ]

@@ -30,10 +30,10 @@ interface Props {
 export default function ProductEditorial({ product, index, onOpenSheet }: Props) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const photoScale = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0.92, 1, 1, 0.97]);
-  const photoOpacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.4, 1, 1, 0.4]);
-  const textY = useTransform(scrollYProgress, [0.1, 0.35], [30, 0]);
-  const textOpacity = useTransform(scrollYProgress, [0.1, 0.3], [0, 1]);
+  const photoScale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.97, 1, 1, 0.99]);
+  const photoOpacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0.85, 1, 1, 0.85]);
+  const textY = useTransform(scrollYProgress, [0.15, 0.35], [12, 0]);
+  const textOpacity = useTransform(scrollYProgress, [0.15, 0.3], [0.5, 1]);
 
   const [justAdded, setJustAdded] = useState(false);
   const addItem = useCartStore((s) => s.addItem);

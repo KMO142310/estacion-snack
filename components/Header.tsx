@@ -32,66 +32,62 @@ export default function Header({ onOrderOpen }: HeaderProps) {
   }, []);
 
   const itemCount = hydrated ? items.length : 0;
-  const fg = scrolled ? "#5A1F1A" : "#F4EADB";
-  const accent = scrolled ? "#D0551F" : "#F4EADB";
 
   return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 200,
-        background: scrolled ? "rgba(244,234,219,0.94)" : "transparent",
-        backdropFilter: scrolled ? "blur(20px)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(20px)" : "none",
-        padding: "12px 1.25rem",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        borderBottom: scrolled ? "1px solid rgba(90,31,26,0.10)" : "1px solid transparent",
-        transform: visible ? "translateY(0)" : "translateY(-100%)",
-        transition: "transform 0.25s ease, background 0.25s ease, border-color 0.25s ease",
-      }}
-    >
-      <a href="/" aria-label="Estación Snack — inicio" style={{ display: "flex", alignItems: "center", gap: "0.5rem", textDecoration: "none" }}>
-        <svg width={28} height={28} viewBox="0 0 40 40" fill="none" aria-hidden="true">
-          <ellipse cx="20" cy="20" rx="17" ry="13" stroke={fg} strokeWidth="2.2" transform="rotate(-8 20 20)" style={{ transition: "stroke 0.25s ease" }} />
-          <path d="M8,17 C11,11 17,10 20,20 C23,30 27,29 32,23" stroke={accent} strokeWidth="2" strokeLinecap="round" style={{ transition: "stroke 0.25s ease" }} />
-        </svg>
-        {scrolled && (
-          <span style={{
-            fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "0.875rem",
-            color: fg, transition: "opacity 0.25s ease",
-          }}>
-            estación snack
-          </span>
-        )}
+    <header style={{
+      position: "sticky", top: 0, zIndex: 200,
+      background: scrolled ? "rgba(244,234,219,0.96)" : "rgba(90,31,26,0.95)",
+      backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+      padding: "0 16px", height: 56,
+      display: "flex", alignItems: "center", justifyContent: "space-between",
+      borderBottom: scrolled ? "1px solid rgba(90,31,26,0.08)" : "none",
+      transform: visible ? "translateY(0)" : "translateY(-100%)",
+      transition: "transform 0.25s ease, background 0.3s ease",
+    }}>
+      {/* Logo tipo marca — nombre estilizado, no ícono genérico */}
+      <a href="/" style={{
+        textDecoration: "none", display: "flex", alignItems: "center", gap: 8,
+      }}>
+        <span style={{
+          fontFamily: "var(--font-display)", fontWeight: 700,
+          fontSize: 18, letterSpacing: "-0.02em",
+          color: scrolled ? "#5A1F1A" : "#F4EADB",
+          transition: "color 0.3s ease",
+        }}>
+          Estación
+        </span>
+        <span style={{
+          fontFamily: "var(--font-display)", fontWeight: 400,
+          fontSize: 18, letterSpacing: "-0.02em",
+          color: scrolled ? "#D0551F" : "rgba(244,234,219,0.6)",
+          transition: "color 0.3s ease",
+        }}>
+          Snack
+        </span>
       </a>
 
+      {/* Carrito */}
       <button
         onClick={onOrderOpen}
-        aria-label={`Ver pedido${itemCount > 0 ? ` (${itemCount} productos)` : ""}`}
+        aria-label={`Ver pedido${itemCount > 0 ? ` (${itemCount})` : ""}`}
         style={{
-          position: "relative",
-          width: 38, height: 38,
-          background: scrolled ? "#5A1F1A" : "rgba(244,234,219,0.15)",
-          color: "#F4EADB",
-          borderRadius: "10px",
+          position: "relative", width: 40, height: 40,
+          background: scrolled ? "#5A1F1A" : "rgba(244,234,219,0.12)",
+          color: "#F4EADB", borderRadius: 12,
           display: "flex", alignItems: "center", justifyContent: "center",
           border: "none", cursor: "pointer",
-          transition: "background 0.25s ease",
-          flexShrink: 0,
+          transition: "background 0.3s ease",
         }}
       >
-        <ShoppingBag size={17} />
+        <ShoppingBag size={18} />
         {itemCount > 0 && (
-          <span aria-hidden="true" style={{
-            position: "absolute", top: -4, right: -4,
-            minWidth: 17, height: 17, padding: "0 4px",
+          <span style={{
+            position: "absolute", top: -3, right: -3,
+            minWidth: 18, height: 18, padding: "0 5px",
             background: "#D0551F", color: "#F4EADB",
-            fontSize: 10, fontWeight: 700, borderRadius: "9999px",
+            fontSize: 10, fontWeight: 700, borderRadius: 999,
             display: "flex", alignItems: "center", justifyContent: "center",
-            fontFamily: "var(--font-body)", lineHeight: 1,
+            fontFamily: "var(--font-body)",
           }}>
             {itemCount}
           </span>

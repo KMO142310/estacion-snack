@@ -111,7 +111,7 @@ export const PRODUCTS: Product[] = [
     name: "Almendra Entera",
     category: "frutos",
     cat_label: "Frutos secos",
-    price: 16000,
+    price: 14990,
     unit: "kg",
     stock_kg: 1,
     low_threshold: 2,

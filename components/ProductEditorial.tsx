@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { fmt } from "@/lib/cart-utils";
 import { useCartStore } from "@/lib/store";
 import { hapticSuccess } from "@/lib/haptics";
@@ -25,12 +26,24 @@ interface Props {
   onOpenSheet: () => void;
 }
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
+};
+
 export default function ProductEditorial({ product, index, onOpenSheet }: Props) {
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
   const isOut = product.status === "agotado";
   const isLast = product.status === "ultimo_kg";
   const align = index % 2 === 0 ? "left" : "right";
+  const dark = index % 2 !== 0;
+
+  const bg = dark ? "#5A1F1A" : "#F4EADB";
+  const textPrimary = dark ? "#F4EADB" : "#5A1F1A";
+  const textSecondary = dark ? "rgba(244,234,219,0.65)" : "#5E6B3E";
+  const accentColor = dark ? "#F4EADB" : "#D0551F";
+  const photoBg = dark ? "#3A1410" : "#E6D4BE";
 
   const handleQuickAdd = () => {
     if (isOut) return;
@@ -48,14 +61,14 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
   return (
     <article
       id={`producto-${product.slug}`}
-      style={{ background: "#F4EADB" }}
+      style={{ background: bg, overflow: "hidden" }}
     >
       <div
         className="editorial-grid"
         style={{
           display: "grid",
           gridTemplateColumns: "1fr",
-          minHeight: "70svh",
+          minHeight: "75svh",
         }}
         data-align={align}
       >
@@ -64,7 +77,7 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
           style={{
             position: "relative",
             aspectRatio: "4/5",
-            background: "#E6D4BE",
+            background: photoBg,
             cursor: isOut ? "default" : "pointer",
             overflow: "hidden",
           }}
@@ -103,9 +116,13 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
         </div>
 
         {/* Texto */}
-        <div
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={fadeUp}
           style={{
-            padding: "2.5rem 1.5rem 3rem",
+            padding: "3rem 1.5rem 3.5rem",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -118,7 +135,7 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
               fontWeight: 600,
               letterSpacing: "0.18em",
               textTransform: "uppercase",
-              color: "#5E6B3E",
+              color: textSecondary,
               marginBottom: "0.75rem",
             }}
           >
@@ -129,11 +146,11 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 600,
-              fontSize: "clamp(2rem, 7vw, 3rem)",
-              color: "#5A1F1A",
-              lineHeight: 1.05,
-              letterSpacing: "-0.02em",
-              marginBottom: "1rem",
+              fontSize: "clamp(2.25rem, 8vw, 3.5rem)",
+              color: textPrimary,
+              lineHeight: 1.0,
+              letterSpacing: "-0.025em",
+              marginBottom: "1.25rem",
             }}
           >
             {product.name}
@@ -142,12 +159,12 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
           <p
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: "1rem",
-              color: "#5A1F1A",
+              fontSize: "1.0625rem",
+              color: textPrimary,
               lineHeight: 1.65,
-              marginBottom: "0.5rem",
+              marginBottom: "0.625rem",
               maxWidth: 440,
-              opacity: 0.8,
+              opacity: 0.75,
             }}
           >
             {product.copy}
@@ -158,18 +175,18 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
               style={{
                 fontFamily: "var(--font-display)",
                 fontStyle: "italic",
-                fontSize: "0.9375rem",
-                color: "#D0551F",
-                marginBottom: "1.5rem",
+                fontSize: "1rem",
+                color: accentColor,
+                marginBottom: "2rem",
               }}
             >
               {product.occasion}
             </p>
           )}
 
-          {!product.occasion && <div style={{ height: "1rem" }} />}
+          {!product.occasion && <div style={{ height: "1.5rem" }} />}
 
-          <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "0.875rem", alignItems: "center", flexWrap: "wrap" }}>
             <button
               onClick={handleQuickAdd}
               disabled={isOut}
@@ -177,13 +194,15 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
                 fontFamily: "var(--font-body)",
                 fontWeight: 600,
                 fontSize: "0.9375rem",
-                color: isOut ? "#5A1F1A80" : "#F4EADB",
-                background: isOut ? "rgba(90,31,26,0.10)" : "#D0551F",
+                color: dark ? "#5A1F1A" : "#F4EADB",
+                background: dark ? "#F4EADB" : "#D0551F",
                 border: "none",
                 borderRadius: "10px",
-                padding: "0.875rem 1.5rem",
+                padding: "0.9375rem 1.75rem",
                 cursor: isOut ? "not-allowed" : "pointer",
+                opacity: isOut ? 0.5 : 1,
                 WebkitTapHighlightColor: "transparent",
+                transition: "transform 0.15s ease",
               }}
             >
               {isOut ? "Agotado" : "Agregar 1 kg"}
@@ -196,7 +215,7 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
                   fontFamily: "var(--font-body)",
                   fontWeight: 500,
                   fontSize: "0.875rem",
-                  color: "#D0551F",
+                  color: accentColor,
                   background: "none",
                   border: "none",
                   cursor: "pointer",
@@ -209,14 +228,14 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
               </button>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
 
       <style>{`
         @media (min-width: 768px) {
           .editorial-grid {
             grid-template-columns: 1fr 1fr !important;
-            min-height: 80svh !important;
+            min-height: 85svh !important;
           }
           .editorial-grid[data-align="right"] > div:first-child {
             order: 2;

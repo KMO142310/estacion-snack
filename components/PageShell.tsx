@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { useCartStore } from "@/lib/store";
 import productsData from "@/data/products.json";
 import Header from "./Header";
@@ -22,11 +23,12 @@ const editorialOrder = [
   { type: "break" as const, text: "Pesamos al momento.", bg: "#5A1F1A", color: "#F4EADB" },
   { type: "product" as const, index: 1 },
   { type: "product" as const, index: 2 },
-  { type: "break" as const, text: "Despacho martes y viernes\nen el valle." },
+  { type: "break" as const, text: "Despacho martes y viernes\nen el valle.", italic: true },
   { type: "product" as const, index: 3 },
-  { type: "product" as const, index: 4 },
   { type: "break" as const, text: "Sin envases.\nSolo lo que pedís.", bg: "#D0551F", color: "#F4EADB" },
+  { type: "product" as const, index: 4 },
   { type: "product" as const, index: 5 },
+  { type: "break" as const, text: "Santa Cruz · Peralillo\nPalmilla · Nancagua", bg: "#5A1F1A", color: "rgba(244,234,219,0.45)", italic: true },
 ];
 
 export default function PageShell() {
@@ -48,37 +50,68 @@ export default function PageShell() {
       <Header onOrderOpen={() => setOrderOpen(true)} />
 
       <main id="productos">
-        {/* Apertura — no hero, solo marca + una línea */}
+        {/* Apertura */}
         <div
           style={{
             background: "#5A1F1A",
-            padding: "8rem 1.5rem 5rem",
+            padding: "10rem 1.5rem 6rem",
             textAlign: "center",
+            position: "relative",
+            overflow: "hidden",
           }}
         >
-          <h1
+          <div
+            aria-hidden="true"
             style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: "clamp(3rem, 14vw, 6rem)",
-              color: "#F4EADB",
-              lineHeight: 0.95,
-              letterSpacing: "-0.03em",
-              marginBottom: "1.5rem",
+              position: "absolute",
+              inset: 0,
+              backgroundImage: "radial-gradient(ellipse 80% 60% at 30% 20%, rgba(208,85,31,0.08) 0%, transparent 50%)",
             }}
+          />
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+            style={{ position: "relative" }}
           >
-            Estación<br />Snack
-          </h1>
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "1rem",
-              color: "rgba(244,234,219,0.60)",
-              letterSpacing: "0.06em",
-            }}
-          >
-            Frutos secos por kilo · Santa Cruz
-          </p>
+            <p
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: "0.6875rem",
+                fontWeight: 500,
+                letterSpacing: "0.25em",
+                textTransform: "uppercase",
+                color: "rgba(244,234,219,0.40)",
+                marginBottom: "2rem",
+              }}
+            >
+              Santa Cruz · Valle de Colchagua
+            </p>
+            <h1
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: "clamp(3.5rem, 16vw, 7rem)",
+                color: "#F4EADB",
+                lineHeight: 0.92,
+                letterSpacing: "-0.04em",
+                marginBottom: "2rem",
+              }}
+            >
+              Estación<br />Snack
+            </h1>
+            <p
+              style={{
+                fontFamily: "var(--font-display)",
+                fontStyle: "italic",
+                fontSize: "clamp(1rem, 3vw, 1.25rem)",
+                color: "rgba(244,234,219,0.55)",
+                letterSpacing: "0.01em",
+              }}
+            >
+              Frutos secos y dulces por kilo
+            </p>
+          </motion.div>
         </div>
 
         {/* Flow editorial */}
@@ -90,6 +123,7 @@ export default function PageShell() {
                 text={item.text}
                 bg={item.bg}
                 color={item.color}
+                italic={item.italic}
               />
             );
           }

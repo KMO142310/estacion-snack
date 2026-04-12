@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 
 const CONSENT_KEY = "es_tracking_consent";
 
@@ -17,7 +16,7 @@ export default function ConsentBanner() {
 
   useEffect(() => {
     const stored = getTrackingConsent();
-    if (!stored) setVisible(true);
+    if (!stored) setTimeout(() => setVisible(true), 1500);
   }, []);
 
   const respond = (choice: "accepted" | "rejected") => {
@@ -31,72 +30,45 @@ export default function ConsentBanner() {
   return (
     <div
       role="dialog"
-      aria-label="Preferencias de cookies"
+      aria-label="Cookies"
       style={{
         position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
+        bottom: 16,
+        left: 16,
+        right: 16,
         zIndex: 9000,
-        padding: "1.25rem 1.25rem",
-        paddingBottom: "calc(1.25rem + env(safe-area-inset-bottom, 0px))",
-        background: "#5A1F1A",
-        borderTop: "1px solid rgba(244,234,219,0.15)",
+        maxWidth: 400,
+        margin: "0 auto",
+        background: "#fff",
+        borderRadius: 14,
+        padding: "16px 18px",
+        boxShadow: "0 4px 24px rgba(90,31,26,0.15)",
+        display: "flex",
+        alignItems: "center",
+        gap: 12,
       }}
     >
-      <div style={{ maxWidth: 640, margin: "0 auto" }}>
-        <p
-          style={{
-            fontFamily: "var(--font-body)",
-            fontSize: "0.8125rem",
-            color: "rgba(244,234,219,0.85)",
-            lineHeight: 1.6,
-            marginBottom: "0.875rem",
-          }}
-        >
-          Usamos cookies de analítica (Google Analytics y Meta Pixel) para mejorar tu experiencia.
-          No vendemos tus datos.{" "}
-          <Link
-            href="/privacidad"
-            style={{ color: "#D0551F", textDecoration: "underline", textUnderlineOffset: "2px" }}
-          >
-            Política de privacidad
-          </Link>
-        </p>
-        <div style={{ display: "flex", gap: "0.625rem", flexWrap: "wrap" }}>
-          <button
-            onClick={() => respond("accepted")}
-            style={{
-              fontFamily: "var(--font-body)",
-              fontWeight: 600,
-              fontSize: "0.8125rem",
-              color: "#5A1F1A",
-              background: "#F4EADB",
-              border: "none",
-              borderRadius: "8px",
-              padding: "0.625rem 1.25rem",
-              cursor: "pointer",
-            }}
-          >
-            Aceptar
-          </button>
-          <button
-            onClick={() => respond("rejected")}
-            style={{
-              fontFamily: "var(--font-body)",
-              fontWeight: 500,
-              fontSize: "0.8125rem",
-              color: "rgba(244,234,219,0.70)",
-              background: "none",
-              border: "1px solid rgba(244,234,219,0.25)",
-              borderRadius: "8px",
-              padding: "0.625rem 1.25rem",
-              cursor: "pointer",
-            }}
-          >
-            Solo esenciales
-          </button>
-        </div>
+      <p style={{
+        fontFamily: "var(--font-body)", fontSize: 12, color: "#5A1F1A",
+        lineHeight: 1.5, flex: 1, margin: 0,
+      }}>
+        Usamos cookies para mejorar tu experiencia.
+      </p>
+      <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+        <button onClick={() => respond("accepted")} style={{
+          fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 12,
+          color: "#F4EADB", background: "#D0551F", border: "none",
+          borderRadius: 8, padding: "7px 14px", cursor: "pointer",
+        }}>
+          OK
+        </button>
+        <button onClick={() => respond("rejected")} style={{
+          fontFamily: "var(--font-body)", fontWeight: 500, fontSize: 12,
+          color: "#5A1F1A", background: "none", border: "1px solid rgba(90,31,26,0.15)",
+          borderRadius: 8, padding: "7px 12px", cursor: "pointer",
+        }}>
+          No
+        </button>
       </div>
     </div>
   );

@@ -63,11 +63,21 @@ export default function PageShell() {
           </div>
         </section>
 
+        {/* Frase con vida */}
+        <div style={{ background: "#5A1F1A", padding: "3rem 1.5rem", textAlign: "center" }}>
+          <p style={{
+            fontFamily: "var(--font-display)", fontWeight: 600,
+            fontSize: "clamp(1.375rem, 5vw, 2rem)", color: "#F4EADB",
+            lineHeight: 1.2, maxWidth: 500, margin: "0 auto",
+          }}>
+            Seis mezclas. Las probamos todas hasta dejar solo las que uno se termina sin darse cuenta.
+          </p>
+        </div>
+
         {/* Packs */}
         <section style={{ background: "#fff" }}>
           <PackSection />
         </section>
-
 
         {/* Cómo funciona */}
         <ComoFunciona />

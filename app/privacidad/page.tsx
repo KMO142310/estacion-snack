@@ -29,7 +29,7 @@ export default function PrivacidadPage() {
           <h2 style={S.h2}>Qué datos recopilamos</h2>
           <p style={{ ...S.p, fontWeight: 600 }}>Datos que nos das al pedir:</p>
           <ul style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
-            <li style={S.li}>Nombre o apodo (como te identificás en WhatsApp).</li>
+            <li style={S.li}>Nombre o apodo (como te identificas en WhatsApp).</li>
             <li style={S.li}>Número de teléfono (WhatsApp).</li>
             <li style={S.li}>Dirección de entrega.</li>
             <li style={S.li}>Detalle del pedido y medio de pago elegido.</li>
@@ -55,7 +55,7 @@ export default function PrivacidadPage() {
           <h2 style={S.h2}>Cookies y rastreo</h2>
           <ul style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
             <li style={S.li}><strong>Cookies técnicas</strong>: necesarias para que el sitio funcione (por ejemplo, recordar tu carrito). No requieren consentimiento.</li>
-            <li style={S.li}><strong>Cookies de analítica</strong>: Google Analytics y Meta Pixel. Se activan solo si aceptás el banner de cookies.</li>
+            <li style={S.li}><strong>Cookies de analítica</strong>: Google Analytics y Meta Pixel. Se activan solo si aceptas el banner de cookies.</li>
           </ul>
 
           <h2 style={S.h2}>Cuánto tiempo guardamos tus datos</h2>

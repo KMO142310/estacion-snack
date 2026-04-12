@@ -264,7 +264,7 @@ export default function EnviosPage() {
                 Efectivo contra entrega
               </p>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", lineHeight: 1.65 }}>
-                Pagás al recibir el pedido. Sin comisión.
+                Pagas al recibir el pedido. Sin comisión.
               </p>
             </div>
           </div>

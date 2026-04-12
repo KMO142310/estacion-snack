@@ -145,7 +145,7 @@ export default function PageShell() {
             color: "#5A1F1A", background: "#F4EADB", border: "none",
             borderRadius: 30, padding: "8px 20px", cursor: "pointer",
           }}>
-            {itemCount > 0 ? `Confirmar pedido` : "Ver pedido"}
+            {itemCount > 0 ? `Quiero pedir` : "Quiero pedir"}
           </button>
         </div>
       )}

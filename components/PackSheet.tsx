@@ -58,7 +58,8 @@ export default function PackSheet({ pack, products, onClose }: Props) {
   };
 
   return (
-    <FocusTrap focusTrapOptions={{ allowOutsideClick: true, escapeDeactivates: true, onDeactivate: onClose }}>
+    <FocusTrap focusTrapOptions={{ allowOutsideClick: true, escapeDeactivates: true, onDeactivate: onClose, fallbackFocus: "[data-pack-sheet]" }}>
+    <div data-pack-sheet>
     <AnimatePresence>
       <motion.div
         key="pack-backdrop"
@@ -182,6 +183,7 @@ export default function PackSheet({ pack, products, onClose }: Props) {
         </div>
       </motion.div>
     </AnimatePresence>
+    </div>
     </FocusTrap>
   );
 }

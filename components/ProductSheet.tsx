@@ -104,7 +104,8 @@ export default function ProductSheet({ product, onClose }: Props) {
   };
 
   return (
-    <FocusTrap focusTrapOptions={{ allowOutsideClick: true, escapeDeactivates: true, onDeactivate: onClose }}>
+    <FocusTrap focusTrapOptions={{ allowOutsideClick: true, escapeDeactivates: true, onDeactivate: onClose, fallbackFocus: "[data-product-sheet]" }}>
+    <div data-product-sheet>
     <AnimatePresence>
       {/* Backdrop */}
       <motion.div
@@ -481,6 +482,7 @@ export default function ProductSheet({ product, onClose }: Props) {
         </div>
       </motion.div>
     </AnimatePresence>
+    </div>
     </FocusTrap>
   );
 }

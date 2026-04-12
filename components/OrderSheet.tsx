@@ -95,7 +95,8 @@ export default function OrderSheet({ open, onClose }: Props) {
   return (
     <AnimatePresence>
       {open && (
-        <FocusTrap focusTrapOptions={{ allowOutsideClick: true, escapeDeactivates: true, onDeactivate: onClose }}>
+        <FocusTrap focusTrapOptions={{ allowOutsideClick: true, escapeDeactivates: true, onDeactivate: onClose, fallbackFocus: "[data-order-sheet]" }}>
+          <div data-order-sheet>
           <motion.div
             key="order-backdrop"
             initial={{ opacity: 0 }}
@@ -315,6 +316,7 @@ export default function OrderSheet({ open, onClose }: Props) {
               )}
             </div>
           </motion.div>
+        </div>
         </FocusTrap>
       )}
     </AnimatePresence>

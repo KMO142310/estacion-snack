@@ -32,32 +32,25 @@ export default function PageShell() {
       <Header onOrderOpen={() => setOrderOpen(true)} />
 
       <main id="productos">
-        {/* Apertura limpia */}
+        {/* Apertura — solo contexto, directo al producto */}
         <div style={{
           background: "#5A1F1A",
-          padding: "7rem 1.5rem 4rem",
-          textAlign: "center",
+          padding: "5rem 1.5rem 3rem",
         }}>
-          <p style={{
-            fontFamily: "var(--font-body)", fontSize: "0.6875rem", fontWeight: 500,
-            letterSpacing: "0.2em", textTransform: "uppercase",
-            color: "rgba(244,234,219,0.35)", marginBottom: "1.5rem",
-          }}>
-            Santa Cruz · Valle de Colchagua
-          </p>
           <h1 style={{
             fontFamily: "var(--font-display)", fontWeight: 600,
-            fontSize: "clamp(3rem, 14vw, 6rem)", color: "#F4EADB",
-            lineHeight: 0.92, letterSpacing: "-0.03em", marginBottom: "1.25rem",
+            fontSize: "clamp(2rem, 8vw, 3.5rem)", color: "#F4EADB",
+            lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: "0.75rem",
           }}>
-            Estación<br />Snack
+            Frutos secos y dulces por kilo.
           </h1>
           <p style={{
-            fontFamily: "var(--font-display)", fontStyle: "italic",
-            fontSize: "clamp(0.9375rem, 2.5vw, 1.125rem)",
-            color: "rgba(244,234,219,0.5)",
+            fontFamily: "var(--font-body)",
+            fontSize: "0.9375rem",
+            color: "rgba(244,234,219,0.55)",
+            lineHeight: 1.5,
           }}>
-            Frutos secos y dulces por kilo
+            Santa Cruz · Despacho martes y viernes
           </p>
         </div>
 

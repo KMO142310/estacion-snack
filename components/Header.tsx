@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import Logo from "./icons/Logo";
 import ShoppingBag from "./icons/ShoppingBag";
 import { useCartStore } from "@/lib/store";
 
@@ -34,132 +32,79 @@ export default function Header({ onOrderOpen }: HeaderProps) {
         position: "sticky",
         top: 0,
         zIndex: 200,
-        background: scrolled ? "rgba(244,234,219,0.94)" : "rgba(244,234,219,0.80)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-        padding: scrolled ? "10px 1.25rem" : "14px 1.25rem",
+        background: scrolled ? "rgba(244,234,219,0.94)" : "transparent",
+        backdropFilter: scrolled ? "blur(20px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(20px)" : "none",
+        padding: "12px 1.25rem",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         borderBottom: scrolled ? "1px solid rgba(90,31,26,0.10)" : "1px solid transparent",
-        transition: "padding 0.25s ease, border-color 0.25s ease, background 0.25s ease",
+        transition: "background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease",
       }}
     >
-      <Logo variant="horizontal" size="sm" />
-
-      {/* Nav desktop */}
-      <nav
-        style={{ display: "none", gap: 4 }}
-        className="nav-desktop"
-        aria-label="Navegación principal"
+      {/* Nombre simple — no logo pesado */}
+      <a
+        href="/"
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "1.125rem",
+          color: scrolled ? "#5A1F1A" : "#F4EADB",
+          textDecoration: "none",
+          transition: "color 0.3s ease",
+        }}
       >
-        <a href="#productos" className="nav-link">Mezclas</a>
-        <a href="#packs" className="nav-link">Packs</a>
-        <Link href="/sobre-nosotros" className="nav-link">Nosotros</Link>
-        <Link href="/envios" className="nav-link">Envíos</Link>
-        <Link href="/faq" className="nav-link">FAQ</Link>
-        <Link href="/contacto" className="nav-link">Contacto</Link>
-      </nav>
+        estación snack
+      </a>
 
-      {/* Actions */}
-      <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-        {/* WhatsApp CTA — desktop */}
-        <a
-          href="https://wa.me/56953743338"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="wa-btn-desktop"
-          style={{
-            display: "none",
-            alignItems: "center",
-            gap: 6,
-            padding: "9px 18px",
-            background: "#D0551F",
-            color: "#F4EADB",
-            fontSize: "0.875rem",
-            fontWeight: 600,
-            borderRadius: "8px",
-            fontFamily: "var(--font-body)",
-            transition: "opacity 0.15s",
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.85"; }}
-          onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
-        >
-          WhatsApp
-        </a>
-
-        {/* Cart button */}
-        <button
-          onClick={onOrderOpen}
-          aria-label={`Ver pedido${itemCount > 0 ? ` (${itemCount} productos)` : ""}`}
-          style={{
-            position: "relative",
-            width: 42,
-            height: 42,
-            background: "#5A1F1A",
-            color: "#F4EADB",
-            borderRadius: "10px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            border: "none",
-            cursor: "pointer",
-            transition: "opacity 0.15s, transform 0.15s",
-            flexShrink: 0,
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.85"; }}
-          onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
-        >
-          <ShoppingBag size={20} />
-          {itemCount > 0 && (
-            <span
-              aria-hidden="true"
-              style={{
-                position: "absolute",
-                top: -5,
-                right: -5,
-                minWidth: 18,
-                height: 18,
-                padding: "0 5px",
-                background: "#D0551F",
-                color: "#F4EADB",
-                fontSize: 11,
-                fontWeight: 700,
-                borderRadius: "9999px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "2px solid #F4EADB",
-                fontFamily: "var(--font-body)",
-                lineHeight: 1,
-              }}
-            >
-              {itemCount}
-            </span>
-          )}
-        </button>
-      </div>
-
-      <style>{`
-        @media (min-width: 768px) {
-          .nav-desktop { display: flex !important; }
-          .wa-btn-desktop { display: flex !important; }
-        }
-        .nav-link {
-          font-family: var(--font-body);
-          font-size: 0.875rem;
-          font-weight: 500;
-          color: #5E6B3E;
-          padding: 8px 12px;
-          border-radius: 8px;
-          text-decoration: none;
-          transition: color 0.15s, background 0.15s;
-        }
-        .nav-link:hover {
-          color: #5A1F1A;
-          background: rgba(90,31,26,0.06);
-        }
-      `}</style>
+      {/* Solo el carrito — nada más */}
+      <button
+        onClick={onOrderOpen}
+        aria-label={`Ver pedido${itemCount > 0 ? ` (${itemCount} productos)` : ""}`}
+        style={{
+          position: "relative",
+          width: 40,
+          height: 40,
+          background: scrolled ? "#5A1F1A" : "rgba(244,234,219,0.15)",
+          color: "#F4EADB",
+          borderRadius: "10px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          border: "none",
+          cursor: "pointer",
+          transition: "background 0.3s ease",
+          flexShrink: 0,
+        }}
+      >
+        <ShoppingBag size={18} />
+        {itemCount > 0 && (
+          <span
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              top: -4,
+              right: -4,
+              minWidth: 17,
+              height: 17,
+              padding: "0 4px",
+              background: "#D0551F",
+              color: "#F4EADB",
+              fontSize: 10,
+              fontWeight: 700,
+              borderRadius: "9999px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: "var(--font-body)",
+              lineHeight: 1,
+            }}
+          >
+            {itemCount}
+          </span>
+        )}
+      </button>
     </header>
   );
 }

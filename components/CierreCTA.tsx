@@ -37,7 +37,7 @@ export default function CierreCTA({ onOrderOpen }: Props) {
           margin: "0 auto 2rem",
         }}
       >
-        Elegí lo que querés, arma tu pedido y te lo llevamos martes o viernes a donde nos digas.
+        Elegí lo que querés, armá tu pedido y te lo llevamos martes o viernes a donde nos digás.
       </p>
 
       <button
@@ -76,7 +76,7 @@ export default function CierreCTA({ onOrderOpen }: Props) {
           marginTop: "1rem",
         }}
       >
-        Responde una persona, no un bot.
+        Despachamos a Santa Cruz, Peralillo, Palmilla y Nancagua.
       </p>
     </section>
   );

@@ -4,11 +4,13 @@ import { useState } from "react";
 import PackCard from "./PackCard";
 import PackSheet from "./PackSheet";
 import packsData from "@/data/packs.json";
-import type { Pack } from "@/lib/pack-utils";
+import productsData from "@/data/products.json";
+import type { Pack, ProductStock } from "@/lib/pack-utils";
 
 export default function PackSection() {
   const [selected, setSelected] = useState<Pack | null>(null);
   const packs = packsData as Pack[];
+  const products = productsData as unknown as ProductStock[];
 
   return (
     <section id="packs" aria-label="Packs armados" style={{ padding: "5rem 1.25rem 3rem" }}>
@@ -34,7 +36,7 @@ export default function PackSection() {
             maxWidth: 480,
           }}
         >
-          Para cuando no quieres decidir. Mezclas que funcionan juntas, con el ahorro ya calculado.
+          Para cuando querés probar de todo sin comprar 1 kilo de cada uno. El ahorro viene solo.
         </p>
       </div>
 
@@ -47,11 +49,22 @@ export default function PackSection() {
         }}
       >
         {packs.map((pack) => (
-          <PackCard key={pack.id} pack={pack} onOpen={() => setSelected(pack)} />
+          <PackCard
+            key={pack.id}
+            pack={pack}
+            products={products}
+            onOpen={() => setSelected(pack)}
+          />
         ))}
       </div>
 
-      {selected && <PackSheet pack={selected} onClose={() => setSelected(null)} />}
+      {selected && (
+        <PackSheet
+          pack={selected}
+          products={products}
+          onClose={() => setSelected(null)}
+        />
+      )}
     </section>
   );
 }

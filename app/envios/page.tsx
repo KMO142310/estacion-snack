@@ -132,7 +132,7 @@ export default function EnviosPage() {
               ¿Vivís fuera de estas comunas?
             </p>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9rem", color: "#7A8457", lineHeight: 1.65 }}>
-              Escríbenos por{" "}
+              Escribinos por{" "}
               <a
                 href="https://wa.me/56953743338"
                 target="_blank"
@@ -143,6 +143,69 @@ export default function EnviosPage() {
               </a>{" "}
               y lo evaluamos juntos.
             </p>
+          </div>
+
+          {/* Plazos y derecho a retracto — Ley 19.496 */}
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: "clamp(1.375rem, 4vw, 1.75rem)",
+              color: "#5A1F1A",
+              marginBottom: "1.25rem",
+            }}
+          >
+            Plazos y garantías
+          </h2>
+          <div style={{ display: "grid", gap: "0.875rem", marginBottom: "3rem", maxWidth: 620 }}>
+            <div
+              style={{
+                padding: "1.25rem",
+                background: "#fff",
+                borderRadius: "14px",
+                border: "1.5px solid rgba(90,31,26,0.08)",
+                boxShadow: "0 2px 12px rgba(90,31,26,0.06)",
+              }}
+            >
+              <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.5rem" }}>
+                Plazo de entrega
+              </p>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", lineHeight: 1.65 }}>
+                Despachamos el martes o viernes siguiente a la confirmación del pedido. Coordinamos la franja horaria por WhatsApp el día del despacho.
+              </p>
+            </div>
+            <div
+              style={{
+                padding: "1.25rem",
+                background: "#fff",
+                borderRadius: "14px",
+                border: "1.5px solid rgba(90,31,26,0.08)",
+                boxShadow: "0 2px 12px rgba(90,31,26,0.06)",
+              }}
+            >
+              <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.5rem" }}>
+                Derecho a retracto
+              </p>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", lineHeight: 1.65 }}>
+                Según la Ley 19.496, tenés 10 días hábiles desde la recepción para retractarte. Escribinos por WhatsApp con el producto sin abrir y coordinamos la devolución y restitución del pago.
+              </p>
+            </div>
+            <div
+              style={{
+                padding: "1.25rem",
+                background: "#fff",
+                borderRadius: "14px",
+                border: "1.5px solid rgba(90,31,26,0.08)",
+                boxShadow: "0 2px 12px rgba(90,31,26,0.06)",
+              }}
+            >
+              <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.5rem" }}>
+                Producto en mal estado
+              </p>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#7A8457", lineHeight: 1.65 }}>
+                Si algo llega con problema, escribinos dentro de las 24 horas con foto y lo reemplazamos o devolvemos el pago en la próxima ruta.
+              </p>
+            </div>
           </div>
 
           {/* Medios de pago */}

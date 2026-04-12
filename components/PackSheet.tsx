@@ -4,19 +4,22 @@ import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCartStore } from "@/lib/store";
 import { fmt, fmtKg } from "@/lib/cart-utils";
-import { computeSavings, totalKg, type Pack } from "@/lib/pack-utils";
+import { computeSavings, totalKg, getPackAvailability, type Pack, type ProductStock } from "@/lib/pack-utils";
 import { hapticSuccess } from "@/lib/haptics";
 import X from "./icons/X";
 
 interface Props {
   pack: Pack;
+  products: ProductStock[];
   onClose: () => void;
 }
 
-export default function PackSheet({ pack, onClose }: Props) {
+export default function PackSheet({ pack, products, onClose }: Props) {
   const [adding, setAdding] = useState(false);
   const { sueltoTotal, savings } = computeSavings(pack);
   const kg = totalKg(pack);
+  const { units } = getPackAvailability(pack, products);
+  const isLow = units > 0 && units <= 3;
 
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
@@ -106,9 +109,17 @@ export default function PackSheet({ pack, onClose }: Props) {
           <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.625rem", color: "#5A1F1A", marginBottom: "0.375rem" }}>
             {pack.name}
           </h2>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#7A8457", lineHeight: 1.55, marginBottom: "1.5rem" }}>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#7A8457", lineHeight: 1.55, marginBottom: isLow ? "0.75rem" : "1.5rem" }}>
             {pack.tagline}
           </p>
+
+          {isLow && (
+            <div style={{ background: "rgba(208,85,31,0.10)", border: "1px solid rgba(208,85,31,0.25)", borderRadius: "10px", padding: "0.625rem 0.875rem", marginBottom: "1.25rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <span style={{ fontSize: "0.75rem", fontWeight: 700, fontFamily: "var(--font-body)", color: "#D0551F" }}>
+                Últimas {units} {units === 1 ? "unidad disponible" : "unidades disponibles"}
+              </span>
+            </div>
+          )}
 
           {/* Contenido del pack */}
           <h3 style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem", color: "#5A1F1A", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.75rem" }}>
@@ -160,23 +171,23 @@ export default function PackSheet({ pack, onClose }: Props) {
         }}>
           <button
             onClick={handleAdd}
-            disabled={adding}
+            disabled={adding || units === 0}
             style={{
               width: "100%",
               fontFamily: "var(--font-body)",
               fontWeight: 600,
               fontSize: "1.0625rem",
               color: "#F4EADB",
-              background: adding ? "#A84019" : "#D0551F",
+              background: units === 0 ? "#C0B0A8" : adding ? "#A84019" : "#D0551F",
               border: "none",
               borderRadius: "12px",
               padding: "1rem",
-              cursor: adding ? "not-allowed" : "pointer",
+              cursor: adding || units === 0 ? "not-allowed" : "pointer",
               transition: "background 0.15s",
               WebkitTapHighlightColor: "transparent",
             }}
           >
-            {adding ? "Agregando..." : `Agregar ${pack.name} al pedido · ${fmt(pack.price)}`}
+            {units === 0 ? "Momentáneamente agotado" : adding ? "Agregando..." : `Agregar ${pack.name} al pedido · ${fmt(pack.price)}`}
           </button>
         </div>
       </motion.div>

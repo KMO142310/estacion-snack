@@ -123,6 +123,23 @@ img { display: block; max-width: 100%; }
   border-radius: 4px;
 }
 
+/* === Hover solo en dispositivos con hover real (evita sticky en mobile) === */
+.card-lift {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+@media (hover: hover) {
+  .card-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(90,31,26,0.13);
+  }
+}
+.link-subtle {
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+@media (hover: hover) {
+  .link-subtle:hover { opacity: 0.78; }
+}
+
 /* === Animaciones === */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }

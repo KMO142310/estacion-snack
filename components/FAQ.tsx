@@ -5,15 +5,15 @@ import { useState } from "react";
 const faqs = [
   {
     q: "¿Cómo hago mi pedido?",
-    a: 'Elige los productos en el catálogo, selecciona la cantidad y tocá "Agregar al pedido". Cuando estés listo, tocá "Confirmar por WhatsApp". Se abre un mensaje con todo tu pedido listo para enviar. Confirmamos por WhatsApp y coordinamos la entrega.',
+    a: 'Elegí los productos en el catálogo, seleccioná la cantidad y tocá "Agregar al pedido". Cuando estés listo, tocá "Confirmar por WhatsApp". Se abre un mensaje con todo tu pedido listo para enviar. Confirmamos por WhatsApp y coordinamos la entrega.',
   },
   {
     q: "¿A qué comunas despachan?",
-    a: "Despachamos en Santa Cruz, Peralillo, Palmilla y Nancagua. Si vivís en otra zona, escríbenos por WhatsApp y lo evaluamos juntos.",
+    a: "Despachamos en Santa Cruz, Peralillo, Palmilla y Nancagua. Si vivís en otra zona, escribinos por WhatsApp y lo evaluamos juntos.",
   },
   {
     q: "¿Cuánto cuesta el envío?",
-    a: "El envío es gratis. Sin mínimo de compra y sin costo de despacho.",
+    a: "Envío gratis en la zona de cobertura. El mínimo es 1 kg por producto — sin mínimo de monto total.",
   },
   {
     q: "¿Cuándo despachan?",
@@ -25,15 +25,19 @@ const faqs = [
   },
   {
     q: "¿Cuál es el mínimo de compra?",
-    a: "No hay mínimo. Podés pedir desde 500 g de un solo producto (o 250 g en el caso de Chuby Bardú).",
+    a: "El mínimo por producto es 1 kg. Podés combinar varios productos para armar el pedido que quieras.",
   },
   {
     q: "¿Puedo agregar más productos después de enviar el pedido?",
-    a: "Sí, siempre que no hayamos salido a despachar. Escríbenos por WhatsApp y lo sumamos al pedido.",
+    a: "Sí, siempre que no hayamos salido a despachar. Escribinos por WhatsApp y lo sumamos al pedido.",
   },
   {
     q: "¿Cuánto duran los productos?",
     a: "Los frutos secos duran 2–3 meses en frasco hermético en lugar fresco y seco. Los dulces y confites duran hasta 6 meses en las mismas condiciones.",
+  },
+  {
+    q: "¿Tengo derecho a retracto?",
+    a: "Sí. Por Ley 19.496 tenés 10 días hábiles desde la recepción para retractarte. Escribinos por WhatsApp y coordinamos la devolución del producto (sin abrir) y la restitución del pago.",
   },
 ];
 

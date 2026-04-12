@@ -163,8 +163,7 @@ export default function ProductForm({ product, onClose, onSaved }: Props) {
 
             {field("Unidad mínima de venta",
               <select style={{ ...inputStyle, cursor: "pointer" }} value={String(form.min_unit_kg)} onChange={(e) => set("min_unit_kg", parseFloat(e.target.value))}>
-                <option value="1">1 kg (por kilo)</option>
-                <option value="0.5">0,5 kg (desde medio kilo)</option>
+                <option value="1">1 kg (formato único)</option>
               </select>
             )}
           </div>

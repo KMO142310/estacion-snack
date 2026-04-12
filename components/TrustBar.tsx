@@ -35,7 +35,8 @@ export default function TrustBar() {
           gridTemplateColumns: "1fr 1fr 1fr",
           maxWidth: 1200,
           margin: "0 auto",
-          padding: "0 1.25rem",
+          padding: "2.5rem 1.25rem",
+          gap: "0.5rem",
         }}
       >
         {items.map(({ Icon, title, desc }, i) => (
@@ -46,17 +47,17 @@ export default function TrustBar() {
               flexDirection: "column",
               alignItems: "center",
               textAlign: "center",
-              padding: "1.75rem 0.75rem",
+              padding: "0.5rem 0.5rem",
               borderRight: i < 2 ? "1px solid rgba(122,132,87,0.20)" : "none",
-              gap: "0.625rem",
+              gap: "0.875rem",
             }}
           >
-            <span style={{ color: "#D0551F", display: "flex" }}><Icon size={30} /></span>
+            <span style={{ color: "#D0551F", display: "flex" }}><Icon size={32} /></span>
             <p
               style={{
                 fontFamily: "var(--font-body)",
                 fontWeight: 600,
-                fontSize: "0.8125rem",
+                fontSize: "0.875rem",
                 color: "#5A1F1A",
                 lineHeight: 1.3,
                 margin: 0,
@@ -68,8 +69,8 @@ export default function TrustBar() {
               style={{
                 fontFamily: "var(--font-body)",
                 fontWeight: 400,
-                fontSize: "0.75rem",
-                color: "#7A8457",
+                fontSize: "0.8125rem",
+                color: "#5E6B3E",
                 lineHeight: 1.5,
                 margin: 0,
                 whiteSpace: "pre-line",

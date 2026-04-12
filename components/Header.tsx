@@ -55,8 +55,10 @@ export default function Header({ onOrderOpen }: HeaderProps) {
       >
         <a href="#productos" className="nav-link">Mezclas</a>
         <a href="#packs" className="nav-link">Packs</a>
+        <Link href="/sobre-nosotros" className="nav-link">Nosotros</Link>
         <Link href="/envios" className="nav-link">Envíos</Link>
         <Link href="/faq" className="nav-link">FAQ</Link>
+        <Link href="/contacto" className="nav-link">Contacto</Link>
       </nav>
 
       {/* Actions */}

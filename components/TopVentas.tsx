@@ -1,3 +1,4 @@
+import Image from "next/image";
 import productsData from "@/data/products.json";
 
 const topVentas = [
@@ -79,13 +80,12 @@ export default function TopVentas() {
             >
               {/* Imagen */}
               <div style={{ aspectRatio: "4/3", background: "rgba(244,234,219,0.05)", position: "relative" }}>
-                {/* Usamos img nativo para evitar dependencia de next/image en server component */}
-                <img
+                <Image
                   src={product.image_webp_url}
                   alt={product.name}
-                  loading="lazy"
-                  decoding="async"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  fill
+                  sizes="(max-width: 640px) 72vw, 280px"
+                  style={{ objectFit: "cover" }}
                 />
                 {product.badge && (
                   <span

@@ -44,9 +44,9 @@
     "image_webp_url": "/img/pack-proteina.webp",
     "image_400_url": "/img/pack-proteina-400.webp",
     "items": [
-      { "name": "Mix Europeo",     "productId": "1", "kg": 0.5, "pricePerKg": 13000 },
+      { "name": "Mix Europeo",     "productId": "1", "kg": 0.8, "pricePerKg": 13000 },
       { "name": "Almendra Entera", "productId": "6", "kg": 0.3, "pricePerKg": 16000 },
-      { "name": "Mix Europeo",     "productId": "1", "kg": 0.3, "pricePerKg": 13000 }
+      { "name": "Chuby Bardú",     "productId": "4", "kg": 0.2, "pricePerKg": 9990  }
     ]
   }
 ]

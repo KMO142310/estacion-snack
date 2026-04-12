@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s · Estación Snack",
   },
   description:
-    "Frutos secos y dulces del Valle de Colchagua, pesados al momento. Mix de nueces, almendras, maní confitado y más. Despacho martes y viernes en Santa Cruz y alrededores. Pide por WhatsApp.",
+    "Frutos secos y dulces del Valle de Colchagua, pesados al momento. Despacho martes y viernes en Santa Cruz, Peralillo, Palmilla y Nancagua.",
   metadataBase: new URL(SITE),
   alternates: { canonical: SITE },
   robots: {
@@ -105,7 +105,6 @@ const orgJsonLd = {
     { "@type": "City", name: "Palmilla" },
     { "@type": "City", name: "Nancagua" },
   ],
-  openingHours: "Tu,Fr 10:00-19:00",
   servesCuisine: "Frutos secos y snacks naturales",
 };
 

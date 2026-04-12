@@ -1,5 +1,5 @@
 const items = [
-  "Para la oficina", "Para el estudio", "Para el gym",
+  "Para la oficina", "Para la once", "Para la carretera",
   "Para la casa", "Para compartir", "Despacho martes y viernes",
   "WhatsApp +56 9 5374 3338",
 ];

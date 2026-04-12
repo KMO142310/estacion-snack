@@ -21,13 +21,12 @@ export default function ProductCard({ name, price, image_webp_url, badge, status
 
   return (
     <article
+      className={agotado ? undefined : "card-lift"}
       onClick={agotado ? undefined : onOpen}
       role={agotado ? undefined : "button"}
       tabIndex={agotado ? undefined : 0}
       aria-label={agotado ? `${name} — agotado` : `Ver ${name}`}
       onKeyDown={(e) => { if (!agotado && (e.key === "Enter" || e.key === " ")) onOpen(); }}
-      onTouchStart={(e) => { if (!agotado) e.currentTarget.style.transform = "scale(0.97)"; }}
-      onTouchEnd={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
       style={{
         background: "#fff",
         borderRadius: "16px",
@@ -36,10 +35,7 @@ export default function ProductCard({ name, price, image_webp_url, badge, status
         opacity: agotado ? 0.55 : 1,
         boxShadow: "0 2px 16px rgba(90,31,26,0.07)",
         WebkitTapHighlightColor: "transparent",
-        transition: "transform 0.15s ease, box-shadow 0.15s ease",
       }}
-      onMouseEnter={(e) => { if (!agotado) { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 6px 24px rgba(90,31,26,0.12)"; }}}
-      onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 16px rgba(90,31,26,0.07)"; }}
     >
       <div style={{ position: "relative", aspectRatio: "1/1", background: "#F4EADB" }}>
         <Image src={image_webp_url} alt={name} fill sizes="(max-width: 640px) 50vw, 33vw" style={{ objectFit: "cover" }}

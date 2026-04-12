@@ -9,30 +9,20 @@ export default function DetrasDe() {
       style={{ background: "#5A1F1A", padding: "5rem 0" }}
     >
       <div className="wrap">
-        {/* Foto placeholder — reemplazar con next/image cuando haya foto real */}
-        <div
+        {/* Texto — foto pendiente, por ahora tipografía dominante */}
+        <p
           style={{
-            width: "100%",
-            aspectRatio: "16/7",
-            background: "rgba(244,234,219,0.06)",
-            borderRadius: "16px",
-            marginBottom: "2rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            border: "1px solid rgba(244,234,219,0.10)",
+            fontFamily: "var(--font-body)",
+            fontSize: "0.6875rem",
+            fontWeight: 500,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: "rgba(244,234,219,0.50)",
+            marginBottom: "1rem",
           }}
-          aria-hidden="true"
         >
-          {/* SVG placeholder visual */}
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden="true">
-            <rect width="80" height="80" rx="16" fill="rgba(244,234,219,0.08)" />
-            <circle cx="40" cy="28" r="12" stroke="rgba(244,234,219,0.3)" strokeWidth="2" fill="none" />
-            <path d="M16 60 Q40 44 64 60" stroke="rgba(244,234,219,0.3)" strokeWidth="2" fill="none" />
-          </svg>
-        </div>
-
-        {/* Texto */}
+          Santa Cruz · 2026
+        </p>
         <h2
           style={{
             fontFamily: "var(--font-display)",

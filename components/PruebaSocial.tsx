@@ -98,10 +98,10 @@ export default function PruebaSocial() {
                 </div>
               </div>
 
-              {/* Burbuja de WhatsApp */}
+              {/* Burbuja */}
               <div
                 style={{
-                  background: "#DCF8C6",
+                  background: "rgba(122,132,87,0.14)",
                   borderRadius: "12px 12px 4px 12px",
                   padding: "0.75rem",
                   display: "inline-block",
@@ -113,7 +113,7 @@ export default function PruebaSocial() {
                   style={{
                     fontFamily: "var(--font-body)",
                     fontSize: "0.9375rem",
-                    color: "#1A1816",
+                    color: "#3A2018",
                     lineHeight: 1.55,
                     margin: 0,
                   }}
@@ -123,7 +123,7 @@ export default function PruebaSocial() {
               </div>
               <div style={{ clear: "both" }} />
 
-              {/* Badge "cliente real" */}
+              {/* Disclaimer: ejemplos representativos hasta tener capturas reales autorizadas (Ley 19.496 art. 28) */}
               <p
                 style={{
                   fontFamily: "var(--font-body)",
@@ -133,8 +133,7 @@ export default function PruebaSocial() {
                   fontStyle: "italic",
                 }}
               >
-                {/* PENDIENTE_USUARIO: reemplazar por captura real de pantalla */}
-                Mensaje de cliente real — nombre parcial con permiso
+                Ejemplo representativo del tipo de pedido que despachamos.
               </p>
             </div>
           ))}

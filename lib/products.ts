@@ -83,7 +83,7 @@ export const PRODUCTS: Product[] = [
     badge: "Popular",
     sort_order: 4,
     color: "purple",
-    min_unit_kg: 0.5, // exception: sold from 0.5 kg
+    min_unit_kg: 1,
   },
   {
     id: "5",

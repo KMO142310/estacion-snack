@@ -69,17 +69,16 @@ export default function ProductSheet({ product, onClose }: Props) {
     setCustomQty(product.min_unit_kg);
   }, [product.min_unit_kg]);
 
-  const stepQty = 0.05; // 50g increments
+  const stepQty = 1; // kilos enteros
 
   const stepDown = () => {
-    const next = Math.max(product.min_unit_kg, +(customQty - stepQty).toFixed(3));
+    const next = Math.max(product.min_unit_kg, customQty - stepQty);
     setCustomQty(next);
     hapticLight();
   };
 
   const stepUp = () => {
-    const next = +(customQty + stepQty).toFixed(3);
-    setCustomQty(next);
+    setCustomQty(customQty + stepQty);
     hapticLight();
   };
 
@@ -387,7 +386,7 @@ export default function ProductSheet({ product, onClose }: Props) {
                         marginTop: "2px",
                       }}
                     >
-                      Mínimo: {fmtKg(product.min_unit_kg)} · Incrementos de 50 g
+                      Mínimo: {fmtKg(product.min_unit_kg)} · Kilos enteros
                     </p>
                   </div>
 

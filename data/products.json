@@ -13,7 +13,7 @@
     "image_webp_url": "/img/mix-europeo-x-kilo.webp",
     "image_400_url": "/img/mix-europeo-x-kilo-400.webp",
     "copy": "Maní sin sal, almendras, nueces y avellanas. En esas proporciones, exactas, porque las probamos otras y no dan.",
-    "long_copy": "El Mix Europeo lleva cuatro ingredientes y ningún relleno. Nueces enteras, almendras naturales con piel, avellanas y maní sin sal. Pesado al momento, en bolsa de papel kraft con cierre. Si es tu primera vez, parte con medio kilo. Rinde más de lo que parece.",
+    "long_copy": "El Mix Europeo lleva cuatro ingredientes y ningún relleno. Nueces enteras, almendras naturales con piel, avellanas y maní sin sal. Pesado al momento, en bolsa de papel kraft con cierre. Si es tu primera vez, parte con un kilo y lo estiras más de lo que crees.",
     "badge": "Top ventas",
     "sort_order": 1,
     "min_unit_kg": 1,
@@ -76,7 +76,7 @@
     "long_copy": "Chuby Bardú son confites de chocolate con cobertura de azúcar de colores. Tamaño más grande que los M&M estándar, con más chocolate adentro. El que llega a mesa desaparece antes de que te sirvas vino.",
     "badge": "Popular",
     "sort_order": 4,
-    "min_unit_kg": 0.5,
+    "min_unit_kg": 1,
     "occasion": "El que se acaba primero en cualquier mesa."
   },
   {

@@ -20,12 +20,13 @@ const faqSchema = {
   mainEntity: [
     { "@type": "Question", name: "¿Cómo hago mi pedido?", acceptedAnswer: { "@type": "Answer", text: 'Elegí los productos, seleccioná la cantidad y tocá "Agregar al pedido". Cuando estés listo, tocá "Confirmar por WhatsApp".' } },
     { "@type": "Question", name: "¿A qué comunas despachan?", acceptedAnswer: { "@type": "Answer", text: "Despachamos en Santa Cruz, Peralillo, Palmilla y Nancagua." } },
-    { "@type": "Question", name: "¿Cuánto cuesta el envío?", acceptedAnswer: { "@type": "Answer", text: "El envío es gratis. Sin mínimo de compra." } },
+    { "@type": "Question", name: "¿Cuánto cuesta el envío?", acceptedAnswer: { "@type": "Answer", text: "Envío gratis en la zona de cobertura. El mínimo es 1 kg por producto, sin mínimo de monto total." } },
     { "@type": "Question", name: "¿Cuándo despachan?", acceptedAnswer: { "@type": "Answer", text: "Los martes y viernes. Coordinamos por WhatsApp." } },
     { "@type": "Question", name: "¿Qué medios de pago aceptan?", acceptedAnswer: { "@type": "Answer", text: "Transferencia bancaria o efectivo contra entrega." } },
-    { "@type": "Question", name: "¿Cuál es el mínimo de compra?", acceptedAnswer: { "@type": "Answer", text: "No hay mínimo. Podés pedir desde 500 g." } },
+    { "@type": "Question", name: "¿Cuál es el mínimo de compra?", acceptedAnswer: { "@type": "Answer", text: "El mínimo por producto es 1 kg. Podés combinar varios productos." } },
     { "@type": "Question", name: "¿Puedo agregar más productos después de enviar el pedido?", acceptedAnswer: { "@type": "Answer", text: "Sí, siempre que no hayamos salido a despachar." } },
     { "@type": "Question", name: "¿Cuánto duran los productos?", acceptedAnswer: { "@type": "Answer", text: "Los frutos secos duran 2–3 meses en frasco hermético. Los dulces hasta 6 meses." } },
+    { "@type": "Question", name: "¿Tengo derecho a retracto?", acceptedAnswer: { "@type": "Answer", text: "Sí. Por Ley 19.496 tenés 10 días hábiles desde la recepción para retractarte y solicitar la devolución del producto sin abrir." } },
   ],
 };
 
@@ -71,7 +72,7 @@ export default function FaqPage() {
               Preguntas frecuentes
             </h1>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "#7A8457", lineHeight: 1.65 }}>
-              Si no encontrás tu respuesta acá, escríbenos por{" "}
+              Si no encontrás tu respuesta acá, escribinos por{" "}
               <a
                 href="https://wa.me/56953743338"
                 target="_blank"

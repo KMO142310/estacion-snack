@@ -39,11 +39,16 @@ export function buildWaUrl(
       const subtotal = pack.price * item.qty;
       total += subtotal;
       lines.push(`- ${pack.name} (x${item.qty}) · $${Math.round(subtotal).toLocaleString("es-CL")}`);
+      // BOM breakdown so the operator can verify stock component by component
+      const bomLine = pack.items
+        .map((ci) => `${fmtKg(ci.kg)} ${ci.name}`)
+        .join(" + ");
+      lines.push(`  ↳ ${bomLine}`);
     }
   }
 
   lines.push("");
-  lines.push(`*Total estimado: $${Math.round(total).toLocaleString("es-CL")}*`);
+  lines.push(`*Total: $${Math.round(total).toLocaleString("es-CL")}*`);
 
   if (note?.trim()) {
     lines.push("");
@@ -51,7 +56,7 @@ export function buildWaUrl(
   }
 
   lines.push("");
-  lines.push("Confirmo dirección cuando me escribas.");
+  lines.push("Te paso la dirección cuando me confirmés.");
 
   const text = lines.join("\n");
   return `${WA_BASE}?text=${encodeURIComponent(text)}`;

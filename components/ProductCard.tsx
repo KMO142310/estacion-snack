@@ -72,16 +72,6 @@ export default function ProductCard({ product, onOpen }: Props) {
             {badge || "Último kg"}
           </span>
         )}
-        {copy && (
-          <div className="hover-copy" style={{
-            position: "absolute", inset: 0, background: "rgba(90,31,26,0.85)",
-            display: "flex", alignItems: "flex-end", padding: 14,
-          }}>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#F4EADB", lineHeight: 1.5 }}>
-              {copy}
-            </p>
-          </div>
-        )}
       </div>
 
       {/* Info + botón */}

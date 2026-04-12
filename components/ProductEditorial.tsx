@@ -28,10 +28,12 @@ interface Props {
 }
 
 export default function ProductEditorial({ product, index, onOpenSheet }: Props) {
-  const photoRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: photoRef, offset: ["start end", "end start"] });
-  const photoScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.08, 1.0, 1.03]);
-  const photoY = useTransform(scrollYProgress, [0, 1], ["-4%", "4%"]);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const photoScale = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0.92, 1, 1, 0.97]);
+  const photoOpacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.4, 1, 1, 0.4]);
+  const textY = useTransform(scrollYProgress, [0.1, 0.35], [30, 0]);
+  const textOpacity = useTransform(scrollYProgress, [0.1, 0.3], [0, 1]);
 
   const [justAdded, setJustAdded] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
@@ -56,48 +58,57 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
   };
 
   return (
-    <article style={{ background: bg }}>
-      {/* Foto grande — casi pantalla completa, con parallax */}
-      <div
-        ref={photoRef}
-        onClick={isOut ? undefined : onOpenSheet}
-        role={isOut ? undefined : "button"}
-        tabIndex={isOut ? undefined : 0}
-        aria-label={`Ver detalles de ${product.name}`}
-        onKeyDown={(e) => { if (!isOut && (e.key === "Enter" || e.key === " ")) onOpenSheet(); }}
+    <article ref={sectionRef} style={{ background: bg, padding: "3rem 0 3.5rem" }}>
+      {/* Foto — cuadrada (1:1), borde a borde en mobile, con scale dopamínico al scroll */}
+      <motion.div
         style={{
-          position: "relative",
-          width: "100%",
-          aspectRatio: "3 / 4",
-          overflow: "hidden",
-          cursor: isOut ? "default" : "pointer",
+          scale: photoScale,
+          opacity: photoOpacity,
+          marginBottom: "1.75rem",
         }}
       >
-        <motion.div style={{ scale: photoScale, y: photoY, position: "absolute", inset: "-8%", width: "116%", height: "116%" }}>
+        <div
+          onClick={isOut ? undefined : onOpenSheet}
+          role={isOut ? undefined : "button"}
+          tabIndex={isOut ? undefined : 0}
+          aria-label={`Ver detalles de ${product.name}`}
+          onKeyDown={(e) => { if (!isOut && (e.key === "Enter" || e.key === " ")) onOpenSheet(); }}
+          style={{
+            position: "relative",
+            aspectRatio: "1 / 1",
+            overflow: "hidden",
+            cursor: isOut ? "default" : "pointer",
+            borderRadius: "0",
+            maxWidth: 600,
+            margin: "0 auto",
+          }}
+          className="product-photo"
+        >
           <Image
             src={product.image_webp_url}
             alt={product.name}
             fill
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, 600px"
             style={{ objectFit: "cover" }}
             priority={index < 2}
           />
-        </motion.div>
+          {(product.badge || isLast) && (
+            <span style={{
+              position: "absolute", top: 14, left: 14, zIndex: 2,
+              background: isLast ? "rgba(90,31,26,0.9)" : "rgba(208,85,31,0.9)",
+              color: "#F4EADB", fontSize: "0.75rem", fontWeight: 700,
+              fontFamily: "var(--font-body)", padding: "5px 12px", borderRadius: "8px",
+            }}>
+              {product.badge || "Último kg"}
+            </span>
+          )}
+        </div>
+      </motion.div>
 
-        {(product.badge || isLast) && (
-          <span style={{
-            position: "absolute", top: 16, left: 16, zIndex: 2,
-            background: isLast ? "rgba(90,31,26,0.85)" : "rgba(208,85,31,0.9)",
-            color: "#F4EADB", fontSize: "0.75rem", fontWeight: 700,
-            fontFamily: "var(--font-body)", padding: "5px 12px", borderRadius: "8px",
-          }}>
-            {product.badge || "Último kg"}
-          </span>
-        )}
-      </div>
-
-      {/* Texto debajo de la foto */}
-      <div style={{ padding: "2rem 1.5rem 3.5rem", maxWidth: 600 }}>
+      {/* Texto — aparece con slide up sutil */}
+      <motion.div
+        style={{ y: textY, opacity: textOpacity, padding: "0 1.5rem", maxWidth: 600, margin: "0 auto" }}
+      >
         <p style={{
           fontFamily: "var(--font-body)", fontSize: "0.6875rem", fontWeight: 600,
           letterSpacing: "0.18em", textTransform: "uppercase", color: text2,
@@ -108,15 +119,15 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
 
         <h2 style={{
           fontFamily: "var(--font-display)", fontWeight: 600,
-          fontSize: "clamp(2rem, 7vw, 3.5rem)", color: text1,
-          lineHeight: 1.0, letterSpacing: "-0.025em", marginBottom: "0.75rem",
+          fontSize: "clamp(2rem, 7vw, 3rem)", color: text1,
+          lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: "0.625rem",
         }}>
           {product.name}
         </h2>
 
         <p style={{
           fontFamily: "var(--font-body)", fontSize: "1rem", color: text1,
-          lineHeight: 1.65, marginBottom: product.occasion ? "0.5rem" : "1.5rem",
+          lineHeight: 1.65, marginBottom: product.occasion ? "0.5rem" : "1.25rem",
           maxWidth: 440, opacity: 0.75,
         }}>
           {product.copy}
@@ -125,7 +136,7 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
         {product.occasion && (
           <p style={{
             fontFamily: "var(--font-display)", fontStyle: "italic",
-            fontSize: "0.9375rem", color: "#D0551F", marginBottom: "1.5rem",
+            fontSize: "0.9375rem", color: "#D0551F", marginBottom: "1.25rem",
           }}>
             {product.occasion}
           </p>
@@ -135,7 +146,8 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
           <motion.button
             onClick={handleQuickAdd}
             disabled={isOut}
-            whileTap={isOut ? undefined : { scale: 0.95 }}
+            whileTap={isOut ? undefined : { scale: 0.93 }}
+            whileHover={isOut ? undefined : { scale: 1.02 }}
             style={{
               fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.9375rem",
               color: justAdded ? "#F4EADB" : btnText,
@@ -143,13 +155,18 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
               border: "none", borderRadius: "10px", padding: "0.875rem 1.5rem",
               cursor: isOut ? "not-allowed" : "pointer", opacity: isOut ? 0.5 : 1,
               WebkitTapHighlightColor: "transparent", minWidth: 150,
+              transition: "background 0.2s ease, color 0.2s ease",
             }}
           >
             <AnimatePresence mode="wait">
               {isOut ? <span>Agotado</span> : justAdded ? (
-                <motion.span key="ok" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>Agregado</motion.span>
+                <motion.span key="ok" initial={{ scale: 0.85, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.85, opacity: 0 }} transition={{ duration: 0.2 }}>
+                  Agregado
+                </motion.span>
               ) : (
-                <motion.span key="add" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>Agregar 1 kg</motion.span>
+                <motion.span key="add" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
+                  Agregar 1 kg
+                </motion.span>
               )}
             </AnimatePresence>
           </motion.button>
@@ -165,7 +182,13 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
             </button>
           )}
         </div>
-      </div>
+      </motion.div>
+
+      <style>{`
+        @media (min-width: 640px) {
+          .product-photo { border-radius: 16px !important; }
+        }
+      `}</style>
     </article>
   );
 }

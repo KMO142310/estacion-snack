@@ -31,46 +31,51 @@ export default function PageShell() {
       <Header onOrderOpen={() => setOrderOpen(true)} />
 
       <main>
-        {/* Apertura corta */}
+        {/* Apertura premium */}
         <div style={{
           background: "#5A1F1A",
-          padding: "5rem 1.25rem 2.5rem",
+          padding: "5.5rem 1.5rem 3.5rem",
         }}>
+          <p style={{
+            fontFamily: "var(--font-body)", fontSize: "0.625rem", fontWeight: 600,
+            letterSpacing: "0.25em", textTransform: "uppercase",
+            color: "rgba(244,234,219,0.3)", marginBottom: "1.25rem",
+          }}>
+            Santa Cruz · Valle de Colchagua
+          </p>
           <h1 style={{
             fontFamily: "var(--font-display)", fontWeight: 600,
-            fontSize: "clamp(1.75rem, 7vw, 2.75rem)", color: "#F4EADB",
-            lineHeight: 1.1, letterSpacing: "-0.02em", marginBottom: "0.5rem",
+            fontSize: "clamp(2rem, 8vw, 3.25rem)", color: "#F4EADB",
+            lineHeight: 1.05, letterSpacing: "-0.02em",
           }}>
-            Frutos secos y dulces por kilo.
+            Frutos secos<br />y dulces por kilo.
           </h1>
-          <p style={{
-            fontFamily: "var(--font-body)", fontSize: "0.875rem",
-            color: "rgba(244,234,219,0.5)",
-          }}>
-            Santa Cruz · Despacho martes y viernes
-          </p>
         </div>
 
-        {/* Todos los productos visibles de una — grid 2 columnas */}
-        <section id="productos" style={{ background: "#F4EADB", padding: "1.5rem 1rem 2rem" }}>
+        {/* Productos */}
+        <section id="productos" style={{
+          background: "#F4EADB",
+          padding: "1.75rem 1rem 1rem",
+        }}>
+          <p style={{
+            fontFamily: "var(--font-body)", fontSize: "0.625rem", fontWeight: 600,
+            letterSpacing: "0.2em", textTransform: "uppercase",
+            color: "#5E6B3E", marginBottom: "1rem", padding: "0 0.25rem",
+          }}>
+            Nuestras mezclas
+          </p>
           <div style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
-            gap: "0.75rem",
+            gap: "0.625rem",
             maxWidth: 700,
-            margin: "0 auto",
           }}>
             {products.map((p) => (
               <ProductCard
                 key={p.id}
-                id={p.id}
-                slug={p.slug}
-                name={p.name}
-                price={p.price}
-                image_webp_url={p.image_webp_url}
-                image_url={p.image_url}
-                badge={p.badge}
-                status={p.status}
+                id={p.id} slug={p.slug} name={p.name} price={p.price}
+                image_webp_url={p.image_webp_url} image_url={p.image_url}
+                badge={p.badge} status={p.status}
                 onOpen={() => setSheetProduct(p)}
               />
             ))}
@@ -80,35 +85,46 @@ export default function PageShell() {
         {/* Packs */}
         <PackSection />
 
-        {/* FAQ compacto */}
+        {/* FAQ */}
         <section style={{ background: "#F4EADB", padding: "3rem 1.25rem 2.5rem" }}>
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
-            <h2 style={{
-              fontFamily: "var(--font-display)", fontWeight: 600,
-              fontSize: "1.375rem", color: "#5A1F1A", marginBottom: "1rem",
+            <p style={{
+              fontFamily: "var(--font-body)", fontSize: "0.625rem", fontWeight: 600,
+              letterSpacing: "0.2em", textTransform: "uppercase",
+              color: "#5E6B3E", marginBottom: "1rem",
             }}>
               Preguntas frecuentes
-            </h2>
+            </p>
             <FAQ />
           </div>
         </section>
 
-        {/* CTA */}
-        <div style={{ background: "#D0551F", padding: "3rem 1.25rem", textAlign: "center" }}>
+        {/* CTA cierre */}
+        <div style={{
+          background: "#5A1F1A",
+          padding: "3.5rem 1.25rem",
+          textAlign: "center",
+        }}>
           <p style={{
             fontFamily: "var(--font-display)", fontWeight: 500,
             fontSize: "clamp(1.25rem, 5vw, 2rem)", color: "#F4EADB",
-            lineHeight: 1.2, marginBottom: "1.25rem",
+            lineHeight: 1.2, marginBottom: "0.5rem",
           }}>
-            ¿Te animás?
+            ¿Querés probar?
+          </p>
+          <p style={{
+            fontFamily: "var(--font-body)", fontSize: "0.8125rem",
+            color: "rgba(244,234,219,0.5)", marginBottom: "1.5rem",
+          }}>
+            Armá tu pedido y te lo llevamos martes o viernes.
           </p>
           <button onClick={() => setOrderOpen(true)} style={{
-            fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "1rem",
-            color: "#D0551F", background: "#F4EADB", border: "none",
+            fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem",
+            color: "#5A1F1A", background: "#F4EADB", border: "none",
             borderRadius: "12px", padding: "1rem 2rem", cursor: "pointer",
             WebkitTapHighlightColor: "transparent",
           }}>
-            Pedir por WhatsApp
+            Ver mi pedido
           </button>
         </div>
       </main>
@@ -119,19 +135,19 @@ export default function PageShell() {
       {!orderOpen && !sheetProduct && (
         <div className="sticky-bottom" style={{
           position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100,
-          padding: "0.625rem 1.25rem",
-          paddingBottom: "calc(0.625rem + env(safe-area-inset-bottom, 0px))",
-          background: "rgba(90,31,26,0.96)", backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
+          padding: "0.5rem 1rem",
+          paddingBottom: "calc(0.5rem + env(safe-area-inset-bottom, 0px))",
+          background: "rgba(90,31,26,0.97)", backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
           display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem",
         }}>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "rgba(244,234,219,0.70)", margin: 0 }}>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", color: "rgba(244,234,219,0.6)", margin: 0 }}>
             {itemCount > 0 ? `${itemCount} ${itemCount === 1 ? "producto" : "productos"}` : "Pedido vacío"}
           </p>
           <button onClick={() => setOrderOpen(true)} style={{
-            fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem",
+            fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.8125rem",
             color: "#5A1F1A", background: "#F4EADB", border: "none",
-            borderRadius: "8px", padding: "0.625rem 1.25rem", cursor: "pointer",
+            borderRadius: "8px", padding: "0.5rem 1rem", cursor: "pointer",
             flexShrink: 0, WebkitTapHighlightColor: "transparent",
           }}>
             Ver pedido
@@ -155,6 +171,10 @@ export default function PageShell() {
       <ToastStack />
 
       <style>{`
+        .product-card { box-shadow: 0 1px 8px rgba(90,31,26,0.06); }
+        @media (hover: hover) {
+          .product-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(90,31,26,0.10); }
+        }
         @media (min-width: 768px) {
           .sticky-bottom { display: none !important; }
         }

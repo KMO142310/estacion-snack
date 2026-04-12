@@ -13,7 +13,7 @@ const faqs = [
   },
   {
     q: "¿Cuánto cuesta el envío?",
-    a: "Envío gratis en la zona de cobertura. El mínimo es 1 kg por producto — sin mínimo de monto total.",
+    a: "Primer envío gratis. Después, gratis en compras sobre $25.000. Bajo ese monto: $2.000 (Santa Cruz) o $2.500 (comunas cercanas).",
   },
   {
     q: "¿Cuándo despachan?",

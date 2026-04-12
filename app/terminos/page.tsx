@@ -48,7 +48,7 @@ export default function TerminosPage() {
           <ul style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
             <li style={S.li}>Zona de cobertura: Santa Cruz, Peralillo, Palmilla y Nancagua.</li>
             <li style={S.li}>Días de despacho: martes a sábado.</li>
-            <li style={S.li}>Costo: gratis dentro de la zona de cobertura.</li>
+            <li style={S.li}>Costo: primer envío gratis. Después, gratis en compras sobre $25.000. Bajo ese monto: $2.000 (Santa Cruz) o $2.500 (comunas cercanas).</li>
           </ul>
 
           <h2 style={S.h2}>Derecho a retracto</h2>

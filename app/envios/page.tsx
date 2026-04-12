@@ -6,10 +6,10 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Envíos y despacho",
   description:
-    "Despachamos martes a sábado en Santa Cruz, Peralillo, Palmilla y Nancagua. Entrega coordinada por WhatsApp. Siempre gratis.",
+    "Despachamos martes a sábado en Santa Cruz, Peralillo, Palmilla y Nancagua. Primer envío gratis. Envío gratis sobre $25.000.",
   openGraph: {
     title: "Envíos y despacho · Estación Snack",
-    description: "Despacho gratis, martes a sábado, coordinado por WhatsApp.",
+    description: "Primer envío gratis. Envío gratis sobre $25.000. Martes a sábado 19:30-21:00.",
   },
 };
 
@@ -23,10 +23,10 @@ const breadcrumbJsonLd = {
 };
 
 const zonas = [
-  { nombre: "Santa Cruz", desc: "Zona principal. Coordinamos el horario exacto por WhatsApp." },
-  { nombre: "Peralillo", desc: "Disponible martes a sábado según ruta." },
-  { nombre: "Palmilla", desc: "Disponible martes a sábado según ruta." },
-  { nombre: "Nancagua", desc: "Disponible martes a sábado según ruta." },
+  { nombre: "Santa Cruz", desc: "Envío $2.000. Gratis sobre $25.000." },
+  { nombre: "Peralillo", desc: "Envío $2.500. Gratis sobre $25.000." },
+  { nombre: "Palmilla", desc: "Envío $2.500. Gratis sobre $25.000." },
+  { nombre: "Nancagua", desc: "Envío $2.500. Gratis sobre $25.000." },
 ];
 
 export default function EnviosPage() {
@@ -62,7 +62,7 @@ export default function EnviosPage() {
             </h1>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "#5E6B3E", lineHeight: 1.7 }}>
               Despachamos de <strong style={{ color: "#5A1F1A" }}>martes a sábado, de 19:30 a 21:00 hrs</strong>. Coordinamos
-              por WhatsApp una vez confirmado el pedido. El envío es siempre gratis.
+              por WhatsApp una vez confirmado el pedido.
             </p>
           </div>
 
@@ -105,9 +105,6 @@ export default function EnviosPage() {
                 <div>
                   <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.25rem" }}>
                     {z.nombre}
-                    <span style={{ marginLeft: "0.5rem", fontSize: "0.75rem", fontWeight: 700, color: "#5E6B3E", background: "rgba(122,132,87,0.15)", padding: "2px 8px", borderRadius: "9999px" }}>
-                      Gratis
-                    </span>
                   </p>
                   <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", lineHeight: 1.55 }}>
                     {z.desc}

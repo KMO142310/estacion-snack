@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { fmt } from "@/lib/cart-utils";
 import { useCartStore } from "@/lib/store";
 import { hapticSuccess } from "@/lib/haptics";
@@ -28,6 +28,11 @@ interface Props {
 }
 
 export default function ProductEditorial({ product, index, onOpenSheet }: Props) {
+  const photoRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: photoRef, offset: ["start end", "end start"] });
+  const photoScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.08, 1.0, 1.03]);
+  const photoY = useTransform(scrollYProgress, [0, 1], ["-4%", "4%"]);
+
   const [justAdded, setJustAdded] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
@@ -51,46 +56,48 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
   };
 
   return (
-    <article style={{ background: bg, padding: "4rem 0" }}>
-      <div className="wrap" style={{ maxWidth: 1100 }}>
-        {/* Foto — tamaño natural, no full-bleed */}
-        <div
-          onClick={isOut ? undefined : onOpenSheet}
-          role={isOut ? undefined : "button"}
-          tabIndex={isOut ? undefined : 0}
-          aria-label={`Ver detalles de ${product.name}`}
-          onKeyDown={(e) => { if (!isOut && (e.key === "Enter" || e.key === " ")) onOpenSheet(); }}
-          style={{
-            position: "relative",
-            aspectRatio: "1 / 1",
-            maxWidth: 500,
-            borderRadius: "16px",
-            overflow: "hidden",
-            cursor: isOut ? "default" : "pointer",
-            marginBottom: "2rem",
-          }}
-        >
+    <article style={{ background: bg }}>
+      {/* Foto grande — casi pantalla completa, con parallax */}
+      <div
+        ref={photoRef}
+        onClick={isOut ? undefined : onOpenSheet}
+        role={isOut ? undefined : "button"}
+        tabIndex={isOut ? undefined : 0}
+        aria-label={`Ver detalles de ${product.name}`}
+        onKeyDown={(e) => { if (!isOut && (e.key === "Enter" || e.key === " ")) onOpenSheet(); }}
+        style={{
+          position: "relative",
+          width: "100%",
+          aspectRatio: "3 / 4",
+          overflow: "hidden",
+          cursor: isOut ? "default" : "pointer",
+        }}
+      >
+        <motion.div style={{ scale: photoScale, y: photoY, position: "absolute", inset: "-8%", width: "116%", height: "116%" }}>
           <Image
             src={product.image_webp_url}
             alt={product.name}
             fill
-            sizes="(max-width: 768px) 90vw, 500px"
+            sizes="100vw"
             style={{ objectFit: "cover" }}
             priority={index < 2}
           />
-          {(product.badge || isLast) && (
-            <span style={{
-              position: "absolute", top: 12, left: 12,
-              background: isLast ? "#5A1F1A" : "#D0551F", color: "#F4EADB",
-              fontSize: "0.75rem", fontWeight: 700, fontFamily: "var(--font-body)",
-              padding: "5px 12px", borderRadius: "8px",
-            }}>
-              {product.badge || "Último kg"}
-            </span>
-          )}
-        </div>
+        </motion.div>
 
-        {/* Info */}
+        {(product.badge || isLast) && (
+          <span style={{
+            position: "absolute", top: 16, left: 16, zIndex: 2,
+            background: isLast ? "rgba(90,31,26,0.85)" : "rgba(208,85,31,0.9)",
+            color: "#F4EADB", fontSize: "0.75rem", fontWeight: 700,
+            fontFamily: "var(--font-body)", padding: "5px 12px", borderRadius: "8px",
+          }}>
+            {product.badge || "Último kg"}
+          </span>
+        )}
+      </div>
+
+      {/* Texto debajo de la foto */}
+      <div style={{ padding: "2rem 1.5rem 3.5rem", maxWidth: 600 }}>
         <p style={{
           fontFamily: "var(--font-body)", fontSize: "0.6875rem", fontWeight: 600,
           letterSpacing: "0.18em", textTransform: "uppercase", color: text2,
@@ -110,7 +117,7 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
         <p style={{
           fontFamily: "var(--font-body)", fontSize: "1rem", color: text1,
           lineHeight: 1.65, marginBottom: product.occasion ? "0.5rem" : "1.5rem",
-          maxWidth: 480, opacity: 0.75,
+          maxWidth: 440, opacity: 0.75,
         }}>
           {product.copy}
         </p>
@@ -118,8 +125,7 @@ export default function ProductEditorial({ product, index, onOpenSheet }: Props)
         {product.occasion && (
           <p style={{
             fontFamily: "var(--font-display)", fontStyle: "italic",
-            fontSize: "0.9375rem", color: dark ? "#D0551F" : "#D0551F",
-            marginBottom: "1.5rem",
+            fontSize: "0.9375rem", color: "#D0551F", marginBottom: "1.5rem",
           }}>
             {product.occasion}
           </p>

@@ -32,25 +32,32 @@ export default function PageShell() {
       <Header onOrderOpen={() => setOrderOpen(true)} />
 
       <main id="productos">
-        {/* Apertura — solo contexto, directo al producto */}
+        {/* Apertura — marca + propuesta, directo */}
         <div style={{
           background: "#5A1F1A",
-          padding: "5rem 1.5rem 3rem",
+          padding: "5.5rem 1.5rem 3rem",
         }}>
+          <p style={{
+            fontFamily: "var(--font-body)", fontSize: "0.6875rem", fontWeight: 500,
+            letterSpacing: "0.2em", textTransform: "uppercase",
+            color: "rgba(244,234,219,0.35)", marginBottom: "1rem",
+          }}>
+            Santa Cruz · Valle de Colchagua
+          </p>
           <h1 style={{
             fontFamily: "var(--font-display)", fontWeight: 600,
-            fontSize: "clamp(2rem, 8vw, 3.5rem)", color: "#F4EADB",
-            lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: "0.75rem",
+            fontSize: "clamp(2.25rem, 9vw, 4rem)", color: "#F4EADB",
+            lineHeight: 1.0, letterSpacing: "-0.025em", marginBottom: "0.75rem",
           }}>
-            Frutos secos y dulces por kilo.
+            Frutos secos<br />y dulces por kilo.
           </h1>
           <p style={{
             fontFamily: "var(--font-body)",
             fontSize: "0.9375rem",
-            color: "rgba(244,234,219,0.55)",
+            color: "rgba(244,234,219,0.5)",
             lineHeight: 1.5,
           }}>
-            Santa Cruz · Despacho martes y viernes
+            Despacho martes y viernes en el valle.
           </p>
         </div>
 

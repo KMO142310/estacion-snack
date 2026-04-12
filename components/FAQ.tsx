@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: "¿Cuándo despachan?",
-    a: "Los martes y viernes. Coordinamos el horario exacto de entrega por WhatsApp después de confirmar el pedido.",
+    a: "De martes a sábado, entre 19:30 y 21:00 hrs. Coordinamos por WhatsApp después de confirmar el pedido.",
   },
   {
     q: "¿Qué medios de pago aceptan?",

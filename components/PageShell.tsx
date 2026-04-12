@@ -60,7 +60,7 @@ export default function PageShell() {
               ¿Querés probar?
             </p>
             <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "rgba(244,234,219,0.45)", marginBottom: 24 }}>
-              Armá tu pedido y te lo llevamos martes o viernes.
+              Armá tu pedido y te lo llevamos martes a sábado.
             </p>
             <button onClick={() => setOrderOpen(true)} style={{
               fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 15,

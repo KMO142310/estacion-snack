@@ -66,7 +66,7 @@ export default function OgImage() {
             marginBottom: 52,
           }}
         >
-          Frutos secos frescos por kilo. Pedís por WhatsApp y llega martes o viernes.
+          Frutos secos frescos por kilo. Pedís por WhatsApp y llega martes a sábado.
         </div>
 
         {/* Pills row */}
@@ -76,7 +76,7 @@ export default function OgImage() {
             gap: 16,
           }}
         >
-          {["Sin mínimo de compra", "Martes y viernes", "Pesado al momento"].map((label) => (
+          {["Sin mínimo de compra", "Martes a sábado", "Pesado al momento"].map((label) => (
             <div
               key={label}
               style={{

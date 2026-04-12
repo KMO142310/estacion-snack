@@ -41,7 +41,7 @@ const STATUS_COLOR: Record<OrderStatus, string> = {
 const STATUS_COPY: Record<OrderStatus, string> = {
   pending_whatsapp: "Envianos el pedido por WhatsApp para confirmarlo.",
   confirmed: "Recibimos tu pedido y lo estamos preparando.",
-  preparing: "Estamos armando tu pedido. Lo despachamos martes o viernes.",
+  preparing: "Estamos armando tu pedido. Lo despachamos martes a sábado.",
   delivered: "Tu pedido fue entregado. ¡Gracias por confiar en nosotros!",
   cancelled:
     "Este pedido fue cancelado. Si fue un error, escribinos por WhatsApp.",

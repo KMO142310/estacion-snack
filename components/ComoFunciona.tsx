@@ -11,7 +11,7 @@ const steps = [
   },
   {
     number: "03",
-    title: "Llega martes o viernes.",
+    title: "Llega martes a sábado.",
     desc: "Confirmamos antes por WhatsApp. Pagás al recibir o por transferencia.",
   },
 ];

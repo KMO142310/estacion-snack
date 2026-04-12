@@ -10,7 +10,7 @@ const items = [
   },
   {
     Icon: Truck,
-    title: "Martes y viernes",
+    title: "Martes a sábado",
     desc: "Santa Cruz y\nalrededores del valle.",
   },
   {

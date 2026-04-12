@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: "%s · Estación Snack",
   },
   description:
-    "Frutos secos y dulces del Valle de Colchagua, pesados al momento. Despacho martes y viernes en Santa Cruz, Peralillo, Palmilla y Nancagua.",
+    "Frutos secos y dulces del Valle de Colchagua, pesados al momento. Despacho martes a sábado en Santa Cruz, Peralillo, Palmilla y Nancagua.",
   metadataBase: new URL(SITE),
   alternates: { canonical: SITE },
   robots: {
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Estación Snack — Frutos secos por kilo",
     description:
-      "Frutos secos del Valle de Colchagua, pesados al momento. Despacho martes y viernes.",
+      "Frutos secos del Valle de Colchagua, pesados al momento. Despacho martes a sábado.",
     url: SITE,
     siteName: "Estación Snack",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Estación Snack — Frutos secos por kilo" }],
@@ -89,7 +89,7 @@ const orgJsonLd = {
   "@id": `${SITE}/#business`,
   name: "Estación Snack",
   description:
-    "Frutos secos y dulces del Valle de Colchagua, pesados al momento. Despacho martes y viernes en Santa Cruz y alrededores.",
+    "Frutos secos y dulces del Valle de Colchagua, pesados al momento. Despacho martes a sábado en Santa Cruz y alrededores.",
   url: SITE,
   image: `${SITE}/og-image.jpg`,
   telephone: "+56953743338",

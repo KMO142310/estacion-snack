@@ -34,7 +34,7 @@ export default function CambiosDevolucionesPage() {
           <ol style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
             <li style={S.li}>Escribinos por WhatsApp al <a href="https://wa.me/56953743338" style={{ color: "#D0551F", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>.</li>
             <li style={S.li}>Indicanos tu nombre, la fecha del pedido y qué producto querés devolver.</li>
-            <li style={S.li}>Coordinamos el retiro del producto en la siguiente ruta de despacho (martes o viernes).</li>
+            <li style={S.li}>Coordinamos el retiro del producto en la siguiente ruta de despacho (martes a sábado).</li>
             <li style={S.li}>Una vez que recibimos el producto, procesamos el reembolso.</li>
           </ol>
 

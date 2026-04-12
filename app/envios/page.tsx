@@ -6,10 +6,10 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Envíos y despacho",
   description:
-    "Despachamos martes y viernes en Santa Cruz, Peralillo, Palmilla y Nancagua. Entrega coordinada por WhatsApp. Siempre gratis.",
+    "Despachamos martes a sábado en Santa Cruz, Peralillo, Palmilla y Nancagua. Entrega coordinada por WhatsApp. Siempre gratis.",
   openGraph: {
     title: "Envíos y despacho · Estación Snack",
-    description: "Despacho gratis, martes y viernes, coordinado por WhatsApp.",
+    description: "Despacho gratis, martes a sábado, coordinado por WhatsApp.",
   },
 };
 
@@ -24,9 +24,9 @@ const breadcrumbJsonLd = {
 
 const zonas = [
   { nombre: "Santa Cruz", desc: "Zona principal. Coordinamos el horario exacto por WhatsApp." },
-  { nombre: "Peralillo", desc: "Disponible martes y viernes según ruta." },
-  { nombre: "Palmilla", desc: "Disponible martes y viernes según ruta." },
-  { nombre: "Nancagua", desc: "Disponible martes y viernes según ruta." },
+  { nombre: "Peralillo", desc: "Disponible martes a sábado según ruta." },
+  { nombre: "Palmilla", desc: "Disponible martes a sábado según ruta." },
+  { nombre: "Nancagua", desc: "Disponible martes a sábado según ruta." },
 ];
 
 export default function EnviosPage() {
@@ -61,7 +61,7 @@ export default function EnviosPage() {
               Entrega en el valle
             </h1>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "#5E6B3E", lineHeight: 1.7 }}>
-              Despachamos los <strong style={{ color: "#5A1F1A" }}>martes y viernes</strong>. Coordinamos el día y horario exacto
+              Despachamos de <strong style={{ color: "#5A1F1A" }}>martes a sábado, de 19:30 a 21:00 hrs</strong>. Coordinamos
               por WhatsApp una vez confirmado el pedido. El envío es siempre gratis.
             </p>
           </div>
@@ -171,7 +171,7 @@ export default function EnviosPage() {
                 Plazo de entrega
               </p>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", lineHeight: 1.65 }}>
-                Despachamos el martes o viernes siguiente a la confirmación del pedido. Coordinamos la franja horaria por WhatsApp el día del despacho.
+                Despachamos el martes a sábado siguiente a la confirmación del pedido. Coordinamos la franja horaria por WhatsApp el día del despacho.
               </p>
             </div>
             <div

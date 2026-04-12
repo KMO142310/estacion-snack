@@ -71,7 +71,7 @@ export default function DetrasDe() {
               lineHeight: 1.75,
             }}
           >
-            Pesamos al momento, despachamos martes y viernes, y respondemos los mensajes nosotros mismos. No hay intermediarios ni bodega grande. Hay una pesa, un par de manos y ganas de que lo que comés sea bueno.
+            Pesamos al momento, despachamos martes a sábado, y respondemos los mensajes nosotros mismos. No hay intermediarios ni bodega grande. Hay una pesa, un par de manos y ganas de que lo que comés sea bueno.
           </p>
         </div>
       </div>

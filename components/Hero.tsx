@@ -75,7 +75,7 @@ export default function Hero({ onOrderOpen }: HeroProps) {
           marginBottom: "2rem",
         }}>
           Pesados al momento en Santa Cruz.<br />
-          Despacho martes y viernes en el valle.
+          Despacho martes a sábado en el valle.
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>

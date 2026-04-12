@@ -44,7 +44,7 @@ export default function Footer() {
               <li><a href="https://wa.me/56953743338" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(244,234,219,0.65)", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#F4EADB"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(244,234,219,0.65)"; }}>+56 9 5374 3338</a></li>
               <li><a href="https://instagram.com/estacionsnack.sc" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(244,234,219,0.65)", transition: "color 0.15s" }} onMouseEnter={(e) => { e.currentTarget.style.color = "#F4EADB"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(244,234,219,0.65)"; }}>@estacionsnack.sc</a></li>
               <li style={{ color: "rgba(244,234,219,0.65)" }}>Santa Cruz, O&apos;Higgins</li>
-              <li style={{ color: "rgba(244,234,219,0.65)" }}>Despacho mar. y vie.</li>
+              <li style={{ color: "rgba(244,234,219,0.65)" }}>Despacho mar. a sáb.</li>
             </ul>
           </div>
 

@@ -1,4 +1,4 @@
-// Camioneta de perfil — "despacho martes y viernes"
+// Camioneta de perfil — "despacho martes a sábado"
 // Trazo deliberadamente irregular (pluma a mano).
 export default function Truck({ size = 32, className = "" }: { size?: number; className?: string }) {
   return (

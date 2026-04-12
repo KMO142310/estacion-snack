@@ -37,7 +37,7 @@ export default function CierreCTA({ onOrderOpen }: Props) {
           margin: "0 auto 2rem",
         }}
       >
-        Elegí lo que querés, armá tu pedido y te lo llevamos martes o viernes a donde nos digás.
+        Elegí lo que querés, armá tu pedido y te lo llevamos martes a sábado a donde nos digás.
       </p>
 
       <button

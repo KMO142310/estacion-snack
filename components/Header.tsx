@@ -86,7 +86,7 @@ export default function Header({ onOrderOpen }: HeaderProps) {
             fontFamily: "var(--font-body)", fontSize: 12,
             color: "rgba(244,234,219,0.4)",
           }}>
-            Santa Cruz · Despacho martes y viernes
+            Santa Cruz · Martes a sábado · 19:30 a 21:00
           </p>
         </div>
       )}

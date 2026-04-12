@@ -182,7 +182,7 @@ export default function ContactoPage() {
               <div style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
                 <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", minWidth: 80 }}>Despacho</span>
                 <span style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5A1F1A" }}>
-                  Martes y viernes · Santa Cruz y alrededores
+                  Martes a sábado · Santa Cruz y alrededores
                 </span>
               </div>
             </div>

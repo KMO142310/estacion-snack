@@ -5,11 +5,11 @@ import { useState } from "react";
 const faqs = [
   {
     q: "¿Cómo hago mi pedido?",
-    a: 'Elegí los productos en el catálogo, seleccioná la cantidad y tocá "Agregar al pedido". Cuando estés listo, tocá "Confirmar por WhatsApp". Se abre un mensaje con todo tu pedido listo para enviar. Confirmamos por WhatsApp y coordinamos la entrega.',
+    a: 'Elige los productos en el catálogo, selecciona la cantidad y toca "Agregar al pedido". Cuando estés listo, toca "Confirmar por WhatsApp". Se abre un mensaje con todo tu pedido listo para enviar. Confirmamos por WhatsApp y coordinamos la entrega.',
   },
   {
     q: "¿A qué comunas despachan?",
-    a: "Despachamos en Santa Cruz, Peralillo, Palmilla y Nancagua. Si vivís en otra zona, escribinos por WhatsApp y lo evaluamos juntos.",
+    a: "Despachamos en Santa Cruz, Peralillo, Palmilla y Nancagua. Si vives en otra zona, escríbenos por WhatsApp y lo evaluamos juntos.",
   },
   {
     q: "¿Cuánto cuesta el envío?",
@@ -25,11 +25,11 @@ const faqs = [
   },
   {
     q: "¿Cuál es el mínimo de compra?",
-    a: "El mínimo por producto es 1 kg. Podés combinar varios productos para armar el pedido que quieras.",
+    a: "El mínimo por producto es 1 kg. Puedes combinar varios productos para armar el pedido que quieras.",
   },
   {
     q: "¿Puedo agregar más productos después de enviar el pedido?",
-    a: "Sí, siempre que no hayamos salido a despachar. Escribinos por WhatsApp y lo sumamos al pedido.",
+    a: "Sí, siempre que no hayamos salido a despachar. Escríbenos por WhatsApp y lo sumamos al pedido.",
   },
   {
     q: "¿Cuánto duran los productos?",
@@ -37,7 +37,7 @@ const faqs = [
   },
   {
     q: "¿Tengo derecho a retracto?",
-    a: "Sí. Por Ley 19.496 tenés 10 días hábiles desde la recepción para retractarte. Escribinos por WhatsApp y coordinamos la devolución del producto (sin abrir) y la restitución del pago.",
+    a: "Sí. Por Ley 19.496 tienes 10 días hábiles desde la recepción para retractarte. Escríbenos por WhatsApp y coordinamos la devolución del producto (sin abrir) y la restitución del pago.",
   },
 ];
 

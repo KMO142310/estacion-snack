@@ -66,7 +66,7 @@ export default function OgImage() {
             marginBottom: 52,
           }}
         >
-          Frutos secos frescos por kilo. Pedís por WhatsApp y llega martes a sábado.
+          Frutos secos frescos por kilo. Pide por WhatsApp y llega martes a sábado.
         </div>
 
         {/* Pills row */}

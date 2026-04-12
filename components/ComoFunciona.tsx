@@ -1,13 +1,13 @@
 const steps = [
   {
     number: "01",
-    title: "Elegís cuánto.",
-    desc: "Tocás la mezcla, elegís los kilos, lo sumás al pedido. Desde 1 kg por producto.",
+    title: "Eliges cuánto.",
+    desc: "Tocas la mezcla, eliges los kilos, lo sumás al pedido. Desde 1 kg por producto.",
   },
   {
     number: "02",
     title: "Mandás el resumen.",
-    desc: "Se arma solo. Tocás \"pedir por WhatsApp\" y te llevamos ahí con todo escrito.",
+    desc: "Se arma solo. Tocas \"pedir por WhatsApp\" y te llevamos ahí con todo escrito.",
   },
   {
     number: "03",

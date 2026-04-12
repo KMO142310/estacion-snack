@@ -18,15 +18,15 @@ const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: [
-    { "@type": "Question", name: "¿Cómo hago mi pedido?", acceptedAnswer: { "@type": "Answer", text: 'Elegí los productos, seleccioná la cantidad y tocá "Agregar al pedido". Cuando estés listo, tocá "Confirmar por WhatsApp".' } },
+    { "@type": "Question", name: "¿Cómo hago mi pedido?", acceptedAnswer: { "@type": "Answer", text: 'Elige los productos, selecciona la cantidad y toca "Agregar al pedido". Cuando estés listo, toca "Confirmar por WhatsApp".' } },
     { "@type": "Question", name: "¿A qué comunas despachan?", acceptedAnswer: { "@type": "Answer", text: "Despachamos en Santa Cruz, Peralillo, Palmilla y Nancagua." } },
     { "@type": "Question", name: "¿Cuánto cuesta el envío?", acceptedAnswer: { "@type": "Answer", text: "Primer envío gratis. Después, gratis en compras sobre $25.000. Bajo ese monto: $2.000 (Santa Cruz) o $2.500 (comunas cercanas)." } },
     { "@type": "Question", name: "¿Cuándo despachan?", acceptedAnswer: { "@type": "Answer", text: "De martes a sábado, entre 19:30 y 21:00 hrs. Coordinamos por WhatsApp." } },
     { "@type": "Question", name: "¿Qué medios de pago aceptan?", acceptedAnswer: { "@type": "Answer", text: "Transferencia bancaria o efectivo contra entrega." } },
-    { "@type": "Question", name: "¿Cuál es el mínimo de compra?", acceptedAnswer: { "@type": "Answer", text: "El mínimo por producto es 1 kg. Podés combinar varios productos." } },
+    { "@type": "Question", name: "¿Cuál es el mínimo de compra?", acceptedAnswer: { "@type": "Answer", text: "El mínimo por producto es 1 kg. Puedes combinar varios productos." } },
     { "@type": "Question", name: "¿Puedo agregar más productos después de enviar el pedido?", acceptedAnswer: { "@type": "Answer", text: "Sí, siempre que no hayamos salido a despachar." } },
     { "@type": "Question", name: "¿Cuánto duran los productos?", acceptedAnswer: { "@type": "Answer", text: "Los frutos secos duran 2–3 meses en frasco hermético. Los dulces hasta 6 meses." } },
-    { "@type": "Question", name: "¿Tengo derecho a retracto?", acceptedAnswer: { "@type": "Answer", text: "Sí. Por Ley 19.496 tenés 10 días hábiles desde la recepción para retractarte y solicitar la devolución del producto sin abrir." } },
+    { "@type": "Question", name: "¿Tengo derecho a retracto?", acceptedAnswer: { "@type": "Answer", text: "Sí. Por Ley 19.496 tienes 10 días hábiles desde la recepción para retractarte y solicitar la devolución del producto sin abrir." } },
   ],
 };
 
@@ -72,7 +72,7 @@ export default function FaqPage() {
               Preguntas frecuentes
             </h1>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "#5E6B3E", lineHeight: 1.65 }}>
-              Si no encontrás tu respuesta acá, escribinos por{" "}
+              Si no encontrás tu respuesta acá, escríbenos por{" "}
               <a
                 href="https://wa.me/56953743338"
                 target="_blank"

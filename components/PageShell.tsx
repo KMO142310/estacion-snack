@@ -17,10 +17,10 @@ import ToastStack from "./Toast";
 const products = productsData.slice().sort((a, b) => a.sort_order - b.sort_order);
 
 const TOP_FAQ = [
-  { q: "¿Cómo hago mi pedido?", a: 'Elegí los productos, tocá "Agregar" y confirmá por WhatsApp. Te respondemos y coordinamos la entrega.' },
+  { q: "¿Cómo hago mi pedido?", a: 'Elige los productos, toca "Agregar" y confirmá por WhatsApp. Te respondemos y coordinamos la entrega.' },
   { q: "¿A qué comunas despachan?", a: "Santa Cruz, Peralillo, Palmilla y Nancagua." },
   { q: "¿Cuánto cuesta el envío?", a: "Primer envío gratis. Después, gratis en compras sobre $20.000. Bajo ese monto, $2.000." },
-  { q: "¿Cuál es el mínimo de compra?", a: "1 kg por producto. Podés combinar varios." },
+  { q: "¿Cuál es el mínimo de compra?", a: "1 kg por producto. Puedes combinar varios." },
   { q: "¿Qué medios de pago aceptan?", a: "Transferencia bancaria o efectivo contra entrega." },
 ];
 
@@ -109,7 +109,7 @@ export default function PageShell() {
         <section style={{ background: "#5A1F1A", padding: "48px 20px", textAlign: "center" }}>
           <div className="container">
             <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(22px, 5vw, 36px)", color: "#F4EADB", lineHeight: 1.15, marginBottom: 8 }}>
-              Armá tu pedido.
+              Arma tu pedido.
             </p>
             <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "rgba(244,234,219,0.45)", marginBottom: 24 }}>
               Martes a sábado · 19:30 a 21:00 · Santa Cruz y alrededores

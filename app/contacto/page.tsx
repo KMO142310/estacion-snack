@@ -46,7 +46,7 @@ const opciones = [
       </svg>
     ),
     titulo: "Hacer un pedido",
-    desc: "Si sabés lo que querés, podés armar tu pedido directo desde el catálogo y mandarlo por WhatsApp.",
+    desc: "Si sabés lo que quieres, puedes armar tu pedido directo desde el catálogo y mandarlo por WhatsApp.",
     href: "/",
     cta: "Ir al catálogo",
     primary: false,

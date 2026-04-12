@@ -129,7 +129,7 @@ export default function EnviosPage() {
               ¿Vivís fuera de estas comunas?
             </p>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9rem", color: "#5E6B3E", lineHeight: 1.65 }}>
-              Escribinos por{" "}
+              Escríbenos por{" "}
               <a
                 href="https://wa.me/56953743338"
                 target="_blank"
@@ -184,7 +184,7 @@ export default function EnviosPage() {
                 Derecho a retracto
               </p>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", lineHeight: 1.65 }}>
-                Según la Ley 19.496, tenés 10 días hábiles desde la recepción para retractarte. Escribinos por WhatsApp con el producto sin abrir y coordinamos la devolución y restitución del pago.
+                Según la Ley 19.496, tienes 10 días hábiles desde la recepción para retractarte. Escríbenos por WhatsApp con el producto sin abrir y coordinamos la devolución y restitución del pago.
               </p>
             </div>
             <div
@@ -200,7 +200,7 @@ export default function EnviosPage() {
                 Producto en mal estado
               </p>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", lineHeight: 1.65 }}>
-                Si algo llega con problema, escribinos dentro de las 24 horas con foto y lo reemplazamos o devolvemos el pago en la próxima ruta.
+                Si algo llega con problema, escríbenos dentro de las 24 horas con foto y lo reemplazamos o devolvemos el pago en la próxima ruta.
               </p>
             </div>
           </div>

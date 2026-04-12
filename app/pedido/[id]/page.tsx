@@ -44,7 +44,7 @@ const STATUS_COPY: Record<OrderStatus, string> = {
   preparing: "Estamos armando tu pedido. Lo despachamos martes a sábado.",
   delivered: "Tu pedido fue entregado. ¡Gracias por confiar en nosotros!",
   cancelled:
-    "Este pedido fue cancelado. Si fue un error, escribinos por WhatsApp.",
+    "Este pedido fue cancelado. Si fue un error, escríbenos por WhatsApp.",
 };
 
 const fmt = (n: number) => "$" + n.toLocaleString("es-CL");

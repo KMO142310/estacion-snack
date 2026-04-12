@@ -64,7 +64,7 @@ export default function SobreNosotrosPage() {
             <p style={{ fontFamily: "var(--font-body)", fontSize: "1.0625rem", lineHeight: 1.75, color: "#5E6B3E" }}>
               Estación Snack nació en Santa Cruz con una idea simple: traer frutos secos
               frescos, de calidad, sin los márgenes inflados de las tiendas gourmet.
-              Vendemos por kilo porque así tiene más sentido — pagás lo que necesitás,
+              Vendemos por kilo porque así tiene más sentido — pagas lo que necesitás,
               sin el cartón, sin el plástico, sin el markup del packaging.
             </p>
           </div>
@@ -156,10 +156,10 @@ export default function SobreNosotrosPage() {
                 marginBottom: "0.75rem",
               }}
             >
-              ¿Querés saber más?
+              ¿Quieres saber más?
             </h2>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", marginBottom: "1.75rem", lineHeight: 1.65 }}>
-              Escribinos por WhatsApp o a través del formulario. Respondemos en menos de 24 horas hábiles.
+              Escríbenos por WhatsApp o a través del formulario. Respondemos en menos de 24 horas hábiles.
             </p>
             <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
               <a

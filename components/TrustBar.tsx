@@ -10,12 +10,12 @@ const items = [
   },
   {
     Icon: Truck,
-    title: "Primer envío gratis",
-    desc: "Martes a sábado\n19:30 a 21:00.",
+    title: "Martes a sábado",
+    desc: "19:30 a 21:00.\nSanta Cruz y alrededores.",
   },
   {
     Icon: Chat,
-    title: "Pedís por WhatsApp",
+    title: "Pide por WhatsApp",
     desc: "Te respondemos\nnosotros mismos.",
   },
 ];

@@ -42,7 +42,7 @@ export default function PrivacidadPage() {
           <h2 style={S.h2}>Para qué usamos tus datos</h2>
           <ul style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
             <li style={S.li}><strong>Cumplimiento del pedido</strong>: procesar tu compra, coordinar despacho, gestionar pagos y devoluciones. Base legal: ejecución del contrato.</li>
-            <li style={S.li}><strong>Analítica del sitio</strong>: entender cómo se usa el sitio para mejorarlo. Base legal: tu consentimiento, que podés retirar en cualquier momento.</li>
+            <li style={S.li}><strong>Analítica del sitio</strong>: entender cómo se usa el sitio para mejorarlo. Base legal: tu consentimiento, que puedes retirar en cualquier momento.</li>
           </ul>
 
           <h2 style={S.h2}>Terceros con acceso a datos</h2>
@@ -66,12 +66,12 @@ export default function PrivacidadPage() {
 
           <h2 style={S.h2}>Tus derechos (ARCO)</h2>
           <ul style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
-            <li style={S.li}><strong>Acceso</strong>: podés pedirnos que te digamos qué datos tuyos tenemos.</li>
-            <li style={S.li}><strong>Rectificación</strong>: si algún dato está mal, podés pedir que lo corrijamos.</li>
-            <li style={S.li}><strong>Cancelación</strong>: podés pedir que eliminemos tus datos cuando ya no sean necesarios.</li>
-            <li style={S.li}><strong>Oposición</strong>: podés oponerte al uso de tus datos para un fin específico.</li>
+            <li style={S.li}><strong>Acceso</strong>: puedes pedirnos que te digamos qué datos tuyos tenemos.</li>
+            <li style={S.li}><strong>Rectificación</strong>: si algún dato está mal, puedes pedir que lo corrijamos.</li>
+            <li style={S.li}><strong>Cancelación</strong>: puedes pedir que eliminemos tus datos cuando ya no sean necesarios.</li>
+            <li style={S.li}><strong>Oposición</strong>: puedes oponerte al uso de tus datos para un fin específico.</li>
           </ul>
-          <p style={S.p}>Para ejercer estos derechos, escribinos por WhatsApp al <a href="https://wa.me/56953743338" style={{ color: "#D0551F", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>. Te respondemos en un plazo máximo de 15 días hábiles.</p>
+          <p style={S.p}>Para ejercer estos derechos, escríbenos por WhatsApp al <a href="https://wa.me/56953743338" style={{ color: "#D0551F", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>. Te respondemos en un plazo máximo de 15 días hábiles.</p>
 
           <h2 style={S.h2}>Contacto</h2>
           <p style={S.p}>Cualquier duda sobre privacidad: WhatsApp <a href="https://wa.me/56953743338" style={{ color: "#D0551F", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>.</p>

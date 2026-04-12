@@ -28,8 +28,8 @@ export default function TerminosPage() {
 
           <h2 style={S.h2}>Cómo funciona un pedido</h2>
           <ol style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
-            <li style={S.li}>Elegís los productos y cantidades en estacionsnack.cl.</li>
-            <li style={S.li}>Tocás &quot;Confirmar por WhatsApp&quot;. Eso nos envía tu pedido.</li>
+            <li style={S.li}>Eliges los productos y cantidades en estacionsnack.cl.</li>
+            <li style={S.li}>Tocas &quot;Confirmar por WhatsApp&quot;. Eso nos envía tu pedido.</li>
             <li style={S.li}>Te respondemos por WhatsApp para confirmar disponibilidad, monto total y coordinar la entrega.</li>
             <li style={S.li}>El pedido queda firme cuando ambas partes confirmamos por WhatsApp.</li>
           </ol>
@@ -38,7 +38,7 @@ export default function TerminosPage() {
           <ul style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
             <li style={S.li}>Todos los precios publicados incluyen IVA.</li>
             <li style={S.li}>Aceptamos transferencia bancaria y efectivo contra entrega.</li>
-            <li style={S.li}>El pedido se prepara una vez confirmado el pago por transferencia, o se cobra al momento de la entrega si elegís efectivo.</li>
+            <li style={S.li}>El pedido se prepara una vez confirmado el pago por transferencia, o se cobra al momento de la entrega si eliges efectivo.</li>
           </ul>
 
           <h2 style={S.h2}>Disponibilidad</h2>
@@ -52,7 +52,7 @@ export default function TerminosPage() {
           </ul>
 
           <h2 style={S.h2}>Derecho a retracto</h2>
-          <p style={S.p}>Tenés 10 días hábiles desde que recibís el producto para retractarte de la compra, sin expresar causa, según el artículo 3 bis de la Ley 19.496. El producto debe estar sin abrir y en las mismas condiciones en que lo recibiste. Escribinos por WhatsApp al +56 9 5374 3338.</p>
+          <p style={S.p}>Tienes 10 días hábiles desde que recibes el producto para retractarte de la compra, sin expresar causa, según el artículo 3 bis de la Ley 19.496. El producto debe estar sin abrir y en las mismas condiciones en que lo recibiste. Escríbenos por WhatsApp al +56 9 5374 3338.</p>
 
           <h2 style={S.h2}>Devolución del pago</h2>
           <p style={S.p}>Si pagaste por transferencia, te devolvemos el monto a la misma cuenta. Si pagaste en efectivo, te lo reembolsamos en la siguiente entrega. Plazo máximo: 5 días hábiles desde que recibimos el producto de vuelta.</p>

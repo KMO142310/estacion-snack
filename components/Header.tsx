@@ -73,21 +73,6 @@ export default function Header({ onOrderOpen }: HeaderProps) {
         </button>
       </div>
 
-      {/* Tagline — solo visible arriba */}
-      {!scrolled && (
-        <div style={{ paddingBottom: 14 }}>
-          <p style={{
-            fontFamily: "var(--font-display)", fontWeight: 600,
-            fontSize: "clamp(18px, 4.5vw, 26px)", color: "#F4EADB",
-            lineHeight: 1.15, letterSpacing: "-0.01em", marginBottom: 4,
-          }}>
-            Frutos secos y dulces por kilo.
-          </p>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(244,234,219,0.4)" }}>
-            Santa Cruz · Martes a sábado · 19:30 a 21:00
-          </p>
-        </div>
-      )}
 
       <style>{`
         .brand-header {

@@ -379,6 +379,70 @@ export async function adminLogOrderView(
   });
 }
 
+export interface CaptureOrderItem {
+  product_name: string;
+  qty: number;
+  unit_price: number;
+}
+
+/**
+ * Capture a pending order intent BEFORE opening WhatsApp.
+ * No customer info yet (will arrive via WhatsApp chat). No stock deduction.
+ * Returns the order id so the WhatsApp message can reference it.
+ *
+ * Public (no assertAdmin) — this is the continuation of an anonymous
+ * checkout flow where the customer just built their cart and is about
+ * to contact the business. The order sits as 'pending_whatsapp' until
+ * the owner confirms it in the admin panel.
+ */
+export async function captureOrderIntent(
+  items: CaptureOrderItem[],
+  notes: string | null,
+): Promise<{ ok: boolean; orderId?: string; error?: string }> {
+  try {
+    if (!items.length) return { ok: false, error: "empty cart" };
+    const supabase = await createAdminSupabase();
+
+    const subtotal = items.reduce((s, i) => s + i.unit_price * i.qty, 0);
+
+    const { data: order, error: orderErr } = await supabase
+      .from("orders")
+      .insert({
+        status: "pending_whatsapp",
+        subtotal: Math.round(subtotal),
+        shipping: 0,
+        total: Math.round(subtotal),
+        notes: notes?.trim() || null,
+      })
+      .select("id")
+      .maybeSingle();
+
+    if (orderErr || !order) {
+      return { ok: false, error: orderErr?.message ?? "insert failed" };
+    }
+
+    const orderId = (order as { id: string }).id;
+
+    const itemRows = items.map((i) => ({
+      order_id: orderId,
+      product_id: null,
+      product_name: i.product_name,
+      qty: i.qty,
+      unit_price: Math.round(i.unit_price),
+      subtotal: Math.round(i.unit_price * i.qty),
+    }));
+
+    const { error: itemsErr } = await supabase.from("order_items").insert(itemRows);
+    if (itemsErr) {
+      return { ok: false, error: itemsErr.message };
+    }
+
+    return { ok: true, orderId };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : String(e) };
+  }
+}
+
 export interface ContactMessageRow {
   id: string;
   created_at: string;

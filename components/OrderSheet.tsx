@@ -6,6 +6,7 @@ import { useCartStore } from "@/lib/store";
 import { fmt, fmtKg } from "@/lib/cart-utils";
 import { hapticLight, hapticSuccess } from "@/lib/haptics";
 import { buildWaUrl } from "@/lib/whatsapp";
+import { captureOrder } from "@/lib/actions";
 import { getPackAvailability, type Pack, type ProductStock } from "@/lib/pack-utils";
 import X from "./icons/X";
 import Minus from "./icons/Minus";
@@ -59,12 +60,37 @@ export default function OrderSheet({ open, onClose }: Props) {
     if (loading || items.length === 0) return;
     setLoading(true);
     hapticSuccess();
-    await new Promise((r) => setTimeout(r, 600));
+
+    // Capture order intent for analytics (non-blocking — WhatsApp flow continues on failure)
+    const captureItems = items.map((item) => {
+      if (item.kind === "product") {
+        const p = productsData.find((x) => x.id === item.id);
+        return {
+          product_name: p?.name ?? item.name ?? "Producto",
+          qty: item.qty,
+          unit_price: p?.price ?? 0,
+        };
+      } else {
+        const pk = (packsData as Pack[]).find((x) => x.id === item.id);
+        return {
+          product_name: `${pk?.name ?? item.name ?? "Pack"} (pack)`,
+          qty: item.qty,
+          unit_price: pk?.price ?? 0,
+        };
+      }
+    });
+
+    const captureResult = await captureOrder(captureItems, note).catch(() => ({ ok: false, orderId: undefined }));
+    const orderRef = captureResult.ok && captureResult.orderId
+      ? captureResult.orderId.slice(0, 8)
+      : undefined;
+
     const url = buildWaUrl(
       items,
       productsData.map((p) => ({ id: p.id, name: p.name, price: p.price })),
       packsData as Pack[],
-      note
+      note,
+      orderRef,
     );
     clear();
     onClose();

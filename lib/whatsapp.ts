@@ -19,7 +19,8 @@ export function buildWaUrl(
   items: CartLine[],
   products: Product[],
   packs: Pack[],
-  note?: string
+  note?: string,
+  orderRef?: string,
 ): string {
   const lines: string[] = ["Hola! Quiero hacer un pedido:"];
   lines.push("");
@@ -57,6 +58,11 @@ export function buildWaUrl(
 
   lines.push("");
   lines.push("Te paso la dirección cuando me confirmes.");
+
+  if (orderRef) {
+    lines.push("");
+    lines.push(`(ref: ${orderRef})`);
+  }
 
   const text = lines.join("\n");
   return `${WA_BASE}?text=${encodeURIComponent(text)}`;

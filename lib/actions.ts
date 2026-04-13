@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "./supabase/server";
-import { adminGetOrderAccessToken } from "./supabase/admin";
+import { adminGetOrderAccessToken, captureOrderIntent, type CaptureOrderItem } from "./supabase/admin";
 import { PRODUCTS } from "./products";
 import { WA, BANK_INFO } from "./business-info";
 import type { Product } from "./types";
@@ -73,6 +73,18 @@ export async function reserveStock(
   } catch (e) {
     return { ok: false, error: String(e) };
   }
+}
+
+/**
+ * Captures a pending order intent before the customer opens WhatsApp.
+ * Fire-and-forget style: best-effort logging so the business can analyze
+ * what's being bought. Never blocks the WhatsApp flow.
+ */
+export async function captureOrder(
+  items: CaptureOrderItem[],
+  notes?: string,
+): Promise<{ ok: boolean; orderId?: string; error?: string }> {
+  return captureOrderIntent(items, notes ?? null);
 }
 
 export async function placeOrder(params: {

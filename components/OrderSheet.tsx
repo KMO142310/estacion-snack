@@ -105,7 +105,13 @@ export default function OrderSheet({ open, onClose }: Props) {
       ? (productsData.find((p) => p.id === item.id)?.min_unit_kg ?? 1)
       : 1;
     const max = getMaxQty(item);
-    if (newQty < min || newQty > max) return;
+    // Si el usuario baja por debajo del mínimo → eliminar el item
+    if (newQty < min) {
+      removeItem(item.id, item.kind);
+      addToast("Eliminado", "info");
+      return;
+    }
+    if (newQty > max) return;
     updateQty(item.id, item.kind, newQty);
   }
 
@@ -275,17 +281,16 @@ export default function OrderSheet({ open, onClose }: Props) {
                               }}>
                                 <button
                                   onClick={() => stepQty(item, -1)}
-                                  disabled={atMin}
-                                  aria-label="Menos"
+                                  aria-label={atMin ? "Eliminar" : "Menos"}
                                   style={{
                                     width: 40, height: 40, display: "flex", alignItems: "center", justifyContent: "center",
-                                    border: "none", borderRadius: "999px 0 0 999px", cursor: atMin ? "default" : "pointer",
+                                    border: "none", borderRadius: "999px 0 0 999px", cursor: "pointer",
                                     background: "transparent",
-                                    color: atMin ? "rgba(90,31,26,0.2)" : "#5A1F1A",
+                                    color: "#5A1F1A",
                                     WebkitTapHighlightColor: "transparent",
                                   }}
                                 >
-                                  <Minus size={16} />
+                                  {atMin ? <X size={14} /> : <Minus size={16} />}
                                 </button>
                                 <span style={{
                                   minWidth: 48, textAlign: "center", fontFamily: "var(--font-body)",
@@ -319,20 +324,6 @@ export default function OrderSheet({ open, onClose }: Props) {
                             </div>
                           </div>
 
-                          {/* Eliminar */}
-                          <button
-                            onClick={() => { removeItem(item.id, item.kind); addToast("Eliminado", "info"); }}
-                            aria-label={`Eliminar ${getLabel(item)}`}
-                            style={{
-                              width: 32, height: 32, borderRadius: "50%", background: "transparent",
-                              color: "rgba(90,31,26,0.35)", display: "flex", alignItems: "center", justifyContent: "center",
-                              border: "none", cursor: "pointer", flexShrink: 0,
-                              WebkitTapHighlightColor: "transparent",
-                              alignSelf: "flex-start",
-                            }}
-                          >
-                            <X size={16} />
-                          </button>
                         </motion.div>
                       );
                     })}

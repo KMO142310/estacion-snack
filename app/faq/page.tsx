@@ -20,7 +20,7 @@ const faqSchema = {
   mainEntity: [
     { "@type": "Question", name: "¿Cómo hago mi pedido?", acceptedAnswer: { "@type": "Answer", text: 'Elige los productos, selecciona la cantidad y toca "Agregar al pedido". Cuando estés listo, toca "Confirmar por WhatsApp".' } },
     { "@type": "Question", name: "¿A qué comunas despachan?", acceptedAnswer: { "@type": "Answer", text: "Despachamos en Santa Cruz, Peralillo, Palmilla y Nancagua." } },
-    { "@type": "Question", name: "¿Cuánto cuesta el envío?", acceptedAnswer: { "@type": "Answer", text: "Primer envío gratis. Después, gratis en compras sobre $25.000. Bajo ese monto: $2.000 (Santa Cruz) o $2.500 (comunas cercanas)." } },
+    { "@type": "Question", name: "¿Cuánto cuesta el envío?", acceptedAnswer: { "@type": "Answer", text: "Envío gratis en compras sobre $25.000. Bajo ese monto: $2.000 (Santa Cruz) o $3.000 (comunas cercanas)." } },
     { "@type": "Question", name: "¿Cuándo despachan?", acceptedAnswer: { "@type": "Answer", text: "De martes a sábado, entre 19:30 y 21:00 hrs. Coordinamos por WhatsApp." } },
     { "@type": "Question", name: "¿Qué medios de pago aceptan?", acceptedAnswer: { "@type": "Answer", text: "Transferencia bancaria o efectivo contra entrega." } },
     { "@type": "Question", name: "¿Cuál es el mínimo de compra?", acceptedAnswer: { "@type": "Answer", text: "El mínimo por producto es 1 kg. Puedes combinar varios productos." } },

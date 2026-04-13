@@ -34,22 +34,22 @@ export default function Header({ onOrderOpen }: HeaderProps) {
     <header style={{
       position: "sticky", top: 0, zIndex: 200,
       background: "#5A1F1A",
-      padding: "0 16px", height: 54,
+      padding: "0 20px", height: 62,
       display: "flex", alignItems: "center", justifyContent: "space-between",
       transform: visible ? "translateY(0)" : "translateY(-100%)",
       transition: "transform 0.25s ease",
     }}>
       <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
         <span style={{
-          width: 30, height: 30, borderRadius: 8,
+          width: 36, height: 36, borderRadius: 10,
           background: "#D0551F", color: "#F4EADB",
-          fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 18,
+          fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 20,
           display: "flex", alignItems: "center", justifyContent: "center",
           lineHeight: 1,
         }}>
           E
         </span>
-        <span style={{ fontFamily: "var(--font-display)", fontSize: 16, letterSpacing: "-0.01em", lineHeight: 1 }}>
+        <span style={{ fontFamily: "var(--font-display)", fontSize: 18, letterSpacing: "-0.01em", lineHeight: 1 }}>
           <span style={{ fontWeight: 700, color: "#F4EADB" }}>Estación </span>
           <span style={{ fontWeight: 400, color: "rgba(244,234,219,0.5)" }}>Snack</span>
         </span>
@@ -58,12 +58,12 @@ export default function Header({ onOrderOpen }: HeaderProps) {
       <button onClick={onOrderOpen}
         aria-label={`Ver pedido${itemCount > 0 ? ` (${itemCount})` : ""}`}
         style={{
-          position: "relative", width: 38, height: 38,
-          background: "rgba(244,234,219,0.1)", color: "#F4EADB",
-          borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center",
+          position: "relative", width: 44, height: 44,
+          background: "rgba(244,234,219,0.12)", color: "#F4EADB",
+          borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center",
           border: "none", cursor: "pointer",
         }}>
-        <ShoppingBag size={17} />
+        <ShoppingBag size={20} />
         {itemCount > 0 && (
           <span key={itemCount} style={{
             position: "absolute", top: -3, right: -3, minWidth: 16, height: 16, padding: "0 4px",

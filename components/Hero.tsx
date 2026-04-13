@@ -16,7 +16,7 @@ export default function Hero({ onOrderOpen }: HeroProps) {
       aria-label="Inicio"
       style={{
         position: "relative",
-        minHeight: "100svh",
+        minHeight: "80svh",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",

@@ -45,7 +45,7 @@ export default function Announce() {
 
   const messages = [
     dispatch ? `Próximo despacho: ${dispatch}` : "Despacho martes a sábado · 19:30 a 21:00",
-    "Primer envío gratis · Sobre $25.000 siempre gratis",
+    "Envío gratis sobre $25.000 · Santa Cruz $2.000",
     "Frutos secos por kilo — desde 1 kg",
   ];
 

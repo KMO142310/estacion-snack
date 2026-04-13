@@ -290,7 +290,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                                     WebkitTapHighlightColor: "transparent",
                                   }}
                                 >
-                                  {atMin ? <X size={14} /> : <Minus size={16} />}
+                                  <Minus size={16} />
                                 </button>
                                 <span style={{
                                   minWidth: 48, textAlign: "center", fontFamily: "var(--font-body)",

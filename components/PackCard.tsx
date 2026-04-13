@@ -48,6 +48,9 @@ export default function PackCard({ pack, products, onOpen }: Props) {
         overflow: "hidden",
         cursor: isAgotado ? "default" : "pointer",
         opacity: isAgotado ? 0.6 : 1,
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
         boxShadow: "0 2px 20px rgba(90,31,26,0.08)",
         WebkitTapHighlightColor: "transparent",
       }}
@@ -127,7 +130,7 @@ export default function PackCard({ pack, products, onOpen }: Props) {
       </div>
 
       {/* Info */}
-      <div style={{ padding: "1.125rem" }}>
+      <div style={{ padding: "1.125rem", display: "flex", flexDirection: "column", flex: 1 }}>
         <h3
           style={{
             fontFamily: "var(--font-display)",
@@ -161,6 +164,7 @@ export default function PackCard({ pack, products, onOpen }: Props) {
             background: "rgba(90,31,26,0.04)",
             borderRadius: "10px",
             marginBottom: "0.75rem",
+            marginTop: "auto",
           }}
         >
           <div>

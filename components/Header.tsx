@@ -65,11 +65,12 @@ export default function Header({ onOrderOpen }: HeaderProps) {
         }}>
         <ShoppingBag size={17} />
         {itemCount > 0 && (
-          <span style={{
+          <span key={itemCount} style={{
             position: "absolute", top: -3, right: -3, minWidth: 16, height: 16, padding: "0 4px",
             background: "#D0551F", color: "#F4EADB", fontSize: 9, fontWeight: 700,
             borderRadius: 999, display: "flex", alignItems: "center", justifyContent: "center",
             fontFamily: "var(--font-body)",
+            animation: "badgePop 0.2s ease",
           }}>{itemCount}</span>
         )}
       </button>

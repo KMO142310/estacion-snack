@@ -56,7 +56,7 @@ export function buildWaUrl(
   }
 
   lines.push("");
-  lines.push("Te paso la dirección cuando me confirmés.");
+  lines.push("Te paso la dirección cuando me confirmes.");
 
   const text = lines.join("\n");
   return `${WA_BASE}?text=${encodeURIComponent(text)}`;

@@ -23,6 +23,7 @@ export default function PackSheet({ pack, products, onClose }: Props) {
 
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
+  const setOrderOpen = useCartStore((s) => s.setOrderOpen);
 
   useEffect(() => {
     const prev = document.body.style.overflow;
@@ -54,6 +55,7 @@ export default function PackSheet({ pack, products, onClose }: Props) {
     await new Promise((r) => setTimeout(r, 250));
     setAdding(false);
     onClose();
+    setTimeout(() => setOrderOpen(true), 300);
   };
 
   return (

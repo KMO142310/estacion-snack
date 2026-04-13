@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { MotionConfig } from "framer-motion";
 import { useCartStore } from "@/lib/store";
 import productsData from "@/data/products.json";
+import Announce from "./Announce";
 import Header from "./Header";
 import ProductCard from "./ProductCard";
 import ProductSheet from "./ProductSheet";
@@ -24,24 +26,20 @@ const TOP_FAQ = [
 ];
 
 export default function PageShell() {
-  const [orderOpen, setOrderOpen] = useState(false);
   const [sheetProduct, setSheetProduct] = useState<typeof products[number] | null>(null);
+  const orderOpen = useCartStore((s) => s.orderOpen);
+  const setOrderOpen = useCartStore((s) => s.setOrderOpen);
   const itemCount = useCartStore((s) => s.items.length);
 
   useEffect(() => { useCartStore.persist.rehydrate(); }, []);
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <a href="#productos" className="skip">Saltar al contenido</a>
+      <Announce />
       <Header onOrderOpen={() => setOrderOpen(true)} />
 
       <main>
-        {/* Entrada */}
-        <div style={{ background: "#D0551F", padding: "8px 16px", textAlign: "center" }}>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 600, color: "#F4EADB" }}>
-            Primer envío gratis · Compras sobre $25.000 envío gratis
-          </p>
-        </div>
 
         {/* Productos */}
         <section id="productos" style={{ background: "#F4EADB", padding: "1.75rem 16px 3rem" }}>
@@ -166,6 +164,7 @@ export default function PageShell() {
         .container { max-width: 1100px; margin: 0 auto; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
         @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+        @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
         .pcard { transition: transform .2s ease; }
         @media (min-width: 768px) and (hover:hover) {
           .pcard:hover { transform: translateY(-3px); }
@@ -175,6 +174,6 @@ export default function PageShell() {
         @media (min-width: 768px) { .sticky-bar { display:none !important; } }
         details summary::-webkit-details-marker { display: none; }
       `}</style>
-    </>
+    </MotionConfig>
   );
 }

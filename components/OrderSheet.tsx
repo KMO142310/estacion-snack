@@ -181,7 +181,9 @@ export default function OrderSheet({ open, onClose }: Props) {
                             {getItemLabel(item)}
                           </p>
                           <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "#5E6B3E" }}>
-                            {item.kind === "product" ? fmtKg(item.qty) : `x${item.qty}`}
+                            {item.kind === "product"
+                              ? `${fmtKg(item.qty)} · ${fmt(Math.round((item.pricePerUnit ?? 0) / 10))}/100 g`
+                              : `x${item.qty}`}
                           </p>
                         </div>
                         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexShrink: 0 }}>

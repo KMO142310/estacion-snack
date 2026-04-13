@@ -84,10 +84,15 @@ export default function ProductCard({ product, onOpen }: Props) {
             {copy}
           </p>
         )}
-        <p className="price" style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: 15, color: agotado ? "#aaa" : "#D0551F", marginBottom: 10 }}>
+        <p className="price" style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: 15, color: agotado ? "#aaa" : "#D0551F", marginBottom: 2 }}>
           {agotado ? "Agotado" : fmt(price)}
           {!agotado && <span style={{ fontWeight: 400, fontSize: 11, color: "#5E6B3E", marginLeft: 2 }}>/kg</span>}
         </p>
+        {!agotado && (
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 11, color: "rgba(94,107,62,0.7)", marginBottom: 10 }}>
+            {fmt(Math.round(price / 10))}/100 g
+          </p>
+        )}
         {!agotado && (
           <button
             onClick={handleAdd}

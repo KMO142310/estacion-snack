@@ -38,6 +38,7 @@ export default function ProductSheet({ product, onClose }: Props) {
 
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
+  const setOrderOpen = useCartStore((s) => s.setOrderOpen);
 
   const selectedQty = selectedChip ?? customQty;
   const price = product.price * selectedQty;
@@ -100,6 +101,7 @@ export default function ProductSheet({ product, onClose }: Props) {
     await new Promise((r) => setTimeout(r, 250));
     setAdding(false);
     onClose();
+    setTimeout(() => setOrderOpen(true), 300);
   };
 
   return (
@@ -440,7 +442,7 @@ export default function ProductSheet({ product, onClose }: Props) {
                 fontWeight: 500,
               }}
             >
-              {fmtKg(selectedQty)} · {fmt(product.price)}/kg
+              {fmtKg(selectedQty)} · {fmt(product.price)}/kg · {fmt(Math.round(product.price / 10))}/100 g
             </p>
             <p
               style={{

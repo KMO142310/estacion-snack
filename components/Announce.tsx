@@ -1,58 +1,96 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+function getNextDispatch(): string {
+  const now = new Date();
+  const day = now.getDay();
+  const hour = now.getHours();
+  // Dispatch days: Tue(2) to Sat(6), until 21:00
+  if (day >= 2 && day <= 6 && hour < 21) return "hoy";
+  let next = (day + 1) % 7;
+  let daysAhead = 1;
+  while (next < 2 || next > 6) {
+    next = (next + 1) % 7;
+    daysAhead++;
+  }
+  if (daysAhead === 1) return "mañana";
+  return ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"][next];
+}
+
+const MSG_COUNT = 3;
 
 export default function Announce() {
+  const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [fade, setFade] = useState(true);
+  const [dispatch, setDispatch] = useState("");
+
+  useEffect(() => {
+    setDispatch(getNextDispatch());
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setIndex((i) => (i + 1) % MSG_COUNT);
+        setFade(true);
+      }, 300);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
   if (!visible) return null;
 
-  const nextDispatch = () => {
-    const now = new Date();
-    const day = now.getDay(); // 0=Sun,1=Mon,...
-    // Next Tue=2 or Fri=5
-    const daysToTue = (2 - day + 7) % 7 || 7;
-    const daysToFri = (5 - day + 7) % 7 || 7;
-    const nextDays = Math.min(daysToTue, daysToFri);
-    if (nextDays === 0) return "hoy";
-    if (nextDays === 1) return "mañana";
-    const names = ["dom","lun","mar","mié","jue","vie","sáb"];
-    const next = new Date(now);
-    next.setDate(now.getDate() + nextDays);
-    return names[next.getDay()];
-  };
+  const messages = [
+    dispatch ? `Próximo despacho: ${dispatch}` : "Despacho martes a sábado · 19:30 a 21:00",
+    "Primer envío gratis · Sobre $25.000 siempre gratis",
+    "Frutos secos por kilo — desde 1 kg",
+  ];
 
   return (
     <div
       role="status"
       aria-live="polite"
       style={{
-        background: "var(--orange-soft)",
-        color: "var(--text)",
-        padding: "8px 16px",
+        background: "#D0551F",
+        color: "#F4EADB",
+        padding: "7px 40px 7px 16px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        gap: 12,
         fontSize: 12,
         fontWeight: 600,
+        fontFamily: "var(--font-body)",
         position: "relative",
+        minHeight: 32,
       }}
     >
-      <span>📦 Próximo despacho: <strong style={{ fontWeight: 800, color: "var(--text)" }}>{nextDispatch()}</strong></span>
+      <span
+        style={{
+          opacity: fade ? 1 : 0,
+          transition: "opacity 0.3s ease",
+          textAlign: "center",
+        }}
+      >
+        {messages[index]}
+      </span>
       <button
         aria-label="Cerrar aviso"
         onClick={() => setVisible(false)}
         style={{
           background: "none",
           border: "none",
-          color: "var(--sub)",
+          color: "rgba(244,234,219,0.6)",
           fontSize: 14,
           padding: "4px 8px",
           position: "absolute",
-          right: 8,
+          right: 4,
           top: "50%",
           transform: "translateY(-50%)",
           cursor: "pointer",
+          lineHeight: 1,
         }}
       >
         ✕

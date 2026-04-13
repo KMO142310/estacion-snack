@@ -23,11 +23,13 @@ interface CartState {
   items: CartLine[];
   expiresAt: number;
   toasts: Toast[];
+  orderOpen: boolean;
 
   addItem: (item: Omit<CartLine, "kind"> & { kind: CartLineKind }) => void;
   updateQty: (id: string, kind: CartLineKind, qty: number) => void;
   removeItem: (id: string, kind: CartLineKind) => void;
   clear: () => void;
+  setOrderOpen: (open: boolean) => void;
 
   addToast: (message: string, type?: "success" | "info") => void;
   removeToast: (id: string) => void;
@@ -45,6 +47,7 @@ export const useCartStore = create<CartState>()(
       items: [],
       expiresAt: freshExpiry(),
       toasts: [],
+      orderOpen: false,
 
       addItem: (item) =>
         set((s) => {
@@ -75,6 +78,8 @@ export const useCartStore = create<CartState>()(
         })),
 
       clear: () => set({ items: [], expiresAt: freshExpiry() }),
+
+      setOrderOpen: (open) => set({ orderOpen: open }),
 
       addToast: (message, type = "success") =>
         set((s) => {

@@ -1,12 +1,28 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
+import productsData from "@/data/products.json";
 
 interface HeroProps {
   onOrderOpen: () => void;
 }
 
+const HERO_IMAGES = productsData.map((p) => p.image_webp_url);
+const ROTATE_MS = 5000;
+
 export default function Hero({ onOrderOpen }: HeroProps) {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (HERO_IMAGES.length <= 1) return;
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % HERO_IMAGES.length);
+    }, ROTATE_MS);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <section
       aria-label="Inicio"
@@ -19,18 +35,29 @@ export default function Hero({ onOrderOpen }: HeroProps) {
         justifyContent: "flex-end",
       }}
     >
-      {/* Foto de producto como fondo */}
-      <Image
-        src="/img/mix-europeo-x-kilo.webp"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        style={{ objectFit: "cover", objectPosition: "center 35%" }}
-        aria-hidden="true"
-      />
+      {/* Fondo rotativo — imágenes de productos con crossfade */}
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={HERO_IMAGES[index]}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+          style={{ position: "absolute", inset: 0 }}
+          aria-hidden="true"
+        >
+          <Image
+            src={HERO_IMAGES[index]}
+            alt=""
+            fill
+            priority={index === 0}
+            sizes="100vw"
+            style={{ objectFit: "cover", objectPosition: "center 35%" }}
+          />
+        </motion.div>
+      </AnimatePresence>
 
-      {/* Overlay degradado — deja ver la foto arriba, oscurece abajo para leer el texto */}
+      {/* Overlay degradado — texto legible abajo */}
       <div
         aria-hidden="true"
         style={{
@@ -38,6 +65,7 @@ export default function Hero({ onOrderOpen }: HeroProps) {
           inset: 0,
           background:
             "linear-gradient(to bottom, rgba(90,31,26,0.15) 0%, rgba(90,31,26,0.55) 40%, rgba(90,31,26,0.92) 75%, rgba(90,31,26,0.98) 100%)",
+          zIndex: 1,
         }}
       />
 

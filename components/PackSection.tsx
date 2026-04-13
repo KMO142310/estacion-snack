@@ -40,7 +40,13 @@ export default function PackSection() {
         </p>
       </div>
 
-      <div className="pack-grid">
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "1fr",
+        gap: 16,
+        maxWidth: 420,
+        margin: "0 auto",
+      }} className="pack-grid-inline">
         {packs.map((pack) => (
           <PackCard
             key={pack.id}
@@ -50,6 +56,12 @@ export default function PackSection() {
           />
         ))}
       </div>
+
+      <style>{`
+        @media (min-width: 768px) {
+          .pack-grid-inline { grid-template-columns: repeat(3, 1fr) !important; max-width: none !important; margin: 0 !important; }
+        }
+      `}</style>
 
       {selected && (
         <PackSheet

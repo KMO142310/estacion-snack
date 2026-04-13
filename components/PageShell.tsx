@@ -169,8 +169,8 @@ export default function PageShell() {
         @media (min-width: 768px) and (hover:hover) {
           .pcard:hover { transform: translateY(-3px); }
         }
-        .pack-grid { display: grid; grid-template-columns: 1fr; gap: 14px; max-width: 400px; }
-        @media (min-width: 640px) { .pack-grid { grid-template-columns: 1fr 1fr 1fr; max-width: none; } }
+        .pack-grid { display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 420px; margin: 0 auto; }
+        @media (min-width: 768px) { .pack-grid { grid-template-columns: repeat(3, 1fr); max-width: none; margin: 0; } }
         @media (min-width: 768px) { .sticky-bar { display:none !important; } }
         details summary::-webkit-details-marker { display: none; }
       `}</style>

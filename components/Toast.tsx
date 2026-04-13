@@ -7,12 +7,13 @@ import { useCartStore } from "@/lib/store";
 export default function ToastStack() {
   const toasts = useCartStore((s) => s.toasts);
   const removeToast = useCartStore((s) => s.removeToast);
+  const setOrderOpen = useCartStore((s) => s.setOrderOpen);
 
   useEffect(() => {
     if (toasts.length === 0) return;
     const timer = setTimeout(() => {
       removeToast(toasts[0].id);
-    }, 1400);
+    }, 3500);
     return () => clearTimeout(timer);
   }, [toasts, removeToast]);
 
@@ -24,12 +25,9 @@ export default function ToastStack() {
       style={{
         position: "fixed",
         bottom: "calc(70px + env(safe-area-inset-bottom, 0px))",
-        left: "50%",
-        transform: "translateX(-50%)",
+        left: 12,
+        right: 12,
         zIndex: 9000,
-        pointerEvents: "none",
-        width: "calc(100% - 2rem)",
-        maxWidth: 340,
       }}
     >
       <AnimatePresence mode="wait">
@@ -37,23 +35,63 @@ export default function ToastStack() {
           <motion.div
             key={latest.id}
             role="status"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.2 }}
+            initial={{ opacity: 0, y: 24, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 380, damping: 26 }}
             style={{
               background: "#5A1F1A",
               color: "#F4EADB",
-              padding: "10px 16px",
-              borderRadius: 10,
+              padding: "12px 14px",
+              borderRadius: 14,
               fontFamily: "var(--font-body)",
-              fontSize: 14,
-              fontWeight: 500,
-              boxShadow: "0 4px 20px rgba(90,31,26,0.25)",
-              textAlign: "center",
+              boxShadow: "0 8px 32px rgba(90,31,26,0.35)",
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
             }}
           >
-            {latest.message}
+            {/* Checkmark */}
+            <span style={{
+              width: 30, height: 30, borderRadius: "50%",
+              background: "#5E6B3E", display: "flex",
+              alignItems: "center", justifyContent: "center",
+              flexShrink: 0,
+              animation: "scaleIn 0.3s ease",
+            }}>
+              <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="#F4EADB" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </span>
+
+            {/* Message */}
+            <span style={{ flex: 1, fontSize: 14, fontWeight: 500, lineHeight: 1.3 }}>
+              {latest.message}
+            </span>
+
+            {/* CTA */}
+            <button
+              onClick={() => {
+                removeToast(latest.id);
+                setOrderOpen(true);
+              }}
+              style={{
+                fontFamily: "var(--font-body)",
+                fontWeight: 700,
+                fontSize: 13,
+                color: "#5A1F1A",
+                background: "#F4EADB",
+                border: "none",
+                borderRadius: 8,
+                padding: "8px 14px",
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+                flexShrink: 0,
+                WebkitTapHighlightColor: "transparent",
+              }}
+            >
+              Ver pedido
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

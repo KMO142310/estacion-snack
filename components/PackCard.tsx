@@ -198,10 +198,11 @@ export default function PackCard({ pack, products, onOpen }: Props) {
               border: "none", borderRadius: 10, padding: "10px 0",
               cursor: "pointer", minHeight: 42,
               WebkitTapHighlightColor: "transparent",
-              transition: "background 0.2s ease",
+              transition: "all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)",
+              transform: added ? "scale(1.03)" : "scale(1)",
             }}
           >
-            {added ? "Listo" : `Agregar pack · ${fmt(pack.price)}`}
+            {added ? "✓ Agregado" : `Agregar pack · ${fmt(pack.price)}`}
           </button>
         ) : (
           <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#5E6B3E", fontWeight: 600, textAlign: "center" }}>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCartStore } from "@/lib/store";
 import { fmt, fmtKg } from "@/lib/cart-utils";
@@ -219,11 +220,10 @@ export default function OrderSheet({ open, onClose }: Props) {
                         : 1;
                       const atMin = item.qty <= minQty;
                       const atMax = item.qty >= maxQty;
-                      const unitPrice = getUnitPrice(item);
-                      const stockKg = item.kind === "product"
-                        ? productsData.find((p) => p.id === item.id)?.stock_kg ?? 99
-                        : null;
-                      const stockLow = stockKg !== null && stockKg <= 3;
+
+                      const imageSrc = item.kind === "product"
+                        ? productsData.find((p) => p.id === item.id)?.image_webp_url
+                        : (packsData as Pack[]).find((p) => p.id === item.id)?.image_webp_url;
 
                       return (
                         <motion.div
@@ -233,105 +233,106 @@ export default function OrderSheet({ open, onClose }: Props) {
                           animate={{ opacity: 1, x: 0 }}
                           exit={{ opacity: 0, x: 60, transition: { duration: 0.2 } }}
                           style={{
+                            display: "flex",
+                            gap: 12,
                             padding: "0.875rem 0",
                             borderBottom: "1px solid rgba(90,31,26,0.08)",
+                            alignItems: "center",
                           }}
                         >
-                          {/* Row 1: Name + delete */}
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
+                          {/* Thumbnail */}
+                          {imageSrc && (
+                            <div style={{
+                              width: 64, height: 64, borderRadius: 10, overflow: "hidden",
+                              position: "relative", flexShrink: 0, background: "#EDE4D6",
+                            }}>
+                              <Image
+                                src={imageSrc}
+                                alt=""
+                                fill
+                                sizes="64px"
+                                style={{ objectFit: "cover" }}
+                              />
+                            </div>
+                          )}
+
+                          {/* Main content */}
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            {/* Nombre */}
                             <p style={{
                               fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.9375rem",
-                              color: "#5A1F1A", flex: 1, lineHeight: 1.3,
+                              color: "#5A1F1A", lineHeight: 1.3, marginBottom: 8,
                             }}>
                               {getLabel(item)}
                             </p>
-                            <button
-                              onClick={() => { removeItem(item.id, item.kind); addToast("Producto eliminado", "info"); }}
-                              aria-label={`Eliminar ${getLabel(item)}`}
-                              style={{
-                                width: 28, height: 28, borderRadius: "50%", background: "rgba(90,31,26,0.06)",
-                                color: "rgba(90,31,26,0.4)", display: "flex", alignItems: "center", justifyContent: "center",
-                                border: "none", cursor: "pointer", flexShrink: 0, marginLeft: 8,
-                              }}
-                            >
-                              <X size={12} />
-                            </button>
-                          </div>
 
-                          {/* Row 2: Stepper + subtotal */}
-                          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                            {/* Stepper pill */}
-                            <div style={{
-                              display: "inline-flex", alignItems: "center",
-                              background: "rgba(90,31,26,0.06)", borderRadius: 10,
-                            }}>
-                              <button
-                                onClick={() => stepQty(item, -1)}
-                                disabled={atMin}
-                                aria-label="Menos"
-                                style={{
-                                  width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center",
-                                  border: "none", borderRadius: "10px 0 0 10px", cursor: atMin ? "default" : "pointer",
-                                  background: atMin ? "transparent" : "rgba(90,31,26,0.08)",
-                                  color: atMin ? "rgba(90,31,26,0.2)" : "#5A1F1A",
-                                  transition: "all 0.15s ease",
-                                }}
-                              >
-                                <Minus size={14} />
-                              </button>
-                              <span style={{
-                                minWidth: 52, textAlign: "center", fontFamily: "var(--font-display)",
-                                fontWeight: 600, fontSize: "0.9375rem", color: "#5A1F1A",
-                                padding: "0 4px", userSelect: "none",
+                            {/* Stepper + subtotal */}
+                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+                              <div style={{
+                                display: "inline-flex", alignItems: "center",
+                                background: "#fff", borderRadius: 999,
+                                border: "1px solid rgba(90,31,26,0.12)",
                               }}>
-                                {item.kind === "product" ? fmtKg(item.qty) : `×${item.qty}`}
-                              </span>
-                              <button
-                                onClick={() => stepQty(item, 1)}
-                                disabled={atMax}
-                                aria-label="Más"
-                                style={{
-                                  width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center",
-                                  border: "none", borderRadius: "0 10px 10px 0", cursor: atMax ? "default" : "pointer",
-                                  background: atMax ? "transparent" : "#5A1F1A",
-                                  color: atMax ? "rgba(90,31,26,0.2)" : "#F4EADB",
-                                  transition: "all 0.15s ease",
-                                }}
-                              >
-                                <Plus size={14} />
-                              </button>
+                                <button
+                                  onClick={() => stepQty(item, -1)}
+                                  disabled={atMin}
+                                  aria-label="Menos"
+                                  style={{
+                                    width: 40, height: 40, display: "flex", alignItems: "center", justifyContent: "center",
+                                    border: "none", borderRadius: "999px 0 0 999px", cursor: atMin ? "default" : "pointer",
+                                    background: "transparent",
+                                    color: atMin ? "rgba(90,31,26,0.2)" : "#5A1F1A",
+                                    WebkitTapHighlightColor: "transparent",
+                                  }}
+                                >
+                                  <Minus size={16} />
+                                </button>
+                                <span style={{
+                                  minWidth: 48, textAlign: "center", fontFamily: "var(--font-body)",
+                                  fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A",
+                                  userSelect: "none",
+                                }}>
+                                  {item.kind === "product" ? fmtKg(item.qty) : `×${item.qty}`}
+                                </span>
+                                <button
+                                  onClick={() => stepQty(item, 1)}
+                                  disabled={atMax}
+                                  aria-label="Más"
+                                  style={{
+                                    width: 40, height: 40, display: "flex", alignItems: "center", justifyContent: "center",
+                                    border: "none", borderRadius: "0 999px 999px 0", cursor: atMax ? "default" : "pointer",
+                                    background: "transparent",
+                                    color: atMax ? "rgba(90,31,26,0.2)" : "#5A1F1A",
+                                    WebkitTapHighlightColor: "transparent",
+                                  }}
+                                >
+                                  <Plus size={16} />
+                                </button>
+                              </div>
+
+                              <p style={{
+                                fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.125rem",
+                                color: "#5A1F1A", marginLeft: "auto",
+                              }}>
+                                {fmt(getSubtotal(item))}
+                              </p>
                             </div>
-
-                            {/* Subtotal */}
-                            <p style={{
-                              fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.125rem",
-                              color: "#5A1F1A",
-                            }}>
-                              {fmt(getSubtotal(item))}
-                            </p>
                           </div>
 
-                          {/* Row 3: Unit price + stock info */}
-                          <div style={{ marginTop: 6, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <span style={{ fontFamily: "var(--font-body)", fontSize: 11, color: "#5E6B3E" }}>
-                              {item.kind === "product"
-                                ? `${fmt(unitPrice)}/kg · ${fmt(Math.round(unitPrice / 10))}/100 g`
-                                : `${fmt(unitPrice)} por pack`}
-                            </span>
-                            {item.kind === "product" && stockLow && (
-                              <span style={{
-                                fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 600,
-                                color: "#D0551F",
-                              }}>
-                                {stockKg === 1 ? "Último kg" : `Quedan ${stockKg} kg`}
-                              </span>
-                            )}
-                            {atMax && !stockLow && (
-                              <span style={{ fontFamily: "var(--font-body)", fontSize: 11, color: "#5E6B3E" }}>
-                                Máximo disponible
-                              </span>
-                            )}
-                          </div>
+                          {/* Eliminar */}
+                          <button
+                            onClick={() => { removeItem(item.id, item.kind); addToast("Eliminado", "info"); }}
+                            aria-label={`Eliminar ${getLabel(item)}`}
+                            style={{
+                              width: 32, height: 32, borderRadius: "50%", background: "transparent",
+                              color: "rgba(90,31,26,0.35)", display: "flex", alignItems: "center", justifyContent: "center",
+                              border: "none", cursor: "pointer", flexShrink: 0,
+                              WebkitTapHighlightColor: "transparent",
+                              alignSelf: "flex-start",
+                            }}
+                          >
+                            <X size={16} />
+                          </button>
                         </motion.div>
                       );
                     })}

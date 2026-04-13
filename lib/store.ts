@@ -35,10 +35,10 @@ interface CartState {
   removeToast: (id: string) => void;
 }
 
-const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
+const ONE_HOUR = 60 * 60 * 1000;
 
 function freshExpiry() {
-  return Date.now() + SEVEN_DAYS;
+  return Date.now() + ONE_HOUR;
 }
 
 export const useCartStore = create<CartState>()(
@@ -91,8 +91,8 @@ export const useCartStore = create<CartState>()(
         set((s) => ({ toasts: s.toasts.filter((t) => t.id !== id) })),
     }),
     {
-      name: "es_cart_v2",
-      version: 2,
+      name: "es_cart_v3",
+      version: 3,
       skipHydration: true,
       partialize: (state) => ({
         items: state.items,

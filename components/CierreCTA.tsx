@@ -76,7 +76,7 @@ export default function CierreCTA({ onOrderOpen }: Props) {
           marginTop: "1rem",
         }}
       >
-        Despachamos a Santa Cruz, Peralillo, Palmilla y Nancagua.
+        Despachamos a Santa Cruz, Peralillo, Palmilla, Marchigüe y Cunaco.
       </p>
     </section>
   );

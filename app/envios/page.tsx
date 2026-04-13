@@ -6,7 +6,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Envíos y despacho",
   description:
-    "Despachamos martes a sábado en Santa Cruz, Peralillo, Palmilla y Nancagua. Envío gratis sobre $25.000.",
+    "Despachamos martes a sábado en Santa Cruz, Peralillo, Palmilla, Marchigüe y Cunaco. Envío gratis sobre $25.000.",
   openGraph: {
     title: "Envíos y despacho · Estación Snack",
     description: "Envío gratis sobre $25.000. Martes a sábado 19:30-21:00.",
@@ -26,7 +26,8 @@ const zonas = [
   { nombre: "Santa Cruz", desc: "Envío $2.000. Gratis sobre $25.000." },
   { nombre: "Peralillo", desc: "Envío $3.000. Gratis sobre $25.000." },
   { nombre: "Palmilla", desc: "Envío $3.000. Gratis sobre $25.000." },
-  { nombre: "Nancagua", desc: "Envío $3.000. Gratis sobre $25.000." },
+  { nombre: "Marchigüe", desc: "Envío $3.000. Gratis sobre $25.000." },
+  { nombre: "Cunaco", desc: "Envío $3.000. Gratis sobre $25.000." },
 ];
 
 export default function EnviosPage() {

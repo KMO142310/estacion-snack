@@ -21,7 +21,7 @@ const products = productsData.slice().sort((a, b) => a.sort_order - b.sort_order
 
 const TOP_FAQ = [
   { q: "¿Cómo hago mi pedido?", a: 'Elige los productos, toca "Agregar" y confirma por WhatsApp. Te respondemos y coordinamos la entrega.' },
-  { q: "¿A qué comunas despachan?", a: "Santa Cruz, Peralillo, Palmilla y Nancagua." },
+  { q: "¿A qué comunas despachan?", a: "Santa Cruz, Peralillo, Palmilla, Marchigüe y Cunaco." },
   { q: "¿Cuánto cuesta el envío?", a: "Envío gratis en compras sobre $25.000. Bajo ese monto: $2.000 (Santa Cruz) o $3.000 (comunas cercanas)." },
   { q: "¿Cuál es el mínimo de compra?", a: "1 kg por producto. Puedes combinar varios." },
   { q: "¿Qué medios de pago aceptan?", a: "Transferencia bancaria o efectivo contra entrega." },

@@ -24,7 +24,7 @@ export default function TerminosPage() {
           <p style={S.p}>Estos términos regulan la compra de productos en Estación Snack (estacionsnack.cl), operada desde Santa Cruz, Región de O&apos;Higgins, Chile. Al hacer un pedido, aceptas estas condiciones.</p>
 
           <h2 style={S.h2}>Qué es Estación Snack</h2>
-          <p style={S.p}>Somos una tienda de frutos secos, snacks y mezclas que vende a granel, por kilo. Nuestros productos se pesan al momento del pedido y no vienen en envase sellado de fábrica.</p>
+          <p style={S.p}>Somos una tienda de frutos secos, snacks y mezclas que vende por kilo. Los productos vienen en bolsas de 1 kg con cierre, armadas por nosotros. No son envases sellados de fábrica.</p>
 
           <h2 style={S.h2}>Cómo funciona un pedido</h2>
           <ol style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
@@ -46,7 +46,7 @@ export default function TerminosPage() {
 
           <h2 style={S.h2}>Despacho</h2>
           <ul style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
-            <li style={S.li}>Zona de cobertura: Santa Cruz, Peralillo, Palmilla y Nancagua.</li>
+            <li style={S.li}>Zona de cobertura: Santa Cruz, Peralillo, Palmilla, Marchigüe y Cunaco.</li>
             <li style={S.li}>Días de despacho: martes a sábado.</li>
             <li style={S.li}>Costo: gratis en compras sobre $25.000. Bajo ese monto: $2.000 (Santa Cruz) o $3.000 (comunas cercanas).</li>
           </ul>

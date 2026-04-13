@@ -44,9 +44,9 @@ export default function Announce() {
   if (!visible) return null;
 
   const messages = [
-    dispatch ? `Próximo despacho: ${dispatch}` : "Despacho martes a sábado · 19:30 a 21:00",
-    "Envío gratis sobre $25.000 · Santa Cruz $2.000",
-    "Frutos secos por kilo — desde 1 kg",
+    "Santa Cruz · Peralillo · Palmilla · Marchigüe · Cunaco",
+    "Envío gratis sobre $25.000",
+    "Sin cuentas ni apps — solo WhatsApp",
   ];
 
   return (

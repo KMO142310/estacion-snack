@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s · Estación Snack",
   },
   description:
-    "Frutos secos y dulces del Valle de Colchagua, vendidos por kilo. Despacho martes a sábado en Santa Cruz, Peralillo, Palmilla y Nancagua.",
+    "Frutos secos y dulces del Valle de Colchagua, vendidos por kilo. Despacho martes a sábado en Santa Cruz, Peralillo, Palmilla, Marchigüe y Cunaco.",
   metadataBase: new URL(SITE),
   alternates: { canonical: SITE },
   robots: {
@@ -105,7 +105,8 @@ const orgJsonLd = {
     { "@type": "City", name: "Santa Cruz" },
     { "@type": "City", name: "Peralillo" },
     { "@type": "City", name: "Palmilla" },
-    { "@type": "City", name: "Nancagua" },
+    { "@type": "City", name: "Marchigüe" },
+    { "@type": "City", name: "Cunaco" },
   ],
   servesCuisine: "Frutos secos y snacks naturales",
 };

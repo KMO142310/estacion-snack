@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     q: "¿A qué comunas despachan?",
-    a: "Despachamos en Santa Cruz, Peralillo, Palmilla y Nancagua. Si vives en otra zona, escríbenos por WhatsApp y lo evaluamos juntos.",
+    a: "Despachamos en Santa Cruz, Peralillo, Palmilla, Marchigüe y Cunaco. Si vives en otra zona, escríbenos por WhatsApp y lo evaluamos juntos.",
   },
   {
     q: "¿Cuánto cuesta el envío?",

@@ -175,8 +175,8 @@ export default function ContactoPage() {
               </div>
               <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
                 <span style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", minWidth: 80 }}>Instagram</span>
-                <a href="https://instagram.com/estacionsnack" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", fontWeight: 600, color: "#5A1F1A", textDecoration: "none" }}>
-                  @estacionsnack
+                <a href="https://instagram.com/estacionsnack.sc" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", fontWeight: 600, color: "#5A1F1A", textDecoration: "none" }}>
+                  @estacionsnack.sc
                 </a>
               </div>
               <div style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>

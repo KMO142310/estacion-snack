@@ -40,9 +40,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = allProducts.find((p) => p.slug === slug);
   if (!product) {
-    return { title: "Producto no encontrado · Estación Snack" };
+    return { title: "Producto no encontrado" };
   }
-  const title = `${product.name} por kilo · Estación Snack`;
+  const title = `${product.name} por kilo`;
   const description =
     product.copy ?? `${product.name} fresco por kilo en Santa Cruz. Pide por WhatsApp.`;
   return {

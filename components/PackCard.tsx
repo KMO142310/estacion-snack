@@ -206,7 +206,7 @@ export default function PackCard({ pack, products, onOpen }: Props) {
               transform: added ? "scale(1.03)" : "scale(1)",
             }}
           >
-            {added ? "✓ Agregado" : `Agregar pack · ${fmt(pack.price)}`}
+            {added ? "✓ Agregado" : "Agregar pack"}
           </button>
         ) : (
           <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#5E6B3E", fontWeight: 600, textAlign: "center" }}>

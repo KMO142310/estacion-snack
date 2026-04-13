@@ -9,21 +9,14 @@ interface HeaderProps {
 }
 
 export default function Header({ onOrderOpen }: HeaderProps) {
-  const [visible, setVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [hydrated, setHydrated] = useState(false);
-  const lastY = useRef(0);
   const items = useCartStore((s) => s.items);
 
   useEffect(() => { setHydrated(true); useCartStore.persist.rehydrate(); }, []);
 
   useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 10);
-      setVisible(y < 10 || y < lastY.current);
-      lastY.current = y;
-    };
+    const onScroll = () => { setScrolled(window.scrollY > 10); };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -36,8 +29,6 @@ export default function Header({ onOrderOpen }: HeaderProps) {
       background: "#5A1F1A",
       padding: "0 20px", height: 62,
       display: "flex", alignItems: "center", justifyContent: "space-between",
-      transform: visible ? "translateY(0)" : "translateY(-100%)",
-      transition: "transform 0.25s ease",
       boxShadow: scrolled ? "0 2px 16px rgba(18,5,3,0.25)" : "none",
     }}>
       <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>

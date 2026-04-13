@@ -115,7 +115,7 @@ export default function ProductDetail({ product, related }: Props) {
               {/* Info despacho */}
               <div style={{ marginTop: 20, padding: 16, background: "rgba(122,132,87,0.10)", borderRadius: 12, fontFamily: "var(--font-body)", fontSize: 13, color: "#5A1F1A" }}>
                 <strong style={{ display: "block", marginBottom: 4, color: "#5A1F1A" }}>Despacho martes a sábado</strong>
-                Santa Cruz, Peralillo, Palmilla, Marchigüe y Cunaco. Coordinamos por WhatsApp.
+                Marchigüe, Peralillo, Santa Cruz y Cunaco. Coordinamos por WhatsApp.
               </div>
             </div>
           </div>

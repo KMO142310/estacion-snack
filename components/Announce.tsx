@@ -44,7 +44,7 @@ export default function Announce() {
   if (!visible) return null;
 
   const messages = [
-    "Santa Cruz · Peralillo · Palmilla · Marchigüe · Cunaco",
+    "Marchigüe · Peralillo · Santa Cruz · Cunaco",
     "Envío gratis sobre $25.000",
     "Sin cuentas ni apps — solo WhatsApp",
   ];

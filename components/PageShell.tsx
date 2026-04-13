@@ -38,8 +38,10 @@ export default function PageShell() {
   return (
     <MotionConfig reducedMotion="user">
       <a href="#productos" className="skip">Saltar al contenido</a>
-      <Announce />
-      <Header onOrderOpen={() => setOrderOpen(true)} />
+      <div style={{ position: "sticky", top: 0, zIndex: 200 }}>
+        <Announce />
+        <Header onOrderOpen={() => setOrderOpen(true)} />
+      </div>
 
       <main>
         <Hero onOrderOpen={() => setOrderOpen(true)} />

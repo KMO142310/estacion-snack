@@ -25,7 +25,6 @@ export default function Header({ onOrderOpen }: HeaderProps) {
 
   return (
     <header style={{
-      position: "sticky", top: 0, zIndex: 200,
       background: "#5A1F1A",
       padding: "0 20px", height: 62,
       display: "flex", alignItems: "center", justifyContent: "space-between",

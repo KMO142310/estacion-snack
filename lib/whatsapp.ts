@@ -43,7 +43,7 @@ export function buildWaUrl(
       const bomLine = pack.items
         .map((ci) => `${fmtKg(ci.kg)} ${ci.name}`)
         .join(" + ");
-      lines.push(`  ↳ ${bomLine}`);
+      lines.push(`  > ${bomLine}`);
     }
   }
 

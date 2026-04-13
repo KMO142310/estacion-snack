@@ -330,7 +330,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                       fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "#5E6B3E",
                       lineHeight: 1.5, marginTop: 8, marginBottom: "1.25rem",
                     }}>
-                      El precio final puede variar levemente según el peso exacto. Confirmamos antes de despachar.
+                      Confirmamos stock y precio por WhatsApp antes de despachar.
                     </p>
 
                     {/* Nota opcional */}

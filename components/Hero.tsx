@@ -90,9 +90,9 @@ export default function Hero({ onOrderOpen }: HeroProps) {
             maxWidth: 320,
           }}
         >
-          Por kilo, sin envases de más.
+          De los que se acaban antes
           <br />
-          Despacho martes a sábado.
+          que la conversación.
         </p>
 
         <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>

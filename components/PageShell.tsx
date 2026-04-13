@@ -7,6 +7,7 @@ import productsData from "@/data/products.json";
 import Announce from "./Announce";
 import Header from "./Header";
 import Hero from "./Hero";
+import Benefits from "./Benefits";
 import ProductCard from "./ProductCard";
 import ProductSheet from "./ProductSheet";
 import PackSection from "./PackSection";
@@ -42,6 +43,7 @@ export default function PageShell() {
 
       <main>
         <Hero onOrderOpen={() => setOrderOpen(true)} />
+        <Benefits />
 
         {/* Productos */}
         <section id="productos" style={{ background: "#F4EADB", padding: "1.75rem 16px 3rem" }}>

@@ -38,17 +38,10 @@ export default function Header({ onOrderOpen }: HeaderProps) {
       display: "flex", alignItems: "center", justifyContent: "space-between",
       transform: visible ? "translateY(0)" : "translateY(-100%)",
       transition: "transform 0.25s ease",
+      boxShadow: scrolled ? "0 2px 16px rgba(18,5,3,0.25)" : "none",
     }}>
       <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
-        <span style={{
-          width: 36, height: 36, borderRadius: 10,
-          background: "#D0551F", color: "#F4EADB",
-          fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 20,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          lineHeight: 1,
-        }}>
-          E
-        </span>
+        <img src="/img/logo-icon.svg" alt="" width={38} height={38} style={{ borderRadius: 10 }} />
         <span style={{ fontFamily: "var(--font-display)", fontSize: 18, letterSpacing: "-0.01em", lineHeight: 1 }}>
           <span style={{ fontWeight: 700, color: "#F4EADB" }}>Estación </span>
           <span style={{ fontWeight: 400, color: "rgba(244,234,219,0.5)" }}>Snack</span>

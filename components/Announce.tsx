@@ -54,9 +54,9 @@ export default function Announce() {
       role="status"
       aria-live="polite"
       style={{
-        background: "#D0551F",
+        background: "linear-gradient(90deg, #D0551F, #B84A1A)",
         color: "#F4EADB",
-        padding: "7px 40px 7px 16px",
+        padding: "6px 40px 6px 16px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

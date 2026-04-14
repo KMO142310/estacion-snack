@@ -7,9 +7,13 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import OrderSheet from "@/components/OrderSheet";
 import ToastStack from "@/components/Toast";
+import StampButton from "@/components/StampButton";
+import Odometer from "@/components/Odometer";
 import { useCartStore } from "@/lib/store";
 import { fmt, fmtKg, getChips } from "@/lib/cart-utils";
-import { hapticSuccess } from "@/lib/haptics";
+import { hapticChip } from "@/lib/haptics";
+import { spring } from "@/lib/motion-tokens";
+import { motion } from "framer-motion";
 import type { Product } from "@/lib/types";
 
 interface Props {
@@ -36,7 +40,7 @@ export default function ProductDetail({ product, related }: Props) {
   const handleAdd = async () => {
     if (adding || isOut) return;
     setAdding(true);
-    hapticSuccess();
+    // haptic orchestration en StampButton (chip + stamp)
     addItem({ kind: "product", id: product.id, qty: selectedQty, name: product.name, pricePerUnit: product.price });
     addToast(`${product.name} agregado · ${fmtKg(selectedQty)}`);
     await new Promise((r) => setTimeout(r, 300));
@@ -99,31 +103,54 @@ export default function ProductDetail({ product, related }: Props) {
 
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", lineHeight: 1.7, marginBottom: 24 }}>{product.copy}</p>
 
-              {/* Chips de cantidad */}
+              {/* Chips de cantidad — spring scale al seleccionar (Apple HIG press feedback) */}
               {!isOut && (
                 <div style={{ marginBottom: 24 }}>
                   <p style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem", color: "#5A1F1A", marginBottom: "0.75rem" }}>¿Cuánto vas a pedir?</p>
                   <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
                     {chips.map((kg) => (
-                      <button key={kg} onClick={() => setSelectedQty(kg)} aria-pressed={selectedQty === kg} style={{ fontFamily: "var(--font-body)", fontWeight: selectedQty === kg ? 600 : 500, fontSize: "0.9375rem", padding: "0.625rem 1.125rem", borderRadius: "9999px", border: `2px solid ${selectedQty === kg ? "#A8411A" : "rgba(90,31,26,0.15)"}`, background: selectedQty === kg ? "#A8411A" : "transparent", color: selectedQty === kg ? "#F4EADB" : "#5A1F1A", cursor: "pointer" }}>
+                      <motion.button
+                        key={kg}
+                        onClick={() => { setSelectedQty(kg); hapticChip(); }}
+                        aria-pressed={selectedQty === kg}
+                        whileTap={{ scale: 0.94 }}
+                        transition={spring.press}
+                        style={{
+                          fontFamily: "var(--font-body)",
+                          fontWeight: selectedQty === kg ? 600 : 500,
+                          fontSize: "0.9375rem",
+                          padding: "0.625rem 1.125rem",
+                          borderRadius: "9999px",
+                          border: `2px solid ${selectedQty === kg ? "#A8411A" : "rgba(90,31,26,0.15)"}`,
+                          background: selectedQty === kg ? "#A8411A" : "transparent",
+                          color: selectedQty === kg ? "#F4EADB" : "#5A1F1A",
+                          cursor: "pointer",
+                          WebkitTapHighlightColor: "transparent",
+                          minHeight: 44,
+                        }}
+                      >
                         {fmtKg(kg)}
-                      </button>
+                      </motion.button>
                     ))}
                   </div>
                   <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E" }}>
-                    Subtotal: <strong style={{ color: "#5A1F1A", fontFamily: "var(--font-display)", fontSize: "1.125rem" }}>{fmt(price)}</strong>
+                    Subtotal: <Odometer
+                      value={price}
+                      style={{ color: "#5A1F1A", fontFamily: "var(--font-display)", fontSize: "1.125rem", fontWeight: 700 }}
+                    />
                   </p>
                 </div>
               )}
 
-              {/* CTA */}
-              <button
+              {/* CTA — StampButton: press + ink-bleed (railway dopamine, Schultz 1997) */}
+              <StampButton
                 onClick={handleAdd}
                 disabled={isOut || adding}
-                style={{ width: "100%", maxWidth: 360, fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "1rem", color: "#F4EADB", background: isOut ? "#C0B0A8" : adding ? "#A84019" : "#A8411A", border: "none", borderRadius: "12px", padding: "1rem 1.5rem", cursor: isOut || adding ? "not-allowed" : "pointer" }}
+                size="lg"
+                style={{ maxWidth: 360, background: isOut ? "#C0B0A8" : undefined }}
               >
                 {isOut ? "Agotado" : adding ? "Agregando..." : `Agregar ${fmtKg(selectedQty)} al pedido`}
-              </button>
+              </StampButton>
 
               {/* Info despacho — formato de sello de estación */}
               <div style={{

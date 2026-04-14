@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import ShoppingBag from "./icons/ShoppingBag";
 import { useCartStore } from "@/lib/store";
+import { spring } from "@/lib/motion-tokens";
 
 interface HeaderProps {
   onOrderOpen: () => void;
@@ -12,6 +14,7 @@ export default function Header({ onOrderOpen }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const items = useCartStore((s) => s.items);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => { setHydrated(true); useCartStore.persist.rehydrate(); }, []);
 
@@ -38,26 +41,51 @@ export default function Header({ onOrderOpen }: HeaderProps) {
         </span>
       </a>
 
-      <button onClick={onOrderOpen}
+      <motion.button
+        onClick={onOrderOpen}
         aria-label={`Ver pedido${itemCount > 0 ? ` (${itemCount})` : ""}`}
+        whileTap={reducedMotion ? undefined : { scale: 0.94 }}
+        transition={spring.press}
         style={{
           position: "relative", width: 48, height: 48,
           background: "rgba(244,234,219,0.14)", color: "#F4EADB",
           borderRadius: 14, display: "flex", alignItems: "center", justifyContent: "center",
           border: "none", cursor: "pointer",
-        }}>
+          WebkitTapHighlightColor: "transparent",
+        }}
+      >
         <ShoppingBag size={22} />
-        {itemCount > 0 && (
-          <span key={itemCount} style={{
-            position: "absolute", top: -4, right: -4, minWidth: 18, height: 18, padding: "0 5px",
-            background: "#A8411A", color: "#F4EADB", fontSize: 10, fontWeight: 700,
-            borderRadius: 999, display: "flex", alignItems: "center", justifyContent: "center",
-            fontFamily: "var(--font-body)",
-            animation: "badgePop 0.2s ease",
-            border: "2px solid #5A1F1A",
-          }}>{itemCount}</span>
-        )}
-      </button>
+        <AnimatePresence>
+          {itemCount > 0 && (
+            <motion.span
+              key="badge"
+              initial={reducedMotion ? { opacity: 0 } : { scale: 0, opacity: 0 }}
+              animate={reducedMotion ? { opacity: 1 } : { scale: 1, opacity: 1 }}
+              exit={reducedMotion ? { opacity: 0 } : { scale: 0, opacity: 0 }}
+              transition={spring.press}
+              style={{
+                position: "absolute", top: -4, right: -4, minWidth: 18, height: 18, padding: "0 5px",
+                background: "#A8411A", color: "#F4EADB", fontSize: 10, fontWeight: 700,
+                borderRadius: 999, display: "flex", alignItems: "center", justifyContent: "center",
+                fontFamily: "var(--font-body)",
+                fontVariantNumeric: "tabular-nums",
+                border: "2px solid #5A1F1A",
+                pointerEvents: "none",
+              }}
+            >
+              <motion.span
+                key={itemCount}
+                initial={reducedMotion ? undefined : { y: -10, opacity: 0 }}
+                animate={reducedMotion ? undefined : { y: 0, opacity: 1 }}
+                transition={spring.flip}
+                style={{ display: "inline-block", lineHeight: 1 }}
+              >
+                {itemCount}
+              </motion.span>
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </motion.button>
     </header>
   );
 }

@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import FocusTrap from "focus-trap-react";
 import { useCartStore } from "@/lib/store";
 import { fmt, fmtKg } from "@/lib/cart-utils";
-import { hapticLight, hapticSuccess } from "@/lib/haptics";
+import { hapticChip, hapticWhistle } from "@/lib/haptics";
 import { buildWaUrl } from "@/lib/whatsapp";
 import { captureOrder } from "@/lib/actions";
 import { getPackAvailability, type Pack, type ProductStock } from "@/lib/pack-utils";
@@ -14,6 +14,9 @@ import { COMUNAS, COMUNA_DEFAULT, FREE_SHIPPING_MIN, getShippingCost, type Comun
 import X from "./icons/X";
 import Minus from "./icons/Minus";
 import Plus from "./icons/Plus";
+import Odometer from "./Odometer";
+import StampButton from "./StampButton";
+import TicketProgress from "./TicketProgress";
 import productsData from "@/data/products.json";
 import packsData from "@/data/packs.json";
 
@@ -45,9 +48,6 @@ export default function OrderSheet({ open, onClose }: Props) {
     return sum + (pk ? pk.items.reduce((s, i) => s + i.kg, 0) * item.qty : 0);
   }, 0);
 
-  const envioGratis = subtotal >= FREE_SHIPPING_MIN;
-  const falta = FREE_SHIPPING_MIN - subtotal;
-
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -65,7 +65,8 @@ export default function OrderSheet({ open, onClose }: Props) {
   const handleConfirm = async () => {
     if (loading || items.length === 0) return;
     setLoading(true);
-    hapticSuccess();
+    // Silbato de partida — momento culminante del flow de pedido
+    hapticWhistle();
 
     // iOS Safari: el popup se abre SINCRÓNICAMENTE durante el gesto del usuario.
     // Si se abre después del await, Safari lo bloquea como popup.
@@ -118,7 +119,7 @@ export default function OrderSheet({ open, onClose }: Props) {
   };
 
   function stepQty(item: typeof items[number], delta: number) {
-    hapticLight();
+    hapticChip();
     const newQty = item.qty + delta;
     const min = item.kind === "product"
       ? (productsData.find((p) => p.id === item.id)?.min_unit_kg ?? 1)
@@ -197,39 +198,10 @@ export default function OrderSheet({ open, onClose }: Props) {
               </button>
             </div>
 
-            {/* Shipping progress */}
+            {/* Shipping progress — TicketProgress ferroviario */}
             {items.length > 0 && (
               <div style={{ padding: "0 1.25rem 0.75rem", flexShrink: 0 }}>
-                <div style={{
-                  background: "rgba(90,31,26,0.05)", borderRadius: 10, padding: "10px 14px",
-                }}>
-                  <div style={{
-                    display: "flex", justifyContent: "space-between", alignItems: "center",
-                    marginBottom: 6,
-                  }}>
-                    <span style={{ fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 600, color: envioGratis ? "#5E6B3E" : "#5A1F1A" }}>
-                      {envioGratis ? "✓ Envío gratis" : `Te faltan ${fmt(falta)} para envío gratis`}
-                    </span>
-                    <span style={{ fontFamily: "var(--font-body)", fontSize: 11, color: "#5E6B3E" }}>
-                      {fmt(FREE_SHIPPING_MIN)}
-                    </span>
-                  </div>
-                  <div style={{
-                    height: 4, borderRadius: 9999, background: "rgba(90,31,26,0.1)", overflow: "hidden",
-                  }}>
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${Math.min(100, (subtotal / FREE_SHIPPING_MIN) * 100)}%` }}
-                      transition={{ type: "spring", stiffness: 120, damping: 20 }}
-                      style={{
-                        height: "100%", borderRadius: 9999,
-                        background: envioGratis
-                          ? "linear-gradient(90deg, #5E6B3E, #9DAB75)"
-                          : "linear-gradient(90deg, #A8411A, #E0784D)",
-                      }}
-                    />
-                  </div>
-                </div>
+                <TicketProgress current={subtotal} threshold={FREE_SHIPPING_MIN} />
               </div>
             )}
 
@@ -343,12 +315,13 @@ export default function OrderSheet({ open, onClose }: Props) {
                                 </button>
                               </div>
 
-                              <p style={{
-                                fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.125rem",
-                                color: "#5A1F1A", marginLeft: "auto",
-                              }}>
-                                {fmt(getSubtotal(item))}
-                              </p>
+                              <Odometer
+                                value={getSubtotal(item)}
+                                style={{
+                                  fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.125rem",
+                                  color: "#5A1F1A", marginLeft: "auto",
+                                }}
+                              />
                             </div>
                           </div>
 
@@ -401,12 +374,12 @@ export default function OrderSheet({ open, onClose }: Props) {
                     {/* Desglose: Subtotal + Envío + Total — visible antes del cierre (Ley 19.496 Art. 1 N°2) */}
                     <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", marginBottom: 4 }}>
                       <span>Subtotal</span>
-                      <span>{fmt(subtotal)}</span>
+                      <Odometer value={subtotal} />
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", marginBottom: 8 }}>
                       <span>Envío {comuna}</span>
-                      <span style={{ color: shipping === 0 ? "#5E6B3E" : "#5E6B3E" }}>
-                        {shipping === 0 ? "Gratis" : fmt(shipping)}
+                      <span>
+                        {shipping === 0 ? "Gratis" : <Odometer value={shipping} />}
                       </span>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", paddingTop: 8, borderTop: "1px solid rgba(90,31,26,0.08)" }}>
@@ -418,9 +391,10 @@ export default function OrderSheet({ open, onClose }: Props) {
                           {fmtKg(totalWeight)} en total
                         </p>
                       </div>
-                      <p style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.75rem", color: "#5A1F1A" }}>
-                        {fmt(total)}
-                      </p>
+                      <Odometer
+                        value={total}
+                        style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.75rem", color: "#5A1F1A" }}
+                      />
                     </div>
                     <p style={{
                       fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "#5E6B3E",
@@ -465,25 +439,20 @@ export default function OrderSheet({ open, onClose }: Props) {
               flexShrink: 0, borderTop: "1px solid rgba(90,31,26,0.08)", background: "#F4EADB",
             }}>
               {items.length === 0 ? (
-                <button onClick={onClose} style={{
-                  width: "100%", fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "1rem",
-                  color: "#F4EADB", background: "#5A1F1A", border: "none", borderRadius: "12px",
-                  padding: "1rem", cursor: "pointer",
-                }}>
+                <StampButton
+                  onClick={onClose}
+                  fullWidth
+                  style={{ background: "#5A1F1A", color: "#F4EADB" }}
+                >
                   Ver las mezclas
-                </button>
+                </StampButton>
               ) : (
-                <button
+                <StampButton
                   onClick={handleConfirm}
                   disabled={loading}
-                  style={{
-                    width: "100%", fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "1.0625rem",
-                    color: "#F4EADB", background: loading ? "#A84019" : "#A8411A",
-                    border: "none", borderRadius: "12px", padding: "1rem",
-                    cursor: loading ? "not-allowed" : "pointer",
-                    display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem",
-                    transition: "background 0.15s", WebkitTapHighlightColor: "transparent",
-                  }}
+                  fullWidth
+                  size="lg"
+                  style={{ background: loading ? "#A84019" : "#A8411A" }}
                 >
                   {loading ? (
                     <>
@@ -502,7 +471,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                       Quiero pedir
                     </>
                   )}
-                </button>
+                </StampButton>
               )}
 
               {items.length > 0 && (

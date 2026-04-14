@@ -2,57 +2,31 @@
 
 import { useState, useEffect } from "react";
 import { useReducedMotion } from "framer-motion";
-
-function getNextDispatch(): string {
-  const now = new Date();
-  const day = now.getDay();
-  const hour = now.getHours();
-  // Dispatch days: Tue(2) to Sat(6), until 21:00
-  if (day >= 2 && day <= 6 && hour < 21) return "hoy";
-  let next = (day + 1) % 7;
-  let daysAhead = 1;
-  while (next < 2 || next > 6) {
-    next = (next + 1) % 7;
-    daysAhead++;
-  }
-  if (daysAhead === 1) return "mañana";
-  return ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"][next];
-}
+import FlipBoard from "./FlipBoard";
 
 const MSG_COUNT = 3;
+const ROTATE_MS = 7000;
 
 export default function Announce() {
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
-  const [fade, setFade] = useState(true);
-  const [dispatch, setDispatch] = useState("");
   const [paused, setPaused] = useState(false);
   const reducedMotion = useReducedMotion();
 
+  // Rotación con pause on hover/focus + respeto prefers-reduced-motion.
+  // Ref: NN/g "Auto-Forwarding Carousels Annoy Users" (min 7s + pause control).
   useEffect(() => {
-    setDispatch(getNextDispatch());
-  }, []);
-
-  // 7s + pause on hover/focus + respeta prefers-reduced-motion.
-  // Fuente: NN/g "Auto-Forwarding Carousels Annoy Users".
-  useEffect(() => {
-    if (reducedMotion) return;
-    if (paused) return;
+    if (reducedMotion || paused) return;
     const timer = setInterval(() => {
-      setFade(false);
-      setTimeout(() => {
-        setIndex((i) => (i + 1) % MSG_COUNT);
-        setFade(true);
-      }, 300);
-    }, 7000);
+      setIndex((i) => (i + 1) % MSG_COUNT);
+    }, ROTATE_MS);
     return () => clearInterval(timer);
   }, [paused, reducedMotion]);
 
   if (!visible) return null;
 
-  // Announce como tablero de salidas de estación de tren.
-  // Vocabulario ferroviario verificable del Ramal San Fernando–Pichilemu.
-  // Ref: Research railway Colchagua 2026-04-14.
+  // Mensajes tablero de salidas — vocabulario ferroviario Ramal San Fernando–Pichilemu.
+  // Fuentes: Museo Ramal, EFE Cultura, Memoria Chilena (verificadas 2026-04-14).
   const messages = [
     "Próxima salida · despacho martes a sábado",
     "Cabeceras · Marchigüe · Peralillo · Santa Cruz · Cunaco",
@@ -63,31 +37,27 @@ export default function Announce() {
     <div
       role="status"
       aria-live="polite"
+      aria-atomic="true"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
       style={{
-        // Departure board: burdeo oscuro + acento ámbar de luz de señal
+        // Burdeo oscuro + acento ámbar = tablero de salidas ferroviario
         background: "#3d1613",
         color: "#F4EADB",
-        padding: "8px 40px 8px 16px",
+        padding: "10px 40px 10px 16px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         gap: "0.75rem",
-        fontSize: 11,
-        fontWeight: 600,
-        fontFamily: "var(--font-body)",
-        fontVariantNumeric: "tabular-nums",
-        letterSpacing: "0.04em",
         position: "relative",
-        minHeight: 34,
+        minHeight: 38,
         borderBottom: "1px solid rgba(244,234,219,0.08)",
         overflow: "hidden",
       }}
     >
-      {/* Luz de señal parpadeante (ámbar) — signal light ferroviaria */}
+      {/* Signal light ámbar — luz de señal ferroviaria parpadeante */}
       <span
         aria-hidden="true"
         style={{
@@ -100,16 +70,18 @@ export default function Announce() {
           flexShrink: 0,
         }}
       />
-      <span
-        style={{
-          opacity: fade ? 1 : 0,
-          transition: "opacity 0.3s ease",
-          textAlign: "center",
-          textTransform: "uppercase",
-        }}
-      >
-        {messages[index]}
-      </span>
+
+      {/* Mensaje con flip de paneles Solari */}
+      <FlipBoard
+        text={messages[index]}
+        ariaLabel={messages[index]}
+        panelHeight={16}
+        fontSize={11}
+        letterSpacing="0.08em"
+        color="#F4EADB"
+        fontWeight={600}
+      />
+
       <button
         aria-label="Cerrar aviso"
         onClick={() => setVisible(false)}

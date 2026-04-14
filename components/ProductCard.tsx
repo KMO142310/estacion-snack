@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 import { fmt } from "@/lib/cart-utils";
 import { useCartStore } from "@/lib/store";
-import { hapticSuccess } from "@/lib/haptics";
+import { spring } from "@/lib/motion-tokens";
+import StampButton from "./StampButton";
 
 interface Product {
   id: string;
@@ -33,35 +35,64 @@ interface Props {
 export default function ProductCard({ product, onOpen }: Props) {
   const { name, price, image_webp_url, badge, status, occasion } = product;
   const [added, setAdded] = useState(false);
+  const [revealed, setRevealed] = useState(false);
+  const cardRef = useRef<HTMLElement | null>(null);
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
+  const reducedMotion = useReducedMotion();
   const agotado = status === "agotado";
   const ultimoKg = status === "ultimo_kg";
+
+  // Letterpress reveal — primera vez que la card entra en viewport.
+  // IntersectionObserver (nativo, sin dependencias). Solo primera aparición.
+  useEffect(() => {
+    if (revealed) return;
+    const el = cardRef.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === "undefined") { setRevealed(true); return; }
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealed(true);
+          obs.disconnect();
+        }
+      },
+      { rootMargin: "-40px 0px -40px 0px", threshold: 0.1 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [revealed]);
 
   const handleAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (agotado || added) return;
-    hapticSuccess();
+    // haptic orchestration viene de StampButton (chip + stamp)
     addItem({ kind: "product", id: product.id, qty: 1, name, pricePerUnit: price });
     addToast(`${name} · 1 kg`);
     setAdded(true);
     setTimeout(() => setAdded(false), 1200);
   };
 
+  const shouldAnimate = !reducedMotion && !revealed;
+
   return (
-    <article
+    <motion.article
+      ref={cardRef as React.RefObject<HTMLElement>}
       onClick={agotado ? undefined : onOpen}
       role={agotado ? undefined : "button"}
       tabIndex={agotado ? undefined : 0}
       aria-label={agotado ? `${name} — agotado` : `Ver ${name}`}
       onKeyDown={(e) => { if (!agotado && (e.key === "Enter" || e.key === " ")) onOpen(); }}
       className={agotado ? undefined : "pcard"}
+      initial={shouldAnimate ? { opacity: 0, y: 8, scale: 0.995 } : false}
+      animate={revealed || reducedMotion ? { opacity: agotado ? 0.5 : 1, y: 0, scale: 1 } : undefined}
+      transition={spring.arrive}
       style={{
         background: "transparent",
         overflow: "hidden",
         cursor: agotado ? "default" : "pointer",
-        opacity: agotado ? 0.5 : 1,
         WebkitTapHighlightColor: "transparent",
+        willChange: "transform, opacity",
       }}
     >
       {/* Foto */}
@@ -128,31 +159,20 @@ export default function ProductCard({ product, onOpen }: Props) {
           )}
         </p>
 
-        {/* CTA — filled para conversión (Baymard: +15-20% CTR vs outline) */}
+        {/* CTA — StampButton: press físico + ink-bleed al confirmar (Schultz 1997 anticipación/resolución) */}
         {!agotado && (
-          <button
+          <StampButton
             onClick={handleAdd}
+            fullWidth
+            size="sm"
             style={{
-              width: "100%",
-              fontFamily: "var(--font-body)",
-              fontWeight: 600,
-              fontSize: 13,
-              color: "#F4EADB",
-              background: added ? "#5E6B3E" : "#A8411A",
-              border: "none",
-              borderRadius: 10,
-              padding: "10px 0",
-              cursor: "pointer",
-              WebkitTapHighlightColor: "transparent",
-              transition: "all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)",
-              transform: added ? "scale(1.03)" : "scale(1)",
-              minHeight: 44,
+              background: added ? "#5E6B3E" : undefined,
             }}
           >
             {added ? "✓ Agregado" : "Agregar 1 kg"}
-          </button>
+          </StampButton>
         )}
       </div>
-    </article>
+    </motion.article>
   );
 }

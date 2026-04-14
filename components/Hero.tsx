@@ -147,7 +147,7 @@ export default function Hero({ onOrderOpen }: HeroProps) {
               borderRadius: "10px",
               padding: "0.875rem 1.5rem",
               cursor: "pointer",
-              boxShadow: "0 4px 20px rgba(208,85,31,0.4)",
+              // Elite: sin sombra de color. Ref Byredo, Flamingo Estate — verified 2026-04-13.
               WebkitTapHighlightColor: "transparent",
               textDecoration: "none",
             }}

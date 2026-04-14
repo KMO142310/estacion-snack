@@ -58,12 +58,21 @@ export default function PageShell() {
           </div>
         </section>
 
-        {/* Frase con vida */}
-        <div style={{ background: "#5A1F1A", padding: "3rem 1.5rem", textAlign: "center" }}>
+        {/* Nota de la casa — editorial label + pull quote */}
+        {/* Ref: Lapostolle "Informe de Vendimia", Viu Manent "Cuaderno". Research C. */}
+        <div style={{ background: "#5A1F1A", padding: "3.5rem 1.5rem", textAlign: "center" }}>
+          <p style={{
+            fontFamily: "var(--font-body)", fontSize: "0.6875rem", fontWeight: 600,
+            letterSpacing: "0.14em", textTransform: "uppercase",
+            color: "rgba(244,234,219,0.55)", marginBottom: "1rem",
+          }}>
+            Nota de la casa · 2026
+          </p>
           <p style={{
             fontFamily: "var(--font-display)", fontWeight: 600,
+            fontStyle: "italic",
             fontSize: "clamp(1.375rem, 5vw, 2rem)", color: "#F4EADB",
-            lineHeight: 1.2, maxWidth: 500, margin: "0 auto",
+            lineHeight: 1.25, maxWidth: 520, margin: "0 auto",
           }}>
             Seis mezclas. Las probamos todas hasta dejar solo las que uno se termina sin darse cuenta.
           </p>
@@ -169,8 +178,8 @@ export default function PageShell() {
       <style>{`
         .container { max-width: 1100px; margin: 0 auto; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
-        @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 32px 24px; } }
+        @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 48px 32px; max-width: 960px; margin: 0 auto; } }
         .pcard { transition: transform .2s ease; }
         @media (min-width: 768px) and (hover:hover) {
           .pcard:hover { transform: translateY(-3px); }

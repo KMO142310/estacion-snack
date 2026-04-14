@@ -50,10 +50,13 @@ export default function Announce() {
 
   if (!visible) return null;
 
+  // Elite editorial: líneas dated/geográficas en vez de promo,
+  // inspirado en Viu Manent "90 años" y Lapostolle "Informe de Vendimia".
+  // Ref: Research C (Colchagua wine country).
   const messages = [
-    "Marchigüe · Peralillo · Santa Cruz · Cunaco",
-    "Envío gratis sobre $25.000",
-    "Sin cuentas ni apps — solo WhatsApp",
+    "Santa Cruz · Valle de Colchagua",
+    "Entrega martes a sábado",
+    "WhatsApp, sin apps",
   ];
 
   return (

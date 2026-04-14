@@ -76,7 +76,7 @@ export default function ProductCard({ product, onOpen }: Props) {
 
       {/* Info + botón */}
       <div style={{ padding: "12px 12px 14px" }}>
-        <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 16, color: "#5A1F1A", lineHeight: 1.2, marginBottom: 4 }}>
+        <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 17, color: "#5A1F1A", lineHeight: 1.15, letterSpacing: "-0.015em", marginBottom: 4 }}>
           {name}
         </p>
         {copy && (

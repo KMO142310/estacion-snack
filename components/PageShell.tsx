@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { MotionConfig } from "framer-motion";
 import { useCartStore } from "@/lib/store";
@@ -39,16 +39,23 @@ export default function PageShell() {
 
   useEffect(() => { useCartStore.persist.rehydrate(); }, []);
 
+  // Handlers memoizados — evitan reruns de useEffect en los sheets que
+  // tienen `onClose` como dep (si no se memoiza, se re-attachan listeners
+  // en cada render del padre).
+  const openOrder = useCallback(() => setOrderOpen(true), [setOrderOpen]);
+  const closeOrder = useCallback(() => setOrderOpen(false), [setOrderOpen]);
+  const closeSheet = useCallback(() => setSheetProduct(null), []);
+
   return (
     <MotionConfig reducedMotion="user">
       <a href="#main" className="skip">Saltar al contenido</a>
       <div style={{ position: "sticky", top: 0, zIndex: 200 }}>
         <Announce />
-        <Header onOrderOpen={() => setOrderOpen(true)} />
+        <Header onOrderOpen={openOrder} />
       </div>
 
       <main id="main" tabIndex={-1} style={{ outline: "none" }}>
-        <Hero onOrderOpen={() => setOrderOpen(true)} />
+        <Hero onOrderOpen={openOrder} />
         <Benefits />
 
         {/* Productos */}
@@ -132,7 +139,7 @@ export default function PageShell() {
             <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "rgba(244,234,219,0.78)", marginBottom: 24 }}>
               Martes a sábado · 19:30 a 21:00 · Santa Cruz y alrededores
             </p>
-            <button onClick={() => setOrderOpen(true)} style={{
+            <button onClick={openOrder} style={{
               fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 15,
               color: "#5A1F1A", background: "#F4EADB", border: "none",
               borderRadius: 30, padding: "14px 32px", cursor: "pointer",
@@ -157,7 +164,7 @@ export default function PageShell() {
           <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(244,234,219,0.6)", margin: 0 }}>
             {itemCount > 0 ? `${itemCount} ${itemCount === 1 ? "producto" : "productos"}` : "Pedido vacío"}
           </p>
-          <button onClick={() => setOrderOpen(true)} style={{
+          <button onClick={openOrder} style={{
             fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 13,
             color: "#5A1F1A", background: "#F4EADB", border: "none",
             borderRadius: 30, padding: "8px 20px", cursor: "pointer",
@@ -173,10 +180,10 @@ export default function PageShell() {
           price: sheetProduct.price, image_webp_url: sheetProduct.image_webp_url,
           image_url: sheetProduct.image_url, copy: sheetProduct.copy,
           status: sheetProduct.status, min_unit_kg: sheetProduct.min_unit_kg,
-        }} onClose={() => setSheetProduct(null)} />
+        }} onClose={closeSheet} />
       )}
 
-      <OrderSheet open={orderOpen} onClose={() => setOrderOpen(false)} />
+      <OrderSheet open={orderOpen} onClose={closeOrder} />
       <ToastStack />
 
       <style>{`

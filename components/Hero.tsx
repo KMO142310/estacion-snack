@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import productsData from "@/data/products.json";
+import KmStone from "./icons/KmStone";
 
 interface HeroProps {
   onOrderOpen: () => void;
@@ -95,22 +96,25 @@ export default function Hero({ onOrderOpen }: HeroProps) {
           maxWidth: 800,
         }}
       >
-        {/* Hito kilométrico — guiño al Ramal San Fernando – Pichilemu
-            (Estación Santa Cruz, ex Paniahue, km 35,5. Verificable, no reclama continuidad histórica.) */}
-        <p
-          style={{
-            fontFamily: "var(--font-body)",
-            color: "rgba(244,234,219,0.72)",
-            fontSize: "0.7rem",
-            fontWeight: 600,
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            marginBottom: "2rem",
-            fontVariantNumeric: "tabular-nums",
-          }}
-        >
-          Km 35,5 · Santa Cruz, Valle de Colchagua
-        </p>
+        {/* Hito kilométrico SVG como motivo signature + label geográfica.
+            Marca visual que conecta con el Ramal S.F.–Pichilemu (km 35,5 = Estación Santa Cruz). */}
+        <div style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", marginBottom: "1.5rem", gap: "0.875rem" }}>
+          <KmStone size={72} ariaLabel="Kilómetro 35,5, Estación Santa Cruz" />
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              color: "rgba(244,234,219,0.72)",
+              fontSize: "0.7rem",
+              fontWeight: 600,
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              margin: 0,
+              fontVariantNumeric: "tabular-nums",
+            }}
+          >
+            Santa Cruz · Valle de Colchagua
+          </p>
+        </div>
 
         {/* Marca-monumento */}
         <h1

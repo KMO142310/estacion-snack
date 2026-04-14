@@ -68,24 +68,44 @@ export default function Announce() {
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
       style={{
-        background: "linear-gradient(90deg, #A8411A, #B84A1A)",
+        // Departure board: burdeo oscuro + acento ámbar de luz de señal
+        background: "#3d1613",
         color: "#F4EADB",
-        padding: "6px 40px 6px 16px",
+        padding: "8px 40px 8px 16px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontSize: 12,
+        gap: "0.75rem",
+        fontSize: 11,
         fontWeight: 600,
         fontFamily: "var(--font-body)",
+        fontVariantNumeric: "tabular-nums",
+        letterSpacing: "0.04em",
         position: "relative",
-        minHeight: 32,
+        minHeight: 34,
+        borderBottom: "1px solid rgba(244,234,219,0.08)",
+        overflow: "hidden",
       }}
     >
+      {/* Luz de señal parpadeante (ámbar) — signal light ferroviaria */}
+      <span
+        aria-hidden="true"
+        style={{
+          width: 6,
+          height: 6,
+          borderRadius: "50%",
+          background: "#E0A84D",
+          boxShadow: "0 0 8px rgba(224,168,77,0.6)",
+          animation: reducedMotion ? "none" : "pulse 2s ease-in-out infinite",
+          flexShrink: 0,
+        }}
+      />
       <span
         style={{
           opacity: fade ? 1 : 0,
           transition: "opacity 0.3s ease",
           textAlign: "center",
+          textTransform: "uppercase",
         }}
       >
         {messages[index]}
@@ -96,7 +116,7 @@ export default function Announce() {
         style={{
           background: "none",
           border: "none",
-          color: "rgba(244,234,219,0.6)",
+          color: "rgba(244,234,219,0.55)",
           fontSize: 14,
           padding: "4px 8px",
           position: "absolute",

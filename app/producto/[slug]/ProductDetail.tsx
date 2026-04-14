@@ -125,10 +125,38 @@ export default function ProductDetail({ product, related }: Props) {
                 {isOut ? "Agotado" : adding ? "Agregando..." : `Agregar ${fmtKg(selectedQty)} al pedido`}
               </button>
 
-              {/* Info despacho */}
-              <div style={{ marginTop: 20, padding: 16, background: "rgba(122,132,87,0.10)", borderRadius: 12, fontFamily: "var(--font-body)", fontSize: 13, color: "#5A1F1A" }}>
-                <strong style={{ display: "block", marginBottom: 4, color: "#5A1F1A" }}>Despacho martes a sábado</strong>
-                Marchigüe, Peralillo, Santa Cruz y Cunaco. Coordinamos por WhatsApp.
+              {/* Info despacho — formato de sello de estación */}
+              <div style={{
+                marginTop: 20,
+                padding: "16px 18px",
+                background: "#fff",
+                border: "1.5px solid rgba(90,31,26,0.15)",
+                borderTop: "1px solid rgba(90,31,26,0.15)",
+                borderBottom: "1px solid rgba(90,31,26,0.15)",
+                outline: "3px double rgba(90,31,26,0.15)",
+                outlineOffset: "-7px",
+                borderRadius: 4,
+                fontFamily: "var(--font-body)",
+                fontSize: 13,
+                color: "#5A1F1A",
+                fontVariantNumeric: "tabular-nums",
+              }}>
+                <p style={{
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: "#A8411A",
+                  marginBottom: 6,
+                }}>
+                  Itinerario · Km 35,5
+                </p>
+                <p style={{ marginBottom: 2, fontWeight: 600 }}>
+                  Próxima salida: martes a sábado, 19:30–21:00
+                </p>
+                <p style={{ color: "#5E6B3E", fontSize: 12 }}>
+                  Cabeceras: Marchigüe · Peralillo · Santa Cruz · Cunaco. Coordinamos por WhatsApp.
+                </p>
               </div>
             </div>
           </div>

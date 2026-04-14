@@ -1,18 +1,20 @@
 import Link from "next/link";
+import KmStone from "./icons/KmStone";
 
 // Footer como firma editorial — sin columnas de links apretados.
-// Tipografía como cierre de una nota, no como menú secundario.
+// Hito kilométrico como mark visual + tipografía como cierre de nota.
 export default function Footer() {
   return (
     <footer style={{ background: "#5A1F1A", color: "rgba(244,234,219,0.85)", padding: "4rem 1.25rem 2rem" }}>
       <div className="wrap" style={{ maxWidth: 720, margin: "0 auto" }}>
 
-        {/* Firma editorial */}
-        <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+        {/* Firma editorial con hito kilométrico */}
+        <div style={{ textAlign: "center", marginBottom: "2.5rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.875rem" }}>
+          <KmStone size={64} ariaLabel="Kilómetro 35,5" />
           <p style={{
             fontFamily: "var(--font-display)", fontWeight: 500, fontStyle: "italic",
             fontSize: "clamp(1.5rem, 4vw, 2rem)", color: "#F4EADB", lineHeight: 1.2,
-            marginBottom: "0.75rem",
+            margin: 0,
           }}>
             Estación Snack
           </p>
@@ -21,8 +23,9 @@ export default function Footer() {
             letterSpacing: "0.14em", textTransform: "uppercase",
             color: "rgba(244,234,219,0.6)",
             fontVariantNumeric: "tabular-nums",
+            margin: 0,
           }}>
-            Km 35,5 · Santa Cruz, Valle de Colchagua
+            Santa Cruz · Valle de Colchagua
           </p>
         </div>
 

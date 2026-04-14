@@ -15,6 +15,7 @@ import ComoFunciona from "./ComoFunciona";
 import FAQ from "./FAQ";
 import Footer from "./Footer";
 import ToastStack from "./Toast";
+import Filete from "./Filete";
 
 // Dynamic imports — sheets sólo cargan cuando el usuario interactúa.
 // Reduce first-load JS bundle (framer-motion se mueve a chunk async).
@@ -99,20 +100,9 @@ export default function PageShell() {
           </div>
         </section>
 
-        {/* Separador editorial entre las seis y los armados */}
-        <div
-          aria-hidden="true"
-          style={{
-            background: "#F4EADB",
-            padding: "1rem 20px 3rem",
-            textAlign: "center",
-            fontFamily: "var(--font-display)",
-            fontSize: "1.25rem",
-            color: "rgba(90,31,26,0.35)",
-            letterSpacing: "0.5em",
-          }}
-        >
-          · · ·
+        {/* Separador editorial tipo filete de boleto — divide secciones */}
+        <div style={{ background: "#F4EADB", padding: "1.5rem 20px 2rem" }}>
+          <Filete width={280} ornament="dots" />
         </div>
 
         {/* Packs — intro editorial corto, centrado */}

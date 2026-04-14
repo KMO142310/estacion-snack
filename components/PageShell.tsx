@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { MotionConfig } from "framer-motion";
 import { useCartStore } from "@/lib/store";
 import productsData from "@/data/products.json";
@@ -9,13 +10,16 @@ import Header from "./Header";
 import Hero from "./Hero";
 import Benefits from "./Benefits";
 import ProductCard from "./ProductCard";
-import ProductSheet from "./ProductSheet";
 import PackSection from "./PackSection";
 import ComoFunciona from "./ComoFunciona";
 import FAQ from "./FAQ";
 import Footer from "./Footer";
-import OrderSheet from "./OrderSheet";
 import ToastStack from "./Toast";
+
+// Dynamic imports — sheets sólo cargan cuando el usuario interactúa.
+// Reduce first-load JS bundle (framer-motion se mueve a chunk async).
+const OrderSheet = dynamic(() => import("./OrderSheet"), { ssr: false });
+const ProductSheet = dynamic(() => import("./ProductSheet"), { ssr: false });
 
 const products = productsData.slice().sort((a, b) => a.sort_order - b.sort_order);
 

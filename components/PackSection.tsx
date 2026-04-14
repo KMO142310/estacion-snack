@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import PackCard from "./PackCard";
-import PackSheet from "./PackSheet";
+
+// Dynamic import — PackSheet solo carga cuando el usuario abre un pack.
+const PackSheet = dynamic(() => import("./PackSheet"), { ssr: false });
 import packsData from "@/data/packs.json";
 import productsData from "@/data/products.json";
 import type { Pack, ProductStock } from "@/lib/pack-utils";

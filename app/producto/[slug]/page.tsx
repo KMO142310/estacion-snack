@@ -76,6 +76,11 @@ export default async function ProductPage({ params }: Props) {
   const SITE =
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.estacionsnack.cl";
 
+  // Precio válido hasta 30 días desde generación (requerido Google Search Console desde 2023).
+  const priceValidUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .split("T")[0];
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -91,17 +96,66 @@ export default async function ProductPage({ params }: Props) {
       "@type": "Offer",
       priceCurrency: "CLP",
       price: String(product.price),
+      priceValidUntil,
       availability:
         product.status === "agotado"
           ? "https://schema.org/OutOfStock"
           : "https://schema.org/InStock",
       url: `${SITE}/producto/${product.slug}`,
       seller: {
-        "@type": "LocalBusiness",
+        "@type": "Store",
         "@id": `${SITE}/#business`,
         name: "Estación Snack",
       },
+      // Google rich results requiere hasMerchantReturnPolicy desde 2023.
+      // 10 días hábiles por Ley 19.496 art. 3 bis.
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+        applicableCountry: "CL",
+        returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+        merchantReturnDays: 10,
+        returnMethod: "https://schema.org/ReturnByMail",
+        returnFees: "https://schema.org/FreeReturn",
+      },
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        shippingRate: {
+          "@type": "MonetaryAmount",
+          value: 2000,
+          currency: "CLP",
+        },
+        shippingDestination: {
+          "@type": "DefinedRegion",
+          addressCountry: "CL",
+          addressRegion: "VI",
+        },
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          handlingTime: {
+            "@type": "QuantitativeValue",
+            minValue: 0,
+            maxValue: 1,
+            unitCode: "DAY",
+          },
+          transitTime: {
+            "@type": "QuantitativeValue",
+            minValue: 0,
+            maxValue: 2,
+            unitCode: "DAY",
+          },
+        },
+      },
     },
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: SITE },
+      { "@type": "ListItem", position: 2, name: "Productos", item: `${SITE}/#productos` },
+      { "@type": "ListItem", position: 3, name: product.name, item: `${SITE}/producto/${product.slug}` },
+    ],
   };
 
   // Cast to the Product type ProductDetail expects
@@ -113,6 +167,10 @@ export default async function ProductPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
       />
       <ProductDetail
         product={productForDetail}

@@ -5,9 +5,10 @@ import ConsentBanner from "@/components/ConsentBanner";
 import { safeJsonLd } from "@/lib/json-ld";
 import "./globals.css";
 
+// Fraunces como variable font — sin array de weight, habilita todo el rango 100-900
+// y ahorra ~100-150 KB en fonts. Ref: Next.js next/font + web.dev font best practices.
 const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
   variable: "--font-fraunces",
@@ -65,7 +66,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Estación Snack — Frutos secos por kilo",
     description: "Frutos secos del Valle de Colchagua, vendidos por kilo.",
-    images: ["/og-image.jpg"],
+    images: ["/opengraph-image"],
   },
   manifest: "/manifest.webmanifest",
   icons: {
@@ -86,20 +87,29 @@ export const viewport: Viewport = {
 
 const orgJsonLd = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": "Store",
   "@id": `${SITE}/#business`,
   name: "Estación Snack",
   description:
-    "Frutos secos y dulces del Valle de Colchagua, vendidos por kilo. Despacho martes a sábado en Santa Cruz y alrededores.",
+    "Frutos secos y dulces del Valle de Colchagua, vendidos por kilo. Despacho martes a sábado en Marchigüe, Peralillo, Santa Cruz y Cunaco.",
   url: SITE,
-  image: `${SITE}/og-image.jpg`,
+  image: `${SITE}/opengraph-image`,
   telephone: "+56953743338",
   priceRange: "$$",
+  currenciesAccepted: "CLP",
+  paymentAccepted: ["Transferencia bancaria", "Efectivo"],
   address: {
     "@type": "PostalAddress",
+    streetAddress: "Santa Cruz centro",
     addressLocality: "Santa Cruz",
     addressRegion: "Región de O'Higgins",
+    postalCode: "3130000",
     addressCountry: "CL",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: -34.641,
+    longitude: -71.365,
   },
   areaServed: [
     { "@type": "City", name: "Marchigüe" },
@@ -107,7 +117,16 @@ const orgJsonLd = {
     { "@type": "City", name: "Santa Cruz" },
     { "@type": "City", name: "Cunaco" },
   ],
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "19:30",
+      closes: "21:00",
+    },
+  ],
   servesCuisine: "Frutos secos y snacks naturales",
+  sameAs: ["https://instagram.com/estacionsnack.sc"],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -22,7 +22,6 @@ interface Product {
 interface Props {
   product: Product;
   onOpen: () => void;
-  index?: number; // posición editorial (01, 02, ..., 06) — motivo "Seis"
 }
 
 // Rediseño editorial:
@@ -31,9 +30,8 @@ interface Props {
 // - Sin box-shadow fuerte; la card respira dentro del layout sin verse como un botón.
 // - Nombre con jerarquía clara, precio sobrio debajo.
 // - Botón secundario visual: la tarjeta ENTERA es el tap target; el botón "Agregar" es CTA, no un "Comprar ya" gritado.
-export default function ProductCard({ product, onOpen, index }: Props) {
+export default function ProductCard({ product, onOpen }: Props) {
   const { name, price, image_webp_url, badge, status, occasion } = product;
-  const editionNumber = typeof index === "number" ? String(index + 1).padStart(2, "0") : null;
   const [added, setAdded] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
@@ -86,24 +84,6 @@ export default function ProductCard({ product, onOpen, index }: Props) {
 
       {/* Info — estilo editorial */}
       <div style={{ padding: "0 2px" }}>
-        {/* Edición "N° 01" — motivo "Seis" como catálogo curado, no grilla genérica */}
-        {editionNumber && (
-          <p
-            aria-hidden="true"
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: 10,
-              fontWeight: 700,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "#A8411A",
-              marginBottom: 8,
-            }}
-          >
-            N.º {editionNumber} · Seis
-          </p>
-        )}
-
         {/* Ocasión como hook (como maridaje de vino) */}
         {occasion && !agotado && (
           <p style={{

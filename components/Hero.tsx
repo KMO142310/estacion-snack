@@ -168,9 +168,9 @@ export default function Hero({ onOrderOpen }: HeroProps) {
             marginInline: "auto",
           }}
         >
-          Seis mezclas del valle.
+          Frutos secos y dulces del valle.
           <br />
-          De las que se acaban antes que la conversación.
+          De los que se acaban antes que la conversación.
         </p>
 
         {/* Acción */}
@@ -191,7 +191,7 @@ export default function Hero({ onOrderOpen }: HeroProps) {
               textDecoration: "none",
             }}
           >
-            Ver las seis
+            Ver las mezclas
           </a>
           <button
             onClick={onOrderOpen}

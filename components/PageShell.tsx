@@ -58,43 +58,29 @@ export default function PageShell() {
         <Hero onOrderOpen={openOrder} />
         <Benefits />
 
-        {/* Entrada editorial — prólogo centrado, tipografía monumental como inicio de catálogo curado. */}
-        <section style={{ background: "#F4EADB", padding: "4.5rem 20px 2rem", textAlign: "center" }}>
+        {/* Prólogo editorial — introduce las mezclas con voz, sin count. */}
+        <section style={{ background: "#F4EADB", padding: "4rem 20px 1.5rem", textAlign: "center" }}>
           <div className="container" style={{ maxWidth: 640 }}>
-            <p
-              aria-hidden="true"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontStyle: "italic",
-                fontSize: "clamp(3rem, 10vw, 4.5rem)",
-                fontWeight: 500,
-                color: "#A8411A",
-                letterSpacing: "-0.03em",
-                lineHeight: 1,
-                marginBottom: "0.5rem",
-              }}
-            >
-              Seis.
-            </p>
             <p style={{
               fontFamily: "var(--font-body)",
               fontSize: 11, fontWeight: 700,
               letterSpacing: "0.22em", textTransform: "uppercase",
               color: "rgba(90,31,26,0.55)",
-              marginBottom: "1.5rem",
+              marginBottom: "1rem",
             }}>
-              Ni una más
+              Las mezclas
             </p>
             <p style={{
               fontFamily: "var(--font-display)",
               fontStyle: "italic",
-              fontWeight: 400,
-              fontSize: "clamp(1.125rem, 3vw, 1.375rem)",
+              fontWeight: 500,
+              fontSize: "clamp(1.375rem, 4vw, 1.875rem)",
               color: "#5A1F1A",
-              lineHeight: 1.45,
+              lineHeight: 1.35,
               marginBottom: 0,
-              maxWidth: 520,
+              maxWidth: 540,
               marginInline: "auto",
+              letterSpacing: "-0.01em",
             }}>
               Las probamos todas hasta dejar solo las que uno se termina sin darse cuenta.
               Cada una con su ocasión.
@@ -106,8 +92,8 @@ export default function PageShell() {
         <section id="productos" style={{ background: "#F4EADB", padding: "1rem 16px 3.5rem" }}>
           <div className="container">
             <div className="product-grid">
-              {products.map((p, i) => (
-                <ProductCard key={p.id} product={p} onOpen={() => setSheetProduct(p)} index={i} />
+              {products.map((p) => (
+                <ProductCard key={p.id} product={p} onOpen={() => setSheetProduct(p)} />
               ))}
             </div>
           </div>
@@ -139,7 +125,7 @@ export default function PageShell() {
               color: "rgba(90,31,26,0.55)",
               marginBottom: "0.75rem",
             }}>
-              Tres armados
+              Armados
             </p>
             <p style={{
               fontFamily: "var(--font-display)",

@@ -95,19 +95,21 @@ export default function Hero({ onOrderOpen }: HeroProps) {
           maxWidth: 800,
         }}
       >
-        {/* Label superior — geografía como credencial */}
+        {/* Hito kilométrico — guiño al Ramal San Fernando – Pichilemu
+            (Estación Santa Cruz, ex Paniahue, km 35,5. Verificable, no reclama continuidad histórica.) */}
         <p
           style={{
             fontFamily: "var(--font-body)",
-            color: "rgba(244,234,219,0.75)",
+            color: "rgba(244,234,219,0.72)",
             fontSize: "0.7rem",
             fontWeight: 600,
             letterSpacing: "0.22em",
             textTransform: "uppercase",
             marginBottom: "2rem",
+            fontVariantNumeric: "tabular-nums",
           }}
         >
-          Santa Cruz · Valle de Colchagua
+          Km 35,5 · Santa Cruz, Valle de Colchagua
         </p>
 
         {/* Marca-monumento */}

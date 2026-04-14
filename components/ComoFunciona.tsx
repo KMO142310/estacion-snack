@@ -30,7 +30,7 @@ export default function ComoFunciona() {
           color: "rgba(244,234,219,0.65)",
           marginBottom: "0.75rem",
         }}>
-          Tres pasos
+          Itinerario
         </p>
         <h2
           style={{
@@ -44,7 +44,7 @@ export default function ComoFunciona() {
             letterSpacing: "-0.02em",
           }}
         >
-          Así armamos tu pedido.
+          Así llega tu despacho.
         </h2>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>

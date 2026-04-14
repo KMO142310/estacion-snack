@@ -50,13 +50,13 @@ export default function Announce() {
 
   if (!visible) return null;
 
-  // Elite editorial: líneas dated/geográficas en vez de promo,
-  // inspirado en Viu Manent "90 años" y Lapostolle "Informe de Vendimia".
-  // Ref: Research C (Colchagua wine country).
+  // Announce como tablero de salidas de estación de tren.
+  // Vocabulario ferroviario verificable del Ramal San Fernando–Pichilemu.
+  // Ref: Research railway Colchagua 2026-04-14.
   const messages = [
-    "Santa Cruz · Valle de Colchagua",
-    "Entrega martes a sábado",
-    "WhatsApp, sin apps",
+    "Próxima salida · despacho martes a sábado",
+    "Cabeceras · Marchigüe · Peralillo · Santa Cruz · Cunaco",
+    "Carga desde 1 kg · pedido por WhatsApp",
   ];
 
   return (

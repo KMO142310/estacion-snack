@@ -20,8 +20,9 @@ export default function Footer() {
             fontFamily: "var(--font-body)", fontSize: "0.75rem", fontWeight: 600,
             letterSpacing: "0.14em", textTransform: "uppercase",
             color: "rgba(244,234,219,0.6)",
+            fontVariantNumeric: "tabular-nums",
           }}>
-            Santa Cruz · Valle de Colchagua
+            Km 35,5 · Santa Cruz, Valle de Colchagua
           </p>
         </div>
 

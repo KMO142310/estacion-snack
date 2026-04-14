@@ -58,7 +58,7 @@ export default function PageShell() {
         <Hero onOrderOpen={openOrder} />
         <Benefits />
 
-        {/* Prólogo editorial — introduce las mezclas con voz, sin count. */}
+        {/* Prólogo — "Andén" como anuncio de salida, no heading de catálogo. */}
         <section style={{ background: "#F4EADB", padding: "4rem 20px 1.5rem", textAlign: "center" }}>
           <div className="container" style={{ maxWidth: 640 }}>
             <p style={{
@@ -68,7 +68,7 @@ export default function PageShell() {
               color: "rgba(90,31,26,0.55)",
               marginBottom: "1rem",
             }}>
-              Las mezclas
+              Andén · Las mezclas
             </p>
             <p style={{
               fontFamily: "var(--font-display)",
@@ -125,7 +125,7 @@ export default function PageShell() {
               color: "rgba(90,31,26,0.55)",
               marginBottom: "0.75rem",
             }}>
-              Armados
+              Carga combinada
             </p>
             <p style={{
               fontFamily: "var(--font-display)",
@@ -156,7 +156,7 @@ export default function PageShell() {
               color: "#A8411A",
               marginBottom: "0.75rem",
             }}>
-              Preguntas
+              Guía del pasajero
             </p>
             <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontStyle: "italic", fontSize: "clamp(1.5rem, 4vw, 2rem)", color: "#5A1F1A", marginBottom: "1.5rem", lineHeight: 1.2 }}>
               Lo que me suelen preguntar.
@@ -198,7 +198,7 @@ export default function PageShell() {
               color: "rgba(244,234,219,0.6)",
               marginBottom: "1rem",
             }}>
-              Del valle a tu mesa
+              Del andén a tu mesa
             </p>
             <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontStyle: "italic", fontSize: "clamp(24px, 5.5vw, 40px)", color: "#F4EADB", lineHeight: 1.15, marginBottom: 14, letterSpacing: "-0.02em" }}>
               Cuando quieras, te escribimos.

@@ -10,11 +10,14 @@ interface HeroProps {
 }
 
 const HERO_IMAGES = productsData.map((p) => p.image_webp_url);
-// 8s + pause on hover + respeta prefers-reduced-motion.
-// Fuente: NN/g "Auto-Forwarding Carousels Annoy Users" recomienda ≥6-8s
-// y detener al interactuar para accesibilidad motora.
 const ROTATE_MS = 8000;
 
+/**
+ * Hero tipográfico. La marca ES el hero — las fotos son textura detrás.
+ * Estructura editorial: ubicación / marca-monumento / verso poético / acción.
+ * Inspiración: etiquetas de vino Valle de Colchagua (Lapostolle, Casa Silva),
+ * Aesop Reading Room, Flamingo Estate "Newest Release" banners.
+ */
 export default function Hero({ onOrderOpen }: HeroProps) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -22,7 +25,7 @@ export default function Hero({ onOrderOpen }: HeroProps) {
 
   useEffect(() => {
     if (HERO_IMAGES.length <= 1) return;
-    if (reducedMotion) return; // respeta preferencia del sistema
+    if (reducedMotion) return;
     if (paused) return;
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % HERO_IMAGES.length);
@@ -43,10 +46,12 @@ export default function Hero({ onOrderOpen }: HeroProps) {
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "flex-end",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
       }}
     >
-      {/* Fondo rotativo — imágenes de productos con crossfade */}
+      {/* Fondo rotativo — textura, no protagonista */}
       <AnimatePresence initial={false}>
         <motion.div
           key={HERO_IMAGES[index]}
@@ -68,73 +73,108 @@ export default function Hero({ onOrderOpen }: HeroProps) {
         </motion.div>
       </AnimatePresence>
 
-      {/* Overlay degradado — texto legible abajo */}
+      {/* Overlay profundo — la marca domina, la foto insinúa */}
       <div
         aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
           background:
-            "linear-gradient(to bottom, rgba(90,31,26,0.15) 0%, rgba(90,31,26,0.55) 40%, rgba(90,31,26,0.92) 75%, rgba(90,31,26,0.98) 100%)",
+            "linear-gradient(180deg, rgba(90,31,26,0.55) 0%, rgba(90,31,26,0.80) 100%)",
           zIndex: 1,
         }}
       />
 
-      {/* Contenido */}
+      {/* Contenido editorial */}
       <div
         style={{
           position: "relative",
           zIndex: 10,
-          padding: "0 1.5rem 2rem",
-          paddingBottom: "calc(2rem + env(safe-area-inset-bottom, 0px))",
+          padding: "2rem 1.5rem",
+          width: "100%",
+          maxWidth: 800,
         }}
       >
+        {/* Label superior — geografía como credencial */}
         <p
           style={{
             fontFamily: "var(--font-body)",
-            color: "rgba(244,234,219,0.82)",
+            color: "rgba(244,234,219,0.75)",
             fontSize: "0.7rem",
             fontWeight: 600,
-            letterSpacing: "0.14em",
+            letterSpacing: "0.22em",
             textTransform: "uppercase",
-            marginBottom: "0.75rem",
+            marginBottom: "2rem",
           }}
         >
           Santa Cruz · Valle de Colchagua
         </p>
 
+        {/* Marca-monumento */}
         <h1
           style={{
             fontFamily: "var(--font-display)",
+            fontStyle: "italic",
             color: "#F4EADB",
-            fontWeight: 600,
-            fontSize: "clamp(2.25rem, 10vw, 4rem)",
-            lineHeight: 1.06,
-            letterSpacing: "-0.025em",
-            marginBottom: "0.875rem",
+            fontWeight: 500,
+            fontSize: "clamp(3.5rem, 14vw, 7.5rem)",
+            lineHeight: 0.92,
+            letterSpacing: "-0.04em",
+            marginBottom: "0.25rem",
           }}
         >
-          Frutos secos
-          <br />
-          del valle.
+          Estación
+        </h1>
+        <h1
+          style={{
+            fontFamily: "var(--font-display)",
+            fontStyle: "italic",
+            color: "#F4EADB",
+            fontWeight: 500,
+            fontSize: "clamp(3.5rem, 14vw, 7.5rem)",
+            lineHeight: 0.92,
+            letterSpacing: "-0.04em",
+            marginBottom: "1.75rem",
+          }}
+        >
+          Snack.
         </h1>
 
+        {/* Ornamento editorial */}
         <p
+          aria-hidden="true"
           style={{
-            fontFamily: "var(--font-body)",
-            color: "rgba(244,234,219,0.82)",
-            fontSize: "1rem",
-            lineHeight: 1.55,
-            marginBottom: "1.5rem",
-            maxWidth: 320,
+            fontFamily: "var(--font-display)",
+            fontSize: "1.25rem",
+            color: "rgba(244,234,219,0.6)",
+            letterSpacing: "0.5em",
+            marginBottom: "1.25rem",
           }}
         >
-          De los que se acaban antes
-          <br />
-          que la conversación.
+          · · ·
         </p>
 
-        <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+        {/* Verso */}
+        <p
+          style={{
+            fontFamily: "var(--font-display)",
+            fontStyle: "italic",
+            fontWeight: 400,
+            color: "rgba(244,234,219,0.92)",
+            fontSize: "clamp(1rem, 2.8vw, 1.375rem)",
+            lineHeight: 1.4,
+            marginBottom: "2.5rem",
+            maxWidth: 480,
+            marginInline: "auto",
+          }}
+        >
+          Seis mezclas del valle.
+          <br />
+          De las que se acaban antes que la conversación.
+        </p>
+
+        {/* Acción */}
+        <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", justifyContent: "center" }}>
           <a
             href="#productos"
             style={{
@@ -145,14 +185,13 @@ export default function Hero({ onOrderOpen }: HeroProps) {
               background: "#A8411A",
               border: "none",
               borderRadius: "10px",
-              padding: "0.875rem 1.5rem",
+              padding: "0.875rem 1.75rem",
               cursor: "pointer",
-              // Elite: sin sombra de color. Ref Byredo, Flamingo Estate — verified 2026-04-13.
               WebkitTapHighlightColor: "transparent",
               textDecoration: "none",
             }}
           >
-            Ver las mezclas
+            Ver las seis
           </a>
           <button
             onClick={onOrderOpen}
@@ -160,11 +199,11 @@ export default function Hero({ onOrderOpen }: HeroProps) {
               fontFamily: "var(--font-body)",
               fontWeight: 500,
               fontSize: "0.9375rem",
-              color: "rgba(244,234,219,0.8)",
-              background: "rgba(244,234,219,0.1)",
-              border: "1px solid rgba(244,234,219,0.2)",
+              color: "#F4EADB",
+              background: "transparent",
+              border: "1px solid rgba(244,234,219,0.35)",
               borderRadius: "10px",
-              padding: "0.875rem 1.5rem",
+              padding: "0.875rem 1.75rem",
               cursor: "pointer",
               WebkitTapHighlightColor: "transparent",
             }}

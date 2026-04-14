@@ -72,6 +72,19 @@ export default function ProductDetail({ product, related }: Props) {
             {/* Info */}
             <div>
               <p style={{ fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#5E6B3E", marginBottom: 8 }}>{product.cat_label}</p>
+              {product.occasion && (
+                <p style={{
+                  fontFamily: "var(--font-display)",
+                  fontStyle: "italic",
+                  fontWeight: 500,
+                  fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
+                  color: "#5E6B3E",
+                  lineHeight: 1.35,
+                  marginBottom: 10,
+                }}>
+                  {product.occasion}
+                </p>
+              )}
               <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(1.75rem, 5vw, 3rem)", color: "#5A1F1A", lineHeight: 1.1, marginBottom: 16 }}>
                 {product.name}
               </h1>

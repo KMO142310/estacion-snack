@@ -29,9 +29,11 @@ export interface Product {
   sort_order: number;
   color: ProductColor;
   long_description?: string | null;
+  long_copy?: string | null;
   nutrition?: NutritionInfo | null;
   is_active?: boolean;
   min_unit_kg?: number; // formato de venta: siempre 1 kg mínimo
+  occasion?: string | null; // hook editorial — ej "El repetido de todos los jueves."
 }
 
 export interface CartItem {

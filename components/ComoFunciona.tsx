@@ -23,17 +23,28 @@ export default function ComoFunciona() {
       style={{ background: "#5E6B3E", padding: "5rem 0" }}
     >
       <div className="wrap">
+        <p style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 11, fontWeight: 700,
+          letterSpacing: "0.14em", textTransform: "uppercase",
+          color: "rgba(244,234,219,0.65)",
+          marginBottom: "0.75rem",
+        }}>
+          Tres pasos
+        </p>
         <h2
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
+            fontStyle: "italic",
             fontSize: "clamp(1.75rem, 6vw, 2.5rem)",
             color: "#F4EADB",
             lineHeight: 1.15,
             marginBottom: "2.5rem",
+            letterSpacing: "-0.02em",
           }}
         >
-          Cómo funciona
+          Así armamos tu pedido.
         </h2>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>

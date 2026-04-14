@@ -58,30 +58,46 @@ export default function PageShell() {
         <Hero onOrderOpen={openOrder} />
         <Benefits />
 
-        {/* Entrada editorial — introduce las 6 mezclas como si fuera el prólogo de un catálogo, no un header de grilla. */}
-        <section style={{ background: "#F4EADB", padding: "3rem 20px 1.5rem" }}>
+        {/* Entrada editorial — prólogo centrado, tipografía monumental como inicio de catálogo curado. */}
+        <section style={{ background: "#F4EADB", padding: "4.5rem 20px 2rem", textAlign: "center" }}>
           <div className="container" style={{ maxWidth: 640 }}>
+            <p
+              aria-hidden="true"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontStyle: "italic",
+                fontSize: "clamp(3rem, 10vw, 4.5rem)",
+                fontWeight: 500,
+                color: "#A8411A",
+                letterSpacing: "-0.03em",
+                lineHeight: 1,
+                marginBottom: "0.5rem",
+              }}
+            >
+              Seis.
+            </p>
             <p style={{
               fontFamily: "var(--font-body)",
               fontSize: 11, fontWeight: 700,
-              letterSpacing: "0.14em", textTransform: "uppercase",
-              color: "#A8411A",
-              marginBottom: "0.75rem",
+              letterSpacing: "0.22em", textTransform: "uppercase",
+              color: "rgba(90,31,26,0.55)",
+              marginBottom: "1.5rem",
             }}>
-              Las seis
+              Ni una más
             </p>
             <p style={{
               fontFamily: "var(--font-display)",
-              fontWeight: 500,
               fontStyle: "italic",
-              fontSize: "clamp(1.375rem, 4.5vw, 1.875rem)",
+              fontWeight: 400,
+              fontSize: "clamp(1.125rem, 3vw, 1.375rem)",
               color: "#5A1F1A",
-              lineHeight: 1.3,
+              lineHeight: 1.45,
               marginBottom: 0,
+              maxWidth: 520,
+              marginInline: "auto",
             }}>
-              Las probamos todas hasta dejar solo las que uno
-              <br />
-              se termina sin darse cuenta. Cada una con su ocasión.
+              Las probamos todas hasta dejar solo las que uno se termina sin darse cuenta.
+              Cada una con su ocasión.
             </p>
           </div>
         </section>
@@ -90,37 +106,52 @@ export default function PageShell() {
         <section id="productos" style={{ background: "#F4EADB", padding: "1rem 16px 3.5rem" }}>
           <div className="container">
             <div className="product-grid">
-              {products.map((p) => (
-                <ProductCard key={p.id} product={p} onOpen={() => setSheetProduct(p)} />
+              {products.map((p, i) => (
+                <ProductCard key={p.id} product={p} onOpen={() => setSheetProduct(p)} index={i} />
               ))}
             </div>
           </div>
         </section>
 
-        {/* Packs — introducidas con una línea, no con un "Packs armados" */}
+        {/* Separador editorial entre las seis y los armados */}
+        <div
+          aria-hidden="true"
+          style={{
+            background: "#F4EADB",
+            padding: "1rem 20px 3rem",
+            textAlign: "center",
+            fontFamily: "var(--font-display)",
+            fontSize: "1.25rem",
+            color: "rgba(90,31,26,0.35)",
+            letterSpacing: "0.5em",
+          }}
+        >
+          · · ·
+        </div>
+
+        {/* Packs — intro editorial corto, centrado */}
         <section style={{ background: "#fff" }}>
-          <div className="container" style={{ padding: "3rem 20px 0", maxWidth: 640 }}>
+          <div className="container" style={{ padding: "4rem 20px 0", maxWidth: 640, textAlign: "center" }}>
             <p style={{
               fontFamily: "var(--font-body)",
               fontSize: 11, fontWeight: 700,
-              letterSpacing: "0.14em", textTransform: "uppercase",
-              color: "#A8411A",
+              letterSpacing: "0.22em", textTransform: "uppercase",
+              color: "rgba(90,31,26,0.55)",
               marginBottom: "0.75rem",
             }}>
-              Armados
+              Tres armados
             </p>
             <p style={{
               fontFamily: "var(--font-display)",
               fontWeight: 500,
               fontStyle: "italic",
-              fontSize: "clamp(1.25rem, 4vw, 1.625rem)",
+              fontSize: "clamp(1.375rem, 4vw, 1.75rem)",
               color: "#5A1F1A",
-              lineHeight: 1.35,
+              lineHeight: 1.3,
               marginBottom: 0,
+              letterSpacing: "-0.015em",
             }}>
               Si querés probar dos de una, ya los armé.
-              <br />
-              Sale más barato que comprarlos sueltos.
             </p>
           </div>
           <PackSection />

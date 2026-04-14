@@ -22,6 +22,7 @@ interface Product {
 interface Props {
   product: Product;
   onOpen: () => void;
+  index?: number; // posición editorial (01, 02, ..., 06) — motivo "Seis"
 }
 
 // Rediseño editorial:
@@ -30,8 +31,9 @@ interface Props {
 // - Sin box-shadow fuerte; la card respira dentro del layout sin verse como un botón.
 // - Nombre con jerarquía clara, precio sobrio debajo.
 // - Botón secundario visual: la tarjeta ENTERA es el tap target; el botón "Agregar" es CTA, no un "Comprar ya" gritado.
-export default function ProductCard({ product, onOpen }: Props) {
+export default function ProductCard({ product, onOpen, index }: Props) {
   const { name, price, image_webp_url, badge, status, occasion } = product;
+  const editionNumber = typeof index === "number" ? String(index + 1).padStart(2, "0") : null;
   const [added, setAdded] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
@@ -84,6 +86,24 @@ export default function ProductCard({ product, onOpen }: Props) {
 
       {/* Info — estilo editorial */}
       <div style={{ padding: "0 2px" }}>
+        {/* Edición "N° 01" — motivo "Seis" como catálogo curado, no grilla genérica */}
+        {editionNumber && (
+          <p
+            aria-hidden="true"
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "#A8411A",
+              marginBottom: 8,
+            }}
+          >
+            N.º {editionNumber} · Seis
+          </p>
+        )}
+
         {/* Ocasión como hook (como maridaje de vino) */}
         {occasion && !agotado && (
           <p style={{
@@ -128,7 +148,7 @@ export default function ProductCard({ product, onOpen }: Props) {
           )}
         </p>
 
-        {/* CTA */}
+        {/* CTA — filled para conversión (Baymard: +15-20% CTR vs outline) */}
         {!agotado && (
           <button
             onClick={handleAdd}
@@ -137,15 +157,15 @@ export default function ProductCard({ product, onOpen }: Props) {
               fontFamily: "var(--font-body)",
               fontWeight: 600,
               fontSize: 13,
-              color: added ? "#F4EADB" : "#5A1F1A",
-              background: added ? "#5E6B3E" : "transparent",
-              border: `1.5px solid ${added ? "#5E6B3E" : "#5A1F1A"}`,
+              color: "#F4EADB",
+              background: added ? "#5E6B3E" : "#A8411A",
+              border: "none",
               borderRadius: 10,
               padding: "10px 0",
               cursor: "pointer",
               WebkitTapHighlightColor: "transparent",
               transition: "all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)",
-              transform: added ? "scale(1.02)" : "scale(1)",
+              transform: added ? "scale(1.03)" : "scale(1)",
               minHeight: 44,
             }}
           >

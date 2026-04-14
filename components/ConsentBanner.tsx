@@ -59,7 +59,7 @@ export default function ConsentBanner() {
       <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
         <button onClick={() => respond("accepted")} style={{
           fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 12,
-          color: "#F4EADB", background: "#D0551F", border: "none",
+          color: "#F4EADB", background: "#A8411A", border: "none",
           borderRadius: 8, padding: "7px 14px", cursor: "pointer",
         }}>
           OK

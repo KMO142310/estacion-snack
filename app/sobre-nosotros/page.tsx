@@ -48,7 +48,7 @@ export default function SobreNosotrosPage() {
 
           {/* Hero */}
           <div style={{ maxWidth: 680, marginBottom: "4rem" }}>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#D0551F", marginBottom: "0.75rem" }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#A8411A", marginBottom: "0.75rem" }}>
               Quiénes somos
             </p>
             <h1
@@ -124,7 +124,7 @@ export default function SobreNosotrosPage() {
                         width: 8,
                         height: 8,
                         borderRadius: "50%",
-                        background: "#D0551F",
+                        background: "#A8411A",
                         flexShrink: 0,
                         marginTop: 7,
                       }}
@@ -174,7 +174,7 @@ export default function SobreNosotrosPage() {
                   fontSize: "0.9375rem",
                   padding: "0.875rem 1.75rem",
                   borderRadius: "10px",
-                  background: "#D0551F",
+                  background: "#A8411A",
                   color: "#F4EADB",
                   textDecoration: "none",
                 }}

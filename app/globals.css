@@ -2,7 +2,7 @@
 
 @theme inline {
   /* === Paleta de marca === */
-  --color-terracota:       #D0551F;
+  --color-terracota:       #A8411A;
   --color-terracota-light: #E0784D;
   --color-terracota-dark:  #A8411A;
   --color-crema:           #F4EADB;
@@ -45,7 +45,7 @@
 
 /* === Variables CSS para contextos no-Tailwind === */
 :root {
-  --terracota:   #D0551F;
+  --terracota:   #A8411A;
   --crema:       #F4EADB;
   --burdeo:      #5A1F1A;
   --oliva:       #5E6B3E;
@@ -62,6 +62,8 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  /* Sticky header (Announce 32 + Header 70) no tape anchor/focus target (WCAG 2.4.11). */
+  scroll-padding-top: 110px;
 }
 
 body {
@@ -118,7 +120,7 @@ img { display: block; max-width: 100%; }
 .skip:focus { top: 8px; }
 
 :focus-visible {
-  outline: 2px solid #D0551F;
+  outline: 2px solid #A8411A;
   outline-offset: 2px;
   border-radius: 4px;
 }

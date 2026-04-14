@@ -34,7 +34,7 @@ export default function Benefits() {
                 borderRight: i < items.length - 1 ? "1px solid rgba(90,31,26,0.1)" : "none",
               }}
             >
-              <div style={{ color: "#D0551F" }}>{it.icon}</div>
+              <div style={{ color: "#A8411A" }}>{it.icon}</div>
               <p style={{
                 fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 600,
                 color: "#5A1F1A", textAlign: "center", lineHeight: 1.3,

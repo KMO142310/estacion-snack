@@ -1,9 +1,9 @@
 import type { CartLine } from "./store";
 import { fmtKg } from "./cart-utils";
 import type { Pack } from "./pack-utils";
+import { WA } from "./business-info";
 
-export const WA_PHONE = "56953743338";
-export const WA_BASE = `https://wa.me/${WA_PHONE}`;
+export const WA_BASE = `https://wa.me/${WA}`;
 
 interface Product {
   id: string;

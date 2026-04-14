@@ -8,7 +8,7 @@ import {
   adminLogOrderView,
 } from "@/lib/supabase/admin";
 import { safeEqual } from "@/lib/crypto";
-import { WA } from "@/lib/products";
+import { WA } from "@/lib/business-info";
 import type { OrderStatus } from "@/lib/types";
 
 export const metadata: Metadata = {

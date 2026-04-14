@@ -59,7 +59,7 @@ export default function TerminosPage() {
           <p style={S.p}>Si pagaste por transferencia, te devolvemos el monto a la misma cuenta. Si pagaste en efectivo, te lo reembolsamos en la siguiente entrega. Plazo máximo: 5 días hábiles desde que recibimos el producto de vuelta.</p>
 
           <h2 style={S.h2}>Contacto</h2>
-          <p style={S.p}>Cualquier consulta: WhatsApp <a href="https://wa.me/56953743338" style={{ color: "#D0551F", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>.</p>
+          <p style={S.p}>Cualquier consulta: WhatsApp <a href="https://wa.me/56953743338" style={{ color: "#A8411A", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>.</p>
         </div>
       </main>
     </StaticLayout>

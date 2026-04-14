@@ -72,10 +72,10 @@ export default function PrivacidadPage() {
             <li style={S.li}><strong>Cancelación</strong>: puedes pedir que eliminemos tus datos cuando ya no sean necesarios.</li>
             <li style={S.li}><strong>Oposición</strong>: puedes oponerte al uso de tus datos para un fin específico.</li>
           </ul>
-          <p style={S.p}>Para ejercer estos derechos, escríbenos por WhatsApp al <a href="https://wa.me/56953743338" style={{ color: "#D0551F", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>. Te respondemos en un plazo máximo de 15 días hábiles.</p>
+          <p style={S.p}>Para ejercer estos derechos, escríbenos por WhatsApp al <a href="https://wa.me/56953743338" style={{ color: "#A8411A", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>. Te respondemos en un plazo máximo de 15 días hábiles.</p>
 
           <h2 style={S.h2}>Contacto</h2>
-          <p style={S.p}>Cualquier duda sobre privacidad: WhatsApp <a href="https://wa.me/56953743338" style={{ color: "#D0551F", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>.</p>
+          <p style={S.p}>Cualquier duda sobre privacidad: WhatsApp <a href="https://wa.me/56953743338" style={{ color: "#A8411A", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>.</p>
         </div>
       </main>
     </StaticLayout>

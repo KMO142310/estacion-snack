@@ -37,13 +37,13 @@ export default function PageShell() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <a href="#productos" className="skip">Saltar al contenido</a>
+      <a href="#main" className="skip">Saltar al contenido</a>
       <div style={{ position: "sticky", top: 0, zIndex: 200 }}>
         <Announce />
         <Header onOrderOpen={() => setOrderOpen(true)} />
       </div>
 
-      <main>
+      <main id="main" tabIndex={-1} style={{ outline: "none" }}>
         <Hero onOrderOpen={() => setOrderOpen(true)} />
         <Benefits />
 
@@ -64,7 +64,7 @@ export default function PageShell() {
           <p style={{
             fontFamily: "var(--font-body)", fontSize: "0.6875rem", fontWeight: 600,
             letterSpacing: "0.14em", textTransform: "uppercase",
-            color: "rgba(244,234,219,0.55)", marginBottom: "1rem",
+            color: "rgba(244,234,219,0.82)", marginBottom: "1rem",
           }}>
             Nota de la casa · 2026
           </p>
@@ -105,7 +105,7 @@ export default function PageShell() {
                     display: "flex", justifyContent: "space-between", alignItems: "center",
                   }}>
                     {item.q}
-                    <span style={{ color: "#D0551F", fontSize: 18, fontWeight: 300, flexShrink: 0, marginLeft: 8 }}>+</span>
+                    <span style={{ color: "#A8411A", fontSize: 18, fontWeight: 300, flexShrink: 0, marginLeft: 8 }}>+</span>
                   </summary>
                   <p style={{
                     padding: "0 16px 14px", fontSize: 14, color: "#5E6B3E",
@@ -125,7 +125,7 @@ export default function PageShell() {
             <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(22px, 5vw, 36px)", color: "#F4EADB", lineHeight: 1.15, marginBottom: 8 }}>
               Arma tu pedido.
             </p>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "rgba(244,234,219,0.45)", marginBottom: 24 }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "rgba(244,234,219,0.78)", marginBottom: 24 }}>
               Martes a sábado · 19:30 a 21:00 · Santa Cruz y alrededores
             </p>
             <button onClick={() => setOrderOpen(true)} style={{

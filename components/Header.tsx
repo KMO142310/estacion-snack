@@ -50,7 +50,7 @@ export default function Header({ onOrderOpen }: HeaderProps) {
         {itemCount > 0 && (
           <span key={itemCount} style={{
             position: "absolute", top: -4, right: -4, minWidth: 18, height: 18, padding: "0 5px",
-            background: "#D0551F", color: "#F4EADB", fontSize: 10, fontWeight: 700,
+            background: "#A8411A", color: "#F4EADB", fontSize: 10, fontWeight: 700,
             borderRadius: 999, display: "flex", alignItems: "center", justifyContent: "center",
             fontFamily: "var(--font-body)",
             animation: "badgePop 0.2s ease",

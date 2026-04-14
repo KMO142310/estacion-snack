@@ -71,7 +71,7 @@ export default function ContactoPage() {
           </nav>
 
           <div style={{ maxWidth: 560, marginBottom: "3rem" }}>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#D0551F", marginBottom: "0.75rem" }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#A8411A", marginBottom: "0.75rem" }}>
               Contacto
             </p>
             <h1
@@ -105,7 +105,7 @@ export default function ContactoPage() {
                   alignItems: "flex-start",
                   gap: "1.25rem",
                   padding: "1.5rem",
-                  background: op.primary ? "#D0551F" : "#fff",
+                  background: op.primary ? "#A8411A" : "#fff",
                   borderRadius: "16px",
                   border: op.primary ? "none" : "1.5px solid rgba(90,31,26,0.10)",
                   boxShadow: op.primary ? "0 4px 24px rgba(208,85,31,0.25)" : "0 2px 12px rgba(90,31,26,0.06)",
@@ -113,7 +113,7 @@ export default function ContactoPage() {
                   transition: "transform 0.15s, box-shadow 0.15s",
                 }}
               >
-                <span style={{ color: op.primary ? "#F4EADB" : "#D0551F", flexShrink: 0, marginTop: 2 }}>
+                <span style={{ color: op.primary ? "#F4EADB" : "#A8411A", flexShrink: 0, marginTop: 2 }}>
                   {op.icon}
                 </span>
                 <div style={{ flex: 1 }}>
@@ -144,7 +144,7 @@ export default function ContactoPage() {
                       fontFamily: "var(--font-body)",
                       fontWeight: 600,
                       fontSize: "0.875rem",
-                      color: op.primary ? "#F4EADB" : "#D0551F",
+                      color: op.primary ? "#F4EADB" : "#A8411A",
                       textDecoration: "underline",
                       textUnderlineOffset: "3px",
                     }}

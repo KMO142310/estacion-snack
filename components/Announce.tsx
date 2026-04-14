@@ -68,7 +68,7 @@ export default function Announce() {
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
       style={{
-        background: "linear-gradient(90deg, #D0551F, #B84A1A)",
+        background: "linear-gradient(90deg, #A8411A, #B84A1A)",
         color: "#F4EADB",
         padding: "6px 40px 6px 16px",
         display: "flex",

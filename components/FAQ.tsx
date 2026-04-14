@@ -53,7 +53,7 @@ export default function FAQ() {
             key={item.q}
             style={{
               background: "#fff",
-              border: `1.5px solid ${isOpen ? "#D0551F" : "rgba(90,31,26,0.10)"}`,
+              border: `1.5px solid ${isOpen ? "#A8411A" : "rgba(90,31,26,0.10)"}`,
               borderRadius: "14px",
               overflow: "hidden",
               transition: "border-color 0.15s",
@@ -84,7 +84,7 @@ export default function FAQ() {
                 style={{
                   fontSize: "1.25rem",
                   fontWeight: 300,
-                  color: "#D0551F",
+                  color: "#A8411A",
                   flexShrink: 0,
                   transition: "transform 0.2s",
                   transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",

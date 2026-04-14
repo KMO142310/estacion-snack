@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { updateStock, updateProductActive } from "@/lib/admin-actions";
-import { fmt } from "@/lib/products";
+import { fmt } from "@/lib/cart-utils";
 import type { Product } from "@/lib/types";
 import ProductForm from "./ProductForm";
 

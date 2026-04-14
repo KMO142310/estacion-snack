@@ -110,12 +110,3 @@ export const useCartStore = create<CartState>()(
   )
 );
 
-// Selector helpers
-export const cartItemCount = (state: CartState) =>
-  state.items.reduce((n, i) => n + (i.kind === "product" ? 1 : i.qty), 0);
-
-export const cartTotal = (state: CartState) =>
-  state.items.reduce((sum, i) => {
-    const price = i.pricePerUnit ?? 0;
-    return sum + (i.kind === "product" ? price * i.qty : price * i.qty);
-  }, 0);

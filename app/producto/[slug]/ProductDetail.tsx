@@ -63,7 +63,7 @@ export default function ProductDetail({ product, related }: Props) {
             <div style={{ aspectRatio: "1/1", borderRadius: "16px", overflow: "hidden", background: "#F4EADB", position: "relative" }}>
               <Image src={product.image_webp_url || product.image_url} alt={product.name} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover" }} priority />
               {product.badge && (
-                <span style={{ position: "absolute", top: 12, left: 12, background: "#D0551F", color: "#F4EADB", fontSize: 12, fontWeight: 700, padding: "4px 10px", borderRadius: 8, fontFamily: "var(--font-body)" }}>
+                <span style={{ position: "absolute", top: 12, left: 12, background: "#A8411A", color: "#F4EADB", fontSize: 12, fontWeight: 700, padding: "4px 10px", borderRadius: 8, fontFamily: "var(--font-body)" }}>
                   {product.badge}
                 </span>
               )}
@@ -92,7 +92,7 @@ export default function ProductDetail({ product, related }: Props) {
                   <p style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem", color: "#5A1F1A", marginBottom: "0.75rem" }}>¿Cuánto vas a pedir?</p>
                   <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
                     {chips.map((kg) => (
-                      <button key={kg} onClick={() => setSelectedQty(kg)} aria-pressed={selectedQty === kg} style={{ fontFamily: "var(--font-body)", fontWeight: selectedQty === kg ? 600 : 500, fontSize: "0.9375rem", padding: "0.625rem 1.125rem", borderRadius: "9999px", border: `2px solid ${selectedQty === kg ? "#D0551F" : "rgba(90,31,26,0.15)"}`, background: selectedQty === kg ? "#D0551F" : "transparent", color: selectedQty === kg ? "#F4EADB" : "#5A1F1A", cursor: "pointer" }}>
+                      <button key={kg} onClick={() => setSelectedQty(kg)} aria-pressed={selectedQty === kg} style={{ fontFamily: "var(--font-body)", fontWeight: selectedQty === kg ? 600 : 500, fontSize: "0.9375rem", padding: "0.625rem 1.125rem", borderRadius: "9999px", border: `2px solid ${selectedQty === kg ? "#A8411A" : "rgba(90,31,26,0.15)"}`, background: selectedQty === kg ? "#A8411A" : "transparent", color: selectedQty === kg ? "#F4EADB" : "#5A1F1A", cursor: "pointer" }}>
                         {fmtKg(kg)}
                       </button>
                     ))}
@@ -107,7 +107,7 @@ export default function ProductDetail({ product, related }: Props) {
               <button
                 onClick={handleAdd}
                 disabled={isOut || adding}
-                style={{ width: "100%", maxWidth: 360, fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "1rem", color: "#F4EADB", background: isOut ? "#C0B0A8" : adding ? "#A84019" : "#D0551F", border: "none", borderRadius: "12px", padding: "1rem 1.5rem", cursor: isOut || adding ? "not-allowed" : "pointer" }}
+                style={{ width: "100%", maxWidth: 360, fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "1rem", color: "#F4EADB", background: isOut ? "#C0B0A8" : adding ? "#A84019" : "#A8411A", border: "none", borderRadius: "12px", padding: "1rem 1.5rem", cursor: isOut || adding ? "not-allowed" : "pointer" }}
               >
                 {isOut ? "Agotado" : adding ? "Agregando..." : `Agregar ${fmtKg(selectedQty)} al pedido`}
               </button>

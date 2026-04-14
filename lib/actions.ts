@@ -1,9 +1,8 @@
 "use server";
 
 import { createClient } from "./supabase/server";
-import { adminGetOrderAccessToken, captureOrderIntent, type CaptureOrderItem, type CaptureOrderDelivery } from "./supabase/admin";
-import { PRODUCTS } from "./products";
-import { WA, BANK_INFO } from "./business-info";
+import { captureOrderIntent, type CaptureOrderItem, type CaptureOrderDelivery } from "./supabase/admin";
+import productsData from "@/data/products.json";
 import type { Product } from "./types";
 
 const CAT_LABEL: Record<string, string> = {
@@ -20,6 +19,13 @@ function withCatLabel(row: Record<string, unknown>): Product {
   } as Product;
 }
 
+// Fallback estático — cuando Supabase no responde, usamos data/products.json
+// directamente (fuente única de verdad; antes existía lib/products.ts con seed
+// duplicado que drifteaba).
+const STATIC_PRODUCTS: Product[] = productsData.map((p) =>
+  withCatLabel(p as unknown as Record<string, unknown>)
+);
+
 export async function getProducts(): Promise<Product[]> {
   try {
     const supabase = await createClient();
@@ -29,12 +35,12 @@ export async function getProducts(): Promise<Product[]> {
       .order("sort_order");
 
     if (error || !data?.length) {
-      return PRODUCTS; // fallback to static seed
+      return STATIC_PRODUCTS;
     }
 
     return (data as Record<string, unknown>[]).map(withCatLabel);
   } catch {
-    return PRODUCTS;
+    return STATIC_PRODUCTS;
   }
 }
 
@@ -47,31 +53,11 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
       .eq("slug", slug)
       .maybeSingle();
     if (error || !data) {
-      return PRODUCTS.find((p) => p.slug === slug) ?? null;
+      return STATIC_PRODUCTS.find((p) => p.slug === slug) ?? null;
     }
     return withCatLabel(data as Record<string, unknown>);
   } catch {
-    return PRODUCTS.find((p) => p.slug === slug) ?? null;
-  }
-}
-
-export async function reserveStock(
-  sessionId: string,
-  productId: string,
-  qty: number
-): Promise<{ ok: boolean; error?: string }> {
-  try {
-    const supabase = await createClient();
-    const { data, error } = await supabase.rpc("fn_reserve_stock", {
-      p_session_id: sessionId,
-      p_product_id: productId,
-      p_qty: qty,
-    });
-
-    if (error) return { ok: false, error: error.message };
-    return { ok: data === true };
-  } catch (e) {
-    return { ok: false, error: String(e) };
+    return STATIC_PRODUCTS.find((p) => p.slug === slug) ?? null;
   }
 }
 
@@ -86,74 +72,4 @@ export async function captureOrder(
   delivery?: CaptureOrderDelivery,
 ): Promise<{ ok: boolean; orderId?: string; error?: string }> {
   return captureOrderIntent(items, notes ?? null, delivery);
-}
-
-export async function placeOrder(params: {
-  sessionId: string;
-  customerName: string;
-  customerPhone: string;
-  items: Array<{ product_id: string; qty: number }>;
-  notes?: string;
-}): Promise<{
-  ok: boolean;
-  orderId?: string;
-  accessToken?: string;
-  waUrl?: string;
-  error?: string;
-}> {
-  try {
-    const supabase = await createClient();
-    const { data, error } = await supabase.rpc("fn_place_order", {
-      p_session_id: params.sessionId,
-      p_customer_name: params.customerName,
-      p_customer_phone: params.customerPhone,
-      p_items: params.items,
-      p_notes: params.notes ?? null,
-    });
-
-    if (error) return { ok: false, error: error.message };
-
-    const orderId = data as string;
-
-    // Fetch the access_token that the 0002 migration generated for this row
-    // via the default expression on orders.access_token. The server action
-    // returns it to the client so the WhatsApp link can carry ?t=<token>.
-    // This is a server-to-server call inside the same checkout flow, so
-    // adminGetOrderAccessToken is NOT gated by assertAdmin.
-    const accessToken = await adminGetOrderAccessToken(orderId);
-    if (!accessToken) {
-      return { ok: false, error: "token lookup failed" };
-    }
-
-    // Build WhatsApp message
-    const products = await getProducts();
-    const lines = params.items
-      .map((item) => {
-        const p = products.find((x) => x.id === item.product_id);
-        if (!p) return null;
-        const sub = p.price * item.qty;
-        return `• ${p.name}: ${item.qty} kg — $${sub.toLocaleString("es-CL")}`;
-      })
-      .filter(Boolean)
-      .join("\n");
-
-    const total = params.items.reduce((acc, item) => {
-      const p = products.find((x) => x.id === item.product_id);
-      return acc + (p ? p.price * item.qty : 0);
-    }, 0);
-
-    const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.estacionsnack.cl";
-    const orderUrl = `${site}/pedido/${orderId}?t=${encodeURIComponent(accessToken)}`;
-
-    const bankBlock = `\n\n💳 Datos para transferencia:\nBanco: ${BANK_INFO.bank}\nCuenta: ${BANK_INFO.accountType} ${BANK_INFO.accountNumber}\nRUT: ${BANK_INFO.rut}\nNombre: ${BANK_INFO.holder}\nEmail: ${BANK_INFO.email}`;
-
-    const msg = encodeURIComponent(
-      `¡Hola! Hago el siguiente pedido 🌰\n\n${lines}\n\nTotal: $${total.toLocaleString("es-CL")}\n\nNombre: ${params.customerName}\nTeléfono: ${params.customerPhone}${params.notes ? `\nNotas: ${params.notes}` : ""}${bankBlock}\n\nVer estado del pedido: ${orderUrl}`,
-    );
-
-    const waUrl = `https://wa.me/${WA}?text=${msg}`;
-    return { ok: true, orderId, accessToken, waUrl };
-  } catch (e) {
-    return { ok: false, error: e instanceof Error ? e.message : String(e) };
-  }
 }

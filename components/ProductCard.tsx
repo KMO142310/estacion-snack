@@ -64,7 +64,7 @@ export default function ProductCard({ product, onOpen }: Props) {
         {(badge || ultimoKg) && (
           <span style={{
             position: "absolute", top: 8, left: 8,
-            background: ultimoKg ? "#5A1F1A" : "#D0551F",
+            background: ultimoKg ? "#5A1F1A" : "#A8411A",
             color: "#F4EADB", fontSize: 10, fontWeight: 700,
             fontFamily: "var(--font-body)", padding: "4px 10px",
             borderRadius: 30, letterSpacing: "0.05em", textTransform: "uppercase",
@@ -76,15 +76,15 @@ export default function ProductCard({ product, onOpen }: Props) {
 
       {/* Info + botón */}
       <div style={{ padding: "12px 12px 14px" }}>
-        <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 17, color: "#5A1F1A", lineHeight: 1.15, letterSpacing: "-0.015em", marginBottom: 4 }}>
+        <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 17, color: "#5A1F1A", lineHeight: 1.15, letterSpacing: "-0.015em", marginBottom: 4 }}>
           {name}
-        </p>
+        </h3>
         {copy && (
           <p style={{ fontFamily: "var(--font-body)", fontSize: 11, color: "#5E6B3E", lineHeight: 1.4, marginBottom: 6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as const, overflow: "hidden" }}>
             {copy}
           </p>
         )}
-        <p className="price" style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: 15, color: agotado ? "#aaa" : "#D0551F", marginBottom: 2 }}>
+        <p className="price" style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: 15, color: agotado ? "#aaa" : "#A8411A", marginBottom: 2 }}>
           {agotado ? "Agotado" : fmt(price)}
           {!agotado && <span style={{ fontWeight: 400, fontSize: 11, color: "#5E6B3E", marginLeft: 2 }}>/kg</span>}
         </p>
@@ -99,7 +99,7 @@ export default function ProductCard({ product, onOpen }: Props) {
             style={{
               width: "100%", fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 13,
               color: "#F4EADB",
-              background: added ? "#5E6B3E" : "#D0551F",
+              background: added ? "#5E6B3E" : "#A8411A",
               border: "none", borderRadius: 10, padding: "10px 0",
               cursor: "pointer", WebkitTapHighlightColor: "transparent",
               transition: "all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)",

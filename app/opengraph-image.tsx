@@ -30,7 +30,7 @@ export default function OgImage() {
             marginBottom: 40,
             fontSize: 16,
             fontWeight: 700,
-            color: "#D0551F",
+            color: "#A8411A",
             background: "rgba(208,85,31,0.18)",
             padding: "10px 24px",
             borderRadius: 100,
@@ -84,7 +84,7 @@ export default function OgImage() {
                 fontSize: 15,
                 fontWeight: 700,
                 padding: "10px 22px",
-                background: "#D0551F",
+                background: "#A8411A",
                 color: "#F4EADB",
                 borderRadius: 100,
               }}
@@ -102,7 +102,7 @@ export default function OgImage() {
             left: 0,
             right: 0,
             height: 6,
-            background: "#D0551F",
+            background: "#A8411A",
             display: "flex",
           }}
         />

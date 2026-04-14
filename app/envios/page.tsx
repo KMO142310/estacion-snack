@@ -47,7 +47,7 @@ export default function EnviosPage() {
           </nav>
 
           <div style={{ maxWidth: 640, marginBottom: "3rem" }}>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#D0551F", marginBottom: "0.75rem" }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#A8411A", marginBottom: "0.75rem" }}>
               Despacho
             </p>
             <h1
@@ -136,7 +136,7 @@ export default function EnviosPage() {
                 href="https://wa.me/56953743338"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: "#D0551F", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}
+                style={{ color: "#A8411A", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}
               >
                 WhatsApp
               </a>{" "}
@@ -281,7 +281,7 @@ export default function EnviosPage() {
                 fontSize: "0.9375rem",
                 padding: "0.875rem 1.75rem",
                 borderRadius: "10px",
-                background: "#D0551F",
+                background: "#A8411A",
                 color: "#F4EADB",
                 textDecoration: "none",
               }}

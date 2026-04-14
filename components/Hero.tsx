@@ -92,7 +92,7 @@ export default function Hero({ onOrderOpen }: HeroProps) {
         <p
           style={{
             fontFamily: "var(--font-body)",
-            color: "rgba(244,234,219,0.6)",
+            color: "rgba(244,234,219,0.82)",
             fontSize: "0.7rem",
             fontWeight: 600,
             letterSpacing: "0.14em",
@@ -142,7 +142,7 @@ export default function Hero({ onOrderOpen }: HeroProps) {
               fontWeight: 600,
               fontSize: "0.9375rem",
               color: "#F4EADB",
-              background: "#D0551F",
+              background: "#A8411A",
               border: "none",
               borderRadius: "10px",
               padding: "0.875rem 1.5rem",

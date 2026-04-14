@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
+import FocusTrap from "focus-trap-react";
 import { useCartStore } from "@/lib/store";
 import { fmt, fmtKg, getChips } from "@/lib/cart-utils";
 import { hapticLight, hapticSuccess } from "@/lib/haptics";
@@ -105,7 +106,16 @@ export default function ProductSheet({ product, onClose }: Props) {
   };
 
   return (
-    
+    <FocusTrap
+      focusTrapOptions={{
+        initialFocus: false,
+        clickOutsideDeactivates: true,
+        escapeDeactivates: false,
+        allowOutsideClick: true,
+        returnFocusOnDeactivate: true,
+      }}
+    >
+      <div>
     <AnimatePresence>
       {/* Backdrop */}
       <motion.div
@@ -246,7 +256,7 @@ export default function ProductSheet({ product, onClose }: Props) {
               fontFamily: "var(--font-body)",
               fontSize: "0.8125rem",
               fontWeight: 500,
-              color: "#D0551F",
+              color: "#A8411A",
               display: "inline-flex",
               alignItems: "center",
               gap: 4,
@@ -293,8 +303,8 @@ export default function ProductSheet({ product, onClose }: Props) {
                     fontSize: "0.9375rem",
                     padding: "0.625rem 1.125rem",
                     borderRadius: "9999px",
-                    border: `2px solid ${isSelected ? "#D0551F" : "rgba(90,31,26,0.15)"}`,
-                    background: isSelected ? "#D0551F" : "transparent",
+                    border: `2px solid ${isSelected ? "#A8411A" : "rgba(90,31,26,0.15)"}`,
+                    background: isSelected ? "#A8411A" : "transparent",
                     color: isSelected ? "#F4EADB" : "#5A1F1A",
                     cursor: "pointer",
                     transition: "all 0.15s ease",
@@ -466,7 +476,7 @@ export default function ProductSheet({ product, onClose }: Props) {
               fontWeight: 600,
               fontSize: "1rem",
               color: "#F4EADB",
-              background: adding ? "#A84019" : "#D0551F",
+              background: adding ? "#A84019" : "#A8411A",
               border: "none",
               borderRadius: "12px",
               padding: "0.875rem 1.5rem",
@@ -482,5 +492,7 @@ export default function ProductSheet({ product, onClose }: Props) {
         </div>
       </motion.div>
     </AnimatePresence>
+      </div>
+    </FocusTrap>
   );
 }

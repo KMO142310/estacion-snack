@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import FocusTrap from "focus-trap-react";
 import { useCartStore } from "@/lib/store";
 import { fmt, fmtKg } from "@/lib/cart-utils";
 import { computeSavings, totalKg, getPackAvailability, type Pack, type ProductStock } from "@/lib/pack-utils";
@@ -59,7 +60,16 @@ export default function PackSheet({ pack, products, onClose }: Props) {
   };
 
   return (
-    
+    <FocusTrap
+      focusTrapOptions={{
+        initialFocus: false,
+        clickOutsideDeactivates: true,
+        escapeDeactivates: false,
+        allowOutsideClick: true,
+        returnFocusOnDeactivate: true,
+      }}
+    >
+      <div>
     <AnimatePresence>
       <motion.div
         key="pack-backdrop"
@@ -118,7 +128,7 @@ export default function PackSheet({ pack, products, onClose }: Props) {
 
           {isLow && (
             <div style={{ background: "rgba(208,85,31,0.10)", border: "1px solid rgba(208,85,31,0.25)", borderRadius: "10px", padding: "0.625rem 0.875rem", marginBottom: "1.25rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <span style={{ fontSize: "0.75rem", fontWeight: 700, fontFamily: "var(--font-body)", color: "#D0551F" }}>
+              <span style={{ fontSize: "0.75rem", fontWeight: 700, fontFamily: "var(--font-body)", color: "#A8411A" }}>
                 Últimas {units} {units === 1 ? "unidad disponible" : "unidades disponibles"}
               </span>
             </div>
@@ -146,7 +156,7 @@ export default function PackSheet({ pack, products, onClose }: Props) {
             )}
           </div>
           {savings > 0 && (
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "#D0551F", fontWeight: 600, marginBottom: "1rem" }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "#A8411A", fontWeight: 600, marginBottom: "1rem" }}>
               Ahorras {fmt(savings)} vs comprar por separado
             </p>
           )}
@@ -169,7 +179,7 @@ export default function PackSheet({ pack, products, onClose }: Props) {
               fontWeight: 600,
               fontSize: "1.0625rem",
               color: "#F4EADB",
-              background: units === 0 ? "#C0B0A8" : adding ? "#A84019" : "#D0551F",
+              background: units === 0 ? "#C0B0A8" : adding ? "#A84019" : "#A8411A",
               border: "none",
               borderRadius: "12px",
               padding: "1rem",
@@ -183,5 +193,7 @@ export default function PackSheet({ pack, products, onClose }: Props) {
         </div>
       </motion.div>
     </AnimatePresence>
+      </div>
+    </FocusTrap>
   );
 }

@@ -55,7 +55,7 @@ export default async function OgImage({
                 display: "flex",
                 fontSize: 13,
                 fontWeight: 700,
-                color: "#D0551F",
+                color: "#A8411A",
                 background: "rgba(208,85,31,0.18)",
                 padding: "6px 16px",
                 borderRadius: 100,
@@ -107,7 +107,7 @@ export default async function OgImage({
                   display: "flex",
                   fontSize: 48,
                   fontWeight: 900,
-                  color: "#D0551F",
+                  color: "#A8411A",
                   letterSpacing: "-0.02em",
                 }}
               >
@@ -125,7 +125,7 @@ export default async function OgImage({
             left: 0,
             right: 0,
             height: 6,
-            background: "#D0551F",
+            background: "#A8411A",
             display: "flex",
           }}
         />

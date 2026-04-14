@@ -115,7 +115,7 @@ export default function PackCard({ pack, products, onOpen }: Props) {
               position: "absolute",
               top: 10,
               left: 10,
-              background: "#D0551F",
+              background: "#A8411A",
               color: "#F4EADB",
               fontSize: "0.6875rem",
               fontWeight: 700,
@@ -198,7 +198,7 @@ export default function PackCard({ pack, products, onOpen }: Props) {
             style={{
               width: "100%", fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 13,
               color: added ? "#F4EADB" : "#F4EADB",
-              background: added ? "#5E6B3E" : "#D0551F",
+              background: added ? "#5E6B3E" : "#A8411A",
               border: "none", borderRadius: 10, padding: "10px 0",
               cursor: "pointer", minHeight: 42,
               WebkitTapHighlightColor: "transparent",

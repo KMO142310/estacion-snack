@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
+import FocusTrap from "focus-trap-react";
 import { useCartStore } from "@/lib/store";
 import { fmt, fmtKg } from "@/lib/cart-utils";
 import { hapticLight, hapticSuccess } from "@/lib/haptics";
@@ -136,7 +137,16 @@ export default function OrderSheet({ open, onClose }: Props) {
   return (
     <AnimatePresence>
       {open && (
-        <>
+        <FocusTrap
+          focusTrapOptions={{
+            initialFocus: false,
+            clickOutsideDeactivates: true,
+            escapeDeactivates: false,
+            allowOutsideClick: true,
+            returnFocusOnDeactivate: true,
+          }}
+        >
+        <div>
           <motion.div
             key="order-backdrop"
             initial={{ opacity: 0 }}
@@ -215,7 +225,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                         height: "100%", borderRadius: 9999,
                         background: envioGratis
                           ? "linear-gradient(90deg, #5E6B3E, #9DAB75)"
-                          : "linear-gradient(90deg, #D0551F, #E0784D)",
+                          : "linear-gradient(90deg, #A8411A, #E0784D)",
                       }}
                     />
                   </div>
@@ -374,8 +384,8 @@ export default function OrderSheet({ open, onClose }: Props) {
                               padding: "10px 16px",
                               minHeight: 44,
                               borderRadius: 999,
-                              border: `1.5px solid ${selected ? "#D0551F" : "rgba(90,31,26,0.15)"}`,
-                              background: selected ? "#D0551F" : "transparent",
+                              border: `1.5px solid ${selected ? "#A8411A" : "rgba(90,31,26,0.15)"}`,
+                              background: selected ? "#A8411A" : "transparent",
                               color: selected ? "#F4EADB" : "#5A1F1A",
                               cursor: "pointer",
                               WebkitTapHighlightColor: "transparent",
@@ -439,7 +449,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                           border: "1.5px solid rgba(90,31,26,0.15)", borderRadius: "10px",
                           padding: "0.75rem", resize: "none", outline: "none", lineHeight: 1.5,
                         }}
-                        onFocus={(e) => { e.currentTarget.style.borderColor = "#D0551F"; }}
+                        onFocus={(e) => { e.currentTarget.style.borderColor = "#A8411A"; }}
                         onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(90,31,26,0.15)"; }}
                       />
                     </div>
@@ -468,7 +478,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                   disabled={loading}
                   style={{
                     width: "100%", fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "1.0625rem",
-                    color: "#F4EADB", background: loading ? "#A84019" : "#D0551F",
+                    color: "#F4EADB", background: loading ? "#A84019" : "#A8411A",
                     border: "none", borderRadius: "12px", padding: "1rem",
                     cursor: loading ? "not-allowed" : "pointer",
                     display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem",
@@ -500,12 +510,13 @@ export default function OrderSheet({ open, onClose }: Props) {
                   fontFamily: "var(--font-body)", fontSize: 11, color: "#5E6B3E",
                   lineHeight: 1.4, marginTop: 10, textAlign: "center",
                 }}>
-                  Al continuar compartís tu número con Estación Snack para coordinar tu pedido. Ver <a href="/privacidad" style={{ color: "#D0551F", textDecoration: "underline", textUnderlineOffset: 2 }}>política</a>.
+                  Al continuar compartís tu número con Estación Snack para coordinar tu pedido. Ver <a href="/privacidad" style={{ color: "#A8411A", textDecoration: "underline", textUnderlineOffset: 2 }}>política</a>.
                 </p>
               )}
             </div>
           </motion.div>
-        </>
+        </div>
+        </FocusTrap>
       )}
     </AnimatePresence>
   );

@@ -16,7 +16,7 @@ export default function Logo({
   className = "",
 }: LogoProps) {
   const color = inverted ? "#F4EADB" : "#5A1F1A";
-  const accent = inverted ? "#F4EADB" : "#D0551F";
+  const accent = inverted ? "#F4EADB" : "#A8411A";
 
   const iconSizes = { sm: 24, md: 32, lg: 44 };
   const textSizes = { sm: "text-sm", md: "text-base", lg: "text-xl" };

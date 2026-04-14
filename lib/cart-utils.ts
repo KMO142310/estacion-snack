@@ -19,11 +19,3 @@ export function getChips(_minUnitKg: number): number[] {
   return [1, 2, 3, 5];
 }
 
-/**
- * Snaps a qty to the nearest whole kg, enforcing the product's minimum (1 kg).
- * Formato de venta: kilos enteros.
- */
-export function normalizeQty(qty: number, minUnitKg: number): number {
-  const snapped = Math.round(qty);
-  return Math.max(minUnitKg, snapped);
-}

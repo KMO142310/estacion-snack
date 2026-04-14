@@ -44,7 +44,7 @@ export default function ComoFunciona() {
                   fontFamily: "var(--font-display)",
                   fontWeight: 700,
                   fontSize: "3.5rem",
-                  color: "#D0551F",
+                  color: "#A8411A",
                   lineHeight: 1,
                   flexShrink: 0,
                   width: 72,

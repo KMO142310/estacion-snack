@@ -33,7 +33,7 @@ export default function CambiosDevolucionesPage() {
 
           <h2 style={S.h2}>Cómo pedir una devolución</h2>
           <ol style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
-            <li style={S.li}>Escríbenos por WhatsApp al <a href="https://wa.me/56953743338" style={{ color: "#D0551F", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>.</li>
+            <li style={S.li}>Escríbenos por WhatsApp al <a href="https://wa.me/56953743338" style={{ color: "#A8411A", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>.</li>
             <li style={S.li}>Indícanos tu nombre, la fecha del pedido y qué producto quieres devolver.</li>
             <li style={S.li}>Coordinamos el retiro del producto en la siguiente ruta de despacho (martes a sábado).</li>
             <li style={S.li}>Una vez que recibimos el producto, procesamos el reembolso.</li>
@@ -67,7 +67,7 @@ export default function CambiosDevolucionesPage() {
           <p style={S.p}>Productos que ya fueron abiertos o consumidos, parcial o totalmente. Nuestros productos se venden a granel y se embalan al momento — una vez abierto el envase no podemos garantizar su integridad.</p>
 
           <h2 style={S.h2}>Contacto</h2>
-          <p style={S.p}>Cualquier duda o reclamo: WhatsApp <a href="https://wa.me/56953743338" style={{ color: "#D0551F", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>. También puedes presentar un reclamo en <a href="https://www.sernac.cl" target="_blank" rel="noopener noreferrer" style={{ color: "#D0551F", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>SERNAC</a>.</p>
+          <p style={S.p}>Cualquier duda o reclamo: WhatsApp <a href="https://wa.me/56953743338" style={{ color: "#A8411A", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>. También puedes presentar un reclamo en <a href="https://www.sernac.cl" target="_blank" rel="noopener noreferrer" style={{ color: "#A8411A", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>SERNAC</a>.</p>
         </div>
       </main>
     </StaticLayout>

@@ -77,7 +77,7 @@ export default function PackSheet({ pack, products, onClose }: Props) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        style={{ position: "fixed", inset: 0, background: "rgba(18,5,3,0.55)", zIndex: 500, backdropFilter: "blur(2px)" }}
+        style={{ position: "fixed", inset: 0, background: "rgba(18,5,3,0.55)", zIndex: 500, backdropFilter: "blur(2px)", WebkitBackdropFilter: "blur(2px)" }}
         aria-hidden="true"
       />
 
@@ -103,7 +103,7 @@ export default function PackSheet({ pack, products, onClose }: Props) {
           background: "#F4EADB",
           borderRadius: "24px 24px 0 0",
           boxShadow: "0 -8px 56px rgba(90,31,26,0.18)",
-          maxHeight: "92svh",
+          maxHeight: "92vh",
           display: "flex",
           flexDirection: "column",
           overflowY: "auto",

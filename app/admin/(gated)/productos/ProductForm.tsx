@@ -109,7 +109,7 @@ export default function ProductForm({ product, onClose, onSaved }: Props) {
       {/* Overlay */}
       <div
         onClick={onClose}
-        style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(0,0,0,.4)", backdropFilter: "blur(4px)" }}
+        style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(0,0,0,.4)", backdropFilter: "blur(4px)", WebkitBackdropFilter: "blur(4px)" }}
       />
 
       {/* Modal */}

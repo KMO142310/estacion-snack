@@ -17,8 +17,8 @@ export default function Error({
 
   return (
     <main
+      className="h-screen-error"
       style={{
-        minHeight: "60svh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

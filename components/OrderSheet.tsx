@@ -153,7 +153,7 @@ export default function OrderSheet({ open, onClose }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            style={{ position: "fixed", inset: 0, background: "rgba(18,5,3,0.55)", zIndex: 700, backdropFilter: "blur(2px)" }}
+            style={{ position: "fixed", inset: 0, background: "rgba(18,5,3,0.55)", zIndex: 700, backdropFilter: "blur(2px)", WebkitBackdropFilter: "blur(2px)" }}
             aria-hidden="true"
           />
 
@@ -174,7 +174,7 @@ export default function OrderSheet({ open, onClose }: Props) {
               position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 800,
               background: "#F4EADB", borderRadius: "24px 24px 0 0",
               boxShadow: "0 -8px 56px rgba(90,31,26,0.20)",
-              maxHeight: "94svh", display: "flex", flexDirection: "column",
+              maxHeight: "94vh", display: "flex", flexDirection: "column",
             }}
           >
             {/* Header */}

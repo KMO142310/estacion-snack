@@ -153,25 +153,31 @@ export default function PageShell() {
 
       <Footer />
 
-      {/* Sticky bar mobile — solo visible con items en carrito */}
+      {/* Sticky bar mobile — solo visible con items en carrito.
+          Toda la barra es tap target (no botón duplicado que compita con el toast "Ver pedido"). */}
       {!orderOpen && !sheetProduct && itemCount > 0 && (
-        <div className="sticky-bar" style={{
-          position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100,
-          padding: "8px 16px", paddingBottom: "calc(8px + env(safe-area-inset-bottom, 0px))",
-          background: "rgba(90,31,26,0.97)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)",
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-        }}>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(244,234,219,0.6)", margin: 0 }}>
-            {itemCount > 0 ? `${itemCount} ${itemCount === 1 ? "producto" : "productos"}` : "Pedido vacío"}
-          </p>
-          <button onClick={openOrder} style={{
-            fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 13,
-            color: "#5A1F1A", background: "#F4EADB", border: "none",
-            borderRadius: 30, padding: "8px 20px", cursor: "pointer",
-          }}>
-            {itemCount > 0 ? `Quiero pedir` : "Quiero pedir"}
-          </button>
-        </div>
+        <button
+          onClick={openOrder}
+          aria-label={`Ver tu pedido (${itemCount} ${itemCount === 1 ? "producto" : "productos"})`}
+          className="sticky-bar"
+          style={{
+            position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100,
+            padding: "14px 20px", paddingBottom: "calc(14px + env(safe-area-inset-bottom, 0px))",
+            background: "rgba(90,31,26,0.97)",
+            backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)",
+            display: "flex", alignItems: "center", justifyContent: "space-between",
+            border: "none", cursor: "pointer", width: "100%",
+            fontFamily: "var(--font-body)", color: "#F4EADB",
+            WebkitTapHighlightColor: "transparent",
+          }}
+        >
+          <span style={{ fontSize: 14, fontWeight: 500 }}>
+            Tu pedido · {itemCount} {itemCount === 1 ? "producto" : "productos"}
+          </span>
+          <span style={{ fontSize: 14, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }}>
+            Ver <span aria-hidden="true" style={{ fontSize: 16, lineHeight: 1 }}>→</span>
+          </span>
+        </button>
       )}
 
       {sheetProduct && (

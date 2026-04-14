@@ -33,13 +33,13 @@ export default function Hero({ onOrderOpen }: HeroProps) {
   return (
     <section
       aria-label="Inicio"
+      className="h-screen-hero"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
       style={{
         position: "relative",
-        minHeight: "65svh",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",

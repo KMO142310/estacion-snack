@@ -58,8 +58,36 @@ export default function PageShell() {
         <Hero onOrderOpen={openOrder} />
         <Benefits />
 
-        {/* Productos */}
-        <section id="productos" style={{ background: "#F4EADB", padding: "1.75rem 16px 3rem" }}>
+        {/* Entrada editorial — introduce las 6 mezclas como si fuera el prólogo de un catálogo, no un header de grilla. */}
+        <section style={{ background: "#F4EADB", padding: "3rem 20px 1.5rem" }}>
+          <div className="container" style={{ maxWidth: 640 }}>
+            <p style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 11, fontWeight: 700,
+              letterSpacing: "0.14em", textTransform: "uppercase",
+              color: "#A8411A",
+              marginBottom: "0.75rem",
+            }}>
+              Las seis
+            </p>
+            <p style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 500,
+              fontStyle: "italic",
+              fontSize: "clamp(1.375rem, 4.5vw, 1.875rem)",
+              color: "#5A1F1A",
+              lineHeight: 1.3,
+              marginBottom: 0,
+            }}>
+              Las probamos todas hasta dejar solo las que uno
+              <br />
+              se termina sin darse cuenta. Cada una con su ocasión.
+            </p>
+          </div>
+        </section>
+
+        {/* Productos — grid editorial, sin fondo de tarjeta. Respira. */}
+        <section id="productos" style={{ background: "#F4EADB", padding: "1rem 16px 3.5rem" }}>
           <div className="container">
             <div className="product-grid">
               {products.map((p) => (
@@ -69,39 +97,52 @@ export default function PageShell() {
           </div>
         </section>
 
-        {/* Nota de la casa — editorial label + pull quote */}
-        {/* Ref: Lapostolle "Informe de Vendimia", Viu Manent "Cuaderno". Research C. */}
-        <div style={{ background: "#5A1F1A", padding: "3.5rem 1.5rem", textAlign: "center" }}>
-          <p style={{
-            fontFamily: "var(--font-body)", fontSize: "0.6875rem", fontWeight: 600,
-            letterSpacing: "0.14em", textTransform: "uppercase",
-            color: "rgba(244,234,219,0.82)", marginBottom: "1rem",
-          }}>
-            Nota de la casa · 2026
-          </p>
-          <p style={{
-            fontFamily: "var(--font-display)", fontWeight: 600,
-            fontStyle: "italic",
-            fontSize: "clamp(1.375rem, 5vw, 2rem)", color: "#F4EADB",
-            lineHeight: 1.25, maxWidth: 520, margin: "0 auto",
-          }}>
-            Seis mezclas. Las probamos todas hasta dejar solo las que uno se termina sin darse cuenta.
-          </p>
-        </div>
-
-        {/* Packs */}
+        {/* Packs — introducidas con una línea, no con un "Packs armados" */}
         <section style={{ background: "#fff" }}>
+          <div className="container" style={{ padding: "3rem 20px 0", maxWidth: 640 }}>
+            <p style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 11, fontWeight: 700,
+              letterSpacing: "0.14em", textTransform: "uppercase",
+              color: "#A8411A",
+              marginBottom: "0.75rem",
+            }}>
+              Armados
+            </p>
+            <p style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 500,
+              fontStyle: "italic",
+              fontSize: "clamp(1.25rem, 4vw, 1.625rem)",
+              color: "#5A1F1A",
+              lineHeight: 1.35,
+              marginBottom: 0,
+            }}>
+              Si querés probar dos de una, ya los armé.
+              <br />
+              Sale más barato que comprarlos sueltos.
+            </p>
+          </div>
           <PackSection />
         </section>
 
         {/* Cómo funciona */}
         <ComoFunciona />
 
-        {/* FAQ — solo 5 preguntas clave */}
+        {/* FAQ — "Lo que suelen preguntar" (voz cuaderno) */}
         <section style={{ background: "#F9F3E8", padding: "3.5rem 16px 3rem" }}>
           <div className="container" style={{ maxWidth: 680 }}>
-            <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(1.5rem, 4vw, 2rem)", color: "#5A1F1A", marginBottom: "1.5rem" }}>
-              Preguntas frecuentes
+            <p style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 11, fontWeight: 700,
+              letterSpacing: "0.14em", textTransform: "uppercase",
+              color: "#A8411A",
+              marginBottom: "0.75rem",
+            }}>
+              Preguntas
+            </p>
+            <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontStyle: "italic", fontSize: "clamp(1.5rem, 4vw, 2rem)", color: "#5A1F1A", marginBottom: "1.5rem", lineHeight: 1.2 }}>
+              Lo que me suelen preguntar.
             </h2>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {TOP_FAQ.map((item) => (
@@ -130,11 +171,20 @@ export default function PageShell() {
           </div>
         </section>
 
-        {/* CTA cierre */}
-        <section style={{ background: "#5A1F1A", padding: "4rem 20px", textAlign: "center" }}>
+        {/* CTA cierre — firma, no grito */}
+        <section style={{ background: "#5A1F1A", padding: "5rem 20px", textAlign: "center" }}>
           <div className="container">
-            <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(22px, 5vw, 36px)", color: "#F4EADB", lineHeight: 1.15, marginBottom: 8 }}>
-              Arma tu pedido.
+            <p style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 11, fontWeight: 700,
+              letterSpacing: "0.14em", textTransform: "uppercase",
+              color: "rgba(244,234,219,0.6)",
+              marginBottom: "1rem",
+            }}>
+              Del valle a tu mesa
+            </p>
+            <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontStyle: "italic", fontSize: "clamp(24px, 5.5vw, 40px)", color: "#F4EADB", lineHeight: 1.15, marginBottom: 14, letterSpacing: "-0.02em" }}>
+              Cuando quieras, te escribimos.
             </p>
             <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "rgba(244,234,219,0.78)", marginBottom: 24 }}>
               Martes a sábado · 19:30 a 21:00 · Santa Cruz y alrededores
@@ -194,12 +244,13 @@ export default function PageShell() {
 
       <style>{`
         .container { max-width: 1100px; margin: 0 auto; }
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 32px 24px; } }
-        @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 48px 32px; max-width: 960px; margin: 0 auto; } }
+        /* Grid editorial — 2col mobile, 3col tablet, 2col desktop grande (cards más anchos, estilo revista) */
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 16px; }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 48px 28px; } }
+        @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 64px 40px; max-width: 920px; margin: 0 auto; } }
         .pcard { transition: transform .2s ease; }
         @media (min-width: 768px) and (hover:hover) {
-          .pcard:hover { transform: translateY(-3px); }
+          .pcard:hover { transform: translateY(-2px); }
         }
         .pack-grid { display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 420px; margin: 0 auto; }
         @media (min-width: 768px) { .pack-grid { grid-template-columns: repeat(3, 1fr); max-width: none; margin: 0; } }

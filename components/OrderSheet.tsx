@@ -9,13 +9,12 @@ import { hapticLight, hapticSuccess } from "@/lib/haptics";
 import { buildWaUrl } from "@/lib/whatsapp";
 import { captureOrder } from "@/lib/actions";
 import { getPackAvailability, type Pack, type ProductStock } from "@/lib/pack-utils";
+import { COMUNAS, COMUNA_DEFAULT, FREE_SHIPPING_MIN, getShippingCost, type Comuna } from "@/lib/shipping";
 import X from "./icons/X";
 import Minus from "./icons/Minus";
 import Plus from "./icons/Plus";
 import productsData from "@/data/products.json";
 import packsData from "@/data/packs.json";
-
-const FREE_SHIPPING = 25000;
 
 interface Props {
   open: boolean;
@@ -25,6 +24,7 @@ interface Props {
 export default function OrderSheet({ open, onClose }: Props) {
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
+  const [comuna, setComuna] = useState<Comuna>(COMUNA_DEFAULT);
 
   const items = useCartStore((s) => s.items);
   const updateQty = useCartStore((s) => s.updateQty);
@@ -32,16 +32,20 @@ export default function OrderSheet({ open, onClose }: Props) {
   const addToast = useCartStore((s) => s.addToast);
   const clear = useCartStore((s) => s.clear);
 
-  // Totals
-  const total = items.reduce((sum, item) => sum + getSubtotal(item), 0);
+  // Totales: subtotal (items), shipping (según comuna), total (subtotal + shipping)
+  // Ley 19.496 Art. 1 N°2: el precio total debe ser visible antes del cierre de compra.
+  const subtotal = items.reduce((sum, item) => sum + getSubtotal(item), 0);
+  const shipping = getShippingCost(comuna, subtotal);
+  const total = subtotal + shipping;
+
   const totalWeight = items.reduce((sum, item) => {
     if (item.kind === "product") return sum + item.qty;
     const pk = (packsData as Pack[]).find((p) => p.id === item.id);
     return sum + (pk ? pk.items.reduce((s, i) => s + i.kg, 0) * item.qty : 0);
   }, 0);
 
-  const envioGratis = total >= FREE_SHIPPING;
-  const falta = FREE_SHIPPING - total;
+  const envioGratis = subtotal >= FREE_SHIPPING_MIN;
+  const falta = FREE_SHIPPING_MIN - subtotal;
 
   useEffect(() => {
     if (!open) return;
@@ -81,7 +85,7 @@ export default function OrderSheet({ open, onClose }: Props) {
       }
     });
 
-    const captureResult = await captureOrder(captureItems, note).catch(() => ({ ok: false, orderId: undefined }));
+    const captureResult = await captureOrder(captureItems, note, { comuna, shipping }).catch(() => ({ ok: false, orderId: undefined }));
     const orderRef = captureResult.ok && captureResult.orderId
       ? captureResult.orderId.slice(0, 8)
       : undefined;
@@ -92,6 +96,7 @@ export default function OrderSheet({ open, onClose }: Props) {
       packsData as Pack[],
       note,
       orderRef,
+      { comuna, shipping, total },
     );
     clear();
     onClose();
@@ -183,7 +188,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                       {envioGratis ? "✓ Envío gratis" : `Te faltan ${fmt(falta)} para envío gratis`}
                     </span>
                     <span style={{ fontFamily: "var(--font-body)", fontSize: 11, color: "#5E6B3E" }}>
-                      {fmt(FREE_SHIPPING)}
+                      {fmt(FREE_SHIPPING_MIN)}
                     </span>
                   </div>
                   <div style={{
@@ -191,7 +196,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                   }}>
                     <motion.div
                       initial={{ width: 0 }}
-                      animate={{ width: `${Math.min(100, (total / FREE_SHIPPING) * 100)}%` }}
+                      animate={{ width: `${Math.min(100, (subtotal / FREE_SHIPPING_MIN) * 100)}%` }}
                       transition={{ type: "spring", stiffness: 120, damping: 20 }}
                       style={{
                         height: "100%", borderRadius: 9999,
@@ -283,7 +288,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                                   onClick={() => stepQty(item, -1)}
                                   aria-label={atMin ? "Eliminar" : "Menos"}
                                   style={{
-                                    width: 40, height: 40, display: "flex", alignItems: "center", justifyContent: "center",
+                                    width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center",
                                     border: "none", borderRadius: "999px 0 0 999px", cursor: "pointer",
                                     background: "transparent",
                                     color: "#5A1F1A",
@@ -304,7 +309,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                                   disabled={atMax}
                                   aria-label="Más"
                                   style={{
-                                    width: 40, height: 40, display: "flex", alignItems: "center", justifyContent: "center",
+                                    width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center",
                                     border: "none", borderRadius: "0 999px 999px 0", cursor: atMax ? "default" : "pointer",
                                     background: "transparent",
                                     color: atMax ? "rgba(90,31,26,0.2)" : "#5A1F1A",
@@ -329,12 +334,62 @@ export default function OrderSheet({ open, onClose }: Props) {
                     })}
                   </AnimatePresence>
 
-                  {/* Total + weight */}
+                  {/* Selector de comuna — necesario para calcular envío antes del cierre (Ley 19.496) */}
                   <div style={{ padding: "1rem 0 0" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                    <p style={{
+                      fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem",
+                      color: "#5A1F1A", marginBottom: 8,
+                    }}>
+                      Entregar en
+                    </p>
+                    <div
+                      role="radiogroup"
+                      aria-label="Comuna de entrega"
+                      style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 14 }}
+                    >
+                      {COMUNAS.map((c) => {
+                        const selected = comuna === c;
+                        return (
+                          <button
+                            key={c}
+                            role="radio"
+                            aria-checked={selected}
+                            onClick={() => setComuna(c)}
+                            style={{
+                              fontFamily: "var(--font-body)", fontSize: "0.875rem",
+                              fontWeight: selected ? 600 : 500,
+                              padding: "10px 16px",
+                              minHeight: 44,
+                              borderRadius: 999,
+                              border: `1.5px solid ${selected ? "#D0551F" : "rgba(90,31,26,0.15)"}`,
+                              background: selected ? "#D0551F" : "transparent",
+                              color: selected ? "#F4EADB" : "#5A1F1A",
+                              cursor: "pointer",
+                              WebkitTapHighlightColor: "transparent",
+                              transition: "all 0.15s ease",
+                            }}
+                          >
+                            {c}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Desglose: Subtotal + Envío + Total — visible antes del cierre (Ley 19.496 Art. 1 N°2) */}
+                    <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", marginBottom: 4 }}>
+                      <span>Subtotal</span>
+                      <span>{fmt(subtotal)}</span>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", marginBottom: 8 }}>
+                      <span>Envío {comuna}</span>
+                      <span style={{ color: shipping === 0 ? "#5E6B3E" : "#5E6B3E" }}>
+                        {shipping === 0 ? "Gratis" : fmt(shipping)}
+                      </span>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", paddingTop: 8, borderTop: "1px solid rgba(90,31,26,0.08)" }}>
                       <div>
                         <p style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "1rem", color: "#5A1F1A" }}>
-                          Total estimado
+                          Total
                         </p>
                         <p style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "#5E6B3E", marginTop: 2 }}>
                           {fmtKg(totalWeight)} en total
@@ -425,6 +480,15 @@ export default function OrderSheet({ open, onClose }: Props) {
                     </>
                   )}
                 </button>
+              )}
+
+              {items.length > 0 && (
+                <p style={{
+                  fontFamily: "var(--font-body)", fontSize: 11, color: "#5E6B3E",
+                  lineHeight: 1.4, marginTop: 10, textAlign: "center",
+                }}>
+                  Al continuar compartís tu número con Estación Snack para coordinar tu pedido. Ver <a href="/privacidad" style={{ color: "#D0551F", textDecoration: "underline", textUnderlineOffset: 2 }}>política</a>.
+                </p>
               )}
             </div>
           </motion.div>

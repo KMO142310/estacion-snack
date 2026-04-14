@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useReducedMotion } from "framer-motion";
 
 function getNextDispatch(): string {
   const now = new Date();
@@ -25,21 +26,27 @@ export default function Announce() {
   const [visible, setVisible] = useState(true);
   const [fade, setFade] = useState(true);
   const [dispatch, setDispatch] = useState("");
+  const [paused, setPaused] = useState(false);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     setDispatch(getNextDispatch());
   }, []);
 
+  // 7s + pause on hover/focus + respeta prefers-reduced-motion.
+  // Fuente: NN/g "Auto-Forwarding Carousels Annoy Users".
   useEffect(() => {
+    if (reducedMotion) return;
+    if (paused) return;
     const timer = setInterval(() => {
       setFade(false);
       setTimeout(() => {
         setIndex((i) => (i + 1) % MSG_COUNT);
         setFade(true);
       }, 300);
-    }, 4000);
+    }, 7000);
     return () => clearInterval(timer);
-  }, []);
+  }, [paused, reducedMotion]);
 
   if (!visible) return null;
 
@@ -53,6 +60,10 @@ export default function Announce() {
     <div
       role="status"
       aria-live="polite"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
       style={{
         background: "linear-gradient(90deg, #D0551F, #B84A1A)",
         color: "#F4EADB",

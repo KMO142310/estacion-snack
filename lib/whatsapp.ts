@@ -21,6 +21,7 @@ export function buildWaUrl(
   packs: Pack[],
   note?: string,
   orderRef?: string,
+  delivery?: { comuna: string; shipping: number; total: number },
 ): string {
   const lines: string[] = ["Hola! Quiero hacer un pedido:"];
   lines.push("");
@@ -49,7 +50,16 @@ export function buildWaUrl(
   }
 
   lines.push("");
-  lines.push(`*Total: $${Math.round(total).toLocaleString("es-CL")}*`);
+
+  if (delivery) {
+    lines.push(`Subtotal: $${Math.round(total).toLocaleString("es-CL")}`);
+    lines.push(`Entregar en: ${delivery.comuna}`);
+    const shipLabel = delivery.shipping === 0 ? "gratis" : `$${delivery.shipping.toLocaleString("es-CL")}`;
+    lines.push(`Envío: ${shipLabel}`);
+    lines.push(`*Total: $${Math.round(delivery.total).toLocaleString("es-CL")}*`);
+  } else {
+    lines.push(`*Total: $${Math.round(total).toLocaleString("es-CL")}*`);
+  }
 
   if (note?.trim()) {
     lines.push("");

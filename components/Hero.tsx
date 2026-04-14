@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import productsData from "@/data/products.json";
 
 interface HeroProps {
@@ -10,22 +10,33 @@ interface HeroProps {
 }
 
 const HERO_IMAGES = productsData.map((p) => p.image_webp_url);
-const ROTATE_MS = 5000;
+// 8s + pause on hover + respeta prefers-reduced-motion.
+// Fuente: NN/g "Auto-Forwarding Carousels Annoy Users" recomienda ≥6-8s
+// y detener al interactuar para accesibilidad motora.
+const ROTATE_MS = 8000;
 
 export default function Hero({ onOrderOpen }: HeroProps) {
   const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (HERO_IMAGES.length <= 1) return;
+    if (reducedMotion) return; // respeta preferencia del sistema
+    if (paused) return;
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % HERO_IMAGES.length);
     }, ROTATE_MS);
     return () => clearInterval(id);
-  }, []);
+  }, [paused, reducedMotion]);
 
   return (
     <section
       aria-label="Inicio"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
       style={{
         position: "relative",
         minHeight: "65svh",
@@ -111,9 +122,9 @@ export default function Hero({ onOrderOpen }: HeroProps) {
         <p
           style={{
             fontFamily: "var(--font-body)",
-            color: "rgba(244,234,219,0.75)",
-            fontSize: "0.9375rem",
-            lineHeight: 1.5,
+            color: "rgba(244,234,219,0.82)",
+            fontSize: "1rem",
+            lineHeight: 1.55,
             marginBottom: "1.5rem",
             maxWidth: 320,
           }}

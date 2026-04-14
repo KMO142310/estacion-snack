@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "./supabase/server";
-import { adminGetOrderAccessToken, captureOrderIntent, type CaptureOrderItem } from "./supabase/admin";
+import { adminGetOrderAccessToken, captureOrderIntent, type CaptureOrderItem, type CaptureOrderDelivery } from "./supabase/admin";
 import { PRODUCTS } from "./products";
 import { WA, BANK_INFO } from "./business-info";
 import type { Product } from "./types";
@@ -83,8 +83,9 @@ export async function reserveStock(
 export async function captureOrder(
   items: CaptureOrderItem[],
   notes?: string,
+  delivery?: CaptureOrderDelivery,
 ): Promise<{ ok: boolean; orderId?: string; error?: string }> {
-  return captureOrderIntent(items, notes ?? null);
+  return captureOrderIntent(items, notes ?? null, delivery);
 }
 
 export async function placeOrder(params: {

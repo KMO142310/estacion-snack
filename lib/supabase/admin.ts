@@ -385,6 +385,11 @@ export interface CaptureOrderItem {
   unit_price: number;
 }
 
+export interface CaptureOrderDelivery {
+  comuna: string;
+  shipping: number;
+}
+
 /**
  * Capture a pending order intent BEFORE opening WhatsApp.
  * No customer info yet (will arrive via WhatsApp chat). No stock deduction.
@@ -394,25 +399,39 @@ export interface CaptureOrderItem {
  * checkout flow where the customer just built their cart and is about
  * to contact the business. The order sits as 'pending_whatsapp' until
  * the owner confirms it in the admin panel.
+ *
+ * Delivery info (comuna + shipping) is persisted into `notes` as a
+ * structured prefix so it's visible in /admin/pedidos without a
+ * schema migration. Ley 21.719 audit trail.
  */
 export async function captureOrderIntent(
   items: CaptureOrderItem[],
   notes: string | null,
+  delivery?: CaptureOrderDelivery,
 ): Promise<{ ok: boolean; orderId?: string; error?: string }> {
   try {
     if (!items.length) return { ok: false, error: "empty cart" };
     const supabase = await createAdminSupabase();
 
     const subtotal = items.reduce((s, i) => s + i.unit_price * i.qty, 0);
+    const shipping = delivery?.shipping ?? 0;
+    const total = subtotal + shipping;
+
+    // Prefijar la comuna en notes para que sea visible en admin sin migration
+    const deliveryLine = delivery
+      ? `[Entrega: ${delivery.comuna} · Envío: $${delivery.shipping.toLocaleString("es-CL")}]`
+      : null;
+    const userNotes = notes?.trim() || null;
+    const combinedNotes = [deliveryLine, userNotes].filter(Boolean).join("\n") || null;
 
     const { data: order, error: orderErr } = await supabase
       .from("orders")
       .insert({
         status: "pending_whatsapp",
         subtotal: Math.round(subtotal),
-        shipping: 0,
-        total: Math.round(subtotal),
-        notes: notes?.trim() || null,
+        shipping: Math.round(shipping),
+        total: Math.round(total),
+        notes: combinedNotes,
       })
       .select("id")
       .maybeSingle();

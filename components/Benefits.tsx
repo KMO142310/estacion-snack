@@ -2,11 +2,15 @@ import Scale from "./icons/Scale";
 import Truck from "./icons/Truck";
 import Chat from "./icons/Chat";
 
+// Copy validado por Research C (competencia chilena + gaps reales):
+// 1) Por kilo: diferenciador vs retail nacional (300-700g formato supermercado)
+// 2) Te lo llevo: despacho hoy en Colchagua — nacionales entregan 24-72h desde RM
+// 3) Respondo yo: cercanía humana — sin competencia B2C pequeña posicionada así en Colchagua
 export default function Benefits() {
   const items = [
-    { icon: <Scale size={26} />, title: "Por kilo, sin envases" },
-    { icon: <Truck size={26} />, title: "Te lo llevamos" },
-    { icon: <Chat size={26} />, title: "Pedido en 2 minutos" },
+    { icon: <Scale size={26} />, title: "Por kilo, directo" },
+    { icon: <Truck size={26} />, title: "Te lo llevo en Colchagua" },
+    { icon: <Chat size={26} />, title: "Respondo yo, no un bot" },
   ];
 
   return (

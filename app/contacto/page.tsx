@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import StaticLayout from "@/components/StaticLayout";
+import { safeJsonLd } from "@/lib/json-ld";
 
 export const metadata: Metadata = {
   title: "Contacto",
   description:
     "La vía más rápida para contactarnos es WhatsApp. Respondemos en menos de 24 horas hábiles.",
+  alternates: { canonical: "/contacto" },
   openGraph: {
     title: "Contacto · Estación Snack",
     description: "Contacta con Estación Snack por WhatsApp. Respondemos rápido.",
@@ -56,7 +58,7 @@ const opciones = [
 export default function ContactoPage() {
   return (
     <StaticLayout>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
       <main style={{ paddingTop: "3rem", paddingBottom: "5rem" }}>
         <div className="wrap">
           <nav

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import productsData from "@/data/products.json";
 import ProductDetail from "./ProductDetail";
+import { safeJsonLd } from "@/lib/json-ld";
 
 export const dynamic = "force-static";
 
@@ -111,7 +112,7 @@ export default async function ProductPage({ params }: Props) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
       />
       <ProductDetail
         product={productForDetail}

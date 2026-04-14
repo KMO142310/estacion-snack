@@ -410,7 +410,27 @@ export async function captureOrderIntent(
   delivery?: CaptureOrderDelivery,
 ): Promise<{ ok: boolean; orderId?: string; error?: string }> {
   try {
+    // Validación defensiva — los callers pasan por Zod en lib/actions.ts,
+    // pero esta función usa permisos elevados y el server action es público:
+    // tratar input como hostil.
     if (!items.length) return { ok: false, error: "empty cart" };
+    if (items.length > 30) return { ok: false, error: "too many items" };
+    for (const it of items) {
+      if (typeof it.product_name !== "string" || it.product_name.length === 0 || it.product_name.length > 120) {
+        return { ok: false, error: "invalid product_name" };
+      }
+      if (typeof it.qty !== "number" || !Number.isFinite(it.qty) || it.qty <= 0 || it.qty > 100) {
+        return { ok: false, error: "invalid qty" };
+      }
+      if (typeof it.unit_price !== "number" || !Number.isFinite(it.unit_price) || it.unit_price < 0 || it.unit_price > 1_000_000) {
+        return { ok: false, error: "invalid unit_price" };
+      }
+    }
+    if (notes && notes.length > 500) return { ok: false, error: "notes too long" };
+    if (delivery) {
+      if (typeof delivery.comuna !== "string" || delivery.comuna.length > 50) return { ok: false, error: "invalid comuna" };
+      if (typeof delivery.shipping !== "number" || delivery.shipping < 0 || delivery.shipping > 100_000) return { ok: false, error: "invalid shipping" };
+    }
     const supabase = await createAdminSupabase();
 
     const subtotal = items.reduce((s, i) => s + i.unit_price * i.qty, 0);
@@ -457,6 +477,36 @@ export async function captureOrderIntent(
     }
 
     return { ok: true, orderId };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : String(e) };
+  }
+}
+
+export interface ContactMessageInsert {
+  name: string;
+  email: string;
+  phone?: string | null;
+  message: string;
+}
+
+/**
+ * Insert a contact_messages row usando service role — bypassea RLS.
+ * La tabla tiene RLS enabled sin policy de anon insert (Security audit 2026-04-13).
+ * Usado por submitContact server action.
+ */
+export async function adminInsertContactMessage(
+  payload: ContactMessageInsert
+): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const supabase = await createAdminSupabase();
+    const { error } = await supabase.from("contact_messages").insert({
+      name: payload.name.trim().slice(0, 120),
+      email: payload.email.trim().toLowerCase().slice(0, 254),
+      phone: payload.phone?.trim().slice(0, 20) || null,
+      message: payload.message.trim().slice(0, 5000),
+    });
+    if (error) return { ok: false, error: error.message };
+    return { ok: true };
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : String(e) };
   }

@@ -5,6 +5,7 @@ import StaticLayout from "@/components/StaticLayout";
 export const metadata: Metadata = {
   title: "Política de Privacidad",
   description: "Cómo Estación Snack recopila, usa y protege tus datos personales. Ley 21.719.",
+  alternates: { canonical: "/privacidad" },
 };
 
 const S = { h2: { fontFamily: "var(--font-display)", fontWeight: 600 as const, fontSize: "clamp(1.25rem, 3.5vw, 1.5rem)", color: "#5A1F1A", marginBottom: "0.75rem", marginTop: "2.5rem" }, p: { fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5A1F1A", lineHeight: 1.7, marginBottom: "1rem", opacity: 0.85 }, li: { fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5A1F1A", lineHeight: 1.7, opacity: 0.85, marginBottom: "0.5rem" } };

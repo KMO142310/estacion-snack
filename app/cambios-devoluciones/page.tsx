@@ -5,6 +5,7 @@ import StaticLayout from "@/components/StaticLayout";
 export const metadata: Metadata = {
   title: "Cambios y Devoluciones",
   description: "Política de cambios, devoluciones y derecho a retracto en Estación Snack. Ley 19.496.",
+  alternates: { canonical: "/cambios-devoluciones" },
 };
 
 const S = { h2: { fontFamily: "var(--font-display)", fontWeight: 600 as const, fontSize: "clamp(1.25rem, 3.5vw, 1.5rem)", color: "#5A1F1A", marginBottom: "0.75rem", marginTop: "2.5rem" }, p: { fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5A1F1A", lineHeight: 1.7, marginBottom: "1rem", opacity: 0.85 }, li: { fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5A1F1A", lineHeight: 1.7, opacity: 0.85, marginBottom: "0.5rem" } };

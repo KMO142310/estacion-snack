@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { adminInsertContactMessage } from "@/lib/supabase/admin";
 import { Resend } from "resend";
 
 export interface ContactPayload {
@@ -23,24 +23,17 @@ export async function submitContact(
     return { ok: false, error: "El email no tiene un formato válido." };
   }
 
-  // Persist to Supabase (table created in migration 0004)
-  try {
-    const supabase = await createClient();
-    const { error: dbError } = await supabase
-      .from("contact_messages")
-      .insert({
-        name: payload.name.trim(),
-        email: payload.email.trim().toLowerCase(),
-        phone: payload.phone?.trim() || null,
-        message: payload.message.trim(),
-      });
-
-    if (dbError) {
-      console.error("[contact] db insert error:", dbError.message);
-      // Don't fail the user experience — still try to send email
-    }
-  } catch (e) {
-    console.error("[contact] db error:", e);
+  // Persist to Supabase via admin wrapper (service role, bypassea RLS).
+  // RLS de contact_messages no tiene policy anon insert — ver Security audit 2026-04-13.
+  const dbResult = await adminInsertContactMessage({
+    name: payload.name,
+    email: payload.email,
+    phone: payload.phone,
+    message: payload.message,
+  });
+  if (!dbResult.ok) {
+    console.error("[contact] db insert error:", dbResult.error);
+    // Don't fail the user experience — still try to send email
   }
 
   // Send email notification via Resend

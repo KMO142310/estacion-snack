@@ -66,6 +66,13 @@ export default function OrderSheet({ open, onClose }: Props) {
     setLoading(true);
     hapticSuccess();
 
+    // iOS Safari: el popup se abre SINCRÓNICAMENTE durante el gesto del usuario.
+    // Si se abre después del await, Safari lo bloquea como popup.
+    // Ref: https://webkit.org/blog/7763/a-closer-look-into-wkwebview/ + E2E research 2026-04-13
+    const popup = typeof window !== "undefined"
+      ? window.open("about:blank", "_blank", "noopener,noreferrer")
+      : null;
+
     // Capture order intent for analytics (non-blocking — WhatsApp flow continues on failure)
     const captureItems = items.map((item) => {
       if (item.kind === "product") {
@@ -100,7 +107,13 @@ export default function OrderSheet({ open, onClose }: Props) {
     );
     clear();
     onClose();
-    window.open(url, "_blank", "noopener,noreferrer");
+
+    if (popup && !popup.closed) {
+      popup.location.href = url;
+    } else {
+      // popup bloqueado — fallback: misma pestaña
+      window.location.href = url;
+    }
   };
 
   function stepQty(item: typeof items[number], delta: number) {

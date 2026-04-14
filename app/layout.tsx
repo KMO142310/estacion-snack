@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import AnalyticsScripts from "@/components/AnalyticsScripts";
 import ConsentBanner from "@/components/ConsentBanner";
+import { safeJsonLd } from "@/lib/json-ld";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -118,7 +119,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(orgJsonLd) }}
         />
         {children}
         <AnalyticsScripts />

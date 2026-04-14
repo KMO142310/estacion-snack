@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import StaticLayout from "@/components/StaticLayout";
+import { safeJsonLd } from "@/lib/json-ld";
 
 export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Nuestra historia",
   description:
     "Estación Snack nació en Santa Cruz, en el corazón del Valle de Colchagua. Frutos secos frescos por kilo, vendidos por kilo.",
+  alternates: { canonical: "/sobre-nosotros" },
   openGraph: {
     title: "Nuestra historia · Estación Snack",
     description: "Frutos secos frescos por kilo desde el corazón del Valle de Colchagua.",
@@ -32,7 +34,7 @@ const breadcrumbJsonLd = {
 export default function SobreNosotrosPage() {
   return (
     <StaticLayout>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
       <main style={{ paddingTop: "3rem", paddingBottom: "5rem" }}>
         <div className="wrap">
           <nav

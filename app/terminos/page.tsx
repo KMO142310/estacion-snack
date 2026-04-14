@@ -5,6 +5,7 @@ import StaticLayout from "@/components/StaticLayout";
 export const metadata: Metadata = {
   title: "Términos y Condiciones",
   description: "Términos y condiciones de compra en Estación Snack. Venta a granel, despacho en el Valle de Colchagua.",
+  alternates: { canonical: "/terminos" },
 };
 
 const S = { h2: { fontFamily: "var(--font-display)", fontWeight: 600 as const, fontSize: "clamp(1.25rem, 3.5vw, 1.5rem)", color: "#5A1F1A", marginBottom: "0.75rem", marginTop: "2.5rem" }, p: { fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5A1F1A", lineHeight: 1.7, marginBottom: "1rem", opacity: 0.85 }, li: { fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5A1F1A", lineHeight: 1.7, opacity: 0.85, marginBottom: "0.5rem" } };

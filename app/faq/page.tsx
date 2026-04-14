@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import StaticLayout from "@/components/StaticLayout";
 import FAQ from "@/components/FAQ";
+import { safeJsonLd } from "@/lib/json-ld";
 
 export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Preguntas frecuentes",
   description:
     "Dudas sobre cómo pedir, envíos, pagos y productos. Todo lo que necesitas saber para comprar en Estación Snack.",
+  alternates: { canonical: "/faq" },
   openGraph: {
     title: "Preguntas frecuentes · Estación Snack",
     description: "Cómo pedir, envíos, pagos y más sobre Estación Snack.",
@@ -42,8 +44,8 @@ const breadcrumbJsonLd = {
 export default function FaqPage() {
   return (
     <StaticLayout>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
       <main style={{ paddingTop: "3rem", paddingBottom: "5rem" }}>
         <div className="wrap">
           <nav

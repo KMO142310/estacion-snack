@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import StaticLayout from "@/components/StaticLayout";
+import { safeJsonLd } from "@/lib/json-ld";
 
 export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Envíos y despacho",
   description:
     "Despachamos martes a sábado en Marchigüe, Peralillo, Santa Cruz y Cunaco. Envío gratis sobre $25.000.",
+  alternates: { canonical: "/envios" },
   openGraph: {
     title: "Envíos y despacho · Estación Snack",
     description: "Envío gratis sobre $25.000. Martes a sábado 19:30-21:00.",
@@ -32,7 +34,7 @@ const zonas = [
 export default function EnviosPage() {
   return (
     <StaticLayout>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
       <main style={{ paddingTop: "3rem", paddingBottom: "5rem" }}>
         <div className="wrap">
           <nav

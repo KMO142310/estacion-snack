@@ -29,7 +29,9 @@ export default function Header({ onOrderOpen }: HeaderProps) {
   return (
     <header style={{
       background: "#5A1F1A",
-      padding: "0 20px", height: 70,
+      paddingLeft: 20,
+      paddingRight: "max(20px, env(safe-area-inset-right, 0px))",
+      height: 70,
       display: "flex", alignItems: "center", justifyContent: "space-between",
       boxShadow: scrolled ? "0 2px 16px rgba(18,5,3,0.25)" : "none",
     }}>
@@ -64,7 +66,7 @@ export default function Header({ onOrderOpen }: HeaderProps) {
               exit={reducedMotion ? { opacity: 0 } : { scale: 0, opacity: 0 }}
               transition={spring.press}
               style={{
-                position: "absolute", top: -4, right: -4, minWidth: 18, height: 18, padding: "0 5px",
+                position: "absolute", top: -4, right: -2, minWidth: 18, height: 18, padding: "0 5px",
                 background: "#A8411A", color: "#F4EADB", fontSize: 10, fontWeight: 700,
                 borderRadius: 999, display: "flex", alignItems: "center", justifyContent: "center",
                 fontFamily: "var(--font-body)",

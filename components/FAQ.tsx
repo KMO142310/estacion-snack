@@ -1,45 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-const faqs = [
-  {
-    q: "¿Cómo hago mi pedido?",
-    a: 'Elige los productos en el catálogo, selecciona la cantidad y toca "Agregar al pedido". Cuando estés listo, toca "Confirmar por WhatsApp". Se abre un mensaje con todo tu pedido listo para enviar. Confirmamos por WhatsApp y coordinamos la entrega.',
-  },
-  {
-    q: "¿A qué comunas despachan?",
-    a: "Despachamos en Marchigüe, Peralillo, Santa Cruz y Cunaco. Si vives en otra zona, escríbenos por WhatsApp y lo evaluamos juntos.",
-  },
-  {
-    q: "¿Cuánto cuesta el envío?",
-    a: "Envío gratis en compras sobre $25.000. Bajo ese monto: $2.000 (Santa Cruz) o $3.000 (comunas cercanas).",
-  },
-  {
-    q: "¿Cuándo despachan?",
-    a: "De martes a sábado, entre 19:30 y 21:00 hrs. Coordinamos por WhatsApp después de confirmar el pedido.",
-  },
-  {
-    q: "¿Qué medios de pago aceptan?",
-    a: "Transferencia bancaria o efectivo contra entrega. No cobramos online. Al confirmar el pedido te pasamos los datos bancarios por WhatsApp.",
-  },
-  {
-    q: "¿Cuál es el mínimo de compra?",
-    a: "El mínimo por producto es 1 kg. Puedes combinar varios productos para armar el pedido que quieras.",
-  },
-  {
-    q: "¿Puedo agregar más productos después de enviar el pedido?",
-    a: "Sí, siempre que no hayamos salido a despachar. Escríbenos por WhatsApp y lo sumamos al pedido.",
-  },
-  {
-    q: "¿Cuánto duran los productos?",
-    a: "Los frutos secos duran 2–3 meses en frasco hermético en lugar fresco y seco. Los dulces y confites duran hasta 6 meses en las mismas condiciones.",
-  },
-  {
-    q: "¿Tengo derecho a retracto?",
-    a: "Sí. Por Ley 19.496 tienes 10 días hábiles desde la recepción para retractarte. Escríbenos por WhatsApp y coordinamos la devolución del producto (sin abrir) y la restitución del pago.",
-  },
-];
+import { faqs } from "@/data/faq";
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(null);

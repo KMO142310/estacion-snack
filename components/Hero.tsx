@@ -217,6 +217,24 @@ export default function Hero({ onOrderOpen }: HeroProps) {
             Pedir por WhatsApp
           </button>
         </div>
+
+        {/* Expectativa del flujo — setea que el checkout es por WhatsApp y
+            que hay respuesta en el día, antes de que el usuario descubra la
+            mecánica recién al tocar confirmar. */}
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: "0.7rem",
+            fontWeight: 600,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: "rgba(244,234,219,0.6)",
+            marginTop: "1.5rem",
+            fontVariantNumeric: "tabular-nums",
+          }}
+        >
+          Pedido por WhatsApp · Respuesta el mismo día
+        </p>
       </div>
     </section>
   );

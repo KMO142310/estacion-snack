@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { MotionConfig } from "framer-motion";
 import { useCartStore } from "@/lib/store";
 import productsData from "@/data/products.json";
+import { topFaqs } from "@/data/faq";
 import Announce from "./Announce";
 import Header from "./Header";
 import Hero from "./Hero";
@@ -16,6 +17,10 @@ import FAQ from "./FAQ";
 import Footer from "./Footer";
 import ToastStack from "./Toast";
 import Filete from "./Filete";
+import TicketProgress from "./TicketProgress";
+import packsData from "@/data/packs.json";
+import { FREE_SHIPPING_MIN } from "@/lib/shipping";
+import type { Pack } from "@/lib/pack-utils";
 
 // Dynamic imports — sheets sólo cargan cuando el usuario interactúa.
 // Reduce first-load JS bundle (framer-motion se mueve a chunk async).
@@ -24,19 +29,25 @@ const ProductSheet = dynamic(() => import("./ProductSheet"), { ssr: false });
 
 const products = productsData.slice().sort((a, b) => a.sort_order - b.sort_order);
 
-const TOP_FAQ = [
-  { q: "¿Cómo hago mi pedido?", a: 'Elige los productos, toca "Agregar" y confirma por WhatsApp. Te respondemos y coordinamos la entrega.' },
-  { q: "¿A qué comunas despachan?", a: "Marchigüe, Peralillo, Santa Cruz y Cunaco." },
-  { q: "¿Cuánto cuesta el envío?", a: "Envío gratis en compras sobre $25.000. Bajo ese monto: $2.000 (Santa Cruz) o $3.000 (comunas cercanas)." },
-  { q: "¿Cuál es el mínimo de compra?", a: "1 kg por producto. Puedes combinar varios." },
-  { q: "¿Qué medios de pago aceptan?", a: "Transferencia bancaria o efectivo contra entrega." },
-];
-
 export default function PageShell() {
   const [sheetProduct, setSheetProduct] = useState<typeof products[number] | null>(null);
   const orderOpen = useCartStore((s) => s.orderOpen);
   const setOrderOpen = useCartStore((s) => s.setOrderOpen);
-  const itemCount = useCartStore((s) => s.items.length);
+  const items = useCartStore((s) => s.items);
+  const itemCount = items.length;
+
+  // Subtotal inline para el TicketProgress de la landing — mismo criterio
+  // que OrderSheet. Si hay items, se muestra el boleto de progreso
+  // antes de los packs para que el umbral de envío gratis esté anclado
+  // a la vista del usuario mientras sigue agregando productos.
+  const subtotal = items.reduce((sum, item) => {
+    if (item.kind === "product") {
+      const p = products.find((x) => x.id === item.id);
+      return sum + (p?.price ?? 0) * item.qty;
+    }
+    const pk = (packsData as Pack[]).find((x) => x.id === item.id);
+    return sum + (pk?.price ?? 0) * item.qty;
+  }, 0);
 
   useEffect(() => { useCartStore.persist.rehydrate(); }, []);
 
@@ -100,6 +111,20 @@ export default function PageShell() {
           </div>
         </section>
 
+        {/* TicketProgress inline — solo cuando hay items en el carrito.
+            Ancla el umbral de envío gratis antes de abrir el OrderSheet,
+            para que el usuario vea cuánto le falta mientras sigue agregando. */}
+        {itemCount > 0 && (
+          <section
+            aria-label="Progreso hacia envío gratis"
+            style={{ background: "#F4EADB", padding: "0 16px 1rem" }}
+          >
+            <div className="container" style={{ maxWidth: 520 }}>
+              <TicketProgress current={subtotal} threshold={FREE_SHIPPING_MIN} />
+            </div>
+          </section>
+        )}
+
         {/* Separador editorial tipo filete de boleto — divide secciones */}
         <div style={{ background: "#F4EADB", padding: "1.5rem 20px 2rem" }}>
           <Filete width={280} ornament="dots" />
@@ -152,7 +177,7 @@ export default function PageShell() {
               Lo que me suelen preguntar.
             </h2>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {TOP_FAQ.map((item) => (
+              {topFaqs.map((item) => (
                 <details key={item.q} style={{
                   background: "#fff", border: "1px solid rgba(90,31,26,0.08)",
                   borderRadius: 14, overflow: "hidden",
@@ -193,9 +218,23 @@ export default function PageShell() {
             <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontStyle: "italic", fontSize: "clamp(24px, 5.5vw, 40px)", color: "#F4EADB", lineHeight: 1.15, marginBottom: 14, letterSpacing: "-0.02em" }}>
               Cuando quieras, te escribimos.
             </p>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "rgba(244,234,219,0.78)", marginBottom: 24 }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "rgba(244,234,219,0.78)", marginBottom: 20 }}>
               Martes a sábado · 19:30 a 21:00 · Santa Cruz y alrededores
             </p>
+
+            {/* Trust strip — señales de confianza cerca del CTA. Editorial,
+                no genérico: tracked caps, divisor ·, sin iconos. */}
+            <p style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 11, fontWeight: 700,
+              letterSpacing: "0.14em", textTransform: "uppercase",
+              color: "rgba(244,234,219,0.55)",
+              marginBottom: 28,
+              fontVariantNumeric: "tabular-nums",
+            }}>
+              Retracto 10 días · Pago al recibir · Ley 19.496
+            </p>
+
             <button onClick={openOrder} style={{
               fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 15,
               color: "#5A1F1A", background: "#F4EADB", border: "none",

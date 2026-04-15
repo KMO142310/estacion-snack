@@ -3,6 +3,7 @@ import Link from "next/link";
 import StaticLayout from "@/components/StaticLayout";
 import FAQ from "@/components/FAQ";
 import { safeJsonLd } from "@/lib/json-ld";
+import { faqs } from "@/data/faq";
 
 export const revalidate = 3600;
 export const metadata: Metadata = {
@@ -19,17 +20,11 @@ export const metadata: Metadata = {
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: [
-    { "@type": "Question", name: "¿Cómo hago mi pedido?", acceptedAnswer: { "@type": "Answer", text: 'Elige los productos, selecciona la cantidad y toca "Agregar al pedido". Cuando estés listo, toca "Confirmar por WhatsApp".' } },
-    { "@type": "Question", name: "¿A qué comunas despachan?", acceptedAnswer: { "@type": "Answer", text: "Despachamos en Marchigüe, Peralillo, Santa Cruz y Cunaco." } },
-    { "@type": "Question", name: "¿Cuánto cuesta el envío?", acceptedAnswer: { "@type": "Answer", text: "Envío gratis en compras sobre $25.000. Bajo ese monto: $2.000 (Santa Cruz) o $3.000 (comunas cercanas)." } },
-    { "@type": "Question", name: "¿Cuándo despachan?", acceptedAnswer: { "@type": "Answer", text: "De martes a sábado, entre 19:30 y 21:00 hrs. Coordinamos por WhatsApp." } },
-    { "@type": "Question", name: "¿Qué medios de pago aceptan?", acceptedAnswer: { "@type": "Answer", text: "Transferencia bancaria o efectivo contra entrega." } },
-    { "@type": "Question", name: "¿Cuál es el mínimo de compra?", acceptedAnswer: { "@type": "Answer", text: "El mínimo por producto es 1 kg. Puedes combinar varios productos." } },
-    { "@type": "Question", name: "¿Puedo agregar más productos después de enviar el pedido?", acceptedAnswer: { "@type": "Answer", text: "Sí, siempre que no hayamos salido a despachar." } },
-    { "@type": "Question", name: "¿Cuánto duran los productos?", acceptedAnswer: { "@type": "Answer", text: "Los frutos secos duran 2–3 meses en frasco hermético. Los dulces hasta 6 meses." } },
-    { "@type": "Question", name: "¿Tengo derecho a retracto?", acceptedAnswer: { "@type": "Answer", text: "Sí. Por Ley 19.496 tienes 10 días hábiles desde la recepción para retractarte y solicitar la devolución del producto sin abrir." } },
-  ],
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
 };
 
 const breadcrumbJsonLd = {

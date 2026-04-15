@@ -4,8 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { fmt } from "@/lib/cart-utils";
 import { useCartStore } from "@/lib/store";
-import { hapticSuccess } from "@/lib/haptics";
 import { computeSavings, totalKg, getPackAvailability, type Pack, type ProductStock } from "@/lib/pack-utils";
+import StampButton from "./StampButton";
 
 interface Props {
   pack: Pack;
@@ -26,7 +26,7 @@ export default function PackCard({ pack, products, onOpen }: Props) {
   const handleAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (isAgotado || added) return;
-    hapticSuccess();
+    // Haptics vienen de StampButton (chip + stamp) — patrón unificado con ProductCard.
     addItem({ kind: "pack", id: pack.id, qty: 1, name: pack.name, pricePerUnit: pack.price });
     addToast(`${pack.name} agregado al pedido`);
     setAdded(true);
@@ -193,21 +193,14 @@ export default function PackCard({ pack, products, onOpen }: Props) {
         </div>
 
         {!isAgotado ? (
-          <button
+          <StampButton
             onClick={handleAdd}
-            style={{
-              width: "100%", fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 13,
-              color: added ? "#F4EADB" : "#F4EADB",
-              background: added ? "#5E6B3E" : "#A8411A",
-              border: "none", borderRadius: 10, padding: "10px 0",
-              cursor: "pointer", minHeight: 42,
-              WebkitTapHighlightColor: "transparent",
-              transition: "all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)",
-              transform: added ? "scale(1.03)" : "scale(1)",
-            }}
+            fullWidth
+            size="sm"
+            style={{ background: added ? "#5E6B3E" : undefined }}
           >
             {added ? "✓ Agregado" : "Agregar pack"}
-          </button>
+          </StampButton>
         ) : (
           <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#5E6B3E", fontWeight: 600, textAlign: "center" }}>
             Momentáneamente agotado

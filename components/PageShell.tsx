@@ -17,6 +17,10 @@ import FAQ from "./FAQ";
 import Footer from "./Footer";
 import ToastStack from "./Toast";
 import Filete from "./Filete";
+import TicketProgress from "./TicketProgress";
+import packsData from "@/data/packs.json";
+import { FREE_SHIPPING_MIN } from "@/lib/shipping";
+import type { Pack } from "@/lib/pack-utils";
 
 // Dynamic imports — sheets sólo cargan cuando el usuario interactúa.
 // Reduce first-load JS bundle (framer-motion se mueve a chunk async).
@@ -29,7 +33,21 @@ export default function PageShell() {
   const [sheetProduct, setSheetProduct] = useState<typeof products[number] | null>(null);
   const orderOpen = useCartStore((s) => s.orderOpen);
   const setOrderOpen = useCartStore((s) => s.setOrderOpen);
-  const itemCount = useCartStore((s) => s.items.length);
+  const items = useCartStore((s) => s.items);
+  const itemCount = items.length;
+
+  // Subtotal inline para el TicketProgress de la landing — mismo criterio
+  // que OrderSheet. Si hay items, se muestra el boleto de progreso
+  // antes de los packs para que el umbral de envío gratis esté anclado
+  // a la vista del usuario mientras sigue agregando productos.
+  const subtotal = items.reduce((sum, item) => {
+    if (item.kind === "product") {
+      const p = products.find((x) => x.id === item.id);
+      return sum + (p?.price ?? 0) * item.qty;
+    }
+    const pk = (packsData as Pack[]).find((x) => x.id === item.id);
+    return sum + (pk?.price ?? 0) * item.qty;
+  }, 0);
 
   useEffect(() => { useCartStore.persist.rehydrate(); }, []);
 
@@ -92,6 +110,20 @@ export default function PageShell() {
             </div>
           </div>
         </section>
+
+        {/* TicketProgress inline — solo cuando hay items en el carrito.
+            Ancla el umbral de envío gratis antes de abrir el OrderSheet,
+            para que el usuario vea cuánto le falta mientras sigue agregando. */}
+        {itemCount > 0 && (
+          <section
+            aria-label="Progreso hacia envío gratis"
+            style={{ background: "#F4EADB", padding: "0 16px 1rem" }}
+          >
+            <div className="container" style={{ maxWidth: 520 }}>
+              <TicketProgress current={subtotal} threshold={FREE_SHIPPING_MIN} />
+            </div>
+          </section>
+        )}
 
         {/* Separador editorial tipo filete de boleto — divide secciones */}
         <div style={{ background: "#F4EADB", padding: "1.5rem 20px 2rem" }}>

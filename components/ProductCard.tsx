@@ -115,8 +115,10 @@ export default function ProductCard({ product, onOpen }: Props) {
 
       {/* Info — estilo editorial */}
       <div style={{ padding: "0 2px" }}>
-        {/* Ocasión como hook (como maridaje de vino) */}
-        {occasion && !agotado && (
+        {/* Ocasión como hook (como maridaje de vino).
+            Se preserva incluso en stock=0 con opacidad reducida — la
+            narrativa editorial no desaparece cuando el producto se agota. */}
+        {occasion && (
           <p style={{
             fontFamily: "var(--font-display)",
             fontStyle: "italic",
@@ -125,6 +127,7 @@ export default function ProductCard({ product, onOpen }: Props) {
             color: "#5E6B3E",
             lineHeight: 1.35,
             marginBottom: 6,
+            opacity: agotado ? 0.55 : 1,
           }}>
             {occasion}
           </p>

@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { MotionConfig } from "framer-motion";
 import { useCartStore } from "@/lib/store";
 import productsData from "@/data/products.json";
+import { topFaqs } from "@/data/faq";
 import Announce from "./Announce";
 import Header from "./Header";
 import Hero from "./Hero";
@@ -23,14 +24,6 @@ const OrderSheet = dynamic(() => import("./OrderSheet"), { ssr: false });
 const ProductSheet = dynamic(() => import("./ProductSheet"), { ssr: false });
 
 const products = productsData.slice().sort((a, b) => a.sort_order - b.sort_order);
-
-const TOP_FAQ = [
-  { q: "¿Cómo hago mi pedido?", a: 'Elige los productos, toca "Agregar" y confirma por WhatsApp. Te respondemos y coordinamos la entrega.' },
-  { q: "¿A qué comunas despachan?", a: "Marchigüe, Peralillo, Santa Cruz y Cunaco." },
-  { q: "¿Cuánto cuesta el envío?", a: "Envío gratis en compras sobre $25.000. Bajo ese monto: $2.000 (Santa Cruz) o $3.000 (comunas cercanas)." },
-  { q: "¿Cuál es el mínimo de compra?", a: "1 kg por producto. Puedes combinar varios." },
-  { q: "¿Qué medios de pago aceptan?", a: "Transferencia bancaria o efectivo contra entrega." },
-];
 
 export default function PageShell() {
   const [sheetProduct, setSheetProduct] = useState<typeof products[number] | null>(null);
@@ -152,7 +145,7 @@ export default function PageShell() {
               Lo que me suelen preguntar.
             </h2>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {TOP_FAQ.map((item) => (
+              {topFaqs.map((item) => (
                 <details key={item.q} style={{
                   background: "#fff", border: "1px solid rgba(90,31,26,0.08)",
                   borderRadius: 14, overflow: "hidden",

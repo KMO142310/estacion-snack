@@ -438,6 +438,38 @@ export default function OrderSheet({ open, onClose }: Props) {
               paddingBottom: "calc(0.875rem + env(safe-area-inset-bottom, 0px))",
               flexShrink: 0, borderTop: "1px solid rgba(90,31,26,0.08)", background: "#F4EADB",
             }}>
+              {items.length > 0 && (
+                <div style={{
+                  display: "flex", alignItems: "baseline", justifyContent: "space-between",
+                  gap: 12, marginBottom: "0.75rem",
+                }}>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
+                    <span style={{
+                      fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 700,
+                      letterSpacing: "0.14em", textTransform: "uppercase",
+                      color: "rgba(90,31,26,0.55)",
+                    }}>
+                      Total
+                    </span>
+                    <Odometer
+                      value={total}
+                      style={{
+                        fontFamily: "var(--font-display)", fontWeight: 700,
+                        fontSize: "1.5rem", color: "#5A1F1A", lineHeight: 1,
+                      }}
+                    />
+                  </div>
+                  {shipping === 0 && subtotal >= FREE_SHIPPING_MIN && (
+                    <span style={{
+                      fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 700,
+                      letterSpacing: "0.08em", textTransform: "uppercase",
+                      color: "#5E6B3E",
+                    }}>
+                      Envío gratis
+                    </span>
+                  )}
+                </div>
+              )}
               {items.length === 0 ? (
                 <StampButton
                   onClick={onClose}

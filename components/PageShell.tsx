@@ -218,9 +218,23 @@ export default function PageShell() {
             <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontStyle: "italic", fontSize: "clamp(24px, 5.5vw, 40px)", color: "#F4EADB", lineHeight: 1.15, marginBottom: 14, letterSpacing: "-0.02em" }}>
               Cuando quieras, te escribimos.
             </p>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "rgba(244,234,219,0.78)", marginBottom: 24 }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "rgba(244,234,219,0.78)", marginBottom: 20 }}>
               Martes a sábado · 19:30 a 21:00 · Santa Cruz y alrededores
             </p>
+
+            {/* Trust strip — señales de confianza cerca del CTA. Editorial,
+                no genérico: tracked caps, divisor ·, sin iconos. */}
+            <p style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 11, fontWeight: 700,
+              letterSpacing: "0.14em", textTransform: "uppercase",
+              color: "rgba(244,234,219,0.55)",
+              marginBottom: 28,
+              fontVariantNumeric: "tabular-nums",
+            }}>
+              Retracto 10 días · Pago al recibir · Ley 19.496
+            </p>
+
             <button onClick={openOrder} style={{
               fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 15,
               color: "#5A1F1A", background: "#F4EADB", border: "none",

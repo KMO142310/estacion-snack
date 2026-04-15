@@ -87,48 +87,25 @@ export const viewport: Viewport = {
   themeColor: "#F4EADB",
 };
 
-const orgJsonLd = {
+// JSON-LD mínimo: WebSite. No declaramos Store/LocalBusiness/Organization
+// porque implicaría entidad comercial formalizada (RUT activo, patente,
+// Seremi Salud). Esta es venta directa por WhatsApp.
+// Google acepta WebSite solo para indexación básica sin claims formales.
+const siteJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Store",
-  "@id": `${SITE}/#business`,
+  "@type": "WebSite",
+  "@id": `${SITE}/#website`,
   name: "Estación Snack",
-  description:
-    "Frutos secos y dulces del Valle de Colchagua, vendidos por kilo. Despacho martes a sábado en Marchigüe, Peralillo, Santa Cruz y Cunaco.",
   url: SITE,
-  image: `${SITE}/opengraph-image`,
-  telephone: "+56953743338",
-  priceRange: "$$",
-  currenciesAccepted: "CLP",
-  paymentAccepted: ["Transferencia bancaria", "Efectivo"],
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Santa Cruz centro",
-    addressLocality: "Santa Cruz",
-    addressRegion: "Región de O'Higgins",
-    postalCode: "3130000",
-    addressCountry: "CL",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: -34.641,
-    longitude: -71.365,
-  },
-  areaServed: [
-    { "@type": "City", name: "Marchigüe" },
-    { "@type": "City", name: "Peralillo" },
-    { "@type": "City", name: "Santa Cruz" },
-    { "@type": "City", name: "Cunaco" },
-  ],
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "19:30",
-      closes: "21:00",
+  inLanguage: "es-CL",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${SITE}/?q={search_term_string}`,
     },
-  ],
-  servesCuisine: "Frutos secos y snacks naturales",
-  sameAs: ["https://instagram.com/estacionsnack.sc"],
+    "query-input": "required name=search_term_string",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -140,7 +117,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: safeJsonLd(orgJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(siteJsonLd) }}
         />
         {children}
         <AnalyticsScripts />

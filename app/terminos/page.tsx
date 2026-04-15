@@ -22,23 +22,25 @@ export default function TerminosPage() {
           <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(1.75rem, 5vw, 2.5rem)", color: "#5A1F1A", marginBottom: "0.5rem" }}>Términos y Condiciones</h1>
           <p style={{ ...S.p, fontSize: "0.8125rem", color: "#5E6B3E" }}>Última actualización: abril 2026</p>
 
-          <p style={S.p}>Estos términos regulan la compra de productos en Estación Snack (estacionsnack.cl), operada desde Santa Cruz, Región de O&apos;Higgins, Chile. Al hacer un pedido, aceptas estas condiciones.</p>
+          <p style={S.p}>Estos términos regulan los pedidos hechos a través de estacionsnack.cl. Al hacer un pedido, aceptas estas condiciones.</p>
 
           <h2 style={S.h2}>Qué es Estación Snack</h2>
-          <p style={S.p}>Somos una tienda de frutos secos, snacks y mezclas que vende por kilo. Los productos vienen en bolsas de 1 kg con cierre, armadas por nosotros. No son envases sellados de fábrica.</p>
+          <p style={S.p}>Estación Snack es una venta directa de frutos secos y dulces por WhatsApp, operada por una persona natural en Santa Cruz, Región de O&apos;Higgins. No es una tienda con local abierto al público: los pedidos se coordinan y despachan por WhatsApp.</p>
+          <p style={S.p}>Los productos se entregan en las bolsas originales del proveedor, por unidad de 1 kg. No elaboramos ni reempacamos alimentos: solo intermediamos la venta y el despacho.</p>
 
           <h2 style={S.h2}>Cómo funciona un pedido</h2>
           <ol style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
             <li style={S.li}>Eliges los productos y cantidades en estacionsnack.cl.</li>
-            <li style={S.li}>Tocas &quot;Confirmar por WhatsApp&quot;. Eso nos envía tu pedido.</li>
+            <li style={S.li}>Tocas &quot;Confirmar por WhatsApp&quot;. Eso envía tu pedido al chat.</li>
             <li style={S.li}>Te respondemos por WhatsApp para confirmar disponibilidad, monto total y coordinar la entrega.</li>
             <li style={S.li}>El pedido queda firme cuando ambas partes confirmamos por WhatsApp.</li>
           </ol>
 
           <h2 style={S.h2}>Precios y pago</h2>
           <ul style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
-            <li style={S.li}>Todos los precios publicados incluyen IVA.</li>
+            <li style={S.li}>Los precios publicados son finales en pesos chilenos. No hay cargos adicionales al monto mostrado, salvo el despacho (si corresponde) que se muestra antes de confirmar.</li>
             <li style={S.li}>Aceptamos transferencia bancaria y efectivo contra entrega.</li>
+            <li style={S.li}>No emitimos boleta ni factura electrónica. Si necesitas comprobante tributario, no somos el proveedor adecuado para ti.</li>
             <li style={S.li}>El pedido se prepara una vez confirmado el pago por transferencia, o se cobra al momento de la entrega si eliges efectivo.</li>
           </ul>
 

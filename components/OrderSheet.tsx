@@ -205,8 +205,15 @@ export default function OrderSheet({ open, onClose }: Props) {
               </div>
             )}
 
-            {/* Items */}
-            <div style={{ flex: 1, overflowY: "auto", padding: "0 1.25rem" }}>
+            {/* Items — scroll-hint: fade en el borde inferior para indicar
+                que hay más contenido cuando la lista excede el alto del sheet.
+                overscroll-contain evita que el gesto pase al body detrás. */}
+            <div style={{
+              flex: 1, overflowY: "auto", padding: "0 1.25rem",
+              overscrollBehavior: "contain",
+              WebkitMaskImage: "linear-gradient(to bottom, black calc(100% - 18px), transparent 100%)",
+              maskImage: "linear-gradient(to bottom, black calc(100% - 18px), transparent 100%)",
+            }}>
               {items.length === 0 ? (
                 <div style={{ padding: "3rem 0", textAlign: "center" }}>
                   <p style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", color: "#5A1F1A", marginBottom: "0.5rem" }}>

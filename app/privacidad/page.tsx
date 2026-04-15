@@ -22,10 +22,10 @@ export default function PrivacidadPage() {
           <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(1.75rem, 5vw, 2.5rem)", color: "#5A1F1A", marginBottom: "0.5rem" }}>Política de Privacidad</h1>
           <p style={{ ...S.p, fontSize: "0.8125rem", color: "#5E6B3E" }}>Última actualización: abril 2026</p>
 
-          <p style={S.p}>En Estación Snack nos tomamos en serio tus datos personales. Esta política explica qué información recopilamos, para qué la usamos y cuáles son tus derechos, en cumplimiento de la Ley 21.719 y la Ley 19.628.</p>
+          <p style={S.p}>Esta política explica qué datos personales recibo al procesar tu pedido, para qué los uso y cuáles son tus derechos, en cumplimiento de la Ley 21.719 y la Ley 19.628.</p>
 
           <h2 style={S.h2}>Quién es responsable de tus datos</h2>
-          <p style={S.p}>Estación Snack, con domicilio en Santa Cruz, Región de O&apos;Higgins, Chile. Contacto: WhatsApp +56 9 5374 3338.</p>
+          <p style={S.p}>Estación Snack es una venta directa operada por una persona natural en Santa Cruz, Región de O&apos;Higgins. Los datos que compartes por WhatsApp los recibe y custodia esa misma persona. Contacto: WhatsApp <a href="https://wa.me/56953743338" style={{ color: "#A8411A", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>.</p>
 
           <h2 style={S.h2}>Qué datos recopilamos</h2>
           <p style={{ ...S.p, fontWeight: 600 }}>Datos que nos das al pedir:</p>
@@ -72,7 +72,7 @@ export default function PrivacidadPage() {
             <li style={S.li}><strong>Cancelación</strong>: puedes pedir que eliminemos tus datos cuando ya no sean necesarios.</li>
             <li style={S.li}><strong>Oposición</strong>: puedes oponerte al uso de tus datos para un fin específico.</li>
           </ul>
-          <p style={S.p}>Para ejercer estos derechos, escríbenos por WhatsApp al <a href="https://wa.me/56953743338" style={{ color: "#A8411A", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>. Te respondemos en un plazo máximo de 15 días hábiles.</p>
+          <p style={S.p}>Para ejercer estos derechos, escríbenos por WhatsApp al <a href="https://wa.me/56953743338" style={{ color: "#A8411A", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a> con el asunto &ldquo;ARCO&rdquo;. Te respondemos en un plazo máximo de 15 días hábiles (Ley 21.719, Art. 78).</p>
 
           <h2 style={S.h2}>Contacto</h2>
           <p style={S.p}>Cualquier duda sobre privacidad: WhatsApp <a href="https://wa.me/56953743338" style={{ color: "#A8411A", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "3px" }}>+56 9 5374 3338</a>.</p>

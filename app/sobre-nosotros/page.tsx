@@ -64,7 +64,7 @@ export default function SobreNosotrosPage() {
               Del andén a tu mesa.
             </h1>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "1.0625rem", lineHeight: 1.75, color: "#5E6B3E" }}>
-              Estación Snack nació en Santa Cruz, en el km 35,5 del antiguo Ramal San Fernando–Pichilemu. La estación dejó de correr trenes hace años; nosotros retomamos la idea del despacho: frutos secos y dulces del valle, por kilo, directo a tu casa. Sin márgenes de tienda gourmet, sin cartón de más, sin apps.
+              Estación Snack es una venta directa de frutos secos y dulces por WhatsApp, desde Santa Cruz, Valle de Colchagua. El nombre toma prestada la referencia histórica al km 35,5 del antiguo Ramal San Fernando–Pichilemu, como guiño al territorio. No operamos en la estación ni tenemos vínculo con EFE.
             </p>
           </div>
 
@@ -109,7 +109,7 @@ export default function SobreNosotrosPage() {
               <li><strong style={{ display: "inline-block", width: 64, color: "#A8411A", fontWeight: 700 }}>1986</strong>Último tren de pasajeros. El ramal cierra al público.</li>
               <li><strong style={{ display: "inline-block", width: 64, color: "#A8411A", fontWeight: 700 }}>2004</strong>Vuelve parcialmente como Tren del Vino.</li>
               <li><strong style={{ display: "inline-block", width: 64, color: "#A8411A", fontWeight: 700 }}>2010</strong>Último servicio. El terremoto lo detiene para siempre.</li>
-              <li><strong style={{ display: "inline-block", width: 64, color: "#A8411A", fontWeight: 700 }}>Hoy</strong>Estación Snack. El despacho sigue saliendo — a pie y por WhatsApp.</li>
+              <li><strong style={{ display: "inline-block", width: 64, color: "#A8411A", fontWeight: 700 }}>Hoy</strong>Estación Snack: venta directa de frutos secos por WhatsApp, sin relación con la estación ni con EFE.</li>
             </ul>
             <p style={{
               fontFamily: "var(--font-body)",

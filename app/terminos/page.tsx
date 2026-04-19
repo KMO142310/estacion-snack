@@ -49,9 +49,9 @@ export default function TerminosPage() {
 
           <h2 style={S.h2}>Despacho</h2>
           <ul style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
-            <li style={S.li}>Zona de cobertura: Marchigüe, Peralillo, Santa Cruz y Cunaco.</li>
+            <li style={S.li}>Zona de cobertura: Santa Cruz, Palmilla, Peralillo y Marchigüe. Retiro en local disponible.</li>
             <li style={S.li}>Días de despacho: martes a sábado.</li>
-            <li style={S.li}>Costo: gratis en compras sobre $25.000. Bajo ese monto: $2.000 (Santa Cruz) o $3.000 (comunas cercanas).</li>
+            <li style={S.li}>Costo: retiro en local gratis. Envío gratis en compras sobre $25.000. Bajo ese monto: $1.000 (Santa Cruz) o $2.000 (comunas cercanas).</li>
           </ul>
 
           <h2 style={S.h2}>Derecho a retracto</h2>

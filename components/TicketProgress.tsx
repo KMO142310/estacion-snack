@@ -1,25 +1,5 @@
 "use client";
 
-/**
- * TicketProgress · boleto perforado con progreso hacia envío gratis.
- *
- * Reemplaza el progress bar genérico con un ticket ferroviario real:
- *
- *   ·  · · · · · · · · · · · · ·  ·          ← perforación superior
- *   │  Te faltan $8.500  ══════░░░  │
- *   │  para despacho sin costo      │
- *   ·  · · · · · · · · · · · · ·  ·          ← perforación inferior
- *
- * Al cruzar $25.000 (FREE_SHIPPING_MIN):
- *   - El ticket se llena 100% con terracota → crema invertido.
- *   - Stamp "VÁLIDO" aparece con ink-bleed en esquina derecha.
- *   - Copy cambia a "Boleto válido. Despacho sin costo."
- *   - hapticStamp() se dispara UNA VEZ al cruzar (no en cada render).
- *
- * Ref: Baymard "Threshold Progress Indicators" — AOV +34% promedio.
- * Ref: Solari di Udine departure boards + Italian railway ticket aesthetics.
- */
-
 import { useEffect, useRef } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { fmt } from "@/lib/cart-utils";
@@ -66,11 +46,6 @@ export default function TicketProgress({ current, threshold }: Props) {
         transition: `background ${duration.standard}ms, color ${duration.standard}ms`,
       }}
     >
-      {/* Perforación superior e inferior — dots como ticket real */}
-      <span aria-hidden="true" style={perforationTop(isValid)} />
-      <span aria-hidden="true" style={perforationBottom(isValid)} />
-
-      {/* Contenido */}
       <div style={{ position: "relative", zIndex: 2, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
         <div style={{ flex: 1, minWidth: 0 }}>
           <p style={{
@@ -81,7 +56,7 @@ export default function TicketProgress({ current, threshold }: Props) {
             color: isValid ? "rgba(244,234,219,0.82)" : "#A8411A",
             marginBottom: 4,
           }}>
-            Boleto de carga · Km 35,5
+            Despacho
           </p>
           <p style={{
             fontSize: 13,
@@ -90,12 +65,11 @@ export default function TicketProgress({ current, threshold }: Props) {
             fontVariantNumeric: "tabular-nums",
           }}>
             {isValid
-              ? "Boleto válido. Despacho sin costo."
+              ? "Despacho sin costo activado."
               : <>Te faltan <strong>{fmt(falta)}</strong> para despacho sin costo.</>}
           </p>
         </div>
 
-        {/* Sello VÁLIDO con ink-bleed — aparece al cruzar umbral */}
         <AnimatePresence>
           {isValid && (
             <motion.div
@@ -143,25 +117,4 @@ export default function TicketProgress({ current, threshold }: Props) {
       )}
     </div>
   );
-}
-
-// Perforación con dots CSS — 4px diameter, 10px spacing.
-function perforationTop(isValid: boolean): React.CSSProperties {
-  const dotColor = isValid ? "rgba(244,234,219,0.4)" : "rgba(90,31,26,0.2)";
-  return {
-    position: "absolute",
-    top: -3,
-    left: 0,
-    right: 0,
-    height: 6,
-    backgroundImage: `radial-gradient(circle, ${dotColor} 1.2px, transparent 1.5px)`,
-    backgroundSize: "10px 6px",
-    backgroundPosition: "center",
-    backgroundRepeat: "repeat-x",
-    zIndex: 1,
-  };
-}
-
-function perforationBottom(isValid: boolean): React.CSSProperties {
-  return { ...perforationTop(isValid), top: "auto", bottom: -3 };
 }

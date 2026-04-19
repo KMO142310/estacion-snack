@@ -1,9 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import AnalyticsScripts from "@/components/AnalyticsScripts";
-import ConsentBanner from "@/components/ConsentBanner";
 import { safeJsonLd } from "@/lib/json-ld";
 import "./globals.css";
 
@@ -31,7 +27,7 @@ export const metadata: Metadata = {
     template: "%s · Estación Snack",
   },
   description:
-    "Frutos secos y dulces del Valle de Colchagua, vendidos por kilo. Despacho martes a sábado en Marchigüe, Peralillo, Santa Cruz y Cunaco.",
+    "Frutos secos y dulces del Valle de Colchagua, vendidos por kilo. Despacho martes a sábado en Santa Cruz, Palmilla, Peralillo y Marchigüe.",
   metadataBase: new URL(SITE),
   alternates: { canonical: SITE },
   robots: {
@@ -120,10 +116,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: safeJsonLd(siteJsonLd) }}
         />
         {children}
-        <AnalyticsScripts />
-        <ConsentBanner />
-        <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );

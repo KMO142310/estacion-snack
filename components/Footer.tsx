@@ -1,16 +1,11 @@
 import Link from "next/link";
-import KmStone from "./icons/KmStone";
 
-// Footer como firma editorial — sin columnas de links apretados.
-// Hito kilométrico como mark visual + tipografía como cierre de nota.
 export default function Footer() {
   return (
     <footer style={{ background: "#5A1F1A", color: "rgba(244,234,219,0.85)", padding: "4rem 1.25rem 2rem" }}>
       <div className="wrap" style={{ maxWidth: 720, margin: "0 auto" }}>
 
-        {/* Firma editorial con hito kilométrico */}
         <div style={{ textAlign: "center", marginBottom: "2.5rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.875rem" }}>
-          <KmStone size={64} ariaLabel="Kilómetro 35,5" />
           <p style={{
             fontFamily: "var(--font-display)", fontWeight: 500, fontStyle: "italic",
             fontSize: "clamp(1.5rem, 4vw, 2rem)", color: "#F4EADB", lineHeight: 1.2,
@@ -72,7 +67,7 @@ export default function Footer() {
           <Link href="/#productos" style={{ color: "inherit" }}>Mezclas</Link>
           <Link href="/envios" style={{ color: "inherit" }}>Envíos</Link>
           <Link href="/faq" style={{ color: "inherit" }}>Preguntas</Link>
-          <Link href="/sobre-nosotros" style={{ color: "inherit" }}>La historia</Link>
+          <Link href="/sobre-nosotros" style={{ color: "inherit" }}>Nosotros</Link>
           <Link href="/contacto" style={{ color: "inherit" }}>Contacto</Link>
           <Link href="/terminos" style={{ color: "inherit" }}>Términos</Link>
           <Link href="/privacidad" style={{ color: "inherit" }}>Privacidad</Link>

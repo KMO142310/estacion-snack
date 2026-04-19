@@ -20,12 +20,12 @@ export const faqs: FAQItem[] = [
   },
   {
     q: "¿A qué comunas despachan?",
-    a: "Despachamos en Marchigüe, Peralillo, Santa Cruz y Cunaco. Si vives en otra zona, escríbenos por WhatsApp y lo evaluamos juntos.",
-    aShort: "Marchigüe, Peralillo, Santa Cruz y Cunaco.",
+    a: "Despachamos en Santa Cruz, Palmilla, Peralillo y Marchigüe. También puedes retirar en local gratis. Si vives en otra zona, escríbenos por WhatsApp y lo evaluamos juntos.",
+    aShort: "Santa Cruz, Palmilla, Peralillo y Marchigüe. Retiro en local gratis.",
   },
   {
     q: "¿Cuánto cuesta el envío?",
-    a: "Envío gratis en compras sobre $25.000. Bajo ese monto: $2.000 (Santa Cruz) o $3.000 (comunas cercanas).",
+    a: "Retiro en local gratis. Envío gratis en compras sobre $25.000. Bajo ese monto: $1.000 (Santa Cruz) o $2.000 (comunas cercanas).",
   },
   {
     q: "¿Cuándo despachan?",
@@ -39,8 +39,8 @@ export const faqs: FAQItem[] = [
   },
   {
     q: "¿Cuál es el mínimo de compra?",
-    a: "El mínimo por producto es 1 kg. Puedes combinar varios productos para armar el pedido que quieras.",
-    aShort: "1 kg por producto. Puedes combinar varios.",
+    a: "El mínimo por producto es 1 kg (500 g en algunos productos como Chuby Bardú). Puedes combinar varios productos para armar el pedido que quieras.",
+    aShort: "1 kg por producto (500 g en algunos). Puedes combinar varios.",
   },
   {
     q: "¿Puedo agregar más productos después de enviar el pedido?",

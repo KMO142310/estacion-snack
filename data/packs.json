@@ -5,13 +5,13 @@
     "name": "Pack Pica",
     "tagline": "1 kg de Mix Europeo + 1 kg de Tropical. Cada uno en su bolsa.",
     "badge": "Más pedido",
-    "price": 16990,
+    "price": 12000,
     "image_url": "/img/pack-pica.jpg",
     "image_webp_url": "/img/pack-pica.webp",
     "image_400_url": "/img/pack-pica-400.webp",
     "items": [
-      { "name": "Mix Europeo",             "productId": "1", "kg": 1, "pricePerKg": 13000 },
-      { "name": "Maní Confitado Tropical",  "productId": "2", "kg": 1, "pricePerKg": 5990  }
+      { "name": "Mix Europeo",             "productId": "1", "kg": 1, "pricePerKg": 9000  },
+      { "name": "Maní Confitado Tropical",  "productId": "2", "kg": 1, "pricePerKg": 5000  }
     ]
   },
   {
@@ -20,13 +20,13 @@
     "name": "Pack Dulce",
     "tagline": "1 kg de Chuby Bardú + 1 kg de gomitas. Cada uno en su bolsa.",
     "badge": null,
-    "price": 16490,
+    "price": 12990,
     "image_url": "/img/pack-dulce.jpg",
     "image_webp_url": "/img/pack-dulce.webp",
     "image_400_url": "/img/pack-dulce-400.webp",
     "items": [
-      { "name": "Chuby Bardú",         "productId": "4", "kg": 1, "pricePerKg": 9990  },
-      { "name": "Gomita Osito Docile",  "productId": "5", "kg": 1, "pricePerKg": 8500  }
+      { "name": "Chuby Bardú",         "productId": "4", "kg": 1, "pricePerKg": 8000  },
+      { "name": "Gomita Osito Docile",  "productId": "5", "kg": 1, "pricePerKg": 7000  }
     ]
   },
   {
@@ -35,13 +35,13 @@
     "name": "Pack Clásico",
     "tagline": "Almendra entera + Mix Europeo. 1 kg de cada uno.",
     "badge": "Mejor ahorro",
-    "price": 25990,
+    "price": 18990,
     "image_url": "/img/mix-europeo-x-kilo.jpg",
     "image_webp_url": "/img/mix-europeo-x-kilo.webp",
     "image_400_url": "/img/mix-europeo-x-kilo-400.webp",
     "items": [
-      { "name": "Almendra Entera", "productId": "6", "kg": 1, "pricePerKg": 14990 },
-      { "name": "Mix Europeo",     "productId": "1", "kg": 1, "pricePerKg": 13000 }
+      { "name": "Almendra Entera", "productId": "6", "kg": 1, "pricePerKg": 13000 },
+      { "name": "Mix Europeo",     "productId": "1", "kg": 1, "pricePerKg": 9000  }
     ]
   }
 ]

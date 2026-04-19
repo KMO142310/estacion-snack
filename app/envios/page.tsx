@@ -7,7 +7,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Envíos y despacho",
   description:
-    "Despachamos martes a sábado en Marchigüe, Peralillo, Santa Cruz y Cunaco. Envío gratis sobre $25.000.",
+    "Despachamos martes a sábado en Santa Cruz, Palmilla, Peralillo y Marchigüe. Retiro en local gratis. Envío gratis sobre $25.000.",
   alternates: { canonical: "/envios" },
   openGraph: {
     title: "Envíos y despacho · Estación Snack",
@@ -25,10 +25,11 @@ const breadcrumbJsonLd = {
 };
 
 const zonas = [
-  { nombre: "Marchigüe", desc: "Envío $3.000. Gratis sobre $25.000." },
-  { nombre: "Peralillo", desc: "Envío $3.000. Gratis sobre $25.000." },
-  { nombre: "Santa Cruz", desc: "Envío $2.000. Gratis sobre $25.000." },
-  { nombre: "Cunaco", desc: "Envío $3.000. Gratis sobre $25.000." },
+  { nombre: "Retiro en local", desc: "Gratis siempre." },
+  { nombre: "Santa Cruz", desc: "Envío $1.000. Gratis sobre $25.000." },
+  { nombre: "Palmilla", desc: "Envío $2.000. Gratis sobre $25.000." },
+  { nombre: "Peralillo", desc: "Envío $2.000. Gratis sobre $25.000." },
+  { nombre: "Marchigüe", desc: "Envío $2.000. Gratis sobre $25.000." },
 ];
 
 export default function EnviosPage() {
@@ -128,7 +129,7 @@ export default function EnviosPage() {
             }}
           >
             <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.375rem" }}>
-              ¿Vivís fuera de estas comunas?
+              ¿Vives fuera de estas comunas?
             </p>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9rem", color: "#5E6B3E", lineHeight: 1.65 }}>
               Escríbenos por{" "}

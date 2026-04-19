@@ -28,18 +28,25 @@ export default function Header({ onOrderOpen }: HeaderProps) {
 
   return (
     <header style={{
-      background: "#5A1F1A",
-      paddingLeft: 20,
-      paddingRight: "max(20px, env(safe-area-inset-right, 0px))",
-      height: 70,
+      background: "rgba(90,31,26,0.96)",
+      paddingLeft: 16,
+      paddingRight: "max(16px, env(safe-area-inset-right, 0px))",
+      height: 68,
       display: "flex", alignItems: "center", justifyContent: "space-between",
-      boxShadow: scrolled ? "0 2px 16px rgba(18,5,3,0.25)" : "none",
+      boxShadow: scrolled ? "0 10px 28px rgba(18,5,3,0.18)" : "none",
+      backdropFilter: "blur(18px)",
+      WebkitBackdropFilter: "blur(18px)",
+      borderBottom: "1px solid rgba(244,234,219,0.08)",
     }}>
-      <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 12 }}>
-        <img src="/img/logo-icon.svg" alt="" width={44} height={44} style={{ borderRadius: 12 }} />
-        <span style={{ fontFamily: "var(--font-display)", fontSize: 22, letterSpacing: "-0.01em", lineHeight: 1 }}>
-          <span style={{ fontWeight: 700, color: "#F4EADB" }}>Estación </span>
-          <span style={{ fontWeight: 500, color: "rgba(244,234,219,0.75)" }}>Snack</span>
+      <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
+        <img src="/img/logo-icon.svg" alt="" width={40} height={40} style={{ borderRadius: 12, flexShrink: 0 }} />
+        <span style={{ minWidth: 0 }}>
+          <span style={{ display: "block", fontFamily: "var(--font-display)", fontSize: 21, letterSpacing: "-0.02em", lineHeight: 0.95, color: "#F4EADB", fontWeight: 600 }}>
+            Estación Snack
+          </span>
+          <span style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 9, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(244,234,219,0.62)", marginTop: 4 }}>
+            Frutos secos por kilo
+          </span>
         </span>
       </a>
 
@@ -49,14 +56,26 @@ export default function Header({ onOrderOpen }: HeaderProps) {
         whileTap={reducedMotion ? undefined : { scale: 0.94 }}
         transition={spring.press}
         style={{
-          position: "relative", width: 48, height: 48,
-          background: "rgba(244,234,219,0.14)", color: "#F4EADB",
-          borderRadius: 14, display: "flex", alignItems: "center", justifyContent: "center",
+          position: "relative",
+          minWidth: 50,
+          height: 44,
+          padding: "0 13px",
+          background: "rgba(244,234,219,0.10)",
+          color: "#F4EADB",
+          borderRadius: 999,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 8,
           border: "none", cursor: "pointer",
           WebkitTapHighlightColor: "transparent",
+          flexShrink: 0,
         }}
       >
         <ShoppingBag size={22} />
+        <span style={{ fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+          Pedido
+        </span>
         <AnimatePresence>
           {itemCount > 0 && (
             <motion.span

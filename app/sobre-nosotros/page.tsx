@@ -49,7 +49,7 @@ export default function SobreNosotrosPage() {
           {/* Hero */}
           <div style={{ maxWidth: 680, marginBottom: "4rem" }}>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.14em", color: "#A8411A", marginBottom: "0.75rem", fontVariantNumeric: "tabular-nums" }}>
-              Km 35,5 · Bitácora
+              Nuestra historia
             </p>
             <h1
               style={{
@@ -61,64 +61,10 @@ export default function SobreNosotrosPage() {
                 marginBottom: "1.25rem",
               }}
             >
-              Del andén a tu mesa.
+              Lo que hacemos y por qué.
             </h1>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "1.0625rem", lineHeight: 1.75, color: "#5E6B3E" }}>
-              Estación Snack es una venta directa de frutos secos y dulces por WhatsApp, desde Santa Cruz, Valle de Colchagua. El nombre toma prestada la referencia histórica al km 35,5 del antiguo Ramal San Fernando–Pichilemu, como guiño al territorio. No operamos en la estación ni tenemos vínculo con EFE.
-            </p>
-          </div>
-
-          {/* Bitácora histórica — hechos verificados del ramal */}
-          <div style={{
-            background: "#fff",
-            border: "1.5px solid rgba(90,31,26,0.1)",
-            borderRadius: 16,
-            padding: "2rem 1.75rem",
-            marginBottom: "4rem",
-            maxWidth: 680,
-          }}>
-            <p style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.6875rem",
-              fontWeight: 700,
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: "#A8411A",
-              marginBottom: "1rem",
-              fontVariantNumeric: "tabular-nums",
-            }}>
-              Bitácora del Ramal
-            </p>
-            <ul style={{
-              listStyle: "none",
-              padding: 0,
-              margin: 0,
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.75rem",
-              fontFamily: "var(--font-body)",
-              fontSize: "0.9375rem",
-              lineHeight: 1.5,
-              color: "#5A1F1A",
-              fontVariantNumeric: "tabular-nums",
-            }}>
-              <li><strong style={{ display: "inline-block", width: 64, color: "#A8411A", fontWeight: 700 }}>1870</strong>Ley que autoriza la construcción del Ramal San Fernando–Pichilemu.</li>
-              <li><strong style={{ display: "inline-block", width: 64, color: "#A8411A", fontWeight: 700 }}>1909</strong>La parada &ldquo;Las Trancas&rdquo; pasa a llamarse Estación Paniahue.</li>
-              <li><strong style={{ display: "inline-block", width: 64, color: "#A8411A", fontWeight: 700 }}>1926</strong>Inauguración del tramo completo hasta Pichilemu.</li>
-              <li><strong style={{ display: "inline-block", width: 64, color: "#A8411A", fontWeight: 700 }}>1934</strong>Paniahue se rebautiza Estación Santa Cruz.</li>
-              <li><strong style={{ display: "inline-block", width: 64, color: "#A8411A", fontWeight: 700 }}>1986</strong>Último tren de pasajeros. El ramal cierra al público.</li>
-              <li><strong style={{ display: "inline-block", width: 64, color: "#A8411A", fontWeight: 700 }}>2004</strong>Vuelve parcialmente como Tren del Vino.</li>
-              <li><strong style={{ display: "inline-block", width: 64, color: "#A8411A", fontWeight: 700 }}>2010</strong>Último servicio. El terremoto lo detiene para siempre.</li>
-              <li><strong style={{ display: "inline-block", width: 64, color: "#A8411A", fontWeight: 700 }}>Hoy</strong>Estación Snack: venta directa de frutos secos por WhatsApp, sin relación con la estación ni con EFE.</li>
-            </ul>
-            <p style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.6875rem",
-              color: "rgba(90,31,26,0.55)",
-              marginTop: "1.25rem",
-              lineHeight: 1.5,
-            }}>
-              Fuente: Museo Ramal San Fernando–Pichilemu, EFE Cultura, Memoria Chilena. Este negocio no opera en la estación histórica ni tiene vínculo con EFE — solo toma prestada la idea del km 35,5 como punto de partida.
+              Estación Snack es una venta directa de frutos secos y dulces por WhatsApp, desde Santa Cruz, Valle de Colchagua. Elegimos trabajar simple: buen producto, respuesta humana y despacho local.
             </p>
           </div>
 

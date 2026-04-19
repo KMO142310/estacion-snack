@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, type ReactNode } from "react";
+import Announce from "./Announce";
 import Header from "./Header";
 import Footer from "./Footer";
 import OrderSheet from "./OrderSheet";
@@ -19,7 +20,10 @@ export default function StaticLayout({ children }: Props) {
 
   return (
     <>
-      <Header onOrderOpen={() => setOrderOpen(true)} />
+      <div style={{ position: "sticky", top: 0, zIndex: 200 }}>
+        <Announce />
+        <Header onOrderOpen={() => setOrderOpen(true)} />
+      </div>
       {children}
       <Footer />
       <OrderSheet open={orderOpen} onClose={() => setOrderOpen(false)} />

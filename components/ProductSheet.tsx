@@ -17,6 +17,7 @@ interface Product {
   slug: string;
   name: string;
   price: number;
+  stock_kg: number;
   image_webp_url: string;
   image_url: string;
   copy: string;
@@ -39,10 +40,14 @@ export default function ProductSheet({ product, onClose }: Props) {
 
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
+  const items = useCartStore((s) => s.items);
   const setOrderOpen = useCartStore((s) => s.setOrderOpen);
 
   const selectedQty = selectedChip ?? customQty;
   const price = product.price * selectedQty;
+  const currentQty = items.find((item) => item.kind === "product" && item.id === product.id)?.qty ?? 0;
+  const remainingQty = Math.max(0, product.stock_kg - currentQty);
+  const exceedsStock = selectedQty > remainingQty;
 
   // Lock body scroll when sheet open
   useEffect(() => {
@@ -59,10 +64,11 @@ export default function ProductSheet({ product, onClose }: Props) {
   }, [onClose]);
 
   const handleChipSelect = useCallback((kg: number) => {
+    if (kg > remainingQty) return;
     hapticLight();
     setSelectedChip(kg);
     setShowStepper(false);
-  }, []);
+  }, [remainingQty]);
 
   const handleStepperToggle = useCallback(() => {
     hapticLight();
@@ -71,21 +77,25 @@ export default function ProductSheet({ product, onClose }: Props) {
     setCustomQty(product.min_unit_kg);
   }, [product.min_unit_kg]);
 
-  const stepQty = 1; // kilos enteros
+  const stepQty = product.min_unit_kg;
 
   const stepDown = () => {
-    const next = Math.max(product.min_unit_kg, customQty - stepQty);
+    const next = Math.max(product.min_unit_kg, +(customQty - stepQty).toFixed(3));
     setCustomQty(next);
     hapticLight();
   };
 
   const stepUp = () => {
-    setCustomQty(customQty + stepQty);
+    setCustomQty(Math.min(remainingQty, +(customQty + stepQty).toFixed(3)));
     hapticLight();
   };
 
   const handleAdd = async () => {
     if (adding) return;
+    if (remainingQty < product.min_unit_kg || exceedsStock) {
+      addToast(`Quedan ${Math.max(remainingQty, 0).toLocaleString("es-CL")} kg disponibles`, "info");
+      return;
+    }
     setAdding(true);
     hapticSuccess();
 
@@ -297,6 +307,7 @@ export default function ProductSheet({ product, onClose }: Props) {
                 <button
                   key={kg}
                   onClick={() => handleChipSelect(kg)}
+                  disabled={kg > remainingQty}
                   aria-pressed={isSelected}
                   style={{
                     fontFamily: "var(--font-body)",
@@ -306,10 +317,11 @@ export default function ProductSheet({ product, onClose }: Props) {
                     borderRadius: "9999px",
                     border: `2px solid ${isSelected ? "#A8411A" : "rgba(90,31,26,0.15)"}`,
                     background: isSelected ? "#A8411A" : "transparent",
-                    color: isSelected ? "#F4EADB" : "#5A1F1A",
-                    cursor: "pointer",
+                    color: kg > remainingQty ? "rgba(90,31,26,0.28)" : isSelected ? "#F4EADB" : "#5A1F1A",
+                    cursor: kg > remainingQty ? "not-allowed" : "pointer",
                     transition: "all 0.15s ease",
                     WebkitTapHighlightColor: "transparent",
+                    opacity: kg > remainingQty ? 0.55 : 1,
                   }}
                 >
                   {fmtKg(kg)}
@@ -400,24 +412,25 @@ export default function ProductSheet({ product, onClose }: Props) {
                         marginTop: "2px",
                       }}
                     >
-                      Mínimo: {fmtKg(product.min_unit_kg)} · Kilos enteros
+                      Mínimo: {fmtKg(product.min_unit_kg)}
                     </p>
                   </div>
 
                   <button
                     onClick={stepUp}
+                    disabled={customQty >= remainingQty}
                     aria-label="Más"
                     style={{
                       width: 40,
                       height: 40,
                       borderRadius: "50%",
-                      background: "#5A1F1A",
-                      color: "#F4EADB",
+                      background: customQty >= remainingQty ? "rgba(90,31,26,0.08)" : "#5A1F1A",
+                      color: customQty >= remainingQty ? "#5A1F1A80" : "#F4EADB",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       border: "none",
-                      cursor: "pointer",
+                      cursor: customQty >= remainingQty ? "not-allowed" : "pointer",
                       flexShrink: 0,
                     }}
                   >
@@ -427,6 +440,13 @@ export default function ProductSheet({ product, onClose }: Props) {
               </motion.div>
             )}
           </AnimatePresence>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 12, color: exceedsStock ? "#B74432" : "#5E6B3E", lineHeight: 1.5, marginTop: 12 }}>
+            {remainingQty <= 0
+              ? "Ya no queda stock disponible para agregar."
+              : exceedsStock
+                ? `Solo quedan ${fmtKg(remainingQty)} disponibles en este momento.`
+                : `Disponibles ahora: ${fmtKg(remainingQty)}.`}
+          </p>
         </div>
 
         {/* Precio en tiempo real + CTA */}
@@ -453,7 +473,7 @@ export default function ProductSheet({ product, onClose }: Props) {
                 fontWeight: 500,
               }}
             >
-              {fmtKg(selectedQty)} · {fmt(product.price)}/kg · {fmt(Math.round(product.price / 10))}/100 g
+              {fmtKg(selectedQty)} · {fmt(product.price)}/kg
             </p>
             <p
               style={{
@@ -471,24 +491,28 @@ export default function ProductSheet({ product, onClose }: Props) {
           {/* Botón agregar */}
           <button
             onClick={handleAdd}
-            disabled={adding}
+            disabled={adding || remainingQty < product.min_unit_kg || exceedsStock}
             style={{
               fontFamily: "var(--font-body)",
               fontWeight: 600,
               fontSize: "1rem",
               color: "#F4EADB",
-              background: adding ? "#A84019" : "#A8411A",
+              background: adding ? "#A84019" : remainingQty < product.min_unit_kg || exceedsStock ? "#C0B0A8" : "#A8411A",
               border: "none",
               borderRadius: "12px",
               padding: "0.875rem 1.5rem",
-              cursor: adding ? "not-allowed" : "pointer",
+              cursor: adding || remainingQty < product.min_unit_kg || exceedsStock ? "not-allowed" : "pointer",
               transition: "background 0.15s, transform 0.1s",
               transform: adding ? "scale(0.97)" : "scale(1)",
               whiteSpace: "nowrap",
               WebkitTapHighlightColor: "transparent",
             }}
           >
-            {adding ? "Agregando..." : "Agregar al pedido"}
+            {remainingQty < product.min_unit_kg
+              ? "Sin stock"
+              : exceedsStock
+                ? "Ajusta la cantidad"
+                : adding ? "Agregando..." : "Agregar al pedido"}
           </button>
         </div>
       </motion.div>

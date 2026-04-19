@@ -1,241 +1,294 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import productsData from "@/data/products.json";
-import KmStone from "./icons/KmStone";
+import { fmt } from "@/lib/cart-utils";
 
 interface HeroProps {
   onOrderOpen: () => void;
 }
 
-const HERO_IMAGES = productsData.map((p) => p.image_webp_url);
-const ROTATE_MS = 8000;
+const heroProducts = productsData.slice(0, 3);
 
-/**
- * Hero tipográfico. La marca ES el hero — las fotos son textura detrás.
- * Estructura editorial: ubicación / marca-monumento / verso poético / acción.
- * Inspiración: etiquetas de vino Valle de Colchagua (Lapostolle, Casa Silva),
- * Aesop Reading Room, Flamingo Estate "Newest Release" banners.
- */
 export default function Hero({ onOrderOpen }: HeroProps) {
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const reducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (HERO_IMAGES.length <= 1) return;
-    if (reducedMotion) return;
-    if (paused) return;
-    const id = setInterval(() => {
-      setIndex((i) => (i + 1) % HERO_IMAGES.length);
-    }, ROTATE_MS);
-    return () => clearInterval(id);
-  }, [paused, reducedMotion]);
+  const lead = heroProducts[0];
+  const accents = heroProducts.slice(1);
 
   return (
     <section
       aria-label="Inicio"
-      className="h-screen-hero"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
       style={{
-        position: "relative",
-        overflow: "hidden",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        textAlign: "center",
+        background: "linear-gradient(180deg, #F7F0E4 0%, #F4EADB 100%)",
+        padding: "1.35rem 16px 2.4rem",
       }}
     >
-      {/* Fondo rotativo — textura, no protagonista */}
-      <AnimatePresence initial={false}>
-        <motion.div
-          key={HERO_IMAGES[index]}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
-          style={{ position: "absolute", inset: 0 }}
-          aria-hidden="true"
-        >
-          <Image
-            src={HERO_IMAGES[index]}
-            alt=""
-            fill
-            priority={index === 0}
-            sizes="100vw"
-            style={{ objectFit: "cover", objectPosition: "center 35%" }}
-          />
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Overlay profundo — la marca domina, la foto insinúa */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(180deg, rgba(90,31,26,0.55) 0%, rgba(90,31,26,0.80) 100%)",
-          zIndex: 1,
-        }}
-      />
-
-      {/* Contenido editorial */}
-      <div
-        style={{
-          position: "relative",
-          zIndex: 10,
-          padding: "2rem 1.5rem",
-          width: "100%",
-          maxWidth: 800,
-        }}
-      >
-        {/* Hito kilométrico SVG como motivo signature + label geográfica.
-            Marca visual que conecta con el Ramal S.F.–Pichilemu (km 35,5 = Estación Santa Cruz). */}
-        <div style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", marginBottom: "1.5rem", gap: "0.875rem" }}>
-          <KmStone size={72} ariaLabel="Kilómetro 35,5, Estación Santa Cruz" />
+      <div className="container hero-shell">
+        <div style={{ maxWidth: 520 }}>
           <p
             style={{
               fontFamily: "var(--font-body)",
-              color: "rgba(244,234,219,0.72)",
-              fontSize: "0.7rem",
-              fontWeight: 600,
-              letterSpacing: "0.22em",
+              color: "#A8411A",
+              fontSize: "0.74rem",
+              fontWeight: 700,
+              letterSpacing: "0.18em",
               textTransform: "uppercase",
-              margin: 0,
-              fontVariantNumeric: "tabular-nums",
+              margin: "0 0 1rem",
             }}
           >
-            Santa Cruz · Valle de Colchagua
+            Santa Cruz · Frutos secos por kilo
           </p>
-        </div>
 
-        {/* Marca-monumento */}
-        <h1
-          style={{
-            fontFamily: "var(--font-display)",
-            fontStyle: "italic",
-            color: "#F4EADB",
-            fontWeight: 500,
-            fontSize: "clamp(3.5rem, 14vw, 7.5rem)",
-            lineHeight: 0.92,
-            letterSpacing: "-0.04em",
-            marginBottom: "0.25rem",
-          }}
-        >
-          Estación
-        </h1>
-        <h1
-          style={{
-            fontFamily: "var(--font-display)",
-            fontStyle: "italic",
-            color: "#F4EADB",
-            fontWeight: 500,
-            fontSize: "clamp(3.5rem, 14vw, 7.5rem)",
-            lineHeight: 0.92,
-            letterSpacing: "-0.04em",
-            marginBottom: "1.75rem",
-          }}
-        >
-          Snack.
-        </h1>
-
-        {/* Ornamento editorial */}
-        <p
-          aria-hidden="true"
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "1.25rem",
-            color: "rgba(244,234,219,0.6)",
-            letterSpacing: "0.5em",
-            marginBottom: "1.25rem",
-          }}
-        >
-          · · ·
-        </p>
-
-        {/* Verso */}
-        <p
-          style={{
-            fontFamily: "var(--font-display)",
-            fontStyle: "italic",
-            fontWeight: 400,
-            color: "rgba(244,234,219,0.92)",
-            fontSize: "clamp(1rem, 2.8vw, 1.375rem)",
-            lineHeight: 1.4,
-            marginBottom: "2.5rem",
-            maxWidth: 480,
-            marginInline: "auto",
-          }}
-        >
-          Frutos secos y dulces del valle.
-          <br />
-          De los que se acaban antes que la conversación.
-        </p>
-
-        {/* Acción */}
-        <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", justifyContent: "center" }}>
-          <a
-            href="#productos"
+          <h1
             style={{
-              fontFamily: "var(--font-body)",
+              fontFamily: "var(--font-display)",
+              color: "#5A1F1A",
               fontWeight: 600,
-              fontSize: "0.9375rem",
-              color: "#F4EADB",
-              background: "#A8411A",
-              border: "none",
-              borderRadius: "10px",
-              padding: "0.875rem 1.75rem",
-              cursor: "pointer",
-              WebkitTapHighlightColor: "transparent",
-              textDecoration: "none",
+              fontSize: "clamp(2.7rem, 9vw, 5.4rem)",
+              lineHeight: 0.94,
+              letterSpacing: "-0.05em",
+              marginBottom: "0.85rem",
             }}
           >
-            Ver las mezclas
-          </a>
-          <button
-            onClick={onOrderOpen}
+            Compra rico.
+            <br />
+            Pide simple.
+          </h1>
+
+          <p
+            style={{
+              fontFamily: "var(--font-display)",
+              fontStyle: "italic",
+              fontWeight: 400,
+              color: "#5E6B3E",
+              fontSize: "clamp(1.02rem, 2.8vw, 1.35rem)",
+              lineHeight: 1.4,
+              marginBottom: "0.85rem",
+              maxWidth: 460,
+            }}
+          >
+            Mezclas, frutos secos, dulces y packs listos para cerrar por WhatsApp.
+          </p>
+
+          <p
             style={{
               fontFamily: "var(--font-body)",
-              fontWeight: 500,
-              fontSize: "0.9375rem",
-              color: "#F4EADB",
-              background: "transparent",
-              border: "1px solid rgba(244,234,219,0.35)",
-              borderRadius: "10px",
-              padding: "0.875rem 1.75rem",
-              cursor: "pointer",
-              WebkitTapHighlightColor: "transparent",
+              fontWeight: 400,
+              color: "rgba(90,31,26,0.78)",
+              fontSize: "0.98rem",
+              lineHeight: 1.65,
+              marginBottom: "1.35rem",
+              maxWidth: 480,
             }}
           >
-            Pedir por WhatsApp
-          </button>
+            Lo mejor del catálogo primero. Sin vueltas, sin registro raro y con despacho local de martes a sábado.
+          </p>
+
+          <div className="hero-meta">
+            {["Desde 1 kg", "Santa Cruz y alrededores", "Pago al recibir"].map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+
+          <div className="hero-cta-grid" style={{ marginTop: "1.35rem" }}>
+            <a href="#productos" className="hero-primary-cta">
+              Ver productos
+              <span aria-hidden="true">→</span>
+            </a>
+            <button onClick={onOrderOpen} className="hero-secondary-cta">
+              Abrir pedido
+              <span aria-hidden="true">↗</span>
+            </button>
+          </div>
         </div>
 
-        {/* Expectativa del flujo — setea que el checkout es por WhatsApp y
-            que hay respuesta en el día, antes de que el usuario descubra la
-            mecánica recién al tocar confirmar. */}
-        <p
-          style={{
-            fontFamily: "var(--font-body)",
-            fontSize: "0.7rem",
-            fontWeight: 600,
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: "rgba(244,234,219,0.6)",
-            marginTop: "1.5rem",
-            fontVariantNumeric: "tabular-nums",
-          }}
-        >
-          Pedido por WhatsApp · Respuesta el mismo día
-        </p>
+        <div className="hero-stage">
+          <article className="hero-lead-card">
+            <div className="hero-lead-image">
+              <Image
+                src={lead.image_webp_url}
+                alt={lead.name}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                style={{ objectFit: "cover" }}
+              />
+            </div>
+            <div className="hero-lead-copy">
+              <p className="hero-kicker">Más pedido</p>
+              <div>
+                <h2>{lead.name}</h2>
+                <p>{fmt(lead.price)} · 1 kg</p>
+              </div>
+            </div>
+          </article>
+
+          <div className="hero-mini-grid">
+            {accents.map((product) => (
+              <article key={product.id} className="hero-mini-card">
+                <div className="hero-mini-image">
+                  <Image
+                    src={product.image_webp_url}
+                    alt={product.name}
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 18vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+                <div>
+                  <p>{product.name}</p>
+                  <span>{fmt(product.price)}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
       </div>
+
+      <style>{`
+        .hero-shell {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr);
+          gap: 1.35rem;
+          align-items: center;
+        }
+        .hero-meta {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.6rem;
+        }
+        .hero-meta span {
+          padding: 0.5rem 0.8rem;
+          border-radius: 999px;
+          border: 1px solid rgba(90,31,26,0.12);
+          background: rgba(255,249,241,0.84);
+          color: #5A1F1A;
+          font-family: var(--font-body);
+          font-size: 0.78rem;
+          font-weight: 600;
+        }
+        .hero-cta-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 0.75rem;
+          max-width: 430px;
+        }
+        .hero-primary-cta,
+        .hero-secondary-cta {
+          font-family: var(--font-body);
+          font-size: 0.95rem;
+          border-radius: 14px;
+          padding: 1rem 1.2rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          min-height: 54px;
+        }
+        .hero-primary-cta {
+          font-weight: 700;
+          color: #F4EADB;
+          background: #A8411A;
+          box-shadow: 0 12px 30px rgba(168,65,26,0.22);
+        }
+        .hero-secondary-cta {
+          font-weight: 600;
+          color: #5A1F1A;
+          background: rgba(255,249,241,0.86);
+          border: 1px solid rgba(90,31,26,0.14);
+        }
+        .hero-stage {
+          display: grid;
+          gap: 0.8rem;
+        }
+        .hero-lead-card {
+          background: #FFF9F1;
+          border-radius: 26px;
+          overflow: hidden;
+          border: 1px solid rgba(90,31,26,0.08);
+          box-shadow: 0 22px 44px rgba(90,31,26,0.08);
+        }
+        .hero-lead-image {
+          position: relative;
+          aspect-ratio: 4 / 4.1;
+          background: #EDE4D6;
+        }
+        .hero-lead-copy {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 1rem;
+          padding: 1rem 1rem 1.1rem;
+        }
+        .hero-kicker {
+          font-family: var(--font-body);
+          font-size: 0.68rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.14em;
+          color: #A8411A;
+        }
+        .hero-lead-copy h2 {
+          font-family: var(--font-display);
+          font-size: 1.35rem;
+          font-weight: 600;
+          line-height: 1.05;
+          color: #5A1F1A;
+          margin-bottom: 0.2rem;
+        }
+        .hero-lead-copy p:last-child {
+          font-family: var(--font-body);
+          font-size: 0.82rem;
+          color: #5E6B3E;
+          font-weight: 600;
+        }
+        .hero-mini-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.75rem;
+        }
+        .hero-mini-card {
+          display: grid;
+          grid-template-columns: 84px minmax(0, 1fr);
+          gap: 0.7rem;
+          align-items: center;
+          background: rgba(255,249,241,0.72);
+          border: 1px solid rgba(90,31,26,0.08);
+          border-radius: 20px;
+          padding: 0.7rem;
+        }
+        .hero-mini-image {
+          position: relative;
+          aspect-ratio: 1 / 1;
+          border-radius: 14px;
+          overflow: hidden;
+          background: #EDE4D6;
+        }
+        .hero-mini-card p {
+          font-family: var(--font-display);
+          font-size: 0.94rem;
+          line-height: 1.08;
+          color: #5A1F1A;
+          font-weight: 600;
+          margin-bottom: 0.25rem;
+        }
+        .hero-mini-card span {
+          font-family: var(--font-body);
+          font-size: 0.78rem;
+          color: #5E6B3E;
+          font-weight: 600;
+        }
+        @media (min-width: 640px) {
+          .hero-cta-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
+        @media (min-width: 1024px) {
+          .hero-shell {
+            grid-template-columns: minmax(0, 1.02fr) minmax(420px, 0.98fr);
+            gap: 2.5rem;
+          }
+        }
+      `}</style>
     </section>
   );
 }

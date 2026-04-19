@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Announce from "@/components/Announce";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import OrderSheet from "@/components/OrderSheet";
@@ -32,13 +33,22 @@ export default function ProductDetail({ product, related }: Props) {
 
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
+  const items = useCartStore((s) => s.items);
 
   const chips = getChips(product.min_unit_kg ?? 1);
+  const minQty = product.min_unit_kg ?? 1;
   const isOut = product.status === "agotado";
+  const currentQty = items.find((item) => item.kind === "product" && item.id === product.id)?.qty ?? 0;
+  const remainingQty = Math.max(0, product.stock_kg - currentQty);
+  const exceedsStock = selectedQty > remainingQty;
   const price = product.price * selectedQty;
 
   const handleAdd = async () => {
     if (adding || isOut) return;
+    if (remainingQty < minQty || exceedsStock) {
+      addToast(`Quedan ${Math.max(remainingQty, 0).toLocaleString("es-CL")} kg disponibles`, "info");
+      return;
+    }
     setAdding(true);
     // haptic orchestration en StampButton (chip + stamp)
     addItem({ kind: "product", id: product.id, qty: selectedQty, name: product.name, pricePerUnit: product.price });
@@ -50,7 +60,10 @@ export default function ProductDetail({ product, related }: Props) {
 
   return (
     <>
-      <Header onOrderOpen={() => setOrderOpen(true)} />
+      <div style={{ position: "sticky", top: 0, zIndex: 200 }}>
+        <Announce />
+        <Header onOrderOpen={() => setOrderOpen(true)} />
+      </div>
       <main style={{ paddingTop: 24, paddingBottom: 80 }}>
         <div className="wrap">
           {/* Breadcrumb */}
@@ -76,19 +89,6 @@ export default function ProductDetail({ product, related }: Props) {
             {/* Info */}
             <div>
               <p style={{ fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#5E6B3E", marginBottom: 8 }}>{product.cat_label}</p>
-              {product.occasion && (
-                <p style={{
-                  fontFamily: "var(--font-display)",
-                  fontStyle: "italic",
-                  fontWeight: 500,
-                  fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
-                  color: "#5E6B3E",
-                  lineHeight: 1.35,
-                  marginBottom: 10,
-                }}>
-                  {product.occasion}
-                </p>
-              )}
               <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(1.75rem, 5vw, 3rem)", color: "#5A1F1A", lineHeight: 1.1, marginBottom: 16 }}>
                 {product.name}
               </h1>
@@ -139,30 +139,38 @@ export default function ProductDetail({ product, related }: Props) {
                       style={{ color: "#5A1F1A", fontFamily: "var(--font-display)", fontSize: "1.125rem", fontWeight: 700 }}
                     />
                   </p>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: 12, color: exceedsStock ? "#B74432" : "rgba(94,107,62,0.78)", marginTop: 8 }}>
+                    {remainingQty <= 0
+                      ? "Este producto ya no tiene kilos disponibles para agregar."
+                      : exceedsStock
+                        ? `Solo quedan ${fmtKg(remainingQty)} disponibles.`
+                        : `Disponibles ahora: ${fmtKg(remainingQty)}.`}
+                  </p>
                 </div>
               )}
 
               {/* CTA — StampButton: press + ink-bleed (railway dopamine, Schultz 1997) */}
               <StampButton
                 onClick={handleAdd}
-                disabled={isOut || adding}
+                disabled={isOut || adding || remainingQty < minQty || exceedsStock}
                 size="lg"
-                style={{ maxWidth: 360, background: isOut ? "#C0B0A8" : undefined }}
+                style={{ maxWidth: 360, background: isOut || remainingQty < minQty || exceedsStock ? "#C0B0A8" : undefined }}
               >
-                {isOut ? "Agotado" : adding ? "Agregando..." : `Agregar ${fmtKg(selectedQty)} al pedido`}
+                {isOut
+                  ? "Agotado"
+                  : remainingQty < minQty
+                    ? "Sin stock disponible"
+                    : exceedsStock
+                      ? "Ajusta la cantidad"
+                      : adding ? "Agregando..." : `Agregar ${fmtKg(selectedQty)} al pedido`}
               </StampButton>
 
-              {/* Info despacho — formato de sello de estación */}
               <div style={{
                 marginTop: 20,
                 padding: "16px 18px",
                 background: "#fff",
                 border: "1.5px solid rgba(90,31,26,0.15)",
-                borderTop: "1px solid rgba(90,31,26,0.15)",
-                borderBottom: "1px solid rgba(90,31,26,0.15)",
-                outline: "3px double rgba(90,31,26,0.15)",
-                outlineOffset: "-7px",
-                borderRadius: 4,
+                borderRadius: 12,
                 fontFamily: "var(--font-body)",
                 fontSize: 13,
                 color: "#5A1F1A",
@@ -176,13 +184,13 @@ export default function ProductDetail({ product, related }: Props) {
                   color: "#A8411A",
                   marginBottom: 6,
                 }}>
-                  Itinerario · Km 35,5
+                  Despacho local
                 </p>
                 <p style={{ marginBottom: 2, fontWeight: 600 }}>
-                  Próxima salida: martes a sábado, 19:30–21:00
+                  Martes a sábado, 19:30–21:00
                 </p>
                 <p style={{ color: "#5E6B3E", fontSize: 12 }}>
-                  Cabeceras: Marchigüe · Peralillo · Santa Cruz · Cunaco. Coordinamos por WhatsApp.
+                  Santa Cruz · Palmilla · Peralillo · Marchigüe. Retiro en local gratis. Coordinamos por WhatsApp.
                 </p>
               </div>
             </div>

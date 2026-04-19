@@ -4,19 +4,19 @@
 
 export const FREE_SHIPPING_MIN = 25000;
 
-export const COMUNAS = ["Santa Cruz", "Peralillo", "Marchigüe", "Cunaco"] as const;
+export const COMUNAS = ["Retiro en local", "Santa Cruz", "Palmilla", "Peralillo", "Marchigüe"] as const;
 export type Comuna = (typeof COMUNAS)[number];
 
-export const COMUNA_DEFAULT: Comuna = "Santa Cruz";
-
-const SANTA_CRUZ_COST = 2000;
-const OTRAS_COST = 3000;
+export const COMUNA_DEFAULT: Comuna = "Retiro en local";
 
 /**
  * Calcula el costo de envío dado una comuna y subtotal del pedido.
+ * "Retiro en local" siempre es gratis.
  * Si el subtotal alcanza FREE_SHIPPING_MIN, el envío es 0.
  */
 export function getShippingCost(comuna: Comuna, subtotal: number): number {
+  if (comuna === "Retiro en local") return 0;
   if (subtotal >= FREE_SHIPPING_MIN) return 0;
-  return comuna === "Santa Cruz" ? SANTA_CRUZ_COST : OTRAS_COST;
+  if (comuna === "Santa Cruz") return 1000;
+  return 2000;
 }

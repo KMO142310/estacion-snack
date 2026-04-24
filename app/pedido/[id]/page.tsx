@@ -135,6 +135,8 @@ export default async function OrderPage({
   if (!safeEqual(order.access_token, token)) notFound();
 
   // TTL check: expired tokens are treated identically to wrong tokens.
+  // Server Component: Date.now() en el boundary del request, no en render de cliente.
+  // eslint-disable-next-line react-hooks/purity
   const now = Date.now();
   const expiresMs = new Date(order.access_token_expires_at).getTime();
   if (!Number.isFinite(expiresMs) || expiresMs <= now) notFound();

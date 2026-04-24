@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { fmt, fmtKg, fmtDisplayPrice } from "@/lib/cart-utils";
+import { fmtKg, fmtDisplayPrice } from "@/lib/cart-utils";
 import { useCartStore } from "@/lib/store";
 import StampButton from "./StampButton";
 

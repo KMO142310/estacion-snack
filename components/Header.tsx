@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import ShoppingBag from "./icons/ShoppingBag";
 import { useCartStore } from "@/lib/store";
@@ -16,6 +18,9 @@ export default function Header({ onOrderOpen }: HeaderProps) {
   const items = useCartStore((s) => s.items);
   const reducedMotion = useReducedMotion();
 
+  // setHydrated es intencionalmente síncrono post-rehydrate de Zustand persist.
+  // El flag evita hydration mismatch entre SSR (cart vacío) y cliente (cart de localStorage).
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setHydrated(true); useCartStore.persist.rehydrate(); }, []);
 
   useEffect(() => {
@@ -38,14 +43,14 @@ export default function Header({ onOrderOpen }: HeaderProps) {
       WebkitBackdropFilter: "blur(18px)",
       borderBottom: "1px solid rgba(244,234,219,0.08)",
     }}>
-      <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
-        <img src="/img/logo-icon.svg" alt="" width={40} height={40} style={{ borderRadius: 12, flexShrink: 0 }} />
+      <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
+        <Image src="/img/logo-icon.svg" alt="" width={40} height={40} style={{ borderRadius: 12, flexShrink: 0 }} />
         <span style={{ minWidth: 0 }}>
           <span style={{ display: "block", fontFamily: "var(--font-display)", fontSize: 22, letterSpacing: "-0.02em", lineHeight: 1, color: "#F4EADB", fontWeight: 700 }}>
             Estación Snack
           </span>
         </span>
-      </a>
+      </Link>
 
       <motion.button
         onClick={onOrderOpen}

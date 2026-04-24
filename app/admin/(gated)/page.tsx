@@ -2,14 +2,12 @@ import Link from "next/link";
 import {
   adminDashboardData,
   type AdminOrderRow,
-  type AdminCustomerRow,
 } from "@/lib/supabase/admin";
 import type { OrderStatus } from "@/lib/types";
 
 export const revalidate = 0;
 
 type OrderRow = AdminOrderRow;
-type CustomerRow = AdminCustomerRow;
 
 const fmt = (n: number) => "$" + n.toLocaleString("es-CL");
 const fmtDate = (d: string) =>

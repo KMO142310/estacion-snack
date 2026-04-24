@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 };
 
 const WA_LINK = "https://wa.me/56953743338?text=Hola!%20Tengo%20una%20consulta";
-const WA_PEDIDO = "https://wa.me/56953743338?text=Hola!%20Quiero%20hacer%20un%20pedido";
 
 const breadcrumbJsonLd = {
   "@context": "https://schema.org",

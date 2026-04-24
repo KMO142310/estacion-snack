@@ -130,7 +130,8 @@ export default function StockEditor({ products: initial }: Props) {
             }}
           >
             {/* Thumb */}
-            <div style={{ width: 48, height: 48, borderRadius: 10, overflow: "hidden", background: "#FFF3EC" }}>
+            <div style={{ position: "relative", width: 48, height: 48, borderRadius: 10, overflow: "hidden", background: "#FFF3EC", flexShrink: 0 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element -- admin panel, img.src es URL dinámica de Supabase storage sin dominio whitelisted */}
               <img src={p.image_url} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </div>
 

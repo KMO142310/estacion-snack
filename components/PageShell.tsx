@@ -11,7 +11,6 @@ import Header from "./Header";
 import Hero from "./Hero";
 import Benefits from "./Benefits";
 import ProductCard from "./ProductCard";
-import PackCard from "./PackCard";
 import PackSection from "./PackSection";
 import ComoFunciona from "./ComoFunciona";
 import Footer from "./Footer";
@@ -26,8 +25,6 @@ const ProductSheet = dynamic(() => import("./ProductSheet"), { ssr: false });
 const PackSheet = dynamic(() => import("./PackSheet"), { ssr: false });
 
 const products = productsData.slice().sort((a, b) => a.sort_order - b.sort_order);
-const nutsProducts = products.filter((p) => p.category === "frutos");
-const sweetProducts = products.filter((p) => p.category === "dulces");
 const packs = packsData as Pack[];
 const packProducts = productsData as unknown as ProductStock[];
 

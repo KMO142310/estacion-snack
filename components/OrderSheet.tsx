@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import FocusTrap from "focus-trap-react";
 import { useCartStore } from "@/lib/store";
-import { fmt, fmtKg } from "@/lib/cart-utils";
+import { fmtKg } from "@/lib/cart-utils";
 import { hapticChip, hapticWhistle } from "@/lib/haptics";
 import { buildWaUrl } from "@/lib/whatsapp";
 import { captureOrder } from "@/lib/actions";

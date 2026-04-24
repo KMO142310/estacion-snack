@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import FocusTrap from "focus-trap-react";
 import { useCartStore } from "@/lib/store";
 import { fmt, fmtKg } from "@/lib/cart-utils";
-import { computeSavings, totalKg, getPackAvailability, type Pack, type ProductStock } from "@/lib/pack-utils";
+import { computeSavings, getPackAvailability, type Pack, type ProductStock } from "@/lib/pack-utils";
 import { hapticSuccess } from "@/lib/haptics";
 import X from "./icons/X";
 
@@ -18,7 +18,6 @@ interface Props {
 export default function PackSheet({ pack, products, onClose }: Props) {
   const [adding, setAdding] = useState(false);
   const { sueltoTotal, savings } = computeSavings(pack);
-  const kg = totalKg(pack);
   const { units } = getPackAvailability(pack, products);
   const isLow = units > 0 && units <= 3;
 

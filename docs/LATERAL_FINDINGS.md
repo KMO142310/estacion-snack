@@ -237,3 +237,57 @@ consistente en:
 
 **Plan propuesto**: abrir plan `chore(docs): fix domain typo in CLAUDE.md`
 como commit independiente. Scope de 1 archivo, 1 línea.
+
+---
+
+## 2026-04-24 · LF-5 · business-info.ts con PII hard-coded shippea al cliente
+
+**Status**: open
+
+**Descubierto en**: polish pass 2026-04-24 (Bloque 1), al leer
+`lib/business-info.ts` para entender qué se puede usar en el Hero.
+
+**Impacto**: **bajo-medio**. El archivo contiene:
+
+- RUT del operador: `20.690.128-4`
+- Número de cuenta bancaria: `19823004262`
+- Banco + tipo de cuenta
+- Email personal
+
+El archivo está importado desde `lib/whatsapp.ts` (server action) pero
+también potencialmente desde componentes cliente (OrderSheet usa
+`buildWaUrl` que importa `WA` de este archivo). Esto puede llevar a que
+`BANK_INFO` termine en el bundle del cliente aunque no se use visualmente.
+
+**Evidencia**:
+
+```typescript
+// lib/business-info.ts:1-15
+export const WA = "56953743338";
+
+export const BANK_INFO = {
+  holder:        "Omar Alexis",
+  rut:           "20.690.128-4",
+  email:         "omar11kova@gmail.com",
+  bank:          "Banco Falabella",
+  accountType:   "Cuenta Corriente",
+  accountNumber: "19823004262",
+} as const;
+```
+
+**Mitigación posible**:
+1. Separar `business-info.ts` (público: `WA`) de `bank-info.ts` (server-only,
+   con `import "server-only"` en la primera línea).
+2. Mover `BANK_INFO` a env vars: `BANK_ACCOUNT_NUMBER`, `BANK_HOLDER_RUT`,
+   etc. Leídas solo en server actions que generen el mensaje de WhatsApp
+   con datos bancarios (cuando sea necesario).
+3. Status quo: los datos ya son visibles en WhatsApp de todas formas cuando
+   se confirma el pedido. El riesgo es exposición sin contexto (bots
+   scrapeando el bundle del sitio).
+
+**Plan propuesto**: revisar en próximo bloque de hardening si efectivamente
+`BANK_INFO` está en el client bundle (`next build` output + webpack-bundle-analyzer)
+antes de decidir entre (1) y (2). Si está, mover. Si no está (tree-shaken),
+dejar como está y documentar el invariant con un test o comentario.
+
+No urgente, no crítico. Abierto para tracking.

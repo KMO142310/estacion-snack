@@ -1,5 +1,44 @@
 # Arquitectura — Estación Snack
 
+## Containers (C4 nivel 2)
+
+```mermaid
+C4Container
+    title Containers — Estación Snack
+
+    Person(cliente, "Cliente", "Compra por kilo.")
+    Person(admin, "Operador", "Administra catálogo y pedidos.")
+
+    Container_Boundary(vercel, "Vercel") {
+      Container(web, "Next.js App", "Next 16 / React 19", "SSR + RSC + Server Actions + Static.")
+      Container(middleware, "Edge Middleware", "Next 16", "CSP nonce, security headers, rewrites.")
+      Container(cron, "Cron Function", "Vercel Cron", "Diariamente libera reservas expiradas.")
+    }
+
+    Container_Boundary(supa, "Supabase") {
+      ContainerDb(db, "PostgreSQL 16", "Postgres + RLS", "Tablas, funciones SECURITY DEFINER, audit log.")
+      Container(auth, "Supabase Auth", "magic-link", "Sesión cookie-based del admin.")
+      Container(storage, "Supabase Storage", "S3-compatible", "Imágenes de productos.")
+    }
+
+    System_Ext(wa, "WhatsApp", "Deep-link wa.me con mensaje pre-armado.")
+    System_Ext(resend, "Resend", "Email transaccional (contact form).")
+    System_Ext(analytics, "GA4 · Meta Pixel · Vercel Analytics", "RUM y product metrics.")
+
+    Rel(cliente, web, "HTTPS", "browser")
+    Rel(admin, web, "HTTPS + magic link cookie")
+    Rel(web, db, "supabase-js + RPC", "HTTPS")
+    Rel(web, auth, "signInWithOtp / getSession")
+    Rel(web, storage, "public read para imágenes de productos")
+    Rel(cron, db, "RPC fn_release_expired_reservations", "CRON_SECRET bearer")
+    Rel(web, wa, "Construye URL wa.me")
+    Rel(cliente, wa, "Envía pedido")
+    Rel(web, resend, "POST /emails")
+    Rel(web, analytics, "eventos")
+```
+
+---
+
 ## Stack
 
 ```

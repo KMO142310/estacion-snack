@@ -1,99 +1,103 @@
 const steps = [
-  {
-    number: "01",
-    title: "Eliges",
-    desc: "Abres la mezcla o el pack y agregas lo que quieres pedir.",
-  },
-  {
-    number: "02",
-    title: "Revisas",
-    desc: "La app arma el resumen y lo dejas listo para WhatsApp.",
-  },
-  {
-    number: "03",
-    title: "Confirmas",
-    desc: "Coordinamos despacho, horario y forma de pago contigo.",
-  },
+  { n: "01", title: "Eliges", desc: "Abres el catálogo y agregas lo que quieres." },
+  { n: "02", title: "Revisas", desc: "El resumen queda listo para WhatsApp." },
+  { n: "03", title: "Confirmas", desc: "Coordinamos despacho y forma de pago." },
 ];
 
 export default function ComoFunciona() {
   return (
-    <section aria-label="Cómo funciona" style={{ background: "#FFF9F1", padding: "4rem 16px" }}>
-      <div className="container">
-        <div style={{ maxWidth: 560, marginBottom: "2rem" }}>
-          <p style={{
-            fontFamily: "var(--font-body)",
-            fontSize: 11, fontWeight: 700,
-            letterSpacing: "0.14em", textTransform: "uppercase",
-            color: "#A8411A",
-            marginBottom: "0.75rem",
-          }}>
-            Cómo comprar
-          </p>
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: "clamp(1.75rem, 5vw, 2.4rem)",
-              color: "#5A1F1A",
-              lineHeight: 1.1,
-              letterSpacing: "-0.02em",
-            }}
-          >
-            Todo queda resuelto en tres pasos.
-          </h2>
-        </div>
+    <section aria-label="Cómo funciona" className="cf">
+      <div className="cf-inner">
+        <p className="cf-kicker">Cómo comprar</p>
+        <h2 className="cf-title">Tres pasos y listo.</h2>
 
-        <div className="how-grid">
-          {steps.map(({ number, title, desc }) => (
-            <article key={number} className="how-card">
-              <span className="how-number">{number}</span>
-              <p className="how-title">{title}</p>
-              <p className="how-desc">{desc}</p>
-            </article>
+        <div className="cf-steps">
+          {steps.map(({ n, title, desc }) => (
+            <div key={n} className="cf-step">
+              <span className="cf-n">{n}</span>
+              <div>
+                <p className="cf-step-title">{title}</p>
+                <p className="cf-step-desc">{desc}</p>
+              </div>
+            </div>
           ))}
         </div>
       </div>
 
       <style>{`
-        .how-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1rem;
+        .cf {
+          background: #FFF9F1;
+          padding: 5rem 1.25rem;
         }
-        .how-card {
-          background: #fff;
-          border: 1px solid rgba(90,31,26,0.08);
-          border-radius: 22px;
-          padding: 1.25rem;
+        .cf-inner {
+          max-width: 800px;
+          margin: 0 auto;
         }
-        .how-number {
-          display: inline-block;
+        .cf-kicker {
           font-family: var(--font-body);
-          font-size: 0.72rem;
+          font-size: 11px;
           font-weight: 700;
           letter-spacing: 0.16em;
           text-transform: uppercase;
           color: #A8411A;
-          margin-bottom: 1rem;
+          margin-bottom: 0.75rem;
         }
-        .how-title {
+        .cf-title {
           font-family: var(--font-display);
-          font-size: 1.35rem;
-          font-weight: 600;
+          font-weight: 700;
+          font-size: clamp(1.8rem, 5vw, 2.6rem);
           color: #5A1F1A;
-          margin-bottom: 0.45rem;
+          line-height: 1;
+          letter-spacing: -0.03em;
+          margin-bottom: 3rem;
         }
-        .how-desc {
+        .cf-steps {
+          display: grid;
+          gap: 0;
+        }
+        .cf-step {
+          display: flex;
+          gap: 1.5rem;
+          align-items: baseline;
+          padding: 1.75rem 0;
+          border-bottom: 1px solid rgba(90,31,26,0.08);
+        }
+        .cf-step:last-child { border-bottom: none; }
+        .cf-n {
+          font-family: var(--font-display);
+          font-weight: 700;
+          font-size: 2.5rem;
+          color: rgba(168,65,26,0.12);
+          line-height: 1;
+          flex-shrink: 0;
+          min-width: 52px;
+        }
+        .cf-step-title {
+          font-family: var(--font-display);
+          font-weight: 600;
+          font-size: 1.25rem;
+          color: #5A1F1A;
+          margin-bottom: 4px;
+        }
+        .cf-step-desc {
           font-family: var(--font-body);
-          font-size: 0.92rem;
-          line-height: 1.65;
+          font-size: 0.9375rem;
           color: #5E6B3E;
+          line-height: 1.6;
         }
-        @media (min-width: 900px) {
-          .how-grid {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+        @media (min-width: 768px) {
+          .cf { padding: 7rem 2.5rem; }
+          .cf-steps {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
           }
+          .cf-step {
+            flex-direction: column;
+            gap: 0.75rem;
+            border-bottom: none;
+            padding: 0;
+          }
+          .cf-n { font-size: 3.5rem; }
         }
       `}</style>
     </section>

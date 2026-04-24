@@ -2,6 +2,8 @@
 // Isotipo: oval (fruto seco / piedra pirca) con línea interior de corte
 // Logotipo: isotipo + wordmark tipográfico con Fraunces
 
+import Link from "next/link";
+
 interface LogoProps {
   variant?: "full" | "horizontal" | "icon";
   size?: "sm" | "md" | "lg";
@@ -84,7 +86,7 @@ export default function Logo({
   );
 
   return (
-    <a
+    <Link
       href="/"
       aria-label="Estación Snack — inicio"
       className={`flex items-center gap-2 ${className}`}
@@ -92,6 +94,6 @@ export default function Logo({
     >
       {Icon}
       {wordmark}
-    </a>
+    </Link>
   );
 }

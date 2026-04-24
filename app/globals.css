@@ -71,6 +71,11 @@
   box-sizing: border-box;
 }
 
+::selection {
+  background: rgba(168,65,26,0.12);
+  color: #5A1F1A;
+}
+
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
@@ -107,12 +112,14 @@ a {
   text-decoration: none;
   color: inherit;
   -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.15s ease;
 }
 button {
   font-family: inherit;
   border: none;
   cursor: pointer;
   background: none;
+  transition: transform 0.15s ease, opacity 0.15s ease;
 }
 img { display: block; max-width: 100%; }
 

@@ -1,292 +1,528 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import productsData from "@/data/products.json";
 import { fmt } from "@/lib/cart-utils";
+import KmStone from "./icons/KmStone";
+import FlipBoard from "./FlipBoard";
 
 interface HeroProps {
   onOrderOpen: () => void;
 }
 
-const heroProducts = productsData.slice(0, 3);
+const lead = productsData[0]; // Mix Europeo
 
-export default function Hero({ onOrderOpen }: HeroProps) {
-  const lead = heroProducts[0];
-  const accents = heroProducts.slice(1);
+const BOARD_MESSAGES = [
+  "SANTA CRUZ — SU CASA",
+  "MARTES A SÁBADO",
+  "DESPACHO LOCAL",
+  "ABIERTO AHORA",
+] as const;
+
+export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
+  const [boardIndex, setBoardIndex] = useState(0);
+  const [clock, setClock] = useState("");
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setBoardIndex((i) => (i + 1) % BOARD_MESSAGES.length);
+    }, 3200);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const tick = () => {
+      const d = new Date();
+      const hh = String(d.getHours()).padStart(2, "0");
+      const mm = String(d.getMinutes()).padStart(2, "0");
+      setClock(`${hh}:${mm}`);
+    };
+    tick();
+    const id = setInterval(tick, 30_000);
+    return () => clearInterval(id);
+  }, []);
 
   return (
-    <section
-      aria-label="Inicio"
-      style={{
-        background: "linear-gradient(180deg, #F7F0E4 0%, #F4EADB 100%)",
-        padding: "1.35rem 16px 2.4rem",
-      }}
-    >
-      <div className="container hero-shell">
-        <div style={{ maxWidth: 520 }}>
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              color: "#A8411A",
-              fontSize: "0.74rem",
-              fontWeight: 700,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              margin: "0 0 1rem",
-            }}
-          >
-            Santa Cruz · Frutos secos por kilo
-          </p>
+    <section aria-label="Inicio" className="hero">
+      {/* Status bar superior tipo panel de estación */}
+      <div className="hero-statusbar">
+        <div className="hero-statusbar-left">
+          <span className="hero-led" aria-hidden="true" />
+          <span className="hero-status-text">
+            <FlipBoard
+              text={BOARD_MESSAGES[boardIndex]}
+              fontSize={10.5}
+              panelHeight={13}
+              letterSpacing="0.2em"
+              color="rgba(90,31,26,0.85)"
+            />
+          </span>
+        </div>
+        <div className="hero-statusbar-right">
+          <span className="hero-status-ref">Ramal S.F. — Pichilemu</span>
+          <span className="hero-status-sep" aria-hidden="true">·</span>
+          <span className="hero-status-clock" suppressHydrationWarning>
+            {clock || "—:—"}
+          </span>
+        </div>
+      </div>
 
-          <h1
-            style={{
-              fontFamily: "var(--font-display)",
-              color: "#5A1F1A",
-              fontWeight: 600,
-              fontSize: "clamp(2.7rem, 9vw, 5.4rem)",
-              lineHeight: 0.94,
-              letterSpacing: "-0.05em",
-              marginBottom: "0.85rem",
-            }}
-          >
-            Compra rico.
-            <br />
-            Pide simple.
+      {/* Cuerpo del Hero: composición editorial, tipografía dominante */}
+      <div className="hero-stage">
+        <div className="hero-type">
+          <span className="hero-eyebrow" aria-hidden="true">
+            <span className="hero-eyebrow-dot" /> Abierto para pedidos
+          </span>
+
+          <h1 className="hero-h1">
+            <span className="hero-word hero-word-1">Compra</span>
+            <span className="hero-word hero-word-italic">rico.</span>
+            <span className="hero-word hero-word-2">Pide</span>
+            <span className="hero-word hero-word-italic">simple.</span>
           </h1>
 
-          <p
-            style={{
-              fontFamily: "var(--font-display)",
-              fontStyle: "italic",
-              fontWeight: 400,
-              color: "#5E6B3E",
-              fontSize: "clamp(1.02rem, 2.8vw, 1.35rem)",
-              lineHeight: 1.4,
-              marginBottom: "0.85rem",
-              maxWidth: 460,
-            }}
-          >
-            Mezclas, frutos secos, dulces y packs listos para cerrar por WhatsApp.
+          <p className="hero-sub">
+            Frutos secos y dulces del Valle de Colchagua, vendidos por kilo.
+            <br />
+            Cierre de pedido por WhatsApp — <strong>sin checkout ni tarjeta</strong>.
           </p>
 
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontWeight: 400,
-              color: "rgba(90,31,26,0.78)",
-              fontSize: "0.98rem",
-              lineHeight: 1.65,
-              marginBottom: "1.35rem",
-              maxWidth: 480,
-            }}
-          >
-            Lo mejor del catálogo primero. Sin vueltas, sin registro raro y con despacho local de martes a sábado.
-          </p>
-
-          <div className="hero-meta">
-            {["Desde 1 kg", "Santa Cruz y alrededores", "Pago al recibir"].map((item) => (
-              <span key={item}>{item}</span>
-            ))}
-          </div>
-
-          <div className="hero-cta-grid" style={{ marginTop: "1.35rem" }}>
-            <a href="#productos" className="hero-primary-cta">
-              Ver productos
-              <span aria-hidden="true">→</span>
+          <div className="hero-ctas">
+            <a href="#productos" className="hero-cta">
+              Ver los 6 productos
+              <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 5l7 7-7 7" />
+              </svg>
             </a>
-            <button onClick={onOrderOpen} className="hero-secondary-cta">
-              Abrir pedido
-              <span aria-hidden="true">↗</span>
-            </button>
+            <span className="hero-cta-aside">
+              o mirá los <a href="#packs">packs</a>
+            </span>
           </div>
         </div>
 
-        <div className="hero-stage">
-          <article className="hero-lead-card">
-            <div className="hero-lead-image">
-              <Image
-                src={lead.image_webp_url}
-                alt={lead.name}
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                style={{ objectFit: "cover" }}
-              />
+        {/* Panel lateral: imagen + sello km + datos producto destacado */}
+        <aside className="hero-side" aria-label="Producto destacado">
+          <div className="hero-photo-wrap">
+            <div className="hero-photo-tag" aria-hidden="true">
+              <span className="hero-photo-tag-label">DESTACADO</span>
+              <span className="hero-photo-tag-code">MIX-EU · 1 KG</span>
             </div>
-            <div className="hero-lead-copy">
-              <p className="hero-kicker">Más pedido</p>
-              <div>
-                <h2>{lead.name}</h2>
-                <p>{fmt(lead.price)} · 1 kg</p>
-              </div>
-            </div>
-          </article>
-
-          <div className="hero-mini-grid">
-            {accents.map((product) => (
-              <article key={product.id} className="hero-mini-card">
-                <div className="hero-mini-image">
-                  <Image
-                    src={product.image_webp_url}
-                    alt={product.name}
-                    fill
-                    sizes="(max-width: 1024px) 50vw, 18vw"
-                    style={{ objectFit: "cover" }}
-                  />
-                </div>
-                <div>
-                  <p>{product.name}</p>
-                  <span>{fmt(product.price)}</span>
-                </div>
-              </article>
-            ))}
+            <Image
+              src={lead.image_webp_url}
+              alt={lead.name}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 42vw"
+              style={{ objectFit: "cover" }}
+            />
+            <div className="hero-photo-gradient" aria-hidden="true" />
+            <figcaption className="hero-photo-caption">
+              <span className="hero-photo-name">{lead.name}</span>
+              <span className="hero-photo-price">{fmt(lead.price)} <small>/kg</small></span>
+            </figcaption>
           </div>
+
+          <div className="hero-kmstone" aria-hidden="true">
+            <KmStone size={72} />
+          </div>
+        </aside>
+      </div>
+
+      {/* Franja inferior: datos del despacho estilo pie de boleto */}
+      <div className="hero-ticker" role="complementary" aria-label="Información de servicio">
+        <div className="hero-ticker-item">
+          <span className="hero-ticker-label">Origen</span>
+          <span className="hero-ticker-value">Santa Cruz · km 35,5</span>
+        </div>
+        <div className="hero-ticker-sep" aria-hidden="true" />
+        <div className="hero-ticker-item">
+          <span className="hero-ticker-label">Destinos</span>
+          <span className="hero-ticker-value">5 comunas</span>
+        </div>
+        <div className="hero-ticker-sep" aria-hidden="true" />
+        <div className="hero-ticker-item">
+          <span className="hero-ticker-label">Desde</span>
+          <span className="hero-ticker-value">$5.000 / kg</span>
+        </div>
+        <div className="hero-ticker-sep" aria-hidden="true" />
+        <div className="hero-ticker-item">
+          <span className="hero-ticker-label">Envío gratis</span>
+          <span className="hero-ticker-value">+$25.000</span>
         </div>
       </div>
 
       <style>{`
-        .hero-shell {
-          display: grid;
-          grid-template-columns: minmax(0, 1fr);
-          gap: 1.35rem;
-          align-items: center;
+        .hero {
+          position: relative;
+          background:
+            radial-gradient(1200px 600px at 20% 10%, rgba(168,65,26,0.08), transparent 60%),
+            radial-gradient(900px 500px at 90% 90%, rgba(94,107,62,0.1), transparent 60%),
+            linear-gradient(180deg, #F7F0E4 0%, #F4EADB 100%);
+          padding: 0 1.25rem;
+          overflow: hidden;
         }
-        .hero-meta {
+        .hero::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(90,31,26,0.15), transparent);
+          pointer-events: none;
+        }
+
+        /* Status bar */
+        .hero-statusbar {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 12px 4px;
           display: flex;
-          flex-wrap: wrap;
-          gap: 0.6rem;
-        }
-        .hero-meta span {
-          padding: 0.5rem 0.8rem;
-          border-radius: 999px;
-          border: 1px solid rgba(90,31,26,0.12);
-          background: rgba(255,249,241,0.84);
-          color: #5A1F1A;
+          justify-content: space-between;
+          align-items: center;
+          gap: 1rem;
+          border-bottom: 1px dashed rgba(90,31,26,0.18);
           font-family: var(--font-body);
-          font-size: 0.78rem;
+          font-size: 10.5px;
           font-weight: 600;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: rgba(90,31,26,0.7);
         }
-        .hero-cta-grid {
+        .hero-statusbar-left {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          min-width: 0;
+        }
+        .hero-led {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #5E6B3E;
+          box-shadow: 0 0 0 3px rgba(94,107,62,0.15);
+          animation: hero-led-pulse 2.4s ease-in-out infinite;
+          flex-shrink: 0;
+        }
+        @keyframes hero-led-pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .hero-led { animation: none; }
+        }
+        .hero-statusbar-right {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-variant-numeric: tabular-nums;
+          flex-shrink: 0;
+        }
+        .hero-status-ref {
+          display: none;
+        }
+        .hero-status-sep {
+          display: none;
+          color: rgba(90,31,26,0.3);
+        }
+        .hero-status-clock {
+          font-family: var(--font-display);
+          font-style: italic;
+          font-size: 14px;
+          letter-spacing: 0;
+          color: #5A1F1A;
+          text-transform: none;
+        }
+        @media (min-width: 768px) {
+          .hero-status-ref,
+          .hero-status-sep { display: inline; }
+        }
+
+        /* Stage principal */
+        .hero-stage {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 3rem 0 4rem;
           display: grid;
           grid-template-columns: 1fr;
-          gap: 0.75rem;
-          max-width: 430px;
-        }
-        .hero-primary-cta,
-        .hero-secondary-cta {
-          font-family: var(--font-body);
-          font-size: 0.95rem;
-          border-radius: 14px;
-          padding: 1rem 1.2rem;
-          display: flex;
+          gap: 2.5rem;
           align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-          min-height: 54px;
-        }
-        .hero-primary-cta {
-          font-weight: 700;
-          color: #F4EADB;
-          background: #A8411A;
-          box-shadow: 0 12px 30px rgba(168,65,26,0.22);
-        }
-        .hero-secondary-cta {
-          font-weight: 600;
-          color: #5A1F1A;
-          background: rgba(255,249,241,0.86);
-          border: 1px solid rgba(90,31,26,0.14);
-        }
-        .hero-stage {
-          display: grid;
-          gap: 0.8rem;
-        }
-        .hero-lead-card {
-          background: #FFF9F1;
-          border-radius: 26px;
-          overflow: hidden;
-          border: 1px solid rgba(90,31,26,0.08);
-          box-shadow: 0 22px 44px rgba(90,31,26,0.08);
-        }
-        .hero-lead-image {
           position: relative;
-          aspect-ratio: 4 / 4.1;
-          background: #EDE4D6;
         }
-        .hero-lead-copy {
-          display: flex;
-          align-items: flex-end;
-          justify-content: space-between;
-          gap: 1rem;
-          padding: 1rem 1rem 1.1rem;
+
+        .hero-type {
+          min-width: 0;
+          position: relative;
+          z-index: 2;
         }
-        .hero-kicker {
+
+        .hero-eyebrow {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 6px 12px 6px 10px;
+          margin-bottom: 2rem;
+          background: #fff;
+          border: 1px solid rgba(90,31,26,0.08);
+          border-radius: 999px;
           font-family: var(--font-body);
-          font-size: 0.68rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.14em;
-          color: #A8411A;
-        }
-        .hero-lead-copy h2 {
-          font-family: var(--font-display);
-          font-size: 1.35rem;
+          font-size: 11px;
           font-weight: 600;
-          line-height: 1.05;
+          letter-spacing: 0.04em;
           color: #5A1F1A;
-          margin-bottom: 0.2rem;
+          box-shadow: 0 4px 14px -6px rgba(90,31,26,0.18);
         }
-        .hero-lead-copy p:last-child {
-          font-family: var(--font-body);
-          font-size: 0.82rem;
+        .hero-eyebrow-dot {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #5E6B3E;
+          box-shadow: 0 0 0 3px rgba(94,107,62,0.2);
+          animation: hero-led-pulse 2.4s ease-in-out infinite;
+        }
+
+        .hero-h1 {
+          display: flex;
+          flex-direction: column;
+          gap: 0.02em;
+          font-family: var(--font-display);
+          color: #5A1F1A;
+          line-height: 0.88;
+          letter-spacing: -0.05em;
+          margin: 0 0 2rem;
+        }
+        .hero-word {
+          display: block;
+          font-weight: 700;
+          font-size: clamp(3.5rem, 16vw, 10rem);
+        }
+        .hero-word-italic {
+          font-style: italic;
+          font-weight: 400;
+          color: #A8411A;
+          padding-left: 0.6em;
+          font-size: clamp(3.5rem, 16vw, 10rem);
+        }
+        .hero-word-2 { margin-top: 0.08em; }
+
+        .hero-sub {
+          font-family: var(--font-display);
+          font-style: italic;
+          font-weight: 300;
+          font-size: clamp(1.02rem, 2.2vw, 1.3rem);
+          line-height: 1.5;
           color: #5E6B3E;
-          font-weight: 600;
+          max-width: 500px;
+          margin: 0 0 2rem;
         }
-        .hero-mini-grid {
+        .hero-sub strong {
+          font-weight: 500;
+          font-style: normal;
+          color: #5A1F1A;
+        }
+
+        .hero-ctas {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 1rem 1.5rem;
+        }
+        .hero-cta {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          font-family: var(--font-body);
+          font-weight: 600;
+          font-size: 1rem;
+          color: #F4EADB;
+          background: #5A1F1A;
+          padding: 1.05rem 1.75rem;
+          border-radius: 999px;
+          box-shadow: 0 14px 32px -10px rgba(90,31,26,0.45);
+          transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+          text-decoration: none;
+          white-space: nowrap;
+        }
+        @media (hover: hover) {
+          .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 44px -12px rgba(90,31,26,0.55);
+          }
+          .hero-cta:hover svg { transform: translateX(4px); }
+        }
+        .hero-cta svg { transition: transform 0.25s ease; }
+        .hero-cta-aside {
+          font-family: var(--font-display);
+          font-style: italic;
+          font-size: 0.95rem;
+          color: #5E6B3E;
+        }
+        .hero-cta-aside a {
+          color: #A8411A;
+          text-decoration: underline;
+          text-underline-offset: 4px;
+        }
+
+        /* Panel lateral con foto */
+        .hero-side {
+          position: relative;
+          align-self: end;
+        }
+        .hero-photo-wrap {
+          position: relative;
+          aspect-ratio: 4/5;
+          border-radius: 24px;
+          overflow: hidden;
+          background: #EDE4D6;
+          box-shadow:
+            0 2px 0 rgba(90,31,26,0.06),
+            0 30px 60px -24px rgba(90,31,26,0.35);
+          transform: rotate(-1.2deg);
+        }
+        .hero-photo-tag {
+          position: absolute;
+          top: 14px;
+          left: 14px;
+          z-index: 3;
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          padding: 7px 12px;
+          background: rgba(90,31,26,0.88);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          color: #F4EADB;
+          border-radius: 10px;
+        }
+        .hero-photo-tag-label {
+          font-family: var(--font-body);
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: 0.2em;
+        }
+        .hero-photo-tag-code {
+          font-family: var(--font-body);
+          font-size: 9.5px;
+          font-weight: 500;
+          letter-spacing: 0.12em;
+          color: rgba(244,234,219,0.7);
+          font-variant-numeric: tabular-nums;
+        }
+        .hero-photo-gradient {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.55) 100%);
+        }
+        .hero-photo-caption {
+          position: absolute;
+          left: 18px;
+          right: 18px;
+          bottom: 16px;
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          gap: 1rem;
+          color: #F4EADB;
+        }
+        .hero-photo-name {
+          font-family: var(--font-display);
+          font-weight: 600;
+          font-size: 1.2rem;
+          letter-spacing: -0.02em;
+          line-height: 1.1;
+        }
+        .hero-photo-price {
+          font-family: var(--font-body);
+          font-weight: 700;
+          font-size: 0.95rem;
+          letter-spacing: -0.01em;
+          font-variant-numeric: tabular-nums;
+        }
+        .hero-photo-price small {
+          font-weight: 400;
+          opacity: 0.7;
+        }
+
+        .hero-kmstone {
+          position: absolute;
+          right: -14px;
+          bottom: -24px;
+          z-index: 4;
+          transform: rotate(8deg);
+          filter: drop-shadow(0 10px 20px rgba(90,31,26,0.25));
+        }
+
+        /* Ticker inferior */
+        .hero-ticker {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 1.4rem 0;
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 0.75rem;
-        }
-        .hero-mini-card {
-          display: grid;
-          grid-template-columns: 84px minmax(0, 1fr);
-          gap: 0.7rem;
+          gap: 1.25rem;
+          border-top: 1px dashed rgba(90,31,26,0.2);
           align-items: center;
-          background: rgba(255,249,241,0.72);
-          border: 1px solid rgba(90,31,26,0.08);
-          border-radius: 20px;
-          padding: 0.7rem;
         }
-        .hero-mini-image {
-          position: relative;
-          aspect-ratio: 1 / 1;
-          border-radius: 14px;
-          overflow: hidden;
-          background: #EDE4D6;
+        .hero-ticker-item {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+          min-width: 0;
         }
-        .hero-mini-card p {
-          font-family: var(--font-display);
-          font-size: 0.94rem;
-          line-height: 1.08;
-          color: #5A1F1A;
-          font-weight: 600;
-          margin-bottom: 0.25rem;
-        }
-        .hero-mini-card span {
+        .hero-ticker-label {
           font-family: var(--font-body);
-          font-size: 0.78rem;
-          color: #5E6B3E;
-          font-weight: 600;
+          font-size: 9.5px;
+          font-weight: 700;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: rgba(90,31,26,0.55);
         }
+        .hero-ticker-value {
+          font-family: var(--font-display);
+          font-weight: 500;
+          font-size: 0.95rem;
+          color: #5A1F1A;
+          letter-spacing: -0.01em;
+        }
+        .hero-ticker-sep {
+          display: none;
+          width: 1px;
+          height: 32px;
+          background: rgba(90,31,26,0.12);
+        }
+
         @media (min-width: 640px) {
-          .hero-cta-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+          .hero-ticker {
+            grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+            padding: 1.6rem 0;
           }
+          .hero-ticker-sep { display: block; }
         }
-        @media (min-width: 1024px) {
-          .hero-shell {
-            grid-template-columns: minmax(0, 1.02fr) minmax(420px, 0.98fr);
-            gap: 2.5rem;
+
+        @media (min-width: 900px) {
+          .hero {
+            padding: 0 2.5rem;
           }
+          .hero-stage {
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 4rem;
+            padding: 5rem 0 5rem;
+            min-height: calc(100vh - 68px - 52px);
+          }
+          .hero-word-italic { padding-left: 1em; }
+          .hero-photo-wrap {
+            transform: rotate(-1.6deg);
+          }
+          .hero-kmstone {
+            right: -24px;
+            bottom: -30px;
+          }
+          .hero-ticker-value { font-size: 1rem; }
+        }
+
+        @media (min-width: 1200px) {
+          .hero-stage { padding: 6rem 0 6rem; }
         }
       `}</style>
     </section>

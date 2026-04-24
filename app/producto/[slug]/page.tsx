@@ -77,6 +77,8 @@ export default async function ProductPage({ params }: Props) {
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.estacionsnack.cl";
 
   // Precio válido hasta 30 días desde generación (requerido Google Search Console desde 2023).
+  // Server Component: Date.now() en el boundary request/response, no en render de cliente.
+  // eslint-disable-next-line react-hooks/purity
   const priceValidUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
     .toISOString()
     .split("T")[0];

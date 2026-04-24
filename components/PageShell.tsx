@@ -21,22 +21,15 @@ import packsData from "@/data/packs.json";
 import { FREE_SHIPPING_MIN } from "@/lib/shipping";
 import type { Pack, ProductStock } from "@/lib/pack-utils";
 
-// Dynamic imports — sheets sólo cargan cuando el usuario interactúa.
-// Reduce first-load JS bundle (framer-motion se mueve a chunk async).
 const OrderSheet = dynamic(() => import("./OrderSheet"), { ssr: false });
 const ProductSheet = dynamic(() => import("./ProductSheet"), { ssr: false });
 const PackSheet = dynamic(() => import("./PackSheet"), { ssr: false });
 
 const products = productsData.slice().sort((a, b) => a.sort_order - b.sort_order);
-const nutsProducts = products.filter((product) => product.category === "frutos");
-const sweetProducts = products.filter((product) => product.category === "dulces");
+const nutsProducts = products.filter((p) => p.category === "frutos");
+const sweetProducts = products.filter((p) => p.category === "dulces");
 const packs = packsData as Pack[];
 const packProducts = productsData as unknown as ProductStock[];
-const featuredProducts = [
-  nutsProducts[0],
-  sweetProducts[0],
-  products.find((product) => product.slug === "almendra-entera"),
-].filter((product): product is typeof products[number] => Boolean(product));
 
 export default function PageShell() {
   const [sheetProduct, setSheetProduct] = useState<typeof products[number] | null>(null);
@@ -57,9 +50,6 @@ export default function PageShell() {
 
   useEffect(() => { useCartStore.persist.rehydrate(); }, []);
 
-  // Handlers memoizados — evitan reruns de useEffect en los sheets que
-  // tienen `onClose` como dep (si no se memoiza, se re-attachan listeners
-  // en cada render del padre).
   const openOrder = useCallback(() => setOrderOpen(true), [setOrderOpen]);
   const closeOrder = useCallback(() => setOrderOpen(false), [setOrderOpen]);
   const closeSheet = useCallback(() => setSheetProduct(null), []);
@@ -75,87 +65,35 @@ export default function PageShell() {
 
       <main id="main" tabIndex={-1} style={{ outline: "none" }}>
         <Hero onOrderOpen={openOrder} />
-
-        <section id="productos" style={{ background: "#fff", padding: "1rem 16px 3rem" }}>
-          <div className="container" style={{ maxWidth: 1100 }}>
-            <div className="section-head">
-              <div>
-                <p className="section-kicker">Selección</p>
-                <h2 className="section-title">Lo más pedido.</h2>
-              </div>
-              <div className="section-links">
-                <a href="#frutos">Frutos secos</a>
-                <a href="#dulces">Dulces</a>
-                <a href="#packs">Packs</a>
-              </div>
-            </div>
-
-            <div className="featured-grid featured-grid-home">
-              {featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} onOpen={() => setSheetProduct(product)} />
-              ))}
-              {packs[0] && (
-                <PackCard
-                  pack={packs[0]}
-                  products={packProducts}
-                  onOpen={() => setSheetPack(packs[0])}
-                />
-              )}
-            </div>
-          </div>
-        </section>
-
         <Benefits />
 
-        <section id="packs" style={{ background: "#F7F0E4", padding: "3.25rem 16px" }}>
+        {/* ── Productos destacados ── */}
+        <section id="productos" className="s-white">
           <div className="container">
-            <div className="section-head" style={{ marginBottom: "1.5rem" }}>
-              <div>
-                <p className="section-kicker">Packs</p>
-                <h2 className="section-title">Listos para resolver rápido.</h2>
-              </div>
-            </div>
-            <PackSection />
-          </div>
-        </section>
-
-        <section id="frutos" style={{ background: "#fff", padding: "3.25rem 16px" }}>
-          <div className="container">
-            <div className="section-head section-head-narrow">
-              <div>
-                <p className="section-kicker">Frutos secos</p>
-                <h2 className="section-title">Para repetir sin pensarlo mucho.</h2>
-              </div>
-            </div>
-            <div className="product-grid">
-              {nutsProducts.map((p) => (
+            <p className="kicker">Selección</p>
+            <h2 className="stitle">Lo más pedido.</h2>
+            <div className="product-grid" style={{ marginTop: "2.5rem" }}>
+              {products.map((p) => (
                 <ProductCard key={p.id} product={p} onOpen={() => setSheetProduct(p)} />
               ))}
             </div>
           </div>
         </section>
 
-        <section id="dulces" style={{ background: "#F9F3E8", padding: "3.25rem 16px" }}>
+        {/* ── Packs ── */}
+        <section id="packs" className="s-warm">
           <div className="container">
-            <div className="section-head section-head-narrow">
-              <div>
-                <p className="section-kicker">Dulces</p>
-                <h2 className="section-title">Los que se acaban primero en la mesa.</h2>
-              </div>
-            </div>
-            <div className="product-grid">
-              {sweetProducts.map((p) => (
-                <ProductCard key={p.id} product={p} onOpen={() => setSheetProduct(p)} />
-              ))}
+            <p className="kicker">Packs</p>
+            <h2 className="stitle">Listos para resolver rápido.</h2>
+            <div style={{ marginTop: "2rem" }}>
+              <PackSection />
             </div>
           </div>
         </section>
 
+        {/* ── Progreso envío gratis ── */}
         {itemCount > 0 && (
-          <section
-            aria-label="Progreso hacia envío gratis"
-            style={{ background: "#fff", padding: "0 16px 3rem" }}
-          >
+          <section className="s-white" style={{ paddingTop: "1rem", paddingBottom: "2rem" }}>
             <div className="container" style={{ maxWidth: 520 }}>
               <TicketProgress current={subtotal} threshold={FREE_SHIPPING_MIN} />
             </div>
@@ -164,72 +102,46 @@ export default function PageShell() {
 
         <ComoFunciona />
 
-        <section style={{ background: "#fff", padding: "3.5rem 16px 3rem" }}>
+        {/* ── FAQ ── */}
+        <section className="s-white">
           <div className="container" style={{ maxWidth: 680 }}>
-            <p className="section-kicker" style={{ marginBottom: "0.75rem" }}>
-              Dudas comunes
-            </p>
-            <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(1.5rem, 4vw, 2rem)", color: "#5A1F1A", marginBottom: "1.5rem", lineHeight: 1.2 }}>
-              Todo lo importante, claro y corto.
-            </h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <p className="kicker">Dudas comunes</p>
+            <h2 className="stitle" style={{ marginBottom: "2rem" }}>Preguntas frecuentes.</h2>
+            <div className="faq-list">
               {topFaqs.map((item) => (
-                <details key={item.q} style={{
-                  background: "#fff", border: "1px solid rgba(90,31,26,0.08)",
-                  borderRadius: 14, overflow: "hidden",
-                }}>
-                  <summary style={{
-                    padding: "14px 16px", fontSize: 15, fontWeight: 600,
-                    fontFamily: "var(--font-body)", color: "#5A1F1A",
-                    cursor: "pointer", listStyle: "none",
-                    display: "flex", justifyContent: "space-between", alignItems: "center",
-                  }}>
+                <details key={item.q} className="faq-item">
+                  <summary className="faq-q">
                     {item.q}
-                    <span style={{ color: "#A8411A", fontSize: 18, fontWeight: 300, flexShrink: 0, marginLeft: 8 }}>+</span>
+                    <svg className="faq-chevron" width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" aria-hidden="true">
+                      <path d="M6 9l6 6 6-6" />
+                    </svg>
                   </summary>
-                  <p style={{
-                    padding: "0 16px 14px", fontSize: 14, color: "#5E6B3E",
-                    lineHeight: 1.6, fontFamily: "var(--font-body)",
-                  }}>
-                    {item.a}
-                  </p>
+                  <p className="faq-a">{item.a}</p>
                 </details>
               ))}
             </div>
           </div>
         </section>
 
-        <section style={{ background: "#5A1F1A", padding: "4rem 16px" }}>
-          <div className="container cta-shell">
-            <div>
-              <p className="section-kicker" style={{ color: "rgba(244,234,219,0.62)", marginBottom: "0.75rem" }}>
-                Pedido
-              </p>
-              <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(2rem, 5vw, 3rem)", color: "#F4EADB", lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: 12 }}>
-                Cuando ya elegiste,
-                seguimos por WhatsApp.
-              </p>
-              <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "rgba(244,234,219,0.76)", lineHeight: 1.7, maxWidth: 460 }}>
-                Santa Cruz y alrededores · martes a sábado · pago al recibir o por transferencia.
-              </p>
-            </div>
-
-            <div className="cta-actions">
-              <button onClick={openOrder} className="cta-main-button">
-                Abrir pedido
-              </button>
-              <p style={{ fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(244,234,219,0.5)" }}>
-                Sin registro · Sin pago online · Atención humana
-              </p>
-            </div>
+        {/* ── CTA final ── */}
+        <section className="cta-final">
+          <div className="container" style={{ textAlign: "center", maxWidth: 640 }}>
+            <h2 className="cta-h2">
+              Cuando ya elegiste, seguimos por WhatsApp.
+            </h2>
+            <p className="cta-sub">
+              Santa Cruz y alrededores · martes a sábado · pago al recibir o por transferencia.
+            </p>
+            <button onClick={openOrder} className="cta-btn">
+              Abrir pedido
+            </button>
           </div>
         </section>
       </main>
 
       <Footer />
 
-      {/* Sticky bar mobile — solo visible con items en carrito.
-          Toda la barra es tap target (no botón duplicado que compita con el toast "Ver pedido"). */}
+      {/* Sticky bar mobile */}
       {!orderOpen && !sheetProduct && !sheetPack && itemCount > 0 && (
         <button
           onClick={openOrder}
@@ -273,73 +185,115 @@ export default function PageShell() {
       <ToastStack />
 
       <style>{`
-        .container { max-width: 1100px; margin: 0 auto; }
-        .section-head { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
-        .section-head-narrow { max-width: 620px; }
-        .section-kicker {
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
+        @media (min-width: 768px) { .container { padding: 0 2.5rem; } }
+
+        .s-white { background: #fff; padding: 5rem 0; }
+        .s-warm  { background: #F7F0E4; padding: 5rem 0; }
+        @media (min-width: 768px) {
+          .s-white, .s-warm { padding: 7rem 0; }
+        }
+
+        .kicker {
           font-family: var(--font-body);
           font-size: 11px;
           font-weight: 700;
-          letter-spacing: 0.16em;
+          letter-spacing: 0.18em;
           text-transform: uppercase;
           color: #A8411A;
+          margin-bottom: 0.65rem;
         }
-        .section-title {
+        .stitle {
           font-family: var(--font-display);
-          font-size: clamp(1.8rem, 4vw, 2.5rem);
-          font-weight: 600;
-          line-height: 1.05;
-          letter-spacing: -0.03em;
+          font-weight: 700;
+          font-size: clamp(2rem, 5vw, 3rem);
+          line-height: 1;
+          letter-spacing: -0.035em;
           color: #5A1F1A;
         }
-        .section-links {
+
+        .product-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 2rem 1rem;
+        }
+        @media (min-width: 640px) { .product-grid { gap: 2.5rem 1.5rem; } }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 3rem 2rem; } }
+
+        .pack-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; max-width: 420px; margin: 0 auto; }
+        @media (min-width: 768px) { .pack-grid { grid-template-columns: repeat(3, 1fr); max-width: none; margin: 0; } }
+
+        /* FAQ */
+        .faq-list { display: flex; flex-direction: column; }
+        .faq-item { border-bottom: 1px solid rgba(90,31,26,0.08); }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-q {
+          padding: 1.25rem 0;
+          font-family: var(--font-display);
+          font-weight: 500;
+          font-size: 1.05rem;
+          color: #5A1F1A;
+          cursor: pointer;
+          list-style: none;
           display: flex;
-          flex-wrap: wrap;
-          gap: 0.6rem;
+          justify-content: space-between;
+          align-items: center;
+          gap: 1rem;
         }
-        .section-links a {
-          padding: 0.55rem 0.85rem;
-          border-radius: 999px;
-          border: 1px solid rgba(90,31,26,0.1);
-          background: #FFF9F1;
+        .faq-q::-webkit-details-marker { display: none; }
+        .faq-chevron { color: #A8411A; transition: transform 0.2s ease; flex-shrink: 0; }
+        details[open] .faq-chevron { transform: rotate(180deg); }
+        .faq-a {
+          padding: 0 0 1.25rem;
           font-family: var(--font-body);
-          font-size: 0.82rem;
-          font-weight: 600;
-          color: #5A1F1A;
+          font-size: 0.9375rem;
+          color: #5E6B3E;
+          line-height: 1.7;
         }
-        .featured-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 16px; align-items: start; }
-        .featured-grid-home { align-items: stretch; }
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 16px; }
-        @media (min-width: 768px) { .featured-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 22px; } }
-        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 48px 28px; } }
-        @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 64px 40px; max-width: 920px; margin: 0 auto; } }
-        .cta-shell { display: grid; grid-template-columns: 1fr; gap: 1.5rem; align-items: center; }
-        .cta-actions { display: flex; flex-direction: column; gap: 0.9rem; align-items: flex-start; }
-        .cta-main-button {
+
+        /* CTA final */
+        .cta-final {
+          background: #5A1F1A;
+          padding: 5rem 1.25rem;
+        }
+        @media (min-width: 768px) { .cta-final { padding: 8rem 2.5rem; } }
+        .cta-h2 {
+          font-family: var(--font-display);
+          font-weight: 700;
+          font-size: clamp(2rem, 6vw, 3.5rem);
+          line-height: 1;
+          letter-spacing: -0.035em;
+          color: #F4EADB;
+          margin-bottom: 1.25rem;
+        }
+        .cta-sub {
+          font-family: var(--font-body);
+          font-size: 0.9375rem;
+          color: rgba(244,234,219,0.65);
+          line-height: 1.7;
+          margin-bottom: 2.5rem;
+        }
+        .cta-btn {
           font-family: var(--font-body);
           font-weight: 600;
-          font-size: 15px;
+          font-size: 1rem;
           color: #5A1F1A;
           background: #F4EADB;
           border: none;
-          border-radius: 999px;
-          padding: 14px 28px;
+          border-radius: 14px;
+          padding: 1rem 2.5rem;
           cursor: pointer;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
           -webkit-tap-highlight-color: transparent;
         }
-        .pcard { transition: transform .2s ease; }
-        @media (min-width: 768px) and (hover:hover) {
-          .pcard:hover { transform: translateY(-2px); }
+        @media (hover: hover) {
+          .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(244,234,219,0.2);
+          }
         }
-        .pack-grid { display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 420px; margin: 0 auto; }
-        @media (min-width: 768px) { .pack-grid { grid-template-columns: repeat(3, 1fr); max-width: none; margin: 0; } }
-        @media (min-width: 900px) {
-          .section-head { flex-direction: row; align-items: end; justify-content: space-between; }
-          .cta-shell { grid-template-columns: minmax(0, 1fr) auto; gap: 2rem; }
-          .cta-actions { align-items: flex-end; }
-        }
-        @media (min-width: 768px) { .sticky-bar { display:none !important; } }
-        details summary::-webkit-details-marker { display: none; }
+
+        @media (min-width: 768px) { .sticky-bar { display: none !important; } }
       `}</style>
     </MotionConfig>
   );

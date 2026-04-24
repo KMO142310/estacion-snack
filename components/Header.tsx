@@ -41,11 +41,8 @@ export default function Header({ onOrderOpen }: HeaderProps) {
       <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
         <img src="/img/logo-icon.svg" alt="" width={40} height={40} style={{ borderRadius: 12, flexShrink: 0 }} />
         <span style={{ minWidth: 0 }}>
-          <span style={{ display: "block", fontFamily: "var(--font-display)", fontSize: 21, letterSpacing: "-0.02em", lineHeight: 0.95, color: "#F4EADB", fontWeight: 600 }}>
+          <span style={{ display: "block", fontFamily: "var(--font-display)", fontSize: 22, letterSpacing: "-0.02em", lineHeight: 1, color: "#F4EADB", fontWeight: 700 }}>
             Estación Snack
-          </span>
-          <span style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 9, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(244,234,219,0.62)", marginTop: 4 }}>
-            Frutos secos por kilo
           </span>
         </span>
       </a>
@@ -73,9 +70,6 @@ export default function Header({ onOrderOpen }: HeaderProps) {
         }}
       >
         <ShoppingBag size={22} />
-        <span style={{ fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-          Pedido
-        </span>
         <AnimatePresence>
           {itemCount > 0 && (
             <motion.span

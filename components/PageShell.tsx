@@ -13,6 +13,9 @@ import Benefits from "./Benefits";
 import ProductCard from "./ProductCard";
 import PackSection from "./PackSection";
 import ComoFunciona from "./ComoFunciona";
+import Marquee from "./Marquee";
+import StationManifesto from "./StationManifesto";
+import FeaturedProduct from "./FeaturedProduct";
 import Footer from "./Footer";
 import ToastStack from "./Toast";
 import TicketProgress from "./TicketProgress";
@@ -25,8 +28,19 @@ const ProductSheet = dynamic(() => import("./ProductSheet"), { ssr: false });
 const PackSheet = dynamic(() => import("./PackSheet"), { ssr: false });
 
 const products = productsData.slice().sort((a, b) => a.sort_order - b.sort_order);
+const featured = products[0]; // Mix Europeo — va a la sección FeaturedProduct
+const gridProducts = products.slice(1); // El resto al grid "Lo más pedido"
 const packs = packsData as Pack[];
 const packProducts = productsData as unknown as ProductStock[];
+
+const MARQUEE_TOP = [
+  "Desde 1 kilo",
+  "Despacho local",
+  "Martes a sábado",
+  "Envío gratis +$25.000",
+  "Pago al recibir o transferencia",
+  "Santa Cruz · Colchagua",
+];
 
 export default function PageShell() {
   const [sheetProduct, setSheetProduct] = useState<typeof products[number] | null>(null);
@@ -62,15 +76,32 @@ export default function PageShell() {
 
       <main id="main" tabIndex={-1} style={{ outline: "none" }}>
         <Hero onOrderOpen={openOrder} />
-        <Benefits />
 
-        {/* ── Productos destacados ── */}
+        {/* Banda ferroviaria: scroll infinito con trust signals */}
+        <Marquee items={MARQUEE_TOP} speed={45} />
+
+        {/* Producto destacado — layout editorial, NO card del grid */}
+        {featured && (
+          <FeaturedProduct
+            product={featured}
+            onOpen={() => setSheetProduct(featured)}
+          />
+        )}
+
+        {/* ── Resto del catálogo ── */}
         <section id="productos" className="s-white">
           <div className="container">
-            <p className="kicker">Selección</p>
-            <h2 className="stitle">Lo más pedido.</h2>
+            <div className="section-head">
+              <div>
+                <p className="kicker">Catálogo</p>
+                <h2 className="stitle">El resto de la tienda.</h2>
+              </div>
+              <p className="section-aside">
+                {gridProducts.length} productos · por kilo · con stock real en la DB
+              </p>
+            </div>
             <div className="product-grid" style={{ marginTop: "2.5rem" }}>
-              {products.map((p) => (
+              {gridProducts.map((p) => (
                 <ProductCard key={p.id} product={p} onOpen={() => setSheetProduct(p)} />
               ))}
             </div>
@@ -80,8 +111,15 @@ export default function PageShell() {
         {/* ── Packs ── */}
         <section id="packs" className="s-warm">
           <div className="container">
-            <p className="kicker">Packs</p>
-            <h2 className="stitle">Listos para resolver rápido.</h2>
+            <div className="section-head">
+              <div>
+                <p className="kicker">Packs</p>
+                <h2 className="stitle">Armados para probar variedad.</h2>
+              </div>
+              <p className="section-aside">
+                Calculados contra stock real de cada componente
+              </p>
+            </div>
             <div style={{ marginTop: "2rem" }}>
               <PackSection />
             </div>
@@ -98,6 +136,12 @@ export default function PageShell() {
         )}
 
         <ComoFunciona />
+
+        {/* ── Manifiesto de marca ferroviario ── */}
+        <StationManifesto />
+
+        {/* ── TrustBar al final como sello resumen ── */}
+        <Benefits />
 
         {/* ── FAQ ── */}
         <section className="s-white">
@@ -123,14 +167,18 @@ export default function PageShell() {
         {/* ── CTA final ── */}
         <section className="cta-final">
           <div className="container" style={{ textAlign: "center", maxWidth: 640 }}>
+            <p className="cta-kicker">Siguiente paso</p>
             <h2 className="cta-h2">
-              Cuando ya elegiste, seguimos por WhatsApp.
+              Cuando ya elegiste, <em>seguimos por WhatsApp</em>.
             </h2>
             <p className="cta-sub">
               Santa Cruz y alrededores · martes a sábado · pago al recibir o por transferencia.
             </p>
             <button onClick={openOrder} className="cta-btn">
               Abrir pedido
+              <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" aria-hidden="true">
+                <path d="M5 12h14M13 5l7 7-7 7" />
+              </svg>
             </button>
           </div>
         </section>
@@ -192,21 +240,63 @@ export default function PageShell() {
         }
 
         .kicker {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
           font-family: var(--font-body);
-          font-size: 11px;
+          font-size: 10.5px;
           font-weight: 700;
-          letter-spacing: 0.18em;
+          letter-spacing: 0.22em;
           text-transform: uppercase;
           color: #A8411A;
-          margin-bottom: 0.65rem;
+          margin-bottom: 0.9rem;
+        }
+        .kicker::before {
+          content: "";
+          display: inline-block;
+          width: 18px;
+          height: 1px;
+          background: currentColor;
+          opacity: 0.55;
         }
         .stitle {
           font-family: var(--font-display);
           font-weight: 700;
-          font-size: clamp(2rem, 5vw, 3rem);
-          line-height: 1;
-          letter-spacing: -0.035em;
+          font-size: clamp(2.2rem, 6vw, 4rem);
+          line-height: 0.98;
+          letter-spacing: -0.04em;
           color: #5A1F1A;
+          margin: 0;
+        }
+        .stitle em {
+          font-style: italic;
+          font-weight: 400;
+          color: #A8411A;
+        }
+        .section-head {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          margin-bottom: 0.5rem;
+          align-items: flex-start;
+        }
+        .section-aside {
+          font-family: var(--font-display);
+          font-style: italic;
+          font-weight: 300;
+          font-size: 0.95rem;
+          color: #5E6B3E;
+          margin: 0;
+          max-width: 320px;
+        }
+        @media (min-width: 768px) {
+          .section-head {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 2rem;
+          }
+          .section-aside { text-align: right; padding-bottom: 0.5rem; }
         }
 
         .product-grid {
@@ -252,16 +342,42 @@ export default function PageShell() {
         .cta-final {
           background: #5A1F1A;
           padding: 5rem 1.25rem;
+          position: relative;
+          overflow: hidden;
         }
+        .cta-final::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(600px 300px at 20% 20%, rgba(168,65,26,0.2), transparent 60%),
+            radial-gradient(800px 400px at 90% 100%, rgba(94,107,62,0.15), transparent 60%);
+          pointer-events: none;
+        }
+        .cta-final > * { position: relative; }
         @media (min-width: 768px) { .cta-final { padding: 8rem 2.5rem; } }
+        .cta-kicker {
+          font-family: var(--font-body);
+          font-size: 10.5px;
+          font-weight: 700;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: rgba(244,234,219,0.55);
+          margin-bottom: 1.25rem;
+        }
         .cta-h2 {
           font-family: var(--font-display);
           font-weight: 700;
-          font-size: clamp(2rem, 6vw, 3.5rem);
+          font-size: clamp(2rem, 6vw, 3.75rem);
           line-height: 1;
           letter-spacing: -0.035em;
           color: #F4EADB;
-          margin-bottom: 1.25rem;
+          margin: 0 0 1.25rem;
+        }
+        .cta-h2 em {
+          font-style: italic;
+          font-weight: 400;
+          color: #E8B87D;
         }
         .cta-sub {
           font-family: var(--font-body);
@@ -271,23 +387,29 @@ export default function PageShell() {
           margin-bottom: 2.5rem;
         }
         .cta-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
           font-family: var(--font-body);
           font-weight: 600;
           font-size: 1rem;
           color: #5A1F1A;
           background: #F4EADB;
           border: none;
-          border-radius: 14px;
-          padding: 1rem 2.5rem;
+          border-radius: 999px;
+          padding: 1.05rem 2rem;
           cursor: pointer;
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
           -webkit-tap-highlight-color: transparent;
+          box-shadow: 0 14px 32px -10px rgba(0,0,0,0.35);
         }
+        .cta-btn svg { transition: transform 0.25s ease; }
         @media (hover: hover) {
           .cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(244,234,219,0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 44px -12px rgba(0,0,0,0.45);
           }
+          .cta-btn:hover svg { transform: translateX(4px); }
         }
 
         @media (min-width: 768px) { .sticky-bar { display: none !important; } }

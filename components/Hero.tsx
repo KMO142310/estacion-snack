@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import productsData from "@/data/products.json";
 import { fmt } from "@/lib/cart-utils";
+import Sticker from "./Sticker";
+import HandUnderline from "./HandUnderline";
 
 interface HeroProps {
   onOrderOpen: () => void;
@@ -49,18 +51,19 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
         <div className="hero-text">
           <p className="hero-eyebrow">
             <span className="hero-eyebrow-mark" aria-hidden="true" />
-            Ramal San Fernando — Pichilemu · Km 35,5
+            Frutos secos del Valle de Colchagua
           </p>
 
           <h1 className="hero-h1">
-            Lo que pediste<br />
+            Lo que <HandUnderline color="#B94A1F" thickness={5}>pediste</HandUnderline>
+            <br />
             es <em>lo que llega</em>.
           </h1>
 
           <p className="hero-sub">
-            Frutos secos y dulces del valle, en bolsa sellada. <strong>1 kilo</strong>
-            (o <strong>500 g</strong> para Chuby Bardú), cerrada al vacío, lista para la mesa.
-            Despacho de martes a sábado en Santa Cruz, Palmilla, Peralillo y Marchigüe.
+            Bolsa sellada al vacío. <strong>1 kilo</strong> (o <strong>500 g</strong> si es
+            Chuby Bardú). Sin granel, sin tarjeta, sin trampa.
+            Despacho martes a sábado en cuatro comunas de Colchagua.
           </p>
 
           <div className="hero-actions">
@@ -90,6 +93,23 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
               <span className="hero-stamp-kicker">Bolsa destacada</span>
               <span className="hero-stamp-name">{lead.name}</span>
               <span className="hero-stamp-meta">{fmt(lead.price)} · 1 kg sellado</span>
+            </span>
+
+            {/* Stickers flotantes — identidad de marca, no decoración pasiva */}
+            <span className="hero-sticker hero-sticker-1">
+              <Sticker tone="terracota" rotate={-8} size="md" variant="badge">
+                ✓ Sellado al vacío
+              </Sticker>
+            </span>
+            <span className="hero-sticker hero-sticker-2">
+              <Sticker tone="oliva" rotate={6} size="sm" variant="label">
+                Hecho acá
+              </Sticker>
+            </span>
+            <span className="hero-sticker hero-sticker-3">
+              <Sticker tone="crema" rotate={-3} size="sm" variant="tag">
+                Sin RUT empresa
+              </Sticker>
             </span>
           </div>
           <figcaption className="hero-cap">
@@ -334,6 +354,20 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
           font-weight: 500;
           color: rgba(90,31,26,0.5);
           text-align: right;
+        }
+
+        /* Stickers flotantes en la foto del hero */
+        .hero-sticker {
+          position: absolute;
+          z-index: 3;
+        }
+        .hero-sticker-1 { top: -14px; right: -8px; }
+        .hero-sticker-2 { top: 38%; left: -22px; }
+        .hero-sticker-3 { bottom: -18px; right: 30px; }
+        @media (min-width: 900px) {
+          .hero-sticker-1 { top: -18px; right: -18px; }
+          .hero-sticker-2 { top: 40%; left: -38px; }
+          .hero-sticker-3 { bottom: -22px; right: 40px; }
         }
 
         @media (min-width: 900px) {

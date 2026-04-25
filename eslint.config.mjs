@@ -13,6 +13,8 @@ export default [
       "tsconfig.tsbuildinfo",
       ".vercel/**",
       "coverage/**",
+      "playwright-report/**",
+      "test-results/**",
     ],
   },
   {

@@ -56,10 +56,16 @@ export function middleware(request: NextRequest) {
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-nonce", nonce);
-  requestHeaders.set("content-security-policy", csp);
 
   const response = NextResponse.next({ request: { headers: requestHeaders } });
-  response.headers.set("content-security-policy", csp);
+  // CSP en MODO REPORT-ONLY — el navegador loguea violaciones a /api/csp-report
+  // pero NO bloquea. Razón: 'strict-dynamic' requiere que Next.js propague el
+  // nonce a sus chunks dinámicos, y eso no funciona out-of-the-box en Next 16.
+  // Sin esto, el middleware bloquea TODOS los chunks de Next y la página no
+  // hidrata — lo que rompía Zustand, Add-to-cart, OrderSheet, etc.
+  // TODO: integrar nonce con next/script + cookies()/headers() en Server Components,
+  // luego promover de Report-Only a enforced.
+  response.headers.set("content-security-policy-report-only", csp);
   return response;
 }
 

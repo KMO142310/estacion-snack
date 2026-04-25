@@ -81,7 +81,7 @@ export default function ProductCard({ product, onOpen }: Props) {
         aria-label={agotado ? `${name} — agotado` : `Ver detalle de ${name}`}
         className="pc-btn"
       >
-        <div className="pc-img-wrap">
+        <div className="pc-img-wrap img-warm-frame">
           <Image
             src={image_webp_url}
             alt=""

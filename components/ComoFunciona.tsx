@@ -1,15 +1,15 @@
 const steps = [
-  { n: "01", title: "Eliges", desc: "Abres el catálogo y agregas lo que quieres." },
-  { n: "02", title: "Revisas", desc: "El resumen queda listo para WhatsApp." },
-  { n: "03", title: "Confirmas", desc: "Coordinamos despacho y forma de pago." },
+  { n: "01", title: "Eliges la bolsa", desc: "Miras las seis, marcas lo que quieres. Sin mínimo." },
+  { n: "02", title: "Mandas el resumen", desc: "Se arma solo. Un toque y te llevamos a WhatsApp con todo escrito." },
+  { n: "03", title: "Llega en dos días", desc: "Martes o sábado, según el que te quede más cerca. Pagas al recibir o transferencia." },
 ];
 
 export default function ComoFunciona() {
   return (
     <section aria-label="Cómo funciona" className="cf">
       <div className="cf-inner">
-        <p className="cf-kicker">Cómo comprar</p>
-        <h2 className="cf-title">Tres pasos y listo.</h2>
+        <p className="cf-kicker">Cómo se pide</p>
+        <h2 className="cf-title">Tres pasos. Sin formulario.</h2>
 
         <div className="cf-steps">
           {steps.map(({ n, title, desc }) => (

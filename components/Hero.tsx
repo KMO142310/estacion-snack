@@ -11,14 +11,6 @@ interface HeroProps {
 
 const lead = productsData[0]; // Mix Europeo
 
-/**
- * Hero rediseñado con DISCIPLINA tipo Aesop / Graza:
- * - Un solo mensaje grande, sin gimmicks compitiendo.
- * - Status bar minimal (solo dot + clock, sin FlipBoard).
- * - Foto sin rotación, sin tags. Composición clean.
- * - Un solo CTA principal.
- * - El restraint es la jerarquía.
- */
 export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
   const [clock, setClock] = useState("");
   const [open, setOpen] = useState(true);
@@ -41,44 +33,51 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
 
   return (
     <section aria-label="Inicio" className="hero">
-      {/* Status bar minimal — solo lo que aporta señal */}
       <div className="hero-bar">
         <div className="hero-bar-left">
           <span className={`hero-led ${open ? "open" : "closed"}`} aria-hidden="true" />
-          <span>{open ? "Tomando pedidos ahora" : "Cerrado · WhatsApp deja mensaje"}</span>
+          <span>{open ? "Mesa abierta · responde una persona" : "Cerrado · deja mensaje en WhatsApp"}</span>
         </div>
         <div className="hero-bar-right">
           <span suppressHydrationWarning>{clock || "—:—"}</span>
           <span className="hero-bar-sep" aria-hidden="true">·</span>
-          <span>Santa Cruz, CL</span>
+          <span>Santa Cruz · Colchagua</span>
         </div>
       </div>
 
       <div className="hero-grid">
         <div className="hero-text">
-          <p className="hero-eyebrow">Frutos secos del Valle de Colchagua</p>
+          <p className="hero-eyebrow">
+            <span className="hero-eyebrow-mark" aria-hidden="true" />
+            Ramal San Fernando — Pichilemu · Km 35,5
+          </p>
 
           <h1 className="hero-h1">
-            Bolsa sellada,<br />
-            <em>cantidad honesta</em>.
+            Lo que pediste<br />
+            es <em>lo que llega</em>.
           </h1>
 
           <p className="hero-sub">
-            Sin granel, sin pesa de mostrador. La que pedís es la que llega:
-            <strong> 1 kilo</strong> (o <strong>500 g</strong> si es Chuby Bardú),
-            cerrada al vacío, lista para la mesa.
+            Frutos secos y dulces del valle, en bolsa sellada. <strong>1 kilo</strong>
+            (o <strong>500 g</strong> para Chuby Bardú), cerrada al vacío, lista para la mesa.
+            Despacho de martes a sábado en Santa Cruz, Palmilla, Peralillo y Marchigüe.
           </p>
 
-          <a href="#productos" className="hero-cta">
-            Ver las 6 bolsas
-            <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M5 12h14M13 5l7 7-7 7" />
-            </svg>
-          </a>
+          <div className="hero-actions">
+            <a href="#productos" className="hero-cta">
+              Ver las seis bolsas
+              <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 5l7 7-7 7" />
+              </svg>
+            </a>
+            <a href="#packs" className="hero-link">
+              o armar un pack
+            </a>
+          </div>
         </div>
 
         <figure className="hero-figure">
-          <div className="hero-photo-frame">
+          <div className="hero-photo-frame img-warm-frame">
             <Image
               src={lead.image_webp_url}
               alt={lead.name}
@@ -87,10 +86,15 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
               sizes="(max-width: 768px) 100vw, 50vw"
               style={{ objectFit: "cover" }}
             />
+            <span className="hero-stamp" aria-hidden="true">
+              <span className="hero-stamp-kicker">Bolsa destacada</span>
+              <span className="hero-stamp-name">{lead.name}</span>
+              <span className="hero-stamp-meta">{fmt(lead.price)} · 1 kg sellado</span>
+            </span>
           </div>
           <figcaption className="hero-cap">
             <span className="hero-cap-name">{lead.name}</span>
-            <span className="hero-cap-meta">{fmt(lead.price)} · Bolsa de 1 kg</span>
+            <span className="hero-cap-meta">Almendra · nuez · avellana europea · maní sin sal</span>
           </figcaption>
         </figure>
       </div>
@@ -162,13 +166,23 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
 
         .hero-text { min-width: 0; }
         .hero-eyebrow {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
           font-family: var(--font-body);
-          font-size: 11px;
+          font-size: 10.5px;
           font-weight: 700;
           letter-spacing: 0.22em;
           text-transform: uppercase;
           color: #A8411A;
           margin: 0 0 1.5rem;
+        }
+        .hero-eyebrow-mark {
+          display: inline-block;
+          width: 22px;
+          height: 1px;
+          background: currentColor;
+          opacity: 0.55;
         }
         .hero-h1 {
           font-family: var(--font-display);
@@ -199,6 +213,12 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
           font-weight: 500;
           color: #5A1F1A;
         }
+        .hero-actions {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 1rem 1.5rem;
+        }
         .hero-cta {
           display: inline-flex;
           align-items: center;
@@ -222,6 +242,20 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
           }
           .hero-cta:hover svg { transform: translateX(4px); }
         }
+        .hero-link {
+          font-family: var(--font-display);
+          font-style: italic;
+          font-size: 0.975rem;
+          color: #5A1F1A;
+          text-decoration: underline;
+          text-underline-offset: 5px;
+          text-decoration-thickness: 1px;
+          text-decoration-color: rgba(90,31,26,0.35);
+          transition: text-decoration-color 0.2s ease, color 0.2s ease;
+        }
+        @media (hover: hover) {
+          .hero-link:hover { color: #A8411A; text-decoration-color: #A8411A; }
+        }
 
         /* Figura: foto + caption */
         .hero-figure {
@@ -232,9 +266,51 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
           position: relative;
           aspect-ratio: 4/5;
           background: #EDE4D6;
-          border-radius: 20px;
+          border-radius: 4px;
           overflow: hidden;
-          box-shadow: 0 30px 60px -28px rgba(90,31,26,0.4);
+          box-shadow:
+            0 1px 0 rgba(90,31,26,0.08),
+            0 30px 60px -28px rgba(90,31,26,0.4),
+            inset 0 0 0 1px rgba(90,31,26,0.06);
+        }
+        /* Sello estilo papeleta de despacho sobrepuesto a la foto */
+        .hero-stamp {
+          position: absolute;
+          left: 14px;
+          bottom: 14px;
+          z-index: 2;
+          display: inline-flex;
+          flex-direction: column;
+          gap: 2px;
+          padding: 10px 14px;
+          background: rgba(244,234,219,0.94);
+          backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
+          border: 1px solid rgba(90,31,26,0.14);
+          border-radius: 3px;
+          max-width: 72%;
+        }
+        .hero-stamp-kicker {
+          font-family: var(--font-body);
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: #A8411A;
+        }
+        .hero-stamp-name {
+          font-family: var(--font-display);
+          font-weight: 600;
+          font-size: 0.95rem;
+          color: #5A1F1A;
+          line-height: 1.15;
+        }
+        .hero-stamp-meta {
+          font-family: var(--font-body);
+          font-size: 11px;
+          font-weight: 500;
+          color: rgba(90,31,26,0.65);
+          font-variant-numeric: tabular-nums;
         }
         .hero-cap {
           margin-top: 14px;
@@ -247,16 +323,17 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
         }
         .hero-cap-name {
           font-family: var(--font-display);
-          font-weight: 600;
-          font-size: 1.05rem;
-          color: #5A1F1A;
+          font-style: italic;
+          font-weight: 500;
+          font-size: 0.95rem;
+          color: rgba(90,31,26,0.75);
           letter-spacing: -0.01em;
         }
         .hero-cap-meta {
-          font-size: 0.85rem;
+          font-size: 0.78rem;
           font-weight: 500;
-          color: rgba(90,31,26,0.6);
-          font-variant-numeric: tabular-nums;
+          color: rgba(90,31,26,0.5);
+          text-align: right;
         }
 
         @media (min-width: 900px) {

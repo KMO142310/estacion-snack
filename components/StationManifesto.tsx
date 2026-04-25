@@ -36,16 +36,18 @@ export default function StationManifesto() {
 
           <div className="sm-prose">
             <p>
-              El negocio nace en Santa Cruz. El nombre viene de que el pueblo
-              tuvo una estación de verdad — km 35,5 del ramal a Pichilemu,
-              hoy silenciada. La forma de venta es honesta: bolsa sellada
-              al vacío, formato fijo (1 kilo, o 500 g si es Chuby Bardú),
-              sin pesa ni «te dejo unos gramitos más».
+              Partimos en Santa Cruz, en una bodega chica, con una pesa y la
+              convicción de que los frutos secos no tenían por qué venir en
+              envases industriales con más plástico que contenido. El nombre
+              viene del pueblo — km 35,5 del ramal a Pichilemu, una estación
+              que hoy está silenciada.
             </p>
             <p>
-              Sin checkout con tarjeta. Sin cuenta. Sin newsletter que no
-              pediste. Confirmás el pedido por WhatsApp con una persona que
-              responde, y arreglamos la entrega.
+              Vendemos en bolsa sellada al vacío, formato fijo (1 kilo, o 500 g
+              si es Chuby Bardú). Sin pesa de mostrador, sin «te dejo unos
+              gramitos más», sin cuenta, sin newsletter que no pediste.
+              El pedido se confirma por WhatsApp con una persona que responde.
+              Si algo sale mal, nos llega directo.
             </p>
           </div>
 
@@ -56,11 +58,11 @@ export default function StationManifesto() {
             </div>
             <div className="sm-stat">
               <dt>Comunas</dt>
-              <dd>5</dd>
+              <dd>4</dd>
             </div>
             <div className="sm-stat">
               <dt>Despacho</dt>
-              <dd>Mar – Sáb</dd>
+              <dd>Mar — Sáb</dd>
             </div>
           </dl>
         </div>

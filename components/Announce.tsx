@@ -1,9 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+// Mensajes rotativos — señales operativas honestas, no adjetivos.
+const MESSAGES = [
+  "Santa Cruz · pedidos por WhatsApp",
+  "Martes a sábado · despacho en el valle",
+  "Bolsa sellada · peso exacto",
+  "Responde una persona, no un bot",
+];
 
 export default function Announce() {
   const [visible, setVisible] = useState(true);
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIdx((i) => (i + 1) % MESSAGES.length);
+    }, 4800);
+    return () => clearInterval(id);
+  }, []);
 
   if (!visible) return null;
 
@@ -39,15 +55,17 @@ export default function Announce() {
       />
 
       <span
+        key={idx}
         style={{
           fontFamily: "var(--font-body)",
           fontWeight: 600,
           fontSize: 11,
           letterSpacing: "0.08em",
           lineHeight: 1,
+          animation: "announceFade 480ms ease-out",
         }}
       >
-        Santa Cruz · pedido por WhatsApp
+        {MESSAGES[idx]}
       </span>
 
       <button
@@ -69,6 +87,16 @@ export default function Announce() {
       >
         ✕
       </button>
+
+      <style>{`
+        @keyframes announceFade {
+          from { opacity: 0; transform: translateY(3px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          span { animation: none !important; }
+        }
+      `}</style>
     </div>
   );
 }

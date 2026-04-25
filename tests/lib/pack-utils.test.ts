@@ -4,6 +4,7 @@ import {
   totalKg,
   consolidatedBOM,
   getPackAvailability,
+  getBOMDetails,
   type Pack,
   type ProductStock,
 } from "@/lib/pack-utils";
@@ -94,5 +95,88 @@ describe("getPackAvailability", () => {
     ];
     const r = getPackAvailability(samplePack, stock);
     expect(r.units).toBe(0);
+  });
+});
+
+describe("getBOMDetails (lo que ve PackSheet por componente)", () => {
+  const stock: ProductStock[] = [
+    { id: "p1", status: "disponible", stock_kg: 10, name: "Almendra" },
+    { id: "p2", status: "disponible", stock_kg: 5, name: "Mix Europeo" },
+  ];
+
+  it("retorna una entrada por productId único (consolida duplicados)", () => {
+    // samplePack tiene p1 dos veces (0.5 + 0.2). getBOMDetails debe consolidar.
+    const details = getBOMDetails(samplePack, stock);
+    expect(details).toHaveLength(2);
+    const p1 = details.find((d) => d.productId === "p1");
+    expect(p1?.requiredKg).toBe(0.7);
+    expect(p1?.unitsAllowed).toBe(14); // floor(10/0.7)
+  });
+
+  it("componente agotado: unitsAllowed = 0 aunque stock_kg > 0", () => {
+    const stockAg: ProductStock[] = [
+      { id: "p1", status: "agotado", stock_kg: 100, name: "Almendra" }, // status manda
+      { id: "p2", status: "disponible", stock_kg: 5, name: "Mix Europeo" },
+    ];
+    const details = getBOMDetails(samplePack, stockAg);
+    const p1 = details.find((d) => d.productId === "p1");
+    expect(p1?.unitsAllowed).toBe(0);
+    expect(p1?.status).toBe("agotado");
+  });
+
+  it("componente con stock_kg < requiredKg: unitsAllowed = 0", () => {
+    const stockShort: ProductStock[] = [
+      { id: "p1", status: "disponible", stock_kg: 0.5, name: "Almendra" }, // < 0.7 requerido
+      { id: "p2", status: "disponible", stock_kg: 5, name: "Mix Europeo" },
+    ];
+    const details = getBOMDetails(samplePack, stockShort);
+    const p1 = details.find((d) => d.productId === "p1");
+    expect(p1?.unitsAllowed).toBe(0);
+    expect(p1?.stockKg).toBe(0.5);
+  });
+
+  it("componente faltante en stock: stockKg=0, status='agotado', unitsAllowed=0", () => {
+    const stockMissing: ProductStock[] = [
+      { id: "p2", status: "disponible", stock_kg: 5, name: "Mix Europeo" },
+      // p1 no existe
+    ];
+    const details = getBOMDetails(samplePack, stockMissing);
+    const p1 = details.find((d) => d.productId === "p1");
+    expect(p1?.stockKg).toBe(0);
+    expect(p1?.status).toBe("agotado");
+    expect(p1?.unitsAllowed).toBe(0);
+  });
+});
+
+describe("computeSavings edge cases", () => {
+  const overpricedPack: Pack = {
+    id: "bad", slug: "bad", name: "Bad Pack", tagline: "", badge: null,
+    price: 30000, // más caro que comprar suelto!
+    image_url: "", image_webp_url: "", image_400_url: "",
+    items: [
+      { name: "Almendra", productId: "p1", kg: 1, pricePerKg: 13000 },
+      { name: "Mix", productId: "p2", kg: 1, pricePerKg: 9000 },
+    ],
+  };
+
+  it("pack más caro que sueltos: savings es negativo (no enmascara)", () => {
+    const r = computeSavings(overpricedPack);
+    // suelto = 22000, pack = 30000 → savings = -8000.
+    expect(r.savings).toBe(-8000);
+    expect(r.savingsPct).toBe(-36);
+  });
+
+  it("pack con un solo producto único: sueltoTotal = pricePerKg de ese producto", () => {
+    const monoPack: Pack = {
+      id: "m", slug: "m", name: "Mono", tagline: "", badge: null,
+      price: 10000,
+      image_url: "", image_webp_url: "", image_400_url: "",
+      items: [
+        { name: "Almendra", productId: "p1", kg: 0.5, pricePerKg: 13000 },
+        { name: "Almendra", productId: "p1", kg: 0.5, pricePerKg: 13000 }, // mismo product
+      ],
+    };
+    const r = computeSavings(monoPack);
+    expect(r.sueltoTotal).toBe(13000); // 1 producto único × 1 kg de referencia
   });
 });

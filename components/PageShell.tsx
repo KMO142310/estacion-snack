@@ -92,16 +92,15 @@ export default function PageShell() {
         {/* ── Resto del catálogo ── */}
         <section id="productos" className="s-white">
           <div className="container">
-            <div className="section-head">
-              <div>
-                <p className="kicker">Catálogo</p>
-                <h2 className="stitle">Las otras <em>cinco bolsas</em>.</h2>
-              </div>
-              <p className="section-aside">
-                Cinco productos a 1 kg. Chuby Bardú en bolsa de 500 g. Lo que ves es lo que hay.
+            <header className="section-head">
+              <p className="kicker">Catálogo</p>
+              <h2 className="stitle">Las otras <em>cinco bolsas</em>.</h2>
+              <p className="section-sub">
+                Cinco productos a 1 kg. Chuby Bardú en bolsa de 500 g.
+                Lo que ves es lo que hay.
               </p>
-            </div>
-            <div className="product-grid" style={{ marginTop: "3rem" }}>
+            </header>
+            <div className="product-grid">
               {gridProducts.map((p) => (
                 <ProductCard key={p.id} product={p} onOpen={() => setSheetProduct(p)} />
               ))}
@@ -115,18 +114,15 @@ export default function PageShell() {
         {/* ── Packs ── */}
         <section id="packs" className="s-warm">
           <div className="container">
-            <div className="section-head">
-              <div>
-                <p className="kicker">Packs</p>
-                <h2 className="stitle">Para cuando no quieres <em>elegir entre dos</em>.</h2>
-              </div>
-              <p className="section-aside">
-                Dos bolsas que se entienden. Ahorras unos pesos y pruebas dos a la vez.
+            <header className="section-head">
+              <p className="kicker">Packs</p>
+              <h2 className="stitle">Dos bolsas, <em>un poco más barato</em>.</h2>
+              <p className="section-sub">
+                Combinaciones armadas con dos bolsas que se complementan.
+                Te ahorras unos pesos y pruebas variedad.
               </p>
-            </div>
-            <div style={{ marginTop: "2rem" }}>
-              <PackSection />
-            </div>
+            </header>
+            <PackSection />
           </div>
         </section>
 
@@ -278,27 +274,25 @@ export default function PageShell() {
         .section-head {
           display: flex;
           flex-direction: column;
-          gap: 1rem;
-          margin-bottom: 0.5rem;
+          gap: 0.75rem;
+          margin-bottom: 2.75rem;
           align-items: flex-start;
+          max-width: 720px;
         }
-        .section-aside {
+        .section-sub {
           font-family: var(--font-display);
           font-style: italic;
           font-weight: 300;
-          font-size: 0.95rem;
+          font-size: clamp(0.95rem, 1.6vw, 1.1rem);
           color: #5E6B3E;
-          margin: 0;
-          max-width: 320px;
+          margin: 0.5rem 0 0;
+          line-height: 1.5;
+          max-width: 540px;
         }
         @media (min-width: 768px) {
           .section-head {
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: flex-end;
-            gap: 2rem;
+            margin-bottom: 3.5rem;
           }
-          .section-aside { text-align: right; padding-bottom: 0.5rem; }
         }
 
         .product-grid {

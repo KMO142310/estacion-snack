@@ -63,3 +63,8 @@ next-env.d.ts
 
 # claude code local state — trackear solo agents/ y settings, no scratchpad
 .claude/scratch/
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/

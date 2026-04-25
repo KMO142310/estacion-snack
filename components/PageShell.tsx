@@ -103,19 +103,6 @@ export default function PageShell() {
           </section>
         )}
 
-        {/* ── Newsletter (estilo retail estándar) ── */}
-        <section className="rt-newsletter">
-          <div className="rt-wrap" style={{ maxWidth: 560, textAlign: "center" }}>
-            <h3 className="rt-newsletter-title">Avisos por WhatsApp</h3>
-            <p className="rt-newsletter-sub">
-              Te avisamos cuando llega producto nuevo o hay promo. Sin spam.
-            </p>
-            <a href="https://wa.me/56953743338?text=Hola!%20Quiero%20recibir%20avisos%20de%20Estaci%C3%B3n%20Snack" target="_blank" rel="noopener noreferrer" className="rt-newsletter-cta">
-              Suscribirme por WhatsApp
-            </a>
-          </div>
-        </section>
-
         {/* ── FAQ ── */}
         <section className="rt-section">
           <div className="rt-wrap" style={{ maxWidth: 720 }}>
@@ -232,34 +219,6 @@ export default function PageShell() {
         @media (min-width: 1100px) {
           .rt-grid { grid-template-columns: repeat(3, 1fr); gap: 3rem 2rem; }
         }
-
-        /* Newsletter */
-        .rt-newsletter {
-          padding: 3rem 1rem;
-          background: #000;
-          color: #fff;
-        }
-        .rt-newsletter-title {
-          font-size: 1.4rem;
-          font-weight: 700;
-          margin: 0 0 0.4rem;
-        }
-        .rt-newsletter-sub {
-          font-size: 0.9375rem;
-          color: rgba(255,255,255,0.7);
-          margin: 0 0 1.5rem;
-        }
-        .rt-newsletter-cta {
-          display: inline-flex;
-          padding: 0.85rem 1.75rem;
-          background: #EFD200;
-          color: #000;
-          font-weight: 700;
-          font-size: 0.9375rem;
-          border-radius: 4px;
-          transition: opacity 0.15s ease;
-        }
-        .rt-newsletter-cta:hover { opacity: 0.85; }
 
         /* FAQ */
         .rt-faq-list { display: flex; flex-direction: column; }

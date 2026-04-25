@@ -13,10 +13,12 @@
     "image_webp_url": "/img/mix-europeo-x-kilo.webp",
     "image_400_url": "/img/mix-europeo-x-kilo-400.webp",
     "copy": "Maní sin sal, almendras, nueces y avellanas. En esas proporciones, exactas, porque las probamos otras y no dan.",
-    "long_copy": "El Mix Europeo lleva cuatro ingredientes y ningún relleno. Nueces enteras, almendras con piel, avellanas y maní sin sal. En bolsa de 1 kg. Si es tu primera vez, parte con un kilo y lo estiras más de lo que crees.",
+    "long_copy": "El Mix Europeo lleva cuatro ingredientes y ningún relleno. Nueces enteras, almendras con piel, avellanas y maní sin sal. En bolsa sellada de 1 kg. Si es tu primera vez, parte con una bolsa y la estiras más de lo que crees.",
     "badge": "Top ventas",
     "sort_order": 1,
     "min_unit_kg": 1,
+    "format_label": "Bolsa sellada · 1 kg",
+    "format_short": "1 kg",
     "occasion": "El repetido de todos los jueves."
   },
   {
@@ -33,10 +35,12 @@
     "image_webp_url": "/img/mani-confitado-tropical-x-kilo.webp",
     "image_400_url": "/img/mani-confitado-tropical-x-kilo-400.webp",
     "copy": "Maní envuelto en azúcar de colores. Crujiente, dulce, imposible parar.",
-    "long_copy": "La versión de colores vivos. Exterior de azúcar con un leve sabor frutal, interior de maní tostado. Llena un bowl en segundos y lo vacía igual de rápido.",
+    "long_copy": "La versión de colores vivos. Exterior de azúcar con un leve sabor frutal, interior de maní tostado. Llena un bowl en segundos y lo vacía igual de rápido. Bolsa sellada de 1 kg.",
     "badge": null,
     "sort_order": 2,
     "min_unit_kg": 1,
+    "format_label": "Bolsa sellada · 1 kg",
+    "format_short": "1 kg",
     "occasion": "El que desaparece en la sobremesa."
   },
   {
@@ -53,10 +57,12 @@
     "image_webp_url": "/img/mani-confitado-natural-rojo-x-kilo.webp",
     "image_400_url": "/img/mani-confitado-natural-rojo-x-kilo-400.webp",
     "copy": "El confitado clásico. Rojo oscuro, crujiente por fuera, maní tostado por dentro.",
-    "long_copy": "Rojo intenso. La capa de azúcar es más gruesa que en el tropical: cruje más. El maní interior viene tostado en seco. El que pide una vez siempre vuelve a pedir.",
+    "long_copy": "Rojo intenso. La capa de azúcar es más gruesa que en el tropical: cruje más. El maní interior viene tostado en seco. Bolsa sellada de 1 kg. El que pide una vez siempre vuelve a pedir.",
     "badge": null,
     "sort_order": 3,
     "min_unit_kg": 1,
+    "format_label": "Bolsa sellada · 1 kg",
+    "format_short": "1 kg",
     "occasion": "El que pedís una vez y volvés a pedir."
   },
   {
@@ -73,10 +79,12 @@
     "image_webp_url": "/img/chuby-bardu-x-kilo-.webp",
     "image_400_url": "/img/chuby-bardu-x-kilo--400.webp",
     "copy": "Confites de chocolate en todos los colores. Los que desaparecen del bowl sin que nadie confiese.",
-    "long_copy": "Chuby Bardú son confites de chocolate con cobertura de azúcar de colores. Tamaño más grande que los M&M estándar, con más chocolate adentro. El que llega a mesa desaparece antes de que te sirvas vino.",
+    "long_copy": "Chuby Bardú son confites de chocolate con cobertura de azúcar de colores. Tamaño más grande que los M&M estándar, con más chocolate adentro. Bolsa sellada de 500 g. El que llega a mesa desaparece antes de que te sirvas vino.",
     "badge": "Popular",
     "sort_order": 4,
     "min_unit_kg": 0.5,
+    "format_label": "Bolsa sellada · 500 g",
+    "format_short": "500 g",
     "occasion": "El que se acaba primero en cualquier mesa."
   },
   {
@@ -93,10 +101,12 @@
     "image_webp_url": "/img/gomita-osito-docile-x-kg.webp",
     "image_400_url": "/img/gomita-osito-docile-x-kg-400.webp",
     "copy": "Ositos de goma suaves. Los comes de a uno y cuando cachái se acabaron.",
-    "long_copy": "Gomitas en forma de osito, sabores de frutas, textura suave que no endurece. Los que llevan bien con el café de las 4.",
+    "long_copy": "Gomitas en forma de osito, sabores de frutas, textura suave que no endurece. Bolsa sellada de 1 kg. Los que llevan bien con el café de las 4.",
     "badge": null,
     "sort_order": 5,
     "min_unit_kg": 1,
+    "format_label": "Bolsa sellada · 1 kg",
+    "format_short": "1 kg",
     "occasion": "El que acompaña el café de las 4."
   },
   {
@@ -112,11 +122,13 @@
     "image_url": "/img/saco-almendra-enteras-x-10-kilos.jpg",
     "image_webp_url": "/img/saco-almendra-enteras-x-10-kilos.webp",
     "image_400_url": "/img/saco-almendra-enteras-x-10-kilos-400.webp",
-    "copy": "Almendra entera con piel. Crujiente, de primera. Solo queda un kilo.",
-    "long_copy": "Almendra entera con piel, sin sal, sin tostar. La piel aporta sabor. Textura firme al morder. Queda un kilo.",
-    "badge": "Último kg",
+    "copy": "Almendra entera con piel. Crujiente, de primera. Solo queda una bolsa.",
+    "long_copy": "Almendra entera con piel, sin sal, sin tostar. La piel aporta sabor. Textura firme al morder. Bolsa sellada de 1 kg. Queda una bolsa en stock.",
+    "badge": "Última bolsa",
     "sort_order": 6,
     "min_unit_kg": 1,
+    "format_label": "Bolsa sellada · 1 kg",
+    "format_short": "1 kg",
     "occasion": "La picada seria."
   }
 ]

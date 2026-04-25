@@ -2,12 +2,8 @@
 
 import Image from "next/image";
 import { useCartStore } from "@/lib/store";
-import { fmt, fmtKg } from "@/lib/cart-utils";
+import { fmt } from "@/lib/cart-utils";
 
-/**
- * Producto destacado con layout editorial — no es una card más del grid.
- * Foto dominante, copy rico, CTA directo. Rompe la monotonía del grid.
- */
 interface Props {
   product: {
     id: string;
@@ -17,25 +13,39 @@ interface Props {
     image_webp_url: string;
     stock_kg: number;
     min_unit_kg?: number;
+    format_label?: string;
+    format_short?: string;
     status?: string;
     copy?: string;
+    long_copy?: string;
   };
   onOpen: () => void;
 }
 
-const BLURB = "Almendra, nuez, maní sin sal y avellana europea. Mezcla de cuatro frutos, pensada para picar sin elegir. La proporción que le pusimos es la que hace que no se termine solo el rico.";
-
 export default function FeaturedProduct({ product, onOpen }: Props) {
-  const { name, price, image_webp_url, min_unit_kg = 1, status, stock_kg } = product;
+  const {
+    name,
+    price,
+    image_webp_url,
+    min_unit_kg = 1,
+    format_short = "1 kg",
+    status,
+    stock_kg,
+    long_copy,
+  } = product;
   const agotado = status === "agotado";
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
+  const bagPrice = price * min_unit_kg;
+  const blurb =
+    long_copy ??
+    "Mezcla de cuatro frutos en proporciones definidas. Almendra, nuez, maní sin sal y avellana europea.";
 
   const handleAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (agotado || stock_kg < min_unit_kg) return;
     addItem({ kind: "product", id: product.id, qty: min_unit_kg, name, pricePerUnit: price });
-    addToast(`${name} · ${fmtKg(min_unit_kg)}`);
+    addToast(`${name} · 1 bolsa`);
   };
 
   return (
@@ -43,7 +53,6 @@ export default function FeaturedProduct({ product, onOpen }: Props) {
       <div className="fp-inner">
         <div className="fp-image-col">
           <div className="fp-image-wrap">
-            <span className="fp-label" aria-hidden="true">El más pedido</span>
             <button
               type="button"
               onClick={onOpen}
@@ -60,42 +69,38 @@ export default function FeaturedProduct({ product, onOpen }: Props) {
               />
             </button>
           </div>
-          <div className="fp-ticket" aria-hidden="true">
-            <div className="fp-ticket-dots">
-              {Array.from({ length: 24 }).map((_, i) => (
-                <span key={i} />
-              ))}
-            </div>
-          </div>
         </div>
 
         <div className="fp-text-col">
           <p className="fp-kicker">
-            <span className="fp-kicker-num">01</span>
-            <span className="fp-kicker-sep" aria-hidden="true">—</span>
-            Clásico de la casa
+            <span className="fp-kicker-line" aria-hidden="true" />
+            El más pedido de la tienda
           </p>
 
           <h2 className="fp-name">{name}</h2>
 
-          <p className="fp-tagline">Cuatro frutos, una sola mezcla.</p>
+          <p className="fp-blurb">{blurb}</p>
 
-          <p className="fp-blurb">{BLURB}</p>
-
-          <dl className="fp-specs">
-            <div>
-              <dt>Precio</dt>
-              <dd>{fmt(price)} <span>/ kg</span></dd>
+          <div className="fp-meta">
+            <div className="fp-meta-block">
+              <span className="fp-meta-label">Formato</span>
+              <span className="fp-meta-value">Bolsa sellada · {format_short}</span>
             </div>
-            <div>
-              <dt>Desde</dt>
-              <dd>{fmtKg(min_unit_kg)}</dd>
+            <div className="fp-meta-block">
+              <span className="fp-meta-label">Precio</span>
+              <span className="fp-meta-value fp-meta-price">{fmt(bagPrice)}</span>
             </div>
-            <div>
-              <dt>Stock</dt>
-              <dd>{agotado ? "Agotado" : `${stock_kg} kg`}</dd>
+            <div className="fp-meta-block">
+              <span className="fp-meta-label">Stock</span>
+              <span className="fp-meta-value">
+                {agotado
+                  ? "Agotado"
+                  : stock_kg === 1
+                    ? "Última bolsa"
+                    : `${stock_kg} bolsas`}
+              </span>
             </div>
-          </dl>
+          </div>
 
           <div className="fp-actions">
             <button
@@ -104,10 +109,9 @@ export default function FeaturedProduct({ product, onOpen }: Props) {
               disabled={agotado || stock_kg < min_unit_kg}
               className="fp-cta"
             >
-              Agregar 1 kg · {fmt(price)}
-              <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
-                <path d="M12 5v14M5 12h14" strokeLinecap="round" />
-              </svg>
+              Agregar 1 bolsa
+              <span className="fp-cta-divider" aria-hidden="true">·</span>
+              {fmt(bagPrice)}
             </button>
             <button type="button" onClick={onOpen} className="fp-cta-secondary">
               Ver detalle
@@ -118,29 +122,28 @@ export default function FeaturedProduct({ product, onOpen }: Props) {
 
       <style>{`
         .fp {
-          background: #F4EADB;
-          padding: 4rem 1.5rem;
+          background: #FFF9F1;
+          padding: 4.5rem 1.5rem;
           position: relative;
+          border-top: 1px solid rgba(90,31,26,0.06);
+          border-bottom: 1px solid rgba(90,31,26,0.06);
         }
         .fp-inner {
           max-width: 1180px;
           margin: 0 auto;
           display: grid;
           grid-template-columns: 1fr;
-          gap: 2rem;
+          gap: 2.5rem;
           align-items: center;
         }
 
-        .fp-image-col {
-          position: relative;
-        }
+        .fp-image-col { position: relative; }
         .fp-image-wrap {
           position: relative;
-          aspect-ratio: 4/5;
+          aspect-ratio: 1/1;
           background: #EDE4D6;
-          border-radius: 24px;
+          border-radius: 12px;
           overflow: hidden;
-          box-shadow: 0 24px 60px -20px rgba(90,31,26,0.25);
         }
         .fp-image-btn {
           position: absolute;
@@ -152,150 +155,113 @@ export default function FeaturedProduct({ product, onOpen }: Props) {
           -webkit-tap-highlight-color: transparent;
         }
         .fp-image-btn img {
-          transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+          transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
         }
         @media (hover: hover) {
-          .fp-image-btn:hover img {
-            transform: scale(1.04);
-          }
-        }
-        .fp-label {
-          position: absolute;
-          top: 16px;
-          left: 16px;
-          z-index: 2;
-          padding: 6px 12px;
-          background: rgba(90,31,26,0.9);
-          color: #F4EADB;
-          font-family: var(--font-body);
-          font-size: 10px;
-          font-weight: 700;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          border-radius: 999px;
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-        }
-        .fp-ticket {
-          display: none;
+          .fp-image-btn:hover img { transform: scale(1.04); }
         }
 
         .fp-text-col {
           padding: 0.5rem 0;
+          min-width: 0;
         }
 
         .fp-kicker {
-          display: flex;
+          display: inline-flex;
           align-items: center;
-          gap: 0.6rem;
+          gap: 12px;
           font-family: var(--font-body);
-          font-size: 10.5px;
+          font-size: 11px;
           font-weight: 700;
-          letter-spacing: 0.2em;
+          letter-spacing: 0.22em;
           text-transform: uppercase;
           color: #A8411A;
           margin: 0 0 1.25rem;
         }
-        .fp-kicker-num {
-          font-family: var(--font-display);
-          font-style: italic;
-          font-size: 14px;
-          font-weight: 500;
-          color: rgba(90,31,26,0.55);
-          letter-spacing: 0;
+        .fp-kicker-line {
+          display: inline-block;
+          width: 24px;
+          height: 1px;
+          background: currentColor;
+          opacity: 0.55;
         }
-        .fp-kicker-sep { color: rgba(90,31,26,0.3); }
 
         .fp-name {
           font-family: var(--font-display);
           font-weight: 700;
-          font-size: clamp(2.4rem, 7vw, 4.5rem);
+          font-size: clamp(2.5rem, 7vw, 4.5rem);
           line-height: 0.95;
           letter-spacing: -0.04em;
           color: #5A1F1A;
-          margin: 0 0 0.75rem;
-        }
-        .fp-tagline {
-          font-family: var(--font-display);
-          font-style: italic;
-          font-weight: 300;
-          font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-          color: #5E6B3E;
           margin: 0 0 1.5rem;
-          line-height: 1.3;
         }
+
         .fp-blurb {
           font-family: var(--font-body);
-          font-size: 1rem;
-          line-height: 1.75;
-          color: rgba(90,31,26,0.82);
-          max-width: 500px;
+          font-size: 1.0625rem;
+          line-height: 1.7;
+          color: rgba(90,31,26,0.78);
+          max-width: 520px;
           margin: 0 0 2rem;
         }
 
-        .fp-specs {
+        .fp-meta {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: 1fr 1fr 1fr;
           gap: 1rem;
-          padding: 1.25rem 0;
+          padding: 1.5rem 0;
           margin: 0 0 2rem;
           border-top: 1px solid rgba(90,31,26,0.12);
           border-bottom: 1px solid rgba(90,31,26,0.12);
         }
-        .fp-specs > div { margin: 0; min-width: 0; }
-        .fp-specs dt {
+        .fp-meta-block { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+        .fp-meta-label {
           font-family: var(--font-body);
           font-size: 9.5px;
           font-weight: 700;
-          letter-spacing: 0.18em;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
           color: rgba(90,31,26,0.55);
-          margin: 0 0 4px;
         }
-        .fp-specs dd {
+        .fp-meta-value {
           font-family: var(--font-display);
           font-weight: 600;
-          font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+          font-size: clamp(0.95rem, 2.2vw, 1.15rem);
           color: #5A1F1A;
-          margin: 0;
-          letter-spacing: -0.02em;
-          line-height: 1;
+          letter-spacing: -0.015em;
+          line-height: 1.2;
         }
-        .fp-specs dd span {
-          font-family: var(--font-body);
-          font-weight: 400;
-          font-size: 0.65em;
-          color: rgba(90,31,26,0.55);
-          letter-spacing: 0;
+        .fp-meta-price {
+          font-variant-numeric: tabular-nums;
         }
 
         .fp-actions {
           display: flex;
           flex-wrap: wrap;
           align-items: center;
-          gap: 0.9rem 1.5rem;
+          gap: 1rem 1.75rem;
         }
         .fp-cta {
           display: inline-flex;
           align-items: center;
-          gap: 0.6rem;
+          gap: 0.7rem;
           font-family: var(--font-body);
           font-weight: 600;
           font-size: 1rem;
           color: #F4EADB;
           background: #5A1F1A;
-          padding: 0.95rem 1.75rem;
+          padding: 1rem 1.75rem;
           border: none;
-          border-radius: 14px;
+          border-radius: 999px;
           cursor: pointer;
-          box-shadow: 0 10px 24px -8px rgba(90,31,26,0.55);
-          transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+          box-shadow: 0 12px 28px -10px rgba(90,31,26,0.55);
+          transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
         }
+        .fp-cta-divider { opacity: 0.55; }
         @media (hover: hover) {
           .fp-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 32px -8px rgba(90,31,26,0.65);
-            background: #3d1613;
+            transform: translateY(-3px);
+            box-shadow: 0 18px 36px -10px rgba(90,31,26,0.65);
           }
         }
         .fp-cta:disabled {
@@ -328,32 +294,7 @@ export default function FeaturedProduct({ product, onOpen }: Props) {
             grid-template-columns: 0.95fr 1fr;
             gap: 4rem;
           }
-          .fp-image-wrap { aspect-ratio: 4/5.3; }
-          .fp-text-col { padding: 2rem 0 2rem 1rem; }
-          .fp-ticket {
-            display: block;
-            position: absolute;
-            bottom: -28px;
-            left: 28px;
-            right: 28px;
-            height: 28px;
-            background: #F4EADB;
-            border-radius: 0 0 24px 24px;
-            overflow: hidden;
-          }
-          .fp-ticket-dots {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            height: 100%;
-          }
-          .fp-ticket-dots span {
-            flex: 1;
-            height: 2px;
-            border-radius: 1px;
-            background: rgba(90,31,26,0.15);
-          }
+          .fp-text-col { padding: 1rem 0 1rem 1rem; }
         }
       `}</style>
     </section>

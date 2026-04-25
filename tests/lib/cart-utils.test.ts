@@ -36,22 +36,26 @@ describe("fmtKg", () => {
 });
 
 describe("fmtDisplayPrice", () => {
-  it("para unidad >= 1 kg muestra precio por kilo", () => {
-    expect(fmtDisplayPrice(9000, 1)).toEqual({ price: "$9.000", unit: "1 kg" });
+  it("bolsa de 1 kg muestra precio total + label 'Bolsa · 1 kg'", () => {
+    expect(fmtDisplayPrice(9000, 1)).toEqual({ price: "$9.000", unit: "Bolsa · 1 kg" });
   });
 
-  it("para unidad < 1 kg (ej: Chuby Bardú) muestra precio por porción", () => {
-    // Chuby Bardú: $4000 por 500g = $8000/kg conceptual, pero display es por porción.
-    expect(fmtDisplayPrice(8000, 0.5)).toEqual({ price: "$4.000", unit: "500 g" });
+  it("bolsa de 500 g (Chuby Bardú): precio EFECTIVO de la bolsa, no por kg", () => {
+    // Chuby: pricePerKg=8000, format 0.5 kg → bolsa cuesta 4.000.
+    expect(fmtDisplayPrice(8000, 0.5)).toEqual({ price: "$4.000", unit: "Bolsa · 500 g" });
+  });
+
+  it("usa format_short de products.json si está disponible (override)", () => {
+    expect(fmtDisplayPrice(9000, 1, "1 kg")).toEqual({ price: "$9.000", unit: "Bolsa · 1 kg" });
+    expect(fmtDisplayPrice(8000, 0.5, "500 g")).toEqual({ price: "$4.000", unit: "Bolsa · 500 g" });
   });
 });
 
-describe("getChips (opciones de cantidad)", () => {
-  it("para min_unit_kg < 1 parte de 0.5 en incrementos de 0.5", () => {
-    expect(getChips(0.5)).toEqual([0.5, 1, 1.5, 2]);
-  });
-
-  it("para productos vendidos por kilo entero, chips de 1 en 1 (con salto a 5)", () => {
+describe("getChips (cantidad de bolsas)", () => {
+  it("siempre retorna [1, 2, 3, 5] (bolsas selladas, formato fijo)", () => {
+    // El producto es bolsa sellada de formato fijo (1 kg o 500 g).
+    // Los chips son cantidad de BOLSAS, no kg.
     expect(getChips(1)).toEqual([1, 2, 3, 5]);
+    expect(getChips(0.5)).toEqual([1, 2, 3, 5]);
   });
 });

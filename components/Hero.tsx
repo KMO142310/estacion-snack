@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import productsData from "@/data/products.json";
 import { fmt } from "@/lib/cart-utils";
-import KmStone from "./icons/KmStone";
-import FlipBoard from "./FlipBoard";
 
 interface HeroProps {
   onOrderOpen: () => void;
@@ -13,23 +11,17 @@ interface HeroProps {
 
 const lead = productsData[0]; // Mix Europeo
 
-const BOARD_MESSAGES = [
-  "SANTA CRUZ — SU CASA",
-  "MARTES A SÁBADO",
-  "DESPACHO LOCAL",
-  "ABIERTO AHORA",
-] as const;
-
+/**
+ * Hero rediseñado con DISCIPLINA tipo Aesop / Graza:
+ * - Un solo mensaje grande, sin gimmicks compitiendo.
+ * - Status bar minimal (solo dot + clock, sin FlipBoard).
+ * - Foto sin rotación, sin tags. Composición clean.
+ * - Un solo CTA principal.
+ * - El restraint es la jerarquía.
+ */
 export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
-  const [boardIndex, setBoardIndex] = useState(0);
   const [clock, setClock] = useState("");
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setBoardIndex((i) => (i + 1) % BOARD_MESSAGES.length);
-    }, 3200);
-    return () => clearInterval(id);
-  }, []);
+  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     const tick = () => {
@@ -37,6 +29,10 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
       const hh = String(d.getHours()).padStart(2, "0");
       const mm = String(d.getMinutes()).padStart(2, "0");
       setClock(`${hh}:${mm}`);
+      // "Abierto" si es martes a sábado, 9:00-20:00 CLT.
+      const day = d.getDay();
+      const hr = d.getHours();
+      setOpen(day >= 2 && day <= 6 && hr >= 9 && hr < 20);
     };
     tick();
     const id = setInterval(tick, 30_000);
@@ -45,288 +41,163 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
 
   return (
     <section aria-label="Inicio" className="hero">
-      {/* Status bar superior tipo panel de estación */}
-      <div className="hero-statusbar">
-        <div className="hero-statusbar-left">
-          <span className="hero-led" aria-hidden="true" />
-          <span className="hero-status-text">
-            <FlipBoard
-              text={BOARD_MESSAGES[boardIndex]}
-              fontSize={10.5}
-              panelHeight={13}
-              letterSpacing="0.2em"
-              color="rgba(90,31,26,0.85)"
-            />
-          </span>
+      {/* Status bar minimal — solo lo que aporta señal */}
+      <div className="hero-bar">
+        <div className="hero-bar-left">
+          <span className={`hero-led ${open ? "open" : "closed"}`} aria-hidden="true" />
+          <span>{open ? "Tomando pedidos ahora" : "Cerrado · WhatsApp deja mensaje"}</span>
         </div>
-        <div className="hero-statusbar-right">
-          <span className="hero-status-ref">Ramal S.F. — Pichilemu</span>
-          <span className="hero-status-sep" aria-hidden="true">·</span>
-          <span className="hero-status-clock" suppressHydrationWarning>
-            {clock || "—:—"}
-          </span>
+        <div className="hero-bar-right">
+          <span suppressHydrationWarning>{clock || "—:—"}</span>
+          <span className="hero-bar-sep" aria-hidden="true">·</span>
+          <span>Santa Cruz, CL</span>
         </div>
       </div>
 
-      {/* Cuerpo del Hero: composición editorial, tipografía dominante */}
-      <div className="hero-stage">
-        <div className="hero-type">
-          <span className="hero-eyebrow" aria-hidden="true">
-            <span className="hero-eyebrow-dot" /> Abierto para pedidos
-          </span>
+      <div className="hero-grid">
+        <div className="hero-text">
+          <p className="hero-eyebrow">Frutos secos del Valle de Colchagua</p>
 
           <h1 className="hero-h1">
-            <span className="hero-word hero-word-1">Compra</span>
-            <span className="hero-word hero-word-italic">rico.</span>
-            <span className="hero-word hero-word-2">Pide</span>
-            <span className="hero-word hero-word-italic">simple.</span>
+            Bolsa sellada,<br />
+            <em>cantidad honesta</em>.
           </h1>
 
           <p className="hero-sub">
-            Frutos secos y dulces del Valle de Colchagua, vendidos por kilo.
-            <br />
-            Cierre de pedido por WhatsApp — <strong>sin checkout ni tarjeta</strong>.
+            Sin granel, sin pesa de mostrador. La que pedís es la que llega:
+            <strong> 1 kilo</strong> (o <strong>500 g</strong> si es Chuby Bardú),
+            cerrada al vacío, lista para la mesa.
           </p>
 
-          <div className="hero-ctas">
-            <a href="#productos" className="hero-cta">
-              Ver los 6 productos
-              <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M5 12h14M13 5l7 7-7 7" />
-              </svg>
-            </a>
-            <span className="hero-cta-aside">
-              o mirá los <a href="#packs">packs</a>
-            </span>
-          </div>
+          <a href="#productos" className="hero-cta">
+            Ver las 6 bolsas
+            <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 5l7 7-7 7" />
+            </svg>
+          </a>
         </div>
 
-        {/* Panel lateral: imagen + sello km + datos producto destacado */}
-        <aside className="hero-side" aria-label="Producto destacado">
-          <div className="hero-photo-wrap">
-            <div className="hero-photo-tag" aria-hidden="true">
-              <span className="hero-photo-tag-label">DESTACADO</span>
-              <span className="hero-photo-tag-code">MIX-EU · 1 KG</span>
-            </div>
+        <figure className="hero-figure">
+          <div className="hero-photo-frame">
             <Image
               src={lead.image_webp_url}
               alt={lead.name}
               fill
               priority
-              sizes="(max-width: 768px) 100vw, 42vw"
+              sizes="(max-width: 768px) 100vw, 50vw"
               style={{ objectFit: "cover" }}
             />
-            <div className="hero-photo-gradient" aria-hidden="true" />
-            <figcaption className="hero-photo-caption">
-              <span className="hero-photo-name">{lead.name}</span>
-              <span className="hero-photo-price">{fmt(lead.price)} <small>/kg</small></span>
-            </figcaption>
           </div>
-
-          <div className="hero-kmstone" aria-hidden="true">
-            <KmStone size={72} />
-          </div>
-        </aside>
-      </div>
-
-      {/* Franja inferior: datos del despacho estilo pie de boleto */}
-      <div className="hero-ticker" role="complementary" aria-label="Información de servicio">
-        <div className="hero-ticker-item">
-          <span className="hero-ticker-label">Origen</span>
-          <span className="hero-ticker-value">Santa Cruz · km 35,5</span>
-        </div>
-        <div className="hero-ticker-sep" aria-hidden="true" />
-        <div className="hero-ticker-item">
-          <span className="hero-ticker-label">Destinos</span>
-          <span className="hero-ticker-value">5 comunas</span>
-        </div>
-        <div className="hero-ticker-sep" aria-hidden="true" />
-        <div className="hero-ticker-item">
-          <span className="hero-ticker-label">Desde</span>
-          <span className="hero-ticker-value">$5.000 / kg</span>
-        </div>
-        <div className="hero-ticker-sep" aria-hidden="true" />
-        <div className="hero-ticker-item">
-          <span className="hero-ticker-label">Envío gratis</span>
-          <span className="hero-ticker-value">+$25.000</span>
-        </div>
+          <figcaption className="hero-cap">
+            <span className="hero-cap-name">{lead.name}</span>
+            <span className="hero-cap-meta">{fmt(lead.price)} · Bolsa de 1 kg</span>
+          </figcaption>
+        </figure>
       </div>
 
       <style>{`
         .hero {
+          background: #F4EADB;
           position: relative;
-          background:
-            radial-gradient(1200px 600px at 20% 10%, rgba(168,65,26,0.08), transparent 60%),
-            radial-gradient(900px 500px at 90% 90%, rgba(94,107,62,0.1), transparent 60%),
-            linear-gradient(180deg, #F7F0E4 0%, #F4EADB 100%);
-          padding: 0 1.25rem;
+          padding: 0 1.5rem;
           overflow: hidden;
         }
-        .hero::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 1px;
-          background: linear-gradient(90deg, transparent, rgba(90,31,26,0.15), transparent);
-          pointer-events: none;
-        }
 
-        /* Status bar */
-        .hero-statusbar {
+        /* Status bar minimal */
+        .hero-bar {
           max-width: 1280px;
           margin: 0 auto;
-          padding: 12px 4px;
+          padding: 14px 0;
           display: flex;
           justify-content: space-between;
           align-items: center;
           gap: 1rem;
-          border-bottom: 1px dashed rgba(90,31,26,0.18);
+          border-bottom: 1px solid rgba(90,31,26,0.1);
           font-family: var(--font-body);
-          font-size: 10.5px;
+          font-size: 11px;
           font-weight: 600;
-          letter-spacing: 0.16em;
-          text-transform: uppercase;
+          letter-spacing: 0.02em;
           color: rgba(90,31,26,0.7);
         }
-        .hero-statusbar-left {
+        .hero-bar-left,
+        .hero-bar-right {
           display: inline-flex;
           align-items: center;
-          gap: 10px;
-          min-width: 0;
+          gap: 8px;
         }
+        .hero-bar-right { font-variant-numeric: tabular-nums; }
+        .hero-bar-sep { color: rgba(90,31,26,0.3); }
         .hero-led {
           width: 7px;
           height: 7px;
           border-radius: 50%;
-          background: #5E6B3E;
-          box-shadow: 0 0 0 3px rgba(94,107,62,0.15);
-          animation: hero-led-pulse 2.4s ease-in-out infinite;
           flex-shrink: 0;
+        }
+        .hero-led.open {
+          background: #5E6B3E;
+          box-shadow: 0 0 0 3px rgba(94,107,62,0.18);
+          animation: hero-led-pulse 2.4s ease-in-out infinite;
+        }
+        .hero-led.closed {
+          background: #B8B8B8;
         }
         @keyframes hero-led-pulse {
           0%, 100% { opacity: 1; }
-          50% { opacity: 0.5; }
+          50% { opacity: 0.55; }
         }
         @media (prefers-reduced-motion: reduce) {
-          .hero-led { animation: none; }
-        }
-        .hero-statusbar-right {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          font-variant-numeric: tabular-nums;
-          flex-shrink: 0;
-        }
-        .hero-status-ref {
-          display: none;
-        }
-        .hero-status-sep {
-          display: none;
-          color: rgba(90,31,26,0.3);
-        }
-        .hero-status-clock {
-          font-family: var(--font-display);
-          font-style: italic;
-          font-size: 14px;
-          letter-spacing: 0;
-          color: #5A1F1A;
-          text-transform: none;
-        }
-        @media (min-width: 768px) {
-          .hero-status-ref,
-          .hero-status-sep { display: inline; }
+          .hero-led.open { animation: none; }
         }
 
-        /* Stage principal */
-        .hero-stage {
+        /* Grid principal */
+        .hero-grid {
           max-width: 1280px;
           margin: 0 auto;
-          padding: 3rem 0 4rem;
+          padding: 4rem 0 5rem;
           display: grid;
           grid-template-columns: 1fr;
-          gap: 2.5rem;
+          gap: 3rem;
           align-items: center;
-          position: relative;
         }
 
-        .hero-type {
-          min-width: 0;
-          position: relative;
-          z-index: 2;
-        }
-
+        .hero-text { min-width: 0; }
         .hero-eyebrow {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 6px 12px 6px 10px;
-          margin-bottom: 2rem;
-          background: #fff;
-          border: 1px solid rgba(90,31,26,0.08);
-          border-radius: 999px;
           font-family: var(--font-body);
           font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 0.04em;
-          color: #5A1F1A;
-          box-shadow: 0 4px 14px -6px rgba(90,31,26,0.18);
-        }
-        .hero-eyebrow-dot {
-          width: 7px;
-          height: 7px;
-          border-radius: 50%;
-          background: #5E6B3E;
-          box-shadow: 0 0 0 3px rgba(94,107,62,0.2);
-          animation: hero-led-pulse 2.4s ease-in-out infinite;
-        }
-
-        .hero-h1 {
-          display: flex;
-          flex-direction: column;
-          gap: 0.02em;
-          font-family: var(--font-display);
-          color: #5A1F1A;
-          line-height: 0.88;
-          letter-spacing: -0.05em;
-          margin: 0 0 2rem;
-        }
-        .hero-word {
-          display: block;
           font-weight: 700;
-          font-size: clamp(3.5rem, 16vw, 10rem);
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: #A8411A;
+          margin: 0 0 1.5rem;
         }
-        .hero-word-italic {
+        .hero-h1 {
+          font-family: var(--font-display);
+          font-weight: 700;
+          font-size: clamp(3rem, 11vw, 6.5rem);
+          line-height: 0.95;
+          letter-spacing: -0.04em;
+          color: #5A1F1A;
+          margin: 0 0 1.75rem;
+        }
+        .hero-h1 em {
           font-style: italic;
           font-weight: 400;
           color: #A8411A;
-          padding-left: 0.6em;
-          font-size: clamp(3.5rem, 16vw, 10rem);
         }
-        .hero-word-2 { margin-top: 0.08em; }
-
         .hero-sub {
           font-family: var(--font-display);
           font-style: italic;
           font-weight: 300;
-          font-size: clamp(1.02rem, 2.2vw, 1.3rem);
-          line-height: 1.5;
+          font-size: clamp(1.05rem, 2vw, 1.3rem);
+          line-height: 1.55;
           color: #5E6B3E;
-          max-width: 500px;
-          margin: 0 0 2rem;
+          max-width: 540px;
+          margin: 0 0 2.5rem;
         }
         .hero-sub strong {
-          font-weight: 500;
           font-style: normal;
+          font-weight: 500;
           color: #5A1F1A;
-        }
-
-        .hero-ctas {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          gap: 1rem 1.5rem;
         }
         .hero-cta {
           display: inline-flex;
@@ -334,195 +205,75 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
           gap: 10px;
           font-family: var(--font-body);
           font-weight: 600;
-          font-size: 1rem;
+          font-size: 1.0625rem;
           color: #F4EADB;
           background: #5A1F1A;
-          padding: 1.05rem 1.75rem;
+          padding: 1.1rem 1.85rem;
           border-radius: 999px;
-          box-shadow: 0 14px 32px -10px rgba(90,31,26,0.45);
+          box-shadow: 0 12px 28px -8px rgba(90,31,26,0.45);
           transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
           text-decoration: none;
-          white-space: nowrap;
         }
+        .hero-cta svg { transition: transform 0.25s ease; }
         @media (hover: hover) {
           .hero-cta:hover {
             transform: translateY(-3px);
-            box-shadow: 0 20px 44px -12px rgba(90,31,26,0.55);
+            box-shadow: 0 18px 40px -10px rgba(90,31,26,0.55);
           }
           .hero-cta:hover svg { transform: translateX(4px); }
         }
-        .hero-cta svg { transition: transform 0.25s ease; }
-        .hero-cta-aside {
-          font-family: var(--font-display);
-          font-style: italic;
-          font-size: 0.95rem;
-          color: #5E6B3E;
-        }
-        .hero-cta-aside a {
-          color: #A8411A;
-          text-decoration: underline;
-          text-underline-offset: 4px;
-        }
 
-        /* Panel lateral con foto */
-        .hero-side {
+        /* Figura: foto + caption */
+        .hero-figure {
+          margin: 0;
           position: relative;
-          align-self: end;
         }
-        .hero-photo-wrap {
+        .hero-photo-frame {
           position: relative;
           aspect-ratio: 4/5;
-          border-radius: 24px;
-          overflow: hidden;
           background: #EDE4D6;
-          box-shadow:
-            0 2px 0 rgba(90,31,26,0.06),
-            0 30px 60px -24px rgba(90,31,26,0.35);
-          transform: rotate(-1.2deg);
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 30px 60px -28px rgba(90,31,26,0.4);
         }
-        .hero-photo-tag {
-          position: absolute;
-          top: 14px;
-          left: 14px;
-          z-index: 3;
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-          padding: 7px 12px;
-          background: rgba(90,31,26,0.88);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-          color: #F4EADB;
-          border-radius: 10px;
-        }
-        .hero-photo-tag-label {
-          font-family: var(--font-body);
-          font-size: 9px;
-          font-weight: 700;
-          letter-spacing: 0.2em;
-        }
-        .hero-photo-tag-code {
-          font-family: var(--font-body);
-          font-size: 9.5px;
-          font-weight: 500;
-          letter-spacing: 0.12em;
-          color: rgba(244,234,219,0.7);
-          font-variant-numeric: tabular-nums;
-        }
-        .hero-photo-gradient {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.55) 100%);
-        }
-        .hero-photo-caption {
-          position: absolute;
-          left: 18px;
-          right: 18px;
-          bottom: 16px;
+        .hero-cap {
+          margin-top: 14px;
+          padding: 0 4px;
           display: flex;
           justify-content: space-between;
           align-items: baseline;
           gap: 1rem;
-          color: #F4EADB;
+          font-family: var(--font-body);
         }
-        .hero-photo-name {
+        .hero-cap-name {
           font-family: var(--font-display);
           font-weight: 600;
-          font-size: 1.2rem;
-          letter-spacing: -0.02em;
-          line-height: 1.1;
-        }
-        .hero-photo-price {
-          font-family: var(--font-body);
-          font-weight: 700;
-          font-size: 0.95rem;
-          letter-spacing: -0.01em;
-          font-variant-numeric: tabular-nums;
-        }
-        .hero-photo-price small {
-          font-weight: 400;
-          opacity: 0.7;
-        }
-
-        .hero-kmstone {
-          position: absolute;
-          right: -14px;
-          bottom: -24px;
-          z-index: 4;
-          transform: rotate(8deg);
-          filter: drop-shadow(0 10px 20px rgba(90,31,26,0.25));
-        }
-
-        /* Ticker inferior */
-        .hero-ticker {
-          max-width: 1280px;
-          margin: 0 auto;
-          padding: 1.4rem 0;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1.25rem;
-          border-top: 1px dashed rgba(90,31,26,0.2);
-          align-items: center;
-        }
-        .hero-ticker-item {
-          display: flex;
-          flex-direction: column;
-          gap: 3px;
-          min-width: 0;
-        }
-        .hero-ticker-label {
-          font-family: var(--font-body);
-          font-size: 9.5px;
-          font-weight: 700;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          color: rgba(90,31,26,0.55);
-        }
-        .hero-ticker-value {
-          font-family: var(--font-display);
-          font-weight: 500;
-          font-size: 0.95rem;
+          font-size: 1.05rem;
           color: #5A1F1A;
           letter-spacing: -0.01em;
         }
-        .hero-ticker-sep {
-          display: none;
-          width: 1px;
-          height: 32px;
-          background: rgba(90,31,26,0.12);
-        }
-
-        @media (min-width: 640px) {
-          .hero-ticker {
-            grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
-            padding: 1.6rem 0;
-          }
-          .hero-ticker-sep { display: block; }
+        .hero-cap-meta {
+          font-size: 0.85rem;
+          font-weight: 500;
+          color: rgba(90,31,26,0.6);
+          font-variant-numeric: tabular-nums;
         }
 
         @media (min-width: 900px) {
-          .hero {
-            padding: 0 2.5rem;
+          .hero { padding: 0 2.5rem; }
+          .hero-grid {
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 5rem;
+            padding: 6rem 0 7rem;
+            min-height: calc(100vh - 68px - 50px);
           }
-          .hero-stage {
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 4rem;
-            padding: 5rem 0 5rem;
-            min-height: calc(100vh - 68px - 52px);
-          }
-          .hero-word-italic { padding-left: 1em; }
-          .hero-photo-wrap {
-            transform: rotate(-1.6deg);
-          }
-          .hero-kmstone {
-            right: -24px;
-            bottom: -30px;
-          }
-          .hero-ticker-value { font-size: 1rem; }
+          .hero-photo-frame { aspect-ratio: 4/5.4; }
         }
 
         @media (min-width: 1200px) {
-          .hero-stage { padding: 6rem 0 6rem; }
+          .hero-grid {
+            grid-template-columns: 1.15fr 0.85fr;
+          }
         }
       `}</style>
     </section>

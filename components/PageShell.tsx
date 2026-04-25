@@ -34,12 +34,12 @@ const packs = packsData as Pack[];
 const packProducts = productsData as unknown as ProductStock[];
 
 const MARQUEE_TOP = [
-  "Desde 1 kilo",
-  "Despacho local",
-  "Martes a sábado",
-  "Envío gratis +$25.000",
+  "Bolsa sellada de 1 kg",
+  "Chuby Bardú · 500 g",
+  "Despacho martes a sábado",
+  "Envío gratis sobre $25.000",
   "Pago al recibir o transferencia",
-  "Santa Cruz · Colchagua",
+  "Santa Cruz · Valle de Colchagua",
 ];
 
 export default function PageShell() {
@@ -94,13 +94,13 @@ export default function PageShell() {
             <div className="section-head">
               <div>
                 <p className="kicker">Catálogo</p>
-                <h2 className="stitle">El resto de la tienda.</h2>
+                <h2 className="stitle">Las otras <em>cinco bolsas</em>.</h2>
               </div>
               <p className="section-aside">
-                {gridProducts.length} productos · por kilo · con stock real en la DB
+                Bolsa sellada · 1 kg en cinco productos · 500 g en Chuby Bardú · stock real desde Supabase
               </p>
             </div>
-            <div className="product-grid" style={{ marginTop: "2.5rem" }}>
+            <div className="product-grid" style={{ marginTop: "3rem" }}>
               {gridProducts.map((p) => (
                 <ProductCard key={p.id} product={p} onOpen={() => setSheetProduct(p)} />
               ))}
@@ -108,16 +108,19 @@ export default function PageShell() {
           </div>
         </section>
 
+        {/* ── Manifiesto burdeo full-bleed: ROMPE la fatiga crema-sobre-crema ── */}
+        <StationManifesto />
+
         {/* ── Packs ── */}
         <section id="packs" className="s-warm">
           <div className="container">
             <div className="section-head">
               <div>
                 <p className="kicker">Packs</p>
-                <h2 className="stitle">Armados para probar variedad.</h2>
+                <h2 className="stitle">Armados para <em>probar variedad</em>.</h2>
               </div>
               <p className="section-aside">
-                Calculados contra stock real de cada componente
+                Calculados contra stock real de cada bolsa componente
               </p>
             </div>
             <div style={{ marginTop: "2rem" }}>
@@ -136,9 +139,6 @@ export default function PageShell() {
         )}
 
         <ComoFunciona />
-
-        {/* ── Manifiesto de marca ferroviario ── */}
-        <StationManifesto />
 
         {/* ── TrustBar al final como sello resumen ── */}
         <Benefits />
@@ -301,11 +301,11 @@ export default function PageShell() {
 
         .product-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 2rem 1rem;
+          grid-template-columns: 1fr;
+          gap: 2.75rem 1rem;
         }
-        @media (min-width: 640px) { .product-grid { gap: 2.5rem 1.5rem; } }
-        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 3rem 2rem; } }
+        @media (min-width: 600px) { .product-grid { grid-template-columns: 1fr 1fr; gap: 3rem 1.5rem; } }
+        @media (min-width: 1000px) { .product-grid { gap: 4rem 2.5rem; } }
 
         .pack-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; max-width: 420px; margin: 0 auto; }
         @media (min-width: 768px) { .pack-grid { grid-template-columns: repeat(3, 1fr); max-width: none; margin: 0; } }

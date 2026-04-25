@@ -29,16 +29,18 @@ export default function StationManifesto() {
           </div>
 
           <h2 className="sm-title">
-            No es <em>gourmet</em>.<br />
-            Es <em>bueno</em>, y se pide <em>por kilo</em>.
+            No es <em>granel</em>,<br />
+            ni es <em>gourmet</em>.<br />
+            Es la <em>bolsa</em> que pediste.
           </h2>
 
           <div className="sm-prose">
             <p>
               El negocio nace en Santa Cruz. El nombre viene de que el pueblo
               tuvo una estación de verdad — km 35,5 del ramal a Pichilemu,
-              hoy silenciada. Lo del kilo es literal: pedís la cantidad que
-              querés, no la que alguien decidió por vos empaquetándolo.
+              hoy silenciada. La forma de venta es honesta: bolsa sellada
+              al vacío, formato fijo (1 kilo, o 500 g si es Chuby Bardú),
+              sin pesa ni «te dejo unos gramitos más».
             </p>
             <p>
               Sin checkout con tarjeta. Sin cuenta. Sin newsletter que no
@@ -49,8 +51,8 @@ export default function StationManifesto() {
 
           <dl className="sm-stats">
             <div className="sm-stat">
-              <dt>Desde</dt>
-              <dd>1 kg</dd>
+              <dt>Formato</dt>
+              <dd>Bolsa</dd>
             </div>
             <div className="sm-stat">
               <dt>Comunas</dt>

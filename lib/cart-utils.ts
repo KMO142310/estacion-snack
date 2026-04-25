@@ -12,31 +12,41 @@ export function fmtKg(kg: number): string {
 }
 
 /**
- * Returns the chip options for a product's quantity selector.
- * For products with min_unit_kg < 1 (e.g. 0.5 for Chuby Bardú),
- * chips start at 0.5 and increment by 0.5.
+ * Format quantity as "bolsa(s)" para UI más fiel al producto.
+ * 1 → "1 bolsa", 2 → "2 bolsas".
  */
-export function getChips(minUnitKg: number): number[] {
-  if (minUnitKg < 1) {
-    return [0.5, 1, 1.5, 2];
-  }
+export function fmtBolsas(qty: number): string {
+  return qty === 1 ? "1 bolsa" : `${qty} bolsas`;
+}
+
+/**
+ * Cantidad de bolsas a comprar (chips de selector).
+ * El producto se vende en bolsa sellada de formato fijo (1 kg o 500 g),
+ * así que los chips son 1, 2, 3, 5 bolsas.
+ */
+export function getChips(_minUnitKg: number): number[] {
   return [1, 2, 3, 5];
 }
 
 /**
- * Format the display price and unit label for a product.
- * Products with min_unit_kg < 1 show price per portion (e.g. "$4.000 · 500 g")
- * instead of per kg.
+ * Display price + format label.
+ *
+ * Para productos con bolsa sellada de 1 kg: "$9.000 · Bolsa de 1 kg".
+ * Para Chuby Bardú (500 g): muestra el precio EFECTIVO de la bolsa
+ * (pricePerKg × 0.5) con label "Bolsa de 500 g".
+ *
+ * El formato proviene de products.json (`format_short`). Si no está
+ * disponible, se infiere de min_unit_kg (compat con tipos legacy).
  */
-export function fmtDisplayPrice(pricePerKg: number, minUnitKg: number): { price: string; unit: string } {
-  if (minUnitKg < 1) {
-    return {
-      price: fmt(pricePerKg * minUnitKg),
-      unit: fmtKg(minUnitKg),
-    };
-  }
+export function fmtDisplayPrice(
+  pricePerKg: number,
+  minUnitKg: number,
+  formatShort?: string,
+): { price: string; unit: string } {
+  const sizeKg = minUnitKg;
+  const label = formatShort ?? (sizeKg < 1 ? `${Math.round(sizeKg * 1000)} g` : `${sizeKg} kg`);
   return {
-    price: fmt(pricePerKg),
-    unit: "1 kg",
+    price: fmt(pricePerKg * sizeKg),
+    unit: `Bolsa · ${label}`,
   };
 }

@@ -402,7 +402,7 @@ export default function ProductSheet({ product, onClose }: Props) {
                         color: "#5A1F1A",
                       }}
                     >
-                      {fmtKg(customQty)}
+                      {Math.round(customQty / product.min_unit_kg)} {Math.round(customQty / product.min_unit_kg) === 1 ? "bolsa" : "bolsas"}
                     </p>
                     <p
                       style={{
@@ -412,7 +412,7 @@ export default function ProductSheet({ product, onClose }: Props) {
                         marginTop: "2px",
                       }}
                     >
-                      Mínimo: {fmtKg(product.min_unit_kg)}
+                      {fmtKg(customQty)} · bolsa de {fmtKg(product.min_unit_kg)}
                     </p>
                   </div>
 
@@ -473,7 +473,7 @@ export default function ProductSheet({ product, onClose }: Props) {
                 fontWeight: 500,
               }}
             >
-              {fmtKg(selectedQty)} · {fmt(product.price)}/kg
+              {selectedQty === product.min_unit_kg ? "1 bolsa" : `${Math.round(selectedQty / product.min_unit_kg)} bolsas`} · {fmtKg(selectedQty)}
             </p>
             <p
               style={{

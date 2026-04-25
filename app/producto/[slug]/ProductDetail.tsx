@@ -94,11 +94,11 @@ export default function ProductDetail({ product, related }: Props) {
               </h1>
 
               <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 4 }}>
-                <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "2rem", color: "#5A1F1A" }}>{fmt(product.price)}</span>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#5E6B3E" }}>/ kg</span>
+                <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "2rem", color: "#5A1F1A" }}>{fmt(product.price * (product.min_unit_kg ?? 1))}</span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#5E6B3E" }}>· Bolsa sellada {(product.min_unit_kg ?? 1) < 1 ? "500 g" : "1 kg"}</span>
               </div>
               <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(94,107,62,0.7)", marginBottom: 16 }}>
-                {fmt(Math.round(product.price / 10))}/100 g
+                Equivale a {fmt(Math.round(product.price / 10))} cada 100 g
               </p>
 
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", lineHeight: 1.7, marginBottom: 24 }}>{product.copy}</p>
@@ -210,8 +210,8 @@ export default function ProductDetail({ product, related }: Props) {
                     </div>
                     <div style={{ padding: 14 }}>
                       <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: 4 }}>{r.name}</p>
-                      <p style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem", color: "#5E6B3E" }}>{fmt(r.price)}/kg</p>
-                      <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", color: "rgba(94,107,62,0.7)" }}>{fmt(Math.round(r.price / 10))}/100 g</p>
+                      <p style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem", color: "#5E6B3E" }}>{fmt(r.price * (r.min_unit_kg ?? 1))} · {(r.min_unit_kg ?? 1) < 1 ? "500 g" : "1 kg"}</p>
+                      <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", color: "rgba(94,107,62,0.7)" }}>{fmt(Math.round(r.price / 10))} / 100 g</p>
                     </div>
                   </Link>
                 ))}

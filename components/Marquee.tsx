@@ -42,8 +42,8 @@ export default function Marquee({
         {duplicated.map((item, i) => (
           <span key={i} className="marquee-item">
             <span className="marquee-text">{item}</span>
-            <span className="marquee-sep" style={{ color: separatorColor }}>
-              ✺
+            <span className="marquee-sep" style={{ color: separatorColor }} aria-hidden="true">
+              ·
             </span>
           </span>
         ))}

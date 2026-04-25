@@ -204,9 +204,11 @@ export default function PackCard({ pack, products, onOpen }: Props) {
             onClick={handleAdd}
             fullWidth
             size="sm"
-            style={{ background: added ? "#5E6B3E" : undefined }}
+            // BUGFIX: pasar undefined en spread sobrescribe el bg del palette.
+            // Cuando added=false NO mandamos style.background — el StampButton usa su default (#A8411A).
+            style={added ? { background: "#5E6B3E" } : undefined}
           >
-            {added ? "✓ Agregado" : "Agregar"}
+            {added ? "✓ Agregado al pedido" : `Agregar pack — ${fmt(pack.price)}`}
           </StampButton>
         ) : (
           <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#5E6B3E", fontWeight: 600, textAlign: "center" }}>

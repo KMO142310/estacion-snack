@@ -31,7 +31,7 @@ export default function Hero({ onOrderOpen }: HeroProps) {
       <div className="hero-main">
         <div className="hero-main-text">
           <p className="hero-eyebrow">Frutos secos · Santa Cruz</p>
-          <h1 className="hero-h1">Bolsa sellada al vacío.</h1>
+          <h1 className="hero-h1">Bolsa sellada por kilo.</h1>
           <p className="hero-sub">
             Seis productos: cinco en bolsa de 1 kg y Chuby Bardú en bolsa de 500 g.
             Pedido por WhatsApp, llega a tu casa.

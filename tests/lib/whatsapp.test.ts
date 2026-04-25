@@ -94,4 +94,60 @@ describe("buildWaUrl", () => {
     expect(decoded).toContain("Pack Dulce");
     expect(decoded).toContain("> 1 kg Gomitas"); // BOM line prefix
   });
+
+  it("orderRef se incluye al final del mensaje cuando se pasa", () => {
+    const url = buildWaUrl(
+      [{ kind: "product", id: "p1", qty: 1, name: "Almendra", pricePerUnit: 13000 }],
+      products,
+      packs,
+      undefined,
+      "ORD-12345-AB",
+    );
+    const decoded = decodeURIComponent(url.split("?text=")[1]);
+    expect(decoded).toContain("(ref: ORD-12345-AB)");
+  });
+
+  it("nota con saltos de línea + caracteres especiales se preserva sin romper la URL", () => {
+    const note = "Por favor:\n- llamar antes\n- portón rojo\n100% sin envoltorio";
+    const url = buildWaUrl(
+      [{ kind: "product", id: "p1", qty: 1, name: "Almendra", pricePerUnit: 13000 }],
+      products,
+      packs,
+      note,
+    );
+    expect(() => new URL(url)).not.toThrow();
+    const decoded = decodeURIComponent(url.split("?text=")[1]);
+    expect(decoded).toContain("portón rojo");
+    expect(decoded).toContain("100% sin envoltorio");
+  });
+
+  it("pack con cantidad > 1 multiplica subtotal pero el BOM line se muestra una vez", () => {
+    const url = buildWaUrl(
+      [{ kind: "pack", id: "pk1", qty: 3, name: "Pack Dulce", pricePerUnit: 16490 }],
+      products,
+      packs,
+    );
+    const decoded = decodeURIComponent(url.split("?text=")[1]);
+    expect(decoded).toContain("(x3)");
+    // 16490 × 3 = 49470
+    expect(decoded).toContain("$49.470");
+    // BOM line aparece (no está repetido 3 veces — operador entiende que es por unidad)
+    const bomLines = decoded.match(/> 1 kg Gomitas/g) ?? [];
+    expect(bomLines).toHaveLength(1);
+  });
+
+  it("producto que no existe en catalog se omite silenciosamente (defensivo)", () => {
+    const url = buildWaUrl(
+      [
+        { kind: "product", id: "p1", qty: 1, name: "Almendra", pricePerUnit: 13000 },
+        { kind: "product", id: "ghost", qty: 99, name: "Fantasma", pricePerUnit: 999 }, // no existe
+      ],
+      products,
+      packs,
+    );
+    const decoded = decodeURIComponent(url.split("?text=")[1]);
+    expect(decoded).toContain("Almendra");
+    expect(decoded).not.toContain("Fantasma");
+    expect(decoded).not.toContain("$999");
+  });
 });

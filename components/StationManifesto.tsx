@@ -22,7 +22,7 @@ export default function StationManifesto() {
           <p>
             Empezamos vendiendo frutos secos sueltos a los vecinos. Nos cansamos
             de la pesa del mostrador y del «te dejo unos gramitos más». Hoy todo
-            sale en bolsa sellada al vacío, formato fijo: 1 kilo, o 500 g si es
+            sale en bolsa sellada de fábrica, formato fijo: 1 kilo, o 500 g si es
             Chuby Bardú. La que pediste es la que llega.
           </p>
           <p>

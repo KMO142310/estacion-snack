@@ -14,7 +14,7 @@ export default function FounderNote() {
             Empecé esto porque me cansé de comprar 200 g de almendras
             empaquetadas como si fueran joyas.
             <br />
-            Acá te llega la <em>bolsa entera</em>, sellada al vacío,
+            Acá te llega la <em>bolsa entera</em>, sellada y cerrada,
             al precio que tendría que costar.
           </p>
           <span className="fn-quote-mark fn-quote-mark-close" aria-hidden="true">»</span>

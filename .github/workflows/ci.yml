@@ -61,6 +61,11 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
           NEXT_PUBLIC_SITE_URL: http://localhost:3000
+          # Dummies para que /api/health pase los critical checks en CI.
+          # Son strings placeholder, no credenciales reales.
+          ADMIN_EMAIL: ci@example.test
+          CRON_SECRET: ci-dummy-cron-secret-not-real
+          AUDIT_PEPPER: ci-dummy-pepper-not-real
 
       - name: Upload Playwright report on failure
         if: failure()

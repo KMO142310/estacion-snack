@@ -6,17 +6,10 @@ import { MotionConfig } from "framer-motion";
 import { useCartStore } from "@/lib/store";
 import productsData from "@/data/products.json";
 import { topFaqs } from "@/data/faq";
-import Announce from "./Announce";
 import Header from "./Header";
 import Hero from "./Hero";
-import Benefits from "./Benefits";
 import ProductCard from "./ProductCard";
 import PackSection from "./PackSection";
-import ComoFunciona from "./ComoFunciona";
-import Marquee from "./Marquee";
-import StationManifesto from "./StationManifesto";
-import FeaturedProduct from "./FeaturedProduct";
-import FounderNote from "./FounderNote";
 import Footer from "./Footer";
 import ToastStack from "./Toast";
 import TicketProgress from "./TicketProgress";
@@ -29,21 +22,18 @@ const ProductSheet = dynamic(() => import("./ProductSheet"), { ssr: false });
 const PackSheet = dynamic(() => import("./PackSheet"), { ssr: false });
 
 const products = productsData.slice().sort((a, b) => a.sort_order - b.sort_order);
-const featured = products[0]; // Mix Europeo — va a la sección FeaturedProduct
-const gridProducts = products.slice(1); // El resto al grid "Lo más pedido"
 const packs = packsData as Pack[];
 const packProducts = productsData as unknown as ProductStock[];
 
-const MARQUEE_TOP = [
-  "Bolsa sellada · 1 kg",
-  "Chuby Bardú · 500 g",
-  "Despacho martes a sábado",
-  "Retiro en local · gratis",
-  "Pago al recibir o transferencia",
-  "Santa Cruz · Palmilla · Peralillo · Marchigüe",
-  "Responde una persona",
-];
-
+/**
+ * PageShell retail-clean (referencia: grupoalval.com).
+ *
+ * Flow simplificado: Header → Hero → Catálogo grid → Packs → Newsletter →
+ * FAQ → CTA → Footer. Sin Marquee, sin StationManifesto, sin FounderNote,
+ * sin FeaturedProduct, sin Announce — todos esos componentes existen en
+ * /components pero no se renderizan; quedan disponibles si el dueño cambia
+ * de dirección visual.
+ */
 export default function PageShell() {
   const [sheetProduct, setSheetProduct] = useState<typeof products[number] | null>(null);
   const [sheetPack, setSheetPack] = useState<Pack | null>(null);
@@ -72,59 +62,33 @@ export default function PageShell() {
     <MotionConfig reducedMotion="user">
       <a href="#main" className="skip">Saltar al contenido</a>
       <div style={{ position: "sticky", top: 0, zIndex: 200 }}>
-        <Announce />
         <Header onOrderOpen={openOrder} />
       </div>
 
       <main id="main" tabIndex={-1} style={{ outline: "none" }}>
         <Hero onOrderOpen={openOrder} />
 
-        {/* Banda ferroviaria: scroll infinito con trust signals */}
-        <Marquee items={MARQUEE_TOP} speed={45} />
-
-        {/* Producto destacado — layout editorial, NO card del grid */}
-        {featured && (
-          <FeaturedProduct
-            product={featured}
-            onOpen={() => setSheetProduct(featured)}
-          />
-        )}
-
-        {/* ── Resto del catálogo ── */}
-        <section id="productos" className="s-white">
-          <div className="container">
-            <header className="section-head">
-              <p className="kicker">Catálogo</p>
-              <h2 className="stitle">Las otras <em>cinco bolsas</em>.</h2>
-              <p className="section-sub">
-                Cinco productos a 1 kg. Chuby Bardú en bolsa de 500 g.
-                Lo que ves es lo que hay.
-              </p>
+        {/* ── Catálogo completo en grid ── */}
+        <section id="productos" className="rt-section">
+          <div className="rt-wrap">
+            <header className="rt-section-head">
+              <h2 className="rt-section-title">Productos</h2>
+              <p className="rt-section-sub">Seis bolsas selladas. Lo que ves es lo que hay en stock.</p>
             </header>
-            <div className="product-grid">
-              {gridProducts.map((p) => (
+            <div className="rt-grid">
+              {products.map((p) => (
                 <ProductCard key={p.id} product={p} onOpen={() => setSheetProduct(p)} />
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── Manifiesto burdeo full-bleed: ROMPE la fatiga crema-sobre-crema ── */}
-        <StationManifesto />
-
-        {/* ── Voz humana del operador (fondo crema) ── */}
-        <FounderNote />
-
         {/* ── Packs ── */}
-        <section id="packs" className="s-warm">
-          <div className="container">
-            <header className="section-head">
-              <p className="kicker">Packs</p>
-              <h2 className="stitle">Dos bolsas, <em>un poco más barato</em>.</h2>
-              <p className="section-sub">
-                Combinaciones armadas con dos bolsas que se complementan.
-                Te ahorras unos pesos y pruebas variedad.
-              </p>
+        <section id="packs" className="rt-section rt-section-alt">
+          <div className="rt-wrap">
+            <header className="rt-section-head">
+              <h2 className="rt-section-title">Packs</h2>
+              <p className="rt-section-sub">Dos bolsas combinadas, un poco más barato que sueltas.</p>
             </header>
             <PackSection />
           </div>
@@ -132,33 +96,42 @@ export default function PageShell() {
 
         {/* ── Progreso envío gratis ── */}
         {itemCount > 0 && (
-          <section className="s-white" style={{ paddingTop: "1rem", paddingBottom: "2rem" }}>
-            <div className="container" style={{ maxWidth: 520 }}>
+          <section className="rt-section" style={{ paddingTop: "1rem", paddingBottom: "1.5rem" }}>
+            <div className="rt-wrap" style={{ maxWidth: 520 }}>
               <TicketProgress current={subtotal} threshold={FREE_SHIPPING_MIN} />
             </div>
           </section>
         )}
 
-        <ComoFunciona />
-
-        {/* ── TrustBar al final como sello resumen ── */}
-        <Benefits />
+        {/* ── Newsletter (estilo retail estándar) ── */}
+        <section className="rt-newsletter">
+          <div className="rt-wrap" style={{ maxWidth: 560, textAlign: "center" }}>
+            <h3 className="rt-newsletter-title">Avisos por WhatsApp</h3>
+            <p className="rt-newsletter-sub">
+              Te avisamos cuando llega producto nuevo o hay promo. Sin spam.
+            </p>
+            <a href="https://wa.me/56953743338?text=Hola!%20Quiero%20recibir%20avisos%20de%20Estaci%C3%B3n%20Snack" target="_blank" rel="noopener noreferrer" className="rt-newsletter-cta">
+              Suscribirme por WhatsApp
+            </a>
+          </div>
+        </section>
 
         {/* ── FAQ ── */}
-        <section className="s-white">
-          <div className="container" style={{ maxWidth: 680 }}>
-            <p className="kicker">Dudas comunes</p>
-            <h2 className="stitle" style={{ marginBottom: "2rem" }}>Preguntas frecuentes.</h2>
-            <div className="faq-list">
+        <section className="rt-section">
+          <div className="rt-wrap" style={{ maxWidth: 720 }}>
+            <header className="rt-section-head">
+              <h2 className="rt-section-title">Preguntas frecuentes</h2>
+            </header>
+            <div className="rt-faq-list">
               {topFaqs.map((item) => (
-                <details key={item.q} className="faq-item">
-                  <summary className="faq-q">
+                <details key={item.q} className="rt-faq-item">
+                  <summary className="rt-faq-q">
                     {item.q}
-                    <svg className="faq-chevron" width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" aria-hidden="true">
+                    <svg className="rt-faq-chev" width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" aria-hidden="true">
                       <path d="M6 9l6 6 6-6" />
                     </svg>
                   </summary>
-                  <p className="faq-a">{item.a}</p>
+                  <p className="rt-faq-a">{item.a}</p>
                 </details>
               ))}
             </div>
@@ -166,22 +139,13 @@ export default function PageShell() {
         </section>
 
         {/* ── CTA final ── */}
-        <section className="cta-final">
-          <div className="container" style={{ textAlign: "center", maxWidth: 640 }}>
-            <p className="cta-kicker">Último paso</p>
-            <h2 className="cta-h2">
-              ¿<em>Pedimos</em>?
-            </h2>
-            <p className="cta-sub">
-              Te abrimos WhatsApp con el resumen listo. Tú solo decides la comuna y la hora.
-              Responde una persona, no un bot.
+        <section className="rt-cta">
+          <div className="rt-wrap" style={{ maxWidth: 640, textAlign: "center" }}>
+            <h2 className="rt-cta-title">¿Listo para pedir?</h2>
+            <p className="rt-cta-sub">
+              Te abrimos WhatsApp con el resumen del pedido. Responde una persona.
             </p>
-            <button onClick={openOrder} className="cta-btn">
-              Abrir pedido
-              <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" aria-hidden="true">
-                <path d="M5 12h14M13 5l7 7-7 7" />
-              </svg>
-            </button>
+            <button onClick={openOrder} className="rt-cta-btn">Abrir pedido</button>
           </div>
         </section>
       </main>
@@ -192,25 +156,13 @@ export default function PageShell() {
       {!orderOpen && !sheetProduct && !sheetPack && itemCount > 0 && (
         <button
           onClick={openOrder}
-          aria-label={`Ver tu pedido (${itemCount} ${itemCount === 1 ? "producto" : "productos"})`}
-          className="sticky-bar"
-          style={{
-            position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100,
-            padding: "14px 20px", paddingBottom: "calc(14px + env(safe-area-inset-bottom, 0px))",
-            background: "rgba(90,31,26,0.97)",
-            backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)",
-            display: "flex", alignItems: "center", justifyContent: "space-between",
-            border: "none", cursor: "pointer", width: "100%",
-            fontFamily: "var(--font-body)", color: "#F4EADB",
-            WebkitTapHighlightColor: "transparent",
-          }}
+          aria-label={`Tu pedido (${itemCount} ${itemCount === 1 ? "ítem" : "ítems"})`}
+          className="rt-sticky"
         >
-          <span style={{ fontSize: 14, fontWeight: 500 }}>
-            Tu pedido · {itemCount} {itemCount === 1 ? "producto" : "productos"}
+          <span style={{ fontSize: 14, fontWeight: 600 }}>
+            Tu carro · {itemCount} {itemCount === 1 ? "ítem" : "ítems"}
           </span>
-          <span style={{ fontSize: 14, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }}>
-            Ver <span aria-hidden="true" style={{ fontSize: 16, lineHeight: 1 }}>→</span>
-          </span>
+          <span style={{ fontSize: 14, fontWeight: 700 }}>Ver →</span>
         </button>
       )}
 
@@ -232,94 +184,92 @@ export default function PageShell() {
       <ToastStack />
 
       <style>{`
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
-        @media (min-width: 768px) { .container { padding: 0 2.5rem; } }
+        .rt-wrap {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 1rem;
+        }
+        @media (min-width: 768px) { .rt-wrap { padding: 0 1.5rem; } }
 
-        .s-white { background: #fff; padding: 5rem 0; }
-        .s-warm  { background: #F7F0E4; padding: 5rem 0; }
+        .rt-section {
+          padding: 3rem 0;
+          background: #FAF9F7;
+        }
+        .rt-section-alt { background: #ffffff; }
         @media (min-width: 768px) {
-          .s-white, .s-warm { padding: 7rem 0; }
+          .rt-section { padding: 4.5rem 0; }
         }
 
-        .kicker {
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          font-family: var(--font-body);
-          font-size: 10.5px;
-          font-weight: 700;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: #A8411A;
-          margin-bottom: 0.9rem;
+        .rt-section-head {
+          margin-bottom: 2rem;
+          padding: 0 1rem;
         }
-        .kicker::before {
-          content: "";
-          display: inline-block;
-          width: 18px;
-          height: 1px;
-          background: currentColor;
-          opacity: 0.55;
+        @media (min-width: 768px) {
+          .rt-section-head { margin-bottom: 2.5rem; padding: 0 1.5rem; }
         }
-        .stitle {
-          font-family: var(--font-display);
+        .rt-section-title {
+          font-size: clamp(1.4rem, 3vw, 1.875rem);
           font-weight: 700;
-          font-size: clamp(2.2rem, 6vw, 4rem);
-          line-height: 0.98;
-          letter-spacing: -0.04em;
-          color: #5A1F1A;
+          color: #000;
           margin: 0;
+          letter-spacing: -0.01em;
         }
-        .stitle em {
-          font-style: italic;
-          font-weight: 400;
-          color: #A8411A;
-        }
-        .section-head {
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-          margin-bottom: 2.75rem;
-          align-items: flex-start;
-          max-width: 720px;
-        }
-        .section-sub {
-          font-family: var(--font-display);
-          font-style: italic;
-          font-weight: 300;
-          font-size: clamp(0.95rem, 1.6vw, 1.1rem);
-          color: #5E6B3E;
-          margin: 0.5rem 0 0;
-          line-height: 1.5;
-          max-width: 540px;
-        }
-        @media (min-width: 768px) {
-          .section-head {
-            margin-bottom: 3.5rem;
-          }
+        .rt-section-sub {
+          font-size: 0.9375rem;
+          color: #555;
+          margin: 0.4rem 0 0;
         }
 
-        .product-grid {
+        .rt-grid {
           display: grid;
-          grid-template-columns: 1fr;
-          gap: 2.75rem 1rem;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 2rem 1rem;
+          padding: 0 1rem;
         }
-        @media (min-width: 600px) { .product-grid { grid-template-columns: 1fr 1fr; gap: 3rem 1.5rem; } }
-        @media (min-width: 1000px) { .product-grid { gap: 4rem 2.5rem; } }
+        @media (min-width: 700px) {
+          .rt-grid { grid-template-columns: repeat(3, 1fr); gap: 2.5rem 1.5rem; padding: 0 1.5rem; }
+        }
+        @media (min-width: 1100px) {
+          .rt-grid { grid-template-columns: repeat(3, 1fr); gap: 3rem 2rem; }
+        }
 
-        .pack-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; max-width: 420px; margin: 0 auto; }
-        @media (min-width: 768px) { .pack-grid { grid-template-columns: repeat(3, 1fr); max-width: none; margin: 0; } }
+        /* Newsletter */
+        .rt-newsletter {
+          padding: 3rem 1rem;
+          background: #000;
+          color: #fff;
+        }
+        .rt-newsletter-title {
+          font-size: 1.4rem;
+          font-weight: 700;
+          margin: 0 0 0.4rem;
+        }
+        .rt-newsletter-sub {
+          font-size: 0.9375rem;
+          color: rgba(255,255,255,0.7);
+          margin: 0 0 1.5rem;
+        }
+        .rt-newsletter-cta {
+          display: inline-flex;
+          padding: 0.85rem 1.75rem;
+          background: #EFD200;
+          color: #000;
+          font-weight: 700;
+          font-size: 0.9375rem;
+          border-radius: 4px;
+          transition: opacity 0.15s ease;
+        }
+        .rt-newsletter-cta:hover { opacity: 0.85; }
 
         /* FAQ */
-        .faq-list { display: flex; flex-direction: column; }
-        .faq-item { border-bottom: 1px solid rgba(90,31,26,0.08); }
-        .faq-item:last-child { border-bottom: none; }
-        .faq-q {
-          padding: 1.25rem 0;
-          font-family: var(--font-display);
-          font-weight: 500;
-          font-size: 1.05rem;
-          color: #5A1F1A;
+        .rt-faq-list { display: flex; flex-direction: column; }
+        .rt-faq-item { border-bottom: 1px solid #e6e6e6; }
+        .rt-faq-item:last-child { border-bottom: none; }
+        .rt-faq-q {
+          padding: 1.1rem 0;
+          font-size: 0.95rem;
+          font-weight: 600;
+          color: #000;
           cursor: pointer;
           list-style: none;
           display: flex;
@@ -327,92 +277,67 @@ export default function PageShell() {
           align-items: center;
           gap: 1rem;
         }
-        .faq-q::-webkit-details-marker { display: none; }
-        .faq-chevron { color: #A8411A; transition: transform 0.2s ease; flex-shrink: 0; }
-        details[open] .faq-chevron { transform: rotate(180deg); }
-        .faq-a {
-          padding: 0 0 1.25rem;
-          font-family: var(--font-body);
+        .rt-faq-q::-webkit-details-marker { display: none; }
+        .rt-faq-chev { color: #888; transition: transform 0.2s ease; flex-shrink: 0; }
+        details[open] .rt-faq-chev { transform: rotate(180deg); }
+        .rt-faq-a {
+          padding: 0 0 1.1rem;
           font-size: 0.9375rem;
-          color: #5E6B3E;
-          line-height: 1.7;
+          color: #555;
+          line-height: 1.65;
         }
 
-        /* CTA final */
-        .cta-final {
-          background: #5A1F1A;
-          padding: 5rem 1.25rem;
-          position: relative;
-          overflow: hidden;
+        /* CTA */
+        .rt-cta {
+          padding: 3.5rem 1rem;
+          background: #FAF9F7;
+          border-top: 1px solid #e6e6e6;
         }
-        .cta-final::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background:
-            radial-gradient(600px 300px at 20% 20%, rgba(168,65,26,0.2), transparent 60%),
-            radial-gradient(800px 400px at 90% 100%, rgba(94,107,62,0.15), transparent 60%);
-          pointer-events: none;
-        }
-        .cta-final > * { position: relative; }
-        @media (min-width: 768px) { .cta-final { padding: 8rem 2.5rem; } }
-        .cta-kicker {
-          font-family: var(--font-body);
-          font-size: 10.5px;
+        .rt-cta-title {
+          font-size: clamp(1.5rem, 3.5vw, 2rem);
           font-weight: 700;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: rgba(244,234,219,0.55);
-          margin-bottom: 1.25rem;
+          color: #000;
+          margin: 0 0 0.6rem;
         }
-        .cta-h2 {
-          font-family: var(--font-display);
-          font-weight: 700;
-          font-size: clamp(2rem, 6vw, 3.75rem);
-          line-height: 1;
-          letter-spacing: -0.035em;
-          color: #F4EADB;
-          margin: 0 0 1.25rem;
-        }
-        .cta-h2 em {
-          font-style: italic;
-          font-weight: 400;
-          color: #E8B87D;
-        }
-        .cta-sub {
-          font-family: var(--font-body);
+        .rt-cta-sub {
           font-size: 0.9375rem;
-          color: rgba(244,234,219,0.65);
-          line-height: 1.7;
-          margin-bottom: 2.5rem;
+          color: #555;
+          margin: 0 0 1.5rem;
         }
-        .cta-btn {
+        .rt-cta-btn {
           display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          font-family: var(--font-body);
+          padding: 0.95rem 2rem;
+          background: #000;
+          color: #fff;
           font-weight: 600;
-          font-size: 1rem;
-          color: #5A1F1A;
-          background: #F4EADB;
+          font-size: 0.9375rem;
+          border-radius: 4px;
           border: none;
-          border-radius: 999px;
-          padding: 1.05rem 2rem;
           cursor: pointer;
-          transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
-          -webkit-tap-highlight-color: transparent;
-          box-shadow: 0 14px 32px -10px rgba(0,0,0,0.35);
+          transition: background 0.15s ease;
         }
-        .cta-btn svg { transition: transform 0.25s ease; }
-        @media (hover: hover) {
-          .cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 44px -12px rgba(0,0,0,0.45);
-          }
-          .cta-btn:hover svg { transform: translateX(4px); }
-        }
+        .rt-cta-btn:hover { background: #333; }
 
-        @media (min-width: 768px) { .sticky-bar { display: none !important; } }
+        /* Sticky bar mobile */
+        .rt-sticky {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          z-index: 100;
+          padding: 14px 1rem;
+          padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+          background: #000;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border: none;
+          cursor: pointer;
+          width: 100%;
+          -webkit-tap-highlight-color: transparent;
+        }
+        @media (min-width: 768px) { .rt-sticky { display: none !important; } }
       `}</style>
     </MotionConfig>
   );

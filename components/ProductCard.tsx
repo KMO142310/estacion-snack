@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { fmt, fmtDisplayPrice } from "@/lib/cart-utils";
+import { fmtDisplayPrice } from "@/lib/cart-utils";
 import { useCartStore } from "@/lib/store";
-import Confetti from "./Confetti";
 
 interface Product {
   id: string;
@@ -30,15 +29,12 @@ interface Props {
 }
 
 /**
- * ProductCard editorial — no marketplace tile.
- *
- * Cambios vs v anterior:
- * - aspect-ratio 1/1 (era 3/4) → foto más grande, menos tile-y.
- * - blurb (`copy`) visible en la card → ya no es solo "nombre + precio".
- * - "Bolsa sellada · X" como label honesto, no "1 kg" ambiguo.
- * - Tag de categoría arriba (Frutos secos / Dulces) en vez de badge solo.
- * - CTA inline secundario, no StampButton chillón.
- * - Background coloreado en la foto (compensa las fotos de packshot blanco).
+ * ProductCard retail-clean (referencia: grupoalval.com).
+ * - Foto cuadrada blanca, packshot.
+ * - Nombre + precio + botón "Agregar al carro" negro.
+ * - Badge amarillo (#EFD200) para "Última unidad" / promo.
+ * - Sin stickers, sin confetti, sin hover-tilt elaborado.
+ *   Comportamiento de Shopify estándar.
  */
 export default function ProductCard({ product, onOpen }: Props) {
   const {
@@ -50,261 +46,165 @@ export default function ProductCard({ product, onOpen }: Props) {
     stock_kg,
     min_unit_kg = 1,
     format_short = "1 kg",
-    copy,
     cat_label,
   } = product;
   const [added, setAdded] = useState(false);
-  const [confettiKey, setConfettiKey] = useState(0);
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
   const items = useCartStore((s) => s.items);
   const agotado = status === "agotado";
   const ultimaBolsa = status === "ultimo_kg";
-  const currentQty = items.find((item) => item.kind === "product" && item.id === product.id)?.qty ?? 0;
+  const currentQty = items.find((it) => it.kind === "product" && it.id === product.id)?.qty ?? 0;
   const remainingQty = Math.max(0, stock_kg - currentQty);
   const display = fmtDisplayPrice(price, min_unit_kg, format_short);
-  const unitPrice = fmt(price);
 
   const handleAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (agotado || added || remainingQty < min_unit_kg) return;
     addItem({ kind: "product", id: product.id, qty: min_unit_kg, name, pricePerUnit: price });
-    addToast(`${name} · 1 bolsa`);
+    addToast(`${name} agregado`);
     setAdded(true);
-    setConfettiKey((k) => k + 1); // dopamina literal: confetti burst
-    setTimeout(() => setAdded(false), 1200);
+    setTimeout(() => setAdded(false), 1400);
   };
 
   return (
-    <article className="pc" style={{ opacity: agotado ? 0.45 : 1 }}>
+    <article className="pc">
       <button
         type="button"
         onClick={agotado ? undefined : onOpen}
         disabled={agotado}
         aria-label={agotado ? `${name} — agotado` : `Ver detalle de ${name}`}
-        className="pc-btn"
+        className="pc-link"
       >
-        <div className="pc-img-wrap img-warm-frame">
+        <div className="pc-img">
           <Image
             src={image_webp_url}
-            alt=""
+            alt={name}
             fill
-            sizes="(max-width:768px) 100vw, 50vw"
-            style={{ objectFit: "cover", transition: "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)" }}
-            className="pc-img"
+            sizes="(max-width:700px) 50vw, 33vw"
+            style={{ objectFit: "cover" }}
           />
-          {(badge || ultimaBolsa) && (
-            <span className="pc-badge" style={{ background: ultimaBolsa ? "#5A1F1A" : "rgba(168,65,26,0.92)" }}>
-              {badge || "Última bolsa"}
-            </span>
+          {agotado && (
+            <span className="pc-tag pc-tag-out">Agotado</span>
           )}
-          {cat_label && (
-            <span className="pc-cat" aria-hidden="true">{cat_label}</span>
+          {!agotado && ultimaBolsa && (
+            <span className="pc-tag pc-tag-promo">Última unidad</span>
+          )}
+          {!agotado && !ultimaBolsa && badge && (
+            <span className="pc-tag pc-tag-new">{badge}</span>
           )}
         </div>
 
         <div className="pc-info">
-          <h3 className="pc-name">{name}</h3>
-          {copy && <p className="pc-copy">{copy}</p>}
-
-          <div className="pc-meta">
-            <div className="pc-price-block">
-              <span className="pc-price-main">{agotado ? "Agotado" : display.price}</span>
-              {!agotado && (
-                <span className="pc-price-unit">{display.unit}</span>
-              )}
-            </div>
-            {!agotado && min_unit_kg < 1 && (
-              <span className="pc-price-aside">
-                ({fmt(price)} / kg)
-              </span>
-            )}
-            {!agotado && min_unit_kg >= 1 && (
-              <span className="pc-price-aside">
-                ({unitPrice} / kg)
-              </span>
-            )}
-          </div>
+          {cat_label && <p className="pc-cat">{cat_label}</p>}
+          <p className="pc-name">{name}</p>
+          <p className="pc-price">
+            <span className="pc-price-main">{display.price}</span>
+            <span className="pc-price-unit"> · {format_short}</span>
+          </p>
         </div>
       </button>
 
       {!agotado && (
-        <div className="pc-add-wrap">
-          <button
-            type="button"
-            onClick={handleAdd}
-            className="pc-add"
-            style={{ background: added ? "#5E6B3E" : undefined }}
-            aria-label={`Agregar 1 bolsa de ${name} al pedido`}
-          >
-            {added ? "✓ Agregado al pedido" : "Agregar 1 bolsa"}
-            {!added && (
-              <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
-                <path d="M12 5v14M5 12h14" strokeLinecap="round" />
-              </svg>
-            )}
-          </button>
-          <Confetti triggerKey={confettiKey} size={140} />
-        </div>
+        <button
+          type="button"
+          onClick={handleAdd}
+          className="pc-add"
+          aria-label={`Agregar ${name} al carro`}
+        >
+          {added ? "Agregado ✓" : "Agregar al carro"}
+        </button>
       )}
 
       <style>{`
         .pc {
+          background: #fff;
           display: flex;
           flex-direction: column;
-          gap: 0;
-          transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .pc-btn {
+        .pc-link {
+          display: block;
           text-align: left;
-          width: 100%;
           background: transparent;
-          border: none;
           padding: 0;
-          cursor: pointer;
-          -webkit-tap-highlight-color: transparent;
-          margin-bottom: 14px;
+          width: 100%;
+          color: inherit;
         }
-        .pc-img-wrap {
+        .pc-img {
           position: relative;
           aspect-ratio: 1/1;
-          border-radius: 18px;
+          background: #FAF9F7;
           overflow: hidden;
-          background:
-            radial-gradient(circle at 30% 20%, rgba(168,65,26,0.06), transparent 60%),
-            #EDE4D6;
-          margin-bottom: 18px;
         }
-        @media (hover: hover) {
-          .pc:hover { transform: translateY(-3px) rotate(-0.4deg); }
-          .pc:hover .pc-img { transform: scale(1.06); }
+        .pc-link:hover .pc-img img {
+          transform: scale(1.03);
         }
-        .pc-badge {
+        .pc-img img { transition: transform 0.4s ease; }
+
+        .pc-tag {
           position: absolute;
-          top: 14px;
-          left: 14px;
+          top: 10px;
+          left: 10px;
           z-index: 2;
-          color: #F4EADB;
-          font-family: var(--font-body);
-          font-size: 10px;
+          padding: 4px 10px;
+          font-size: 10.5px;
           font-weight: 700;
-          letter-spacing: 0.16em;
+          letter-spacing: 0.06em;
           text-transform: uppercase;
-          padding: 6px 12px;
-          border-radius: 999px;
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
+          border-radius: 2px;
+        }
+        .pc-tag-promo { background: #EFD200; color: #000; }
+        .pc-tag-new   { background: #000;    color: #fff; }
+        .pc-tag-out   { background: #555;    color: #fff; }
+
+        .pc-info {
+          padding: 0.85rem 0 0;
         }
         .pc-cat {
-          position: absolute;
-          top: 14px;
-          right: 14px;
-          z-index: 2;
-          color: rgba(90,31,26,0.78);
-          background: rgba(255,249,241,0.85);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          font-family: var(--font-body);
-          font-size: 10px;
+          font-size: 10.5px;
           font-weight: 600;
           letter-spacing: 0.14em;
           text-transform: uppercase;
-          padding: 5px 10px;
-          border-radius: 999px;
-        }
-        .pc-info {
-          padding: 0 4px;
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
+          color: #888;
+          margin: 0 0 4px;
         }
         .pc-name {
-          font-family: var(--font-display);
-          font-weight: 600;
-          font-size: clamp(1.2rem, 2.4vw, 1.45rem);
-          color: #5A1F1A;
-          line-height: 1.15;
-          letter-spacing: -0.02em;
+          font-size: 0.9375rem;
+          font-weight: 500;
+          color: #000;
+          margin: 0 0 4px;
+          line-height: 1.3;
+        }
+        .pc-price {
+          font-size: 0.9375rem;
+          color: #000;
           margin: 0;
-        }
-        .pc-copy {
-          font-family: var(--font-body);
-          font-size: 0.875rem;
-          line-height: 1.55;
-          color: rgba(90,31,26,0.65);
-          margin: 0;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-        .pc-meta {
-          display: flex;
-          align-items: baseline;
-          gap: 8px;
-          flex-wrap: wrap;
-          padding-top: 6px;
-          margin-top: 4px;
-          border-top: 1px solid rgba(90,31,26,0.08);
-        }
-        .pc-price-block {
-          display: flex;
-          flex-direction: column;
-          gap: 1px;
-        }
-        .pc-price-main {
-          font-family: var(--font-display);
-          font-weight: 700;
-          font-size: 1.15rem;
-          color: #5A1F1A;
           font-variant-numeric: tabular-nums;
-          letter-spacing: -0.02em;
-          line-height: 1;
         }
+        .pc-price-main { font-weight: 700; }
         .pc-price-unit {
-          font-family: var(--font-body);
-          font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 0.06em;
-          color: rgba(90,31,26,0.6);
-          margin-top: 3px;
-        }
-        .pc-price-aside {
-          font-family: var(--font-body);
-          font-size: 11px;
-          color: rgba(90,31,26,0.45);
-          margin-left: auto;
-          font-variant-numeric: tabular-nums;
-          align-self: flex-end;
+          font-weight: 500;
+          color: #888;
         }
 
-        .pc-add-wrap {
-          margin-top: 14px;
-          position: relative;
-        }
         .pc-add {
+          margin-top: 0.85rem;
           width: 100%;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          font-family: var(--font-body);
+          background: #000;
+          color: #fff;
+          font-size: 0.875rem;
           font-weight: 600;
-          font-size: 0.9375rem;
-          color: #F4EADB;
-          background: #5A1F1A;
-          padding: 0.85rem 1.25rem;
+          letter-spacing: 0.02em;
+          padding: 0.75rem 1rem;
           border: none;
-          border-radius: 12px;
+          border-radius: 4px;
           cursor: pointer;
-          transition: background 0.2s ease, transform 0.2s ease;
-          -webkit-tap-highlight-color: transparent;
+          transition: background 0.15s ease;
         }
+        .pc-add:hover { background: #333; }
+
         @media (hover: hover) {
-          .pc-add:hover {
-            background: #3d1613;
-            transform: translateY(-2px);
-          }
+          .pc-link:hover { opacity: 1; }
         }
       `}</style>
     </article>

@@ -1,50 +1,120 @@
 import Link from "next/link";
 
+/**
+ * Footer retail-clean (referencia: grupoalval.com).
+ * Multi-columna: marca, tienda, contacto, legal. Negro sobre blanco.
+ */
 export default function Footer() {
   return (
-    <footer style={{ background: "#5A1F1A", padding: "3rem 1.25rem 2rem" }}>
-      <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
-        <p style={{
-          fontFamily: "var(--font-display)", fontWeight: 600,
-          fontSize: "1.25rem", color: "#F4EADB", marginBottom: "0.5rem",
-        }}>
-          Estación Snack
-        </p>
-        <p style={{
-          fontFamily: "var(--font-body)", fontSize: "0.75rem", fontWeight: 600,
-          letterSpacing: "0.14em", textTransform: "uppercase",
-          color: "rgba(244,234,219,0.45)", marginBottom: "2rem",
-        }}>
-          Santa Cruz · Valle de Colchagua
-        </p>
+    <footer className="ft">
+      <div className="ft-inner">
+        <div className="ft-cols">
+          <div className="ft-col">
+            <p className="ft-brand">Estación Snack</p>
+            <p className="ft-tag">
+              Frutos secos en bolsa sellada.<br />
+              Santa Cruz, Valle de Colchagua.
+            </p>
+          </div>
 
-        <nav
-          aria-label="Secundaria"
-          style={{
-            display: "flex", flexWrap: "wrap", gap: "0.5rem 1.25rem",
-            justifyContent: "center", fontFamily: "var(--font-body)",
-            fontSize: "0.8125rem", color: "rgba(244,234,219,0.65)",
-            marginBottom: "1.5rem",
-          }}
-        >
-          <Link href="/#productos" style={{ color: "inherit" }}>Productos</Link>
-          <Link href="/envios" style={{ color: "inherit" }}>Envíos</Link>
-          <Link href="/faq" style={{ color: "inherit" }}>Preguntas</Link>
-          <Link href="/contacto" style={{ color: "inherit" }}>Contacto</Link>
-          <Link href="/terminos" style={{ color: "inherit" }}>Términos</Link>
-          <Link href="/privacidad" style={{ color: "inherit" }}>Privacidad</Link>
-          <a href="https://instagram.com/estacionsnack.sc" target="_blank" rel="noopener noreferrer" style={{ color: "inherit" }}>Instagram</a>
-          <a href="https://wa.me/56953743338" target="_blank" rel="noopener noreferrer" style={{ color: "inherit" }}>WhatsApp</a>
-        </nav>
+          <div className="ft-col">
+            <p className="ft-h">Tienda</p>
+            <Link href="/#productos">Productos</Link>
+            <Link href="/#packs">Packs</Link>
+            <Link href="/envios">Envíos</Link>
+            <Link href="/faq">Preguntas frecuentes</Link>
+          </div>
 
-        <p style={{
-          fontFamily: "var(--font-body)", fontSize: "0.7rem",
-          color: "rgba(244,234,219,0.35)", paddingTop: "1rem",
-          borderTop: "1px solid rgba(244,234,219,0.08)",
-        }}>
-          © 2026 Estación Snack
-        </p>
+          <div className="ft-col">
+            <p className="ft-h">Contacto</p>
+            <a href="https://wa.me/56953743338" target="_blank" rel="noopener noreferrer">WhatsApp +56 9 5374 3338</a>
+            <a href="https://instagram.com/estacionsnack.sc" target="_blank" rel="noopener noreferrer">@estacionsnack.sc</a>
+            <Link href="/contacto">Formulario</Link>
+          </div>
+
+          <div className="ft-col">
+            <p className="ft-h">Legal</p>
+            <Link href="/terminos">Términos y condiciones</Link>
+            <Link href="/privacidad">Privacidad</Link>
+            <Link href="/cambios-devoluciones">Cambios y devoluciones</Link>
+          </div>
+        </div>
+
+        <div className="ft-bottom">
+          <p>© 2026 Estación Snack · Santa Cruz, Chile</p>
+          <p className="ft-pay">Pago al recibir · Transferencia · WhatsApp</p>
+        </div>
       </div>
+
+      <style>{`
+        .ft {
+          background: #000;
+          color: rgba(255,255,255,0.85);
+          padding: 3rem 1rem 1.5rem;
+        }
+        .ft-inner { max-width: 1200px; margin: 0 auto; }
+        .ft-cols {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          padding-bottom: 2.5rem;
+          border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .ft-col {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        .ft-col a {
+          color: rgba(255,255,255,0.65);
+          font-size: 0.875rem;
+          padding: 2px 0;
+          transition: color 0.15s ease;
+        }
+        .ft-col a:hover { color: #fff; }
+        .ft-brand {
+          font-size: 1.05rem;
+          font-weight: 700;
+          color: #fff;
+          margin: 0 0 0.4rem;
+        }
+        .ft-tag {
+          font-size: 0.875rem;
+          color: rgba(255,255,255,0.6);
+          line-height: 1.55;
+          margin: 0;
+        }
+        .ft-h {
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: #EFD200;
+          margin: 0 0 0.5rem;
+        }
+        .ft-bottom {
+          padding-top: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+          font-size: 0.75rem;
+          color: rgba(255,255,255,0.45);
+        }
+        .ft-pay { font-style: italic; }
+        @media (min-width: 700px) {
+          .ft { padding: 4rem 1.5rem 2rem; }
+          .ft-cols {
+            grid-template-columns: 1.3fr 1fr 1.2fr 1fr;
+            gap: 3rem;
+            padding-bottom: 3rem;
+          }
+          .ft-bottom {
+            flex-direction: row;
+            justify-content: space-between;
+            padding-top: 2rem;
+          }
+        }
+      `}</style>
     </footer>
   );
 }

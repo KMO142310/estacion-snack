@@ -1,111 +1,146 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import Image from "next/image";
 import ShoppingBag from "./icons/ShoppingBag";
 import { useCartStore } from "@/lib/store";
-import { spring } from "@/lib/motion-tokens";
 
 interface HeaderProps {
   onOrderOpen: () => void;
 }
 
+/**
+ * Header retail-clean (referencia: grupoalval.com).
+ * - Logo izquierda + nav center + cart-icon derecha.
+ * - Fondo blanco, borde inferior.
+ * - Sin animaciones extra: visible y funcional.
+ */
 export default function Header({ onOrderOpen }: HeaderProps) {
-  const [scrolled, setScrolled] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const items = useCartStore((s) => s.items);
-  const reducedMotion = useReducedMotion();
-
-  // setHydrated es intencionalmente síncrono post-rehydrate de Zustand persist.
-  // El flag evita hydration mismatch entre SSR (cart vacío) y cliente (cart de localStorage).
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => { setHydrated(true); useCartStore.persist.rehydrate(); }, []);
 
   useEffect(() => {
-    const onScroll = () => { setScrolled(window.scrollY > 10); };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setHydrated(true);
+    useCartStore.persist.rehydrate();
   }, []);
 
   const itemCount = hydrated ? items.length : 0;
 
   return (
-    <header style={{
-      background: "rgba(90,31,26,0.96)",
-      paddingLeft: 16,
-      paddingRight: "max(16px, env(safe-area-inset-right, 0px))",
-      height: 68,
-      display: "flex", alignItems: "center", justifyContent: "space-between",
-      boxShadow: scrolled ? "0 10px 28px rgba(18,5,3,0.18)" : "none",
-      backdropFilter: "blur(18px)",
-      WebkitBackdropFilter: "blur(18px)",
-      borderBottom: "1px solid rgba(244,234,219,0.08)",
-    }}>
-      <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
-        <Image src="/img/logo-icon.svg" alt="" width={40} height={40} style={{ borderRadius: 12, flexShrink: 0 }} />
-        <span style={{ minWidth: 0 }}>
-          <span style={{ display: "block", fontFamily: "var(--font-display)", fontSize: 22, letterSpacing: "-0.02em", lineHeight: 1, color: "#F4EADB", fontWeight: 700 }}>
-            Estación Snack
-          </span>
-        </span>
-      </Link>
+    <header className="hd">
+      <div className="hd-row">
+        <Link href="/" className="hd-logo" aria-label="Estación Snack — inicio">
+          <Image src="/img/logo-icon.svg" alt="" width={36} height={36} className="hd-logo-icon" />
+          <span className="hd-logo-text">Estación Snack</span>
+        </Link>
 
-      <motion.button
-        onClick={onOrderOpen}
-        aria-label={`Ver pedido${itemCount > 0 ? ` (${itemCount})` : ""}`}
-        whileTap={reducedMotion ? undefined : { scale: 0.94 }}
-        transition={spring.press}
-        style={{
-          position: "relative",
-          minWidth: 50,
-          height: 44,
-          padding: "0 13px",
-          background: "rgba(244,234,219,0.10)",
-          color: "#F4EADB",
-          borderRadius: 999,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 8,
-          border: "none", cursor: "pointer",
-          WebkitTapHighlightColor: "transparent",
-          flexShrink: 0,
-        }}
-      >
-        <ShoppingBag size={22} />
-        <AnimatePresence>
+        <nav className="hd-nav" aria-label="Principal">
+          <Link href="/#productos">Productos</Link>
+          <Link href="/#packs">Packs</Link>
+          <Link href="/envios">Envíos</Link>
+          <Link href="/contacto">Contacto</Link>
+        </nav>
+
+        <button
+          type="button"
+          onClick={onOrderOpen}
+          aria-label={`Tu pedido${itemCount > 0 ? ` (${itemCount} ${itemCount === 1 ? "ítem" : "ítems"})` : ""}`}
+          className="hd-cart"
+        >
+          <ShoppingBag size={22} />
           {itemCount > 0 && (
-            <motion.span
-              key="badge"
-              initial={reducedMotion ? { opacity: 0 } : { scale: 0, opacity: 0 }}
-              animate={reducedMotion ? { opacity: 1 } : { scale: 1, opacity: 1 }}
-              exit={reducedMotion ? { opacity: 0 } : { scale: 0, opacity: 0 }}
-              transition={spring.press}
-              style={{
-                position: "absolute", top: -4, right: -2, minWidth: 18, height: 18, padding: "0 5px",
-                background: "#A8411A", color: "#F4EADB", fontSize: 10, fontWeight: 700,
-                borderRadius: 999, display: "flex", alignItems: "center", justifyContent: "center",
-                fontFamily: "var(--font-body)",
-                fontVariantNumeric: "tabular-nums",
-                border: "2px solid #5A1F1A",
-                pointerEvents: "none",
-              }}
-            >
-              <motion.span
-                key={itemCount}
-                initial={reducedMotion ? undefined : { y: -10, opacity: 0 }}
-                animate={reducedMotion ? undefined : { y: 0, opacity: 1 }}
-                transition={spring.flip}
-                style={{ display: "inline-block", lineHeight: 1 }}
-              >
-                {itemCount}
-              </motion.span>
-            </motion.span>
+            <span className="hd-cart-badge" aria-hidden="true">{itemCount}</span>
           )}
-        </AnimatePresence>
-      </motion.button>
+        </button>
+      </div>
+
+      <style>{`
+        .hd {
+          background: #ffffff;
+          border-bottom: 1px solid #e6e6e6;
+        }
+        .hd-row {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 1rem;
+          height: 64px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1.5rem;
+        }
+        .hd-logo {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          color: #000;
+          font-weight: 700;
+          flex-shrink: 0;
+        }
+        .hd-logo-icon { border-radius: 8px; }
+        .hd-logo-text {
+          font-size: 1rem;
+          letter-spacing: -0.01em;
+        }
+
+        .hd-nav {
+          display: none;
+          gap: 1.75rem;
+          font-size: 0.9rem;
+          font-weight: 500;
+          color: #000;
+        }
+        .hd-nav a {
+          color: inherit;
+          padding: 6px 0;
+          border-bottom: 2px solid transparent;
+          transition: border-color 0.15s ease, color 0.15s ease;
+        }
+        .hd-nav a:hover {
+          border-bottom-color: #000;
+        }
+
+        .hd-cart {
+          position: relative;
+          width: 42px;
+          height: 42px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #000;
+          background: transparent;
+          border: none;
+          border-radius: 4px;
+          flex-shrink: 0;
+          transition: background 0.15s ease;
+        }
+        .hd-cart:hover { background: #f0f0f0; }
+        .hd-cart-badge {
+          position: absolute;
+          top: 4px;
+          right: 2px;
+          min-width: 18px;
+          height: 18px;
+          padding: 0 5px;
+          background: #000;
+          color: #fff;
+          font-size: 10px;
+          font-weight: 700;
+          border-radius: 999px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-variant-numeric: tabular-nums;
+        }
+
+        @media (min-width: 768px) {
+          .hd-row { padding: 0 1.5rem; height: 72px; }
+          .hd-nav { display: flex; }
+          .hd-logo-text { font-size: 1.0625rem; }
+        }
+      `}</style>
     </header>
   );
 }

@@ -5,7 +5,6 @@ import Image from "next/image";
 import { fmt } from "@/lib/cart-utils";
 import { useCartStore } from "@/lib/store";
 import { computeSavings, totalKg, getPackAvailability, type Pack, type ProductStock } from "@/lib/pack-utils";
-import StampButton from "./StampButton";
 
 interface Props {
   pack: Pack;
@@ -13,6 +12,10 @@ interface Props {
   onOpen: () => void;
 }
 
+/**
+ * PackCard retail-clean — MISMO lenguaje que ProductCard nuevo.
+ * Sin StampButton terracota serif, sin precio duplicado en CTA.
+ */
 export default function PackCard({ pack, products, onOpen }: Props) {
   const { savings } = computeSavings(pack);
   const kg = totalKg(pack);
@@ -26,196 +29,184 @@ export default function PackCard({ pack, products, onOpen }: Props) {
   const handleAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (isAgotado || added) return;
-    // Haptics vienen de StampButton (chip + stamp) — patrón unificado con ProductCard.
     addItem({ kind: "pack", id: pack.id, qty: 1, name: pack.name, pricePerUnit: pack.price });
-    addToast(`${pack.name} agregado al pedido`);
+    addToast(`${pack.name} agregado`);
     setAdded(true);
-    setTimeout(() => setAdded(false), 1200);
+    setTimeout(() => setAdded(false), 1400);
   };
 
   return (
-    <article
-      className={isAgotado ? undefined : "card-lift"}
-      style={{
-        background: "#fff",
-        borderRadius: "24px",
-        overflow: "hidden",
-        cursor: isAgotado ? "default" : "pointer",
-        opacity: isAgotado ? 0.6 : 1,
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        boxShadow: "0 2px 20px rgba(90,31,26,0.08)",
-        WebkitTapHighlightColor: "transparent",
-      }}
-    >
+    <article className="pkc">
       <button
         type="button"
         onClick={isAgotado ? undefined : onOpen}
         disabled={isAgotado}
         aria-label={isAgotado ? `${pack.name} — agotado` : `Ver detalle de ${pack.name}`}
-        style={{
-          textAlign: "left",
-          width: "100%",
-          background: "transparent",
-          border: "none",
-          padding: 0,
-          cursor: isAgotado ? "default" : "pointer",
-        }}
+        className="pkc-link"
       >
-        <div
-          className="img-warm-frame"
-          style={{
-            position: "relative",
-            aspectRatio: "4/3",
-            background: "#F4EADB",
-            filter: isAgotado ? "grayscale(0.6)" : "none",
-          }}
-        >
+        <div className="pkc-img">
           <Image
             src={pack.image_webp_url}
             alt={pack.name}
             fill
-            sizes="(max-width: 640px) 100vw, 50vw"
+            sizes="(max-width: 700px) 100vw, 33vw"
             style={{ objectFit: "cover" }}
-            placeholder="blur"
-            blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI0Y0RUFEQSI+PC9yZWN0Pjwvc3ZnPg=="
           />
-
-          {isAgotado ? (
-            <span
-              style={{
-                position: "absolute",
-                top: 10,
-                left: 10,
-                background: "rgba(90,31,26,0.75)",
-                color: "#F4EADB",
-                fontSize: "0.6875rem",
-                fontWeight: 700,
-                fontFamily: "var(--font-body)",
-                padding: "4px 10px",
-                borderRadius: "999px",
-              }}
-            >
+          {isAgotado && (
+            <span className="pkc-tag pkc-tag-out">
               Agotado{limitingComponent ? ` · sin ${limitingComponent}` : ""}
             </span>
-          ) : isLast ? (
-            <span
-              style={{
-                position: "absolute",
-                top: 10,
-                left: 10,
-                background: "#5A1F1A",
-                color: "#F4EADB",
-                fontSize: "0.6875rem",
-                fontWeight: 700,
-                fontFamily: "var(--font-body)",
-                padding: "4px 10px",
-                borderRadius: "999px",
-              }}
-            >
+          )}
+          {!isAgotado && isLast && (
+            <span className="pkc-tag pkc-tag-promo">
               {units === 1 ? "Última unidad" : `Últimas ${units} unidades`}
             </span>
-          ) : pack.badge ? (
-            <span
-              style={{
-                position: "absolute",
-                top: 10,
-                left: 10,
-                background: "#A8411A",
-                color: "#F4EADB",
-                fontSize: "0.6875rem",
-                fontWeight: 700,
-                fontFamily: "var(--font-body)",
-                padding: "4px 10px",
-                borderRadius: "999px",
-              }}
-            >
-              {pack.badge}
-            </span>
-          ) : null}
+          )}
+          {!isAgotado && !isLast && pack.badge && (
+            <span className="pkc-tag pkc-tag-new">{pack.badge}</span>
+          )}
         </div>
 
-        <div style={{ padding: "1.2rem 1.2rem 0.85rem", display: "flex", flexDirection: "column", flex: 1 }}>
-          <h3
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: "1.32rem",
-              color: "#5A1F1A",
-              marginBottom: "0.35rem",
-            }}
-          >
-            {pack.name}
-          </h3>
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.84rem",
-              color: "#5E6B3E",
-              lineHeight: 1.5,
-              marginBottom: "0.875rem",
-            }}
-          >
-            {pack.tagline}
+        <div className="pkc-info">
+          <p className="pkc-cat">Pack</p>
+          <p className="pkc-name">{pack.name}</p>
+          <p className="pkc-tagline">{pack.tagline}</p>
+          <p className="pkc-price">
+            <span className="pkc-price-main">{fmt(pack.price)}</span>
+            <span className="pkc-price-aside">{kg} kg · ahorras {fmt(savings)}</span>
           </p>
-
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "0.85rem 0 0",
-              borderTop: "1px solid rgba(90,31,26,0.08)",
-              marginBottom: "0.75rem",
-              marginTop: "auto",
-            }}
-          >
-            <div>
-              <p
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 700,
-                  fontSize: "1.375rem",
-                  color: "#5A1F1A",
-                  lineHeight: 1,
-                }}
-              >
-                {fmt(pack.price)}
-              </p>
-              <p
-                style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "0.75rem",
-                color: "#5E6B3E",
-                marginTop: "2px",
-              }}
-            >
-                {kg} kg en total · ahorras {fmt(savings)}
-              </p>
-            </div>
-          </div>
         </div>
       </button>
 
-      <div style={{ padding: "0 1.125rem 1.125rem" }}>
-        {!isAgotado ? (
-          <StampButton
-            onClick={handleAdd}
-            fullWidth
-            size="sm"
-            // BUGFIX: pasar undefined en spread sobrescribe el bg del palette.
-            // Cuando added=false NO mandamos style.background — el StampButton usa su default (#A8411A).
-            style={added ? { background: "#5E6B3E" } : undefined}
-          >
-            {added ? "✓ Agregado al pedido" : `Agregar pack — ${fmt(pack.price)}`}
-          </StampButton>
-        ) : (
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#5E6B3E", fontWeight: 600, textAlign: "center" }}>
-            Momentáneamente agotado
-          </p>
-        )}
-      </div>
+      {!isAgotado ? (
+        <button
+          type="button"
+          onClick={handleAdd}
+          className="pkc-add"
+          aria-label={`Agregar ${pack.name} al carro`}
+        >
+          {added ? "Agregado ✓" : "Agregar al carro"}
+        </button>
+      ) : (
+        <p className="pkc-out">Momentáneamente agotado</p>
+      )}
+
+      <style>{`
+        .pkc {
+          background: #fff;
+          display: flex;
+          flex-direction: column;
+        }
+        .pkc-link {
+          display: block;
+          text-align: left;
+          background: transparent;
+          padding: 0;
+          width: 100%;
+          color: inherit;
+        }
+        .pkc-img {
+          position: relative;
+          aspect-ratio: 1/1;
+          background: #FAF9F7;
+          overflow: hidden;
+        }
+        .pkc-link:hover .pkc-img img { transform: scale(1.03); }
+        .pkc-img img { transition: transform 0.4s ease; }
+
+        .pkc-tag {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          z-index: 2;
+          padding: 4px 10px;
+          font-size: 10.5px;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          border-radius: 2px;
+        }
+        .pkc-tag-promo { background: #EFD200; color: #000; }
+        .pkc-tag-new   { background: #000;    color: #fff; }
+        .pkc-tag-out   { background: #555;    color: #fff; }
+
+        .pkc-info {
+          padding: 0.85rem 0 0;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+        .pkc-cat {
+          font-size: 10.5px;
+          font-weight: 600;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: #888;
+          margin: 0;
+        }
+        .pkc-name {
+          font-size: 0.9375rem;
+          font-weight: 500;
+          color: #000;
+          margin: 0;
+          line-height: 1.3;
+        }
+        .pkc-tagline {
+          font-size: 0.8125rem;
+          color: #555;
+          margin: 0 0 4px;
+          line-height: 1.45;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        .pkc-price {
+          display: flex;
+          align-items: baseline;
+          gap: 8px;
+          flex-wrap: wrap;
+          margin: 0;
+          font-variant-numeric: tabular-nums;
+        }
+        .pkc-price-main {
+          font-size: 1rem;
+          font-weight: 700;
+          color: #000;
+        }
+        .pkc-price-aside {
+          font-size: 11.5px;
+          color: #888;
+          font-weight: 500;
+        }
+
+        .pkc-add {
+          margin-top: 0.85rem;
+          width: 100%;
+          background: #000;
+          color: #fff;
+          font-size: 0.875rem;
+          font-weight: 600;
+          letter-spacing: 0.02em;
+          padding: 0.75rem 1rem;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background 0.15s ease;
+        }
+        .pkc-add:hover { background: #333; }
+
+        .pkc-out {
+          margin-top: 0.85rem;
+          padding: 0.75rem;
+          font-size: 0.8125rem;
+          font-weight: 600;
+          color: #888;
+          text-align: center;
+          background: #f0f0f0;
+          border-radius: 4px;
+        }
+      `}</style>
     </article>
   );
 }

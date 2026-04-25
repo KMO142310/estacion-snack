@@ -51,6 +51,7 @@ export default function ProductCard({ product, onOpen }: Props) {
   const [added, setAdded] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
+  const setOrderOpen = useCartStore((s) => s.setOrderOpen);
   const items = useCartStore((s) => s.items);
   const agotado = status === "agotado";
   const ultimaBolsa = status === "ultimo_kg";
@@ -64,6 +65,9 @@ export default function ProductCard({ product, onOpen }: Props) {
     addItem({ kind: "product", id: product.id, qty: min_unit_kg, name, pricePerUnit: price });
     addToast(`${name} agregado`);
     setAdded(true);
+    // Abrir el carrito tras 280ms da feedback visible — sin esto se siente
+    // como que "no pasó nada" aunque el item se haya agregado al state.
+    setTimeout(() => setOrderOpen(true), 280);
     setTimeout(() => setAdded(false), 1400);
   };
 

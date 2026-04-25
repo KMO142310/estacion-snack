@@ -25,6 +25,7 @@ export default function PackCard({ pack, products, onOpen }: Props) {
   const [added, setAdded] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
+  const setOrderOpen = useCartStore((s) => s.setOrderOpen);
 
   const handleAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -32,6 +33,8 @@ export default function PackCard({ pack, products, onOpen }: Props) {
     addItem({ kind: "pack", id: pack.id, qty: 1, name: pack.name, pricePerUnit: pack.price });
     addToast(`${pack.name} agregado`);
     setAdded(true);
+    // Abre el cart sheet para feedback visible — sin esto el click parece no hacer nada.
+    setTimeout(() => setOrderOpen(true), 280);
     setTimeout(() => setAdded(false), 1400);
   };
 

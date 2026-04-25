@@ -94,24 +94,25 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
               <span className="hero-stamp-name">{lead.name}</span>
               <span className="hero-stamp-meta">{fmt(lead.price)} · 1 kg sellado</span>
             </span>
-
-            {/* Stickers flotantes — identidad de marca, no decoración pasiva */}
-            <span className="hero-sticker hero-sticker-1">
-              <Sticker tone="terracota" rotate={-8} size="md" variant="badge">
-                ✓ Sellado al vacío
-              </Sticker>
-            </span>
-            <span className="hero-sticker hero-sticker-2">
-              <Sticker tone="oliva" rotate={6} size="sm" variant="label">
-                Hecho acá
-              </Sticker>
-            </span>
-            <span className="hero-sticker hero-sticker-3">
-              <Sticker tone="crema" rotate={-3} size="sm" variant="tag">
-                Sin RUT empresa
-              </Sticker>
-            </span>
           </div>
+
+          {/* Stickers flotantes — afuera del .hero-photo-frame (que tiene overflow:hidden).
+              Anclados al .hero-figure (relative) para asomar fuera del marco. */}
+          <span className="hero-sticker hero-sticker-1">
+            <Sticker tone="terracota" rotate={-8} size="md" variant="badge">
+              ✓ Sellado al vacío
+            </Sticker>
+          </span>
+          <span className="hero-sticker hero-sticker-2">
+            <Sticker tone="oliva" rotate={6} size="sm" variant="label">
+              Hecho acá
+            </Sticker>
+          </span>
+          <span className="hero-sticker hero-sticker-3">
+            <Sticker tone="crema" rotate={-3} size="sm" variant="tag">
+              Sin RUT empresa
+            </Sticker>
+          </span>
           <figcaption className="hero-cap">
             <span className="hero-cap-name">{lead.name}</span>
             <span className="hero-cap-meta">Almendra · nuez · avellana europea · maní sin sal</span>
@@ -356,18 +357,20 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
           text-align: right;
         }
 
-        /* Stickers flotantes en la foto del hero */
+        /* Stickers flotantes — anclados a .hero-figure (relative).
+           El frame tiene overflow:hidden así que los stickers viven AFUERA. */
+        .hero-figure { position: relative; }
         .hero-sticker {
           position: absolute;
-          z-index: 3;
+          z-index: 5;
         }
-        .hero-sticker-1 { top: -14px; right: -8px; }
-        .hero-sticker-2 { top: 38%; left: -22px; }
-        .hero-sticker-3 { bottom: -18px; right: 30px; }
+        .hero-sticker-1 { top: -16px; right: -10px; }
+        .hero-sticker-2 { top: 42%; left: -16px; }
+        .hero-sticker-3 { bottom: 56px; right: -8px; }
         @media (min-width: 900px) {
-          .hero-sticker-1 { top: -18px; right: -18px; }
-          .hero-sticker-2 { top: 40%; left: -38px; }
-          .hero-sticker-3 { bottom: -22px; right: 40px; }
+          .hero-sticker-1 { top: -22px; right: -28px; }
+          .hero-sticker-2 { top: 44%; left: -42px; }
+          .hero-sticker-3 { bottom: 70px; right: -32px; }
         }
 
         @media (min-width: 900px) {

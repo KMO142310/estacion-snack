@@ -1,70 +1,68 @@
 @import "tailwindcss";
 
+/* === Paleta retail clean (referencia: grupoalval.com) ===
+   Reemplaza la paleta editorial-warm previa (cream/burdeo/Fraunces italic)
+   por algo que se vea como Shopify retail estándar: off-white + negro
+   + amarillo de promos + sans-serif. */
 @theme inline {
-  /* === Paleta de marca — afinada hacia terracota real (dirección creativa §2.4) === */
-  --color-terracota:       #B94A1F;
-  --color-terracota-light: #E0784D;
-  --color-terracota-dark:  #8F3614;
-  --color-crema:           #F4EADB;
-  --color-crema-dark:      #E6D4BE;
-  --color-burdeo:          #5A1F1A;
-  --color-burdeo-light:    #7A3028;
-  --color-oliva:           #5E6B3E;
-  --color-oliva-light:     #9DAB75;
+  --color-bg:           #FAF9F7;  /* off-white sutil cálido */
+  --color-surface:      #ffffff;  /* white puro para tarjetas */
+  --color-ink:          #000000;  /* negro puro para texto y CTAs */
+  --color-ink-soft:     #4a4a4a;
+  --color-muted:        #888888;
+  --color-line:         #e6e6e6;
+  --color-promo:        #EFD200;  /* amarillo promo (Última unidad, Nuevo, etc.) */
+  --color-link:         #115ab1;  /* azul link */
+  --color-error:        #B74432;
+  --color-success:      #2E7D32;
 
-  /* === Semánticos === */
-  --color-bg:              #F4EADB;
-  --color-text:            #5A1F1A;
-  --color-text-secondary:  #5E6B3E;
-  --color-border:          rgba(90,31,26,0.12);
-  --color-surface:         rgba(244,234,219,0.96);
-
-  /* === Tipografías === */
+  /* Tipografías — sans-serif sistema dominante. Display sigue cargado pero
+     se usa MUY puntualmente, no en cada h1. */
   --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
-  --font-body:    var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-body:    var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-  /* === Espaciados === */
-  --section-gap:    6rem;
-  --section-gap-lg: 9rem;
-  --edge-pad:       1.25rem;
-  --edge-pad-lg:    2.5rem;
+  /* Espaciados */
+  --section-gap:    4.5rem;
+  --section-gap-lg: 7rem;
+  --edge-pad:       1rem;
+  --edge-pad-lg:    1.5rem;
 
-  /* === Radii === */
-  --radius-xs:   4px;
-  --radius-sm:   8px;
-  --radius-md:   16px;
-  --radius-lg:   24px;
-  --radius-xl:   32px;
+  /* Radii — más conservadores, retail-style */
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
   --radius-full: 9999px;
 
-  /* === Sombras === */
-  --shadow-card:  0 2px 20px rgba(90,31,26,0.08);
-  --shadow-sheet: 0 -8px 56px rgba(90,31,26,0.18);
-  --shadow-btn:   0 6px 20px rgba(208,85,31,0.30);
+  /* Sombras — sutiles, no editoriales */
+  --shadow-card:  0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
+  --shadow-sheet: 0 -8px 32px rgba(0,0,0,0.12);
 }
 
-/* === Variables CSS para contextos no-Tailwind === */
+/* Variables CSS de compatibilidad para componentes legacy que aún
+   las leen — apuntadas a la nueva paleta para que se vean coherentes. */
 :root {
-  --terracota:   #A8411A;
-  --crema:       #F4EADB;
-  --burdeo:      #5A1F1A;
-  --oliva:       #5E6B3E;
-  --bg:          #F4EADB;
-  --surface:     #FFF9F1;
-  --text:        #5A1F1A;
-  --sub:         #5E6B3E;
-  --green:       #5E6B3E;
-  --green-soft:  #E5ECD4;
-  --orange:      #A8411A;
-  --orange-soft: #F1E0CF;
+  --bg:          #FAF9F7;
+  --surface:     #ffffff;
+  --text:        #000000;
+  --sub:         #555555;
+  --green:       #2E7D32;
+  --green-soft:  #E8F5E9;
+  --orange:      #B94A1F;
+  --orange-soft: #FFE6D5;
   --red:         #B74432;
-  --r:           16px;
-  --r-lg:        24px;
+  --r:           8px;
+  --r-lg:        12px;
   --r-full:      9999px;
-  --font-dm-serif: var(--font-display);
+
+  /* Tokens de marca legacy — mapeados al nuevo lenguaje */
+  --terracota:   #B94A1F;
+  --crema:       #FAF9F7;
+  --burdeo:      #000000;
+  --oliva:       #2E7D32;
 }
 
-/* === Reset base === */
+/* === Reset === */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -72,47 +70,26 @@
 }
 
 ::selection {
-  background: rgba(168,65,26,0.12);
-  color: #5A1F1A;
+  background: #EFD200;
+  color: #000;
 }
 
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /* Sticky header (Announce 32 + Header 70) no tape anchor/focus target (WCAG 2.4.11). */
   scroll-padding-top: 110px;
 }
 
 body {
   font-family: var(--font-body);
-  background: #F4EADB;
-  color: #5A1F1A;
+  background: #FAF9F7;
+  color: #000000;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px));
-  position: relative;
 }
-
-/* Grano sutil sobre todo el fondo — imita papel kraft escaneado.
-   SVG fractalNoise con opacidad bajísima. No interfiere con clics. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.035;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.12 0 0 0 0 0.08 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  background-size: 240px 240px;
-}
-@media (prefers-reduced-motion: no-preference) and (min-width: 1px) {
-  /* nada, solo para evitar que algún reset lo quite */
-}
-
-
 @media (min-width: 768px) {
   body { padding-bottom: 0; }
 }
@@ -121,179 +98,43 @@ body::before {
 .wrap {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.25rem;
+  padding: 0 1rem;
 }
-@media (min-width: 768px) { .wrap { padding: 0 2.5rem; } }
+@media (min-width: 768px) { .wrap { padding: 0 1.5rem; } }
 
 /* === Reseteos comunes === */
 a {
   text-decoration: none;
   color: inherit;
   -webkit-tap-highlight-color: transparent;
-  transition: opacity 0.15s ease;
 }
 button {
   font-family: inherit;
   border: none;
   cursor: pointer;
   background: none;
-  transition: transform 0.15s ease, opacity 0.15s ease;
 }
 img { display: block; max-width: 100%; }
 
 /* === Accesibilidad === */
 .skip {
   position: absolute;
-  top: -100px;
-  left: 8px;
-  background: #5A1F1A;
-  color: #F4EADB;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 13px;
-  z-index: 9999;
-  transition: top 0.2s;
+  left: -9999px;
+  top: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px 12px;
+  z-index: 1000;
 }
-.skip:focus { top: 8px; }
+.skip:focus { left: 8px; top: 8px; }
 
-/* Focus-visible · doble filete terracota (match Filete.tsx brand mark).
-   Dos líneas horizontales con gap visible usando outline + box-shadow.
-   outline = línea exterior · box-shadow spread = línea interior con aire.
-   Solo se activa via teclado (focus-visible), no interfiere con mouse. */
-:focus-visible {
-  outline: 1px solid #A8411A;
-  outline-offset: 4px;
-  box-shadow: 0 0 0 2px #F4EADB, 0 0 0 3px rgba(168,65,26,0.55);
-  border-radius: 6px;
-  transition: outline-offset 120ms cubic-bezier(0.22, 1, 0.36, 1);
+*:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
 }
 
-/* Contextos oscuros: invertir (filete crema sobre burdeo/terracota). */
-.on-dark :focus-visible,
-[data-variant="primary"]:focus-visible,
-[data-variant="onDark"]:focus-visible {
-  outline: 1px solid rgba(244,234,219,0.9);
-  box-shadow: 0 0 0 2px rgba(90,31,26,0.8), 0 0 0 3px rgba(244,234,219,0.6);
-}
-
-/* Precios no saltan al cambiar de valor */
+/* === Utility: precios sin saltos === */
 .price { font-variant-numeric: tabular-nums; }
 
-/* === Tratamiento fotográfico: compensa el look "stock AI" de las imágenes base ===
-   Calienta temperatura, baja sat, sube contraste, viñeta sutil. Aplicable a
-   cualquier <img> vía clase, o a contenedores que envuelven Next/Image. */
-.img-warm {
-  filter: saturate(0.88) contrast(1.06) sepia(0.08);
-}
-.img-warm-frame {
-  position: relative;
-  overflow: hidden;
-}
-.img-warm-frame > :first-child,
-.img-warm-frame img {
-  filter: saturate(0.88) contrast(1.06) sepia(0.08);
-}
-.img-warm-frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(58,22,18,0.22) 100%),
-    linear-gradient(180deg, rgba(244,234,219,0.04) 0%, transparent 35%, transparent 75%, rgba(58,22,18,0.10) 100%);
-  mix-blend-mode: multiply;
-}
-
-/* Borde de "papel kraft rasgado" — usa mask-image con path irregular.
-   Para marcos editoriales que necesitan sentirse hechos a mano. */
-.edge-torn {
-  --torn: 3px;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, black var(--torn), black calc(100% - var(--torn)), transparent 100%);
-          mask-image: linear-gradient(to bottom, transparent 0, black var(--torn), black calc(100% - var(--torn)), transparent 100%);
-}
-
-/* WhatsApp float se sube cuando hay sticky bar */
+/* === WhatsApp float === */
 .wa-float { transition: bottom 0.2s ease; }
-
-/* === Hover solo en dispositivos con hover real (evita sticky en mobile) === */
-.card-lift {
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-@media (hover: hover) {
-  .card-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(90,31,26,0.13);
-  }
-}
-.link-subtle {
-  transition: opacity 0.15s ease, color 0.15s ease;
-}
-@media (hover: hover) {
-  .link-subtle:hover { opacity: 0.78; }
-}
-
-/* === Separador editorial — línea fina con marca centrada === */
-.editorial-sep {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 0 1.25rem;
-  max-width: 600px;
-  margin: 0 auto;
-}
-.editorial-sep::before,
-.editorial-sep::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.18;
-}
-
-/* === Animaciones === */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.94); }
-  to   { opacity: 1; transform: scale(1); }
-}
-@keyframes marqueeScroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50%       { transform: scale(1.04); }
-}
-
-/* === Compatibilidad cross-browser ===
-   svh (small viewport height) no está en Samsung Internet <21, Android WebView <108.
-   Fallback a vh garantiza que el hero/sheets no colapsen en esos navegadores.
-   Los navegadores modernos usan svh (la segunda declaración gana). */
-.h-screen-hero    { min-height: 65vh; min-height: 65svh; }
-.h-screen-error   { min-height: 60vh; min-height: 60svh; }
-.max-h-sheet      { max-height: 92vh; max-height: 92svh; }
-.max-h-order      { max-height: 94vh; max-height: 94svh; }
-@keyframes badgePop {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(1.3); }
-  100% { transform: scale(1); }
-}
-
-/* === Preferencia de movimiento reducido === */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}

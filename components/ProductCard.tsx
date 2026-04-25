@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { fmt, fmtDisplayPrice } from "@/lib/cart-utils";
 import { useCartStore } from "@/lib/store";
+import Confetti from "./Confetti";
 
 interface Product {
   id: string;
@@ -53,6 +54,7 @@ export default function ProductCard({ product, onOpen }: Props) {
     cat_label,
   } = product;
   const [added, setAdded] = useState(false);
+  const [confettiKey, setConfettiKey] = useState(0);
   const addItem = useCartStore((s) => s.addItem);
   const addToast = useCartStore((s) => s.addToast);
   const items = useCartStore((s) => s.items);
@@ -69,6 +71,7 @@ export default function ProductCard({ product, onOpen }: Props) {
     addItem({ kind: "product", id: product.id, qty: min_unit_kg, name, pricePerUnit: price });
     addToast(`${name} · 1 bolsa`);
     setAdded(true);
+    setConfettiKey((k) => k + 1); // dopamina literal: confetti burst
     setTimeout(() => setAdded(false), 1200);
   };
 
@@ -126,20 +129,23 @@ export default function ProductCard({ product, onOpen }: Props) {
       </button>
 
       {!agotado && (
-        <button
-          type="button"
-          onClick={handleAdd}
-          className="pc-add"
-          style={{ background: added ? "#5E6B3E" : undefined }}
-          aria-label={`Agregar 1 bolsa de ${name} al pedido`}
-        >
-          {added ? "✓ Agregado al pedido" : "Agregar 1 bolsa"}
-          {!added && (
-            <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
-              <path d="M12 5v14M5 12h14" strokeLinecap="round" />
-            </svg>
-          )}
-        </button>
+        <div className="pc-add-wrap">
+          <button
+            type="button"
+            onClick={handleAdd}
+            className="pc-add"
+            style={{ background: added ? "#5E6B3E" : undefined }}
+            aria-label={`Agregar 1 bolsa de ${name} al pedido`}
+          >
+            {added ? "✓ Agregado al pedido" : "Agregar 1 bolsa"}
+            {!added && (
+              <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                <path d="M12 5v14M5 12h14" strokeLinecap="round" />
+              </svg>
+            )}
+          </button>
+          <Confetti triggerKey={confettiKey} size={140} />
+        </div>
       )}
 
       <style>{`
@@ -170,7 +176,7 @@ export default function ProductCard({ product, onOpen }: Props) {
           margin-bottom: 18px;
         }
         @media (hover: hover) {
-          .pc:hover { transform: translateY(-3px); }
+          .pc:hover { transform: translateY(-3px) rotate(-0.4deg); }
           .pc:hover .pc-img { transform: scale(1.06); }
         }
         .pc-badge {
@@ -272,8 +278,12 @@ export default function ProductCard({ product, onOpen }: Props) {
           align-self: flex-end;
         }
 
-        .pc-add {
+        .pc-add-wrap {
           margin-top: 14px;
+          position: relative;
+        }
+        .pc-add {
+          width: 100%;
           display: inline-flex;
           align-items: center;
           justify-content: center;

@@ -16,6 +16,7 @@ import ComoFunciona from "./ComoFunciona";
 import Marquee from "./Marquee";
 import StationManifesto from "./StationManifesto";
 import FeaturedProduct from "./FeaturedProduct";
+import FounderNote from "./FounderNote";
 import Footer from "./Footer";
 import ToastStack from "./Toast";
 import TicketProgress from "./TicketProgress";
@@ -110,6 +111,9 @@ export default function PageShell() {
 
         {/* ── Manifiesto burdeo full-bleed: ROMPE la fatiga crema-sobre-crema ── */}
         <StationManifesto />
+
+        {/* ── Voz humana del operador (fondo crema) ── */}
+        <FounderNote />
 
         {/* ── Packs ── */}
         <section id="packs" className="s-warm">

@@ -34,12 +34,13 @@ const packs = packsData as Pack[];
 const packProducts = productsData as unknown as ProductStock[];
 
 const MARQUEE_TOP = [
-  "Bolsa sellada de 1 kg",
+  "Bolsa sellada · 1 kg",
   "Chuby Bardú · 500 g",
   "Despacho martes a sábado",
-  "Envío gratis sobre $25.000",
+  "Retiro en local · gratis",
   "Pago al recibir o transferencia",
-  "Santa Cruz · Valle de Colchagua",
+  "Santa Cruz · Palmilla · Peralillo · Marchigüe",
+  "Responde una persona",
 ];
 
 export default function PageShell() {
@@ -97,7 +98,7 @@ export default function PageShell() {
                 <h2 className="stitle">Las otras <em>cinco bolsas</em>.</h2>
               </div>
               <p className="section-aside">
-                Bolsa sellada · 1 kg en cinco productos · 500 g en Chuby Bardú · stock real desde Supabase
+                Cinco productos a 1 kg. Chuby Bardú en bolsa de 500 g. Lo que ves es lo que hay.
               </p>
             </div>
             <div className="product-grid" style={{ marginTop: "3rem" }}>
@@ -117,10 +118,10 @@ export default function PageShell() {
             <div className="section-head">
               <div>
                 <p className="kicker">Packs</p>
-                <h2 className="stitle">Armados para <em>probar variedad</em>.</h2>
+                <h2 className="stitle">Para cuando no quieres <em>elegir entre dos</em>.</h2>
               </div>
               <p className="section-aside">
-                Calculados contra stock real de cada bolsa componente
+                Dos bolsas que se entienden. Ahorras unos pesos y pruebas dos a la vez.
               </p>
             </div>
             <div style={{ marginTop: "2rem" }}>
@@ -167,12 +168,13 @@ export default function PageShell() {
         {/* ── CTA final ── */}
         <section className="cta-final">
           <div className="container" style={{ textAlign: "center", maxWidth: 640 }}>
-            <p className="cta-kicker">Siguiente paso</p>
+            <p className="cta-kicker">Último paso</p>
             <h2 className="cta-h2">
-              Cuando ya elegiste, <em>seguimos por WhatsApp</em>.
+              ¿<em>Pedimos</em>?
             </h2>
             <p className="cta-sub">
-              Santa Cruz y alrededores · martes a sábado · pago al recibir o por transferencia.
+              Te abrimos WhatsApp con el resumen listo. Tú solo decides la comuna y la hora.
+              Responde una persona, no un bot.
             </p>
             <button onClick={openOrder} className="cta-btn">
               Abrir pedido

@@ -64,6 +64,7 @@ export default function PackCard({ pack, products, onOpen }: Props) {
         }}
       >
         <div
+          className="img-warm-frame"
           style={{
             position: "relative",
             aspectRatio: "4/3",

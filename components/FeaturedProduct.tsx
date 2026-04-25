@@ -52,7 +52,7 @@ export default function FeaturedProduct({ product, onOpen }: Props) {
     <section aria-label="Producto destacado" className="fp">
       <div className="fp-inner">
         <div className="fp-image-col">
-          <div className="fp-image-wrap">
+          <div className="fp-image-wrap img-warm-frame">
             <button
               type="button"
               onClick={onOpen}
@@ -74,7 +74,7 @@ export default function FeaturedProduct({ product, onOpen }: Props) {
         <div className="fp-text-col">
           <p className="fp-kicker">
             <span className="fp-kicker-line" aria-hidden="true" />
-            El más pedido de la tienda
+            El repetido de todos los jueves
           </p>
 
           <h2 className="fp-name">{name}</h2>
@@ -142,8 +142,9 @@ export default function FeaturedProduct({ product, onOpen }: Props) {
           position: relative;
           aspect-ratio: 1/1;
           background: #EDE4D6;
-          border-radius: 12px;
+          border-radius: 4px;
           overflow: hidden;
+          box-shadow: 0 1px 0 rgba(90,31,26,0.08), 0 20px 40px -18px rgba(90,31,26,0.3);
         }
         .fp-image-btn {
           position: absolute;

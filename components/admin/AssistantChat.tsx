@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { chatAdmin } from "@/lib/admin-actions";
 import type { AgentMessage, AgentTurnResult } from "@/lib/agent/types";
+import { extractActions } from "@/lib/agent/parse-actions";
 
 /**
  * UI conversacional para /admin/asistente.
@@ -21,6 +22,7 @@ type UiMessage = {
   tool_calls?: AgentTurnResult["tool_calls"];
   pending?: { tool_name: string; summary: string; next_args: Record<string, unknown> };
 };
+
 
 const SEED_PROMPTS = [
   "¿Cuántos pedidos pendientes hay?",
@@ -146,10 +148,30 @@ export default function AssistantChat() {
           </div>
         )}
 
-        {ui.map((m, i) => (
+        {ui.map((m, i) => {
+          const { cleanText, actions } = m.role === "assistant"
+            ? extractActions(m.text)
+            : { cleanText: m.text, actions: [] };
+          return (
           <div key={i} className={`ac-msg ac-msg--${m.role}`}>
             <p className="ac-msg-role">{m.role === "user" ? "Vos" : "Asistente"}</p>
-            <div className="ac-msg-text">{m.text || <em>(sin respuesta textual)</em>}</div>
+            <div className="ac-msg-text">{cleanText || <em>(sin respuesta textual)</em>}</div>
+
+            {actions.length > 0 && (
+              <div className="ac-actions">
+                {actions.map((a, k) => (
+                  <a
+                    key={k}
+                    href={a.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`ac-action ac-action--${a.kind}`}
+                  >
+                    {a.label}
+                  </a>
+                ))}
+              </div>
+            )}
 
             {m.tool_calls && m.tool_calls.length > 0 && (
               <ul className="ac-tools">
@@ -197,7 +219,8 @@ export default function AssistantChat() {
               </div>
             )}
           </div>
-        ))}
+          );
+        })}
 
         {loading && (
           <div className="ac-msg ac-msg--assistant">
@@ -307,6 +330,41 @@ export default function AssistantChat() {
         .ac-msg--user .ac-msg-text {
           background: #1d1d1f;
           color: #ffffff;
+        }
+
+        .ac-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-top: 10px;
+          max-width: 78%;
+        }
+        .ac-action {
+          display: inline-flex;
+          align-items: center;
+          padding: 10px 18px;
+          font-size: 14px;
+          font-weight: 600;
+          border-radius: 999px;
+          text-decoration: none;
+          transition: transform 0.12s ease, box-shadow 0.12s ease;
+        }
+        .ac-action:hover { transform: translateY(-1px); }
+        .ac-action--whatsapp {
+          background: #25D366;
+          color: #ffffff;
+          box-shadow: 0 1px 3px rgba(37,211,102,0.35);
+        }
+        .ac-action--whatsapp:hover { box-shadow: 0 3px 8px rgba(37,211,102,0.45); }
+        .ac-action--image {
+          background: #ffffff;
+          color: #1d1d1f;
+          border: 1px solid #d2d2d7;
+        }
+        .ac-action--image:hover { background: #f5f5f7; }
+        .ac-action--link {
+          background: #f5f5f7;
+          color: #0071e3;
         }
 
         .ac-tools {

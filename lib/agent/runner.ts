@@ -3,6 +3,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { buildSystemPrompt } from "./system-prompt";
 import { toolsForActor } from "./tools";
 import { EXECUTORS } from "./executors";
+import { logAgentTurn } from "./audit";
 import type { AgentContext, AgentMessage, AgentTurnResult, ToolResult } from "./types";
 
 // Modelo por env var para poder rotar sin redeploy si Anthropic deprecia.
@@ -105,7 +106,7 @@ export async function runAgent({
     // Si terminó sin tool_use → es la respuesta final.
     if (res.stop_reason !== "tool_use") {
       conversation.push({ role: "assistant", content: res.content });
-      return {
+      const final: AgentTurnResult = {
         reply: {
           role: "assistant",
           content: res.content as unknown as AgentMessage["content"],
@@ -114,6 +115,8 @@ export async function runAgent({
         usage,
         latency_ms: Date.now() - startedAt,
       };
+      logAgentTurn(ctx, final);
+      return final;
     }
 
     // Hubo tool_use → ejecutamos cada uno.
@@ -156,7 +159,7 @@ export async function runAgent({
   }
 
   // Fallback: si excedemos MAX_TOOL_ITERATIONS, devolvemos lo último + warning.
-  return {
+  const fallback: AgentTurnResult = {
     reply: {
       role: "assistant",
       content: `(Excedí ${MAX_TOOL_ITERATIONS} iteraciones de tools sin llegar a respuesta. Reformulá tu pedido más simple.)`,
@@ -165,4 +168,6 @@ export async function runAgent({
     usage,
     latency_ms: Date.now() - startedAt,
   };
+  logAgentTurn(ctx, fallback);
+  return fallback;
 }

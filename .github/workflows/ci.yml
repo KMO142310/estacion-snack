@@ -61,6 +61,11 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
           NEXT_PUBLIC_SITE_URL: http://localhost:3000
+          # Env vars críticas que /api/health verifica. Dummy values para CI —
+          # los E2E no hacen ops admin reales, sólo smoke del server.
+          ADMIN_EMAIL: ci@example.com
+          CRON_SECRET: ci-dummy-cron-secret
+          AUDIT_PEPPER: ci-dummy-audit-pepper-32-chars-min
 
       - name: Upload Playwright report on failure
         if: failure()

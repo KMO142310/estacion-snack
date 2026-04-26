@@ -66,7 +66,7 @@ describe("Flujo completo: cart → WA message → factura honesta", () => {
     }, 0);
     expect(subtotal).toBe(35000);
 
-    // Envío Santa Cruz: subtotal > FREE_SHIPPING_MIN ($25.000) → gratis.
+    // Envío Santa Cruz: subtotal $35.000 > FREE_SHIPPING_MIN $25.000 → gratis.
     const ship = getShippingCost("Santa Cruz", subtotal);
     expect(ship).toBe(0);
     expect(subtotal).toBeGreaterThan(FREE_SHIPPING_MIN);

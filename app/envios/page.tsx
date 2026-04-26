@@ -7,7 +7,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Envíos y despacho",
   description:
-    "Despachamos martes a sábado en Santa Cruz, Palmilla, Peralillo y Marchigüe. Retiro en local gratis. Envío gratis sobre $25.000.",
+    "Despachamos martes a sábado en Santa Cruz, Cunaco, Palmilla, Peralillo, Nancagua y Marchigüe. Retiro en local gratis. Envío gratis sobre $25.000.",
   alternates: { canonical: "/envios" },
   openGraph: {
     title: "Envíos y despacho · Estación Snack",
@@ -25,12 +25,16 @@ const breadcrumbJsonLd = {
 };
 
 const zonas = [
-  { nombre: "Retiro en local", desc: "Gratis siempre." },
-  { nombre: "Santa Cruz", desc: "Envío $1.000. Gratis sobre $25.000." },
-  { nombre: "Palmilla", desc: "Envío $2.000. Gratis sobre $25.000." },
-  { nombre: "Peralillo", desc: "Envío $2.000. Gratis sobre $25.000." },
-  { nombre: "Marchigüe", desc: "Envío $2.000. Gratis sobre $25.000." },
+  { nombre: "Retiro en local", desc: "Gratis siempre.", km: null },
+  { nombre: "Santa Cruz",      desc: "$1.500 · gratis sobre $25.000", km: "urbano" },
+  { nombre: "Cunaco",          desc: "$2.000 · gratis sobre $25.000", km: null },
+  { nombre: "Palmilla",        desc: "$2.000 · gratis sobre $25.000", km: null },
+  { nombre: "Peralillo",       desc: "$3.000 · gratis sobre $25.000", km: null },
+  { nombre: "Nancagua",        desc: "$3.000 · gratis sobre $25.000", km: null },
+  { nombre: "Marchigüe",       desc: "$4.000 · gratis sobre $25.000", km: null },
 ];
+
+const CALCULO_NOTA = "Los precios consideran el pasaje de bus rural ida y vuelta más una hora del tiempo del operador. Por eso varían según distancia.";
 
 export default function EnviosPage() {
   return (
@@ -81,13 +85,14 @@ export default function EnviosPage() {
           >
             Zona de cobertura
           </h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem", marginBottom: "3rem", maxWidth: 560 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem", marginBottom: "1.25rem", maxWidth: 560 }}>
             {zonas.map((z) => (
               <div
                 key={z.nombre}
                 style={{
                   display: "flex",
                   alignItems: "flex-start",
+                  justifyContent: "space-between",
                   gap: "1rem",
                   padding: "1rem 1.25rem",
                   background: "rgba(122,132,87,0.08)",
@@ -95,27 +100,39 @@ export default function EnviosPage() {
                   border: "1px solid rgba(122,132,87,0.15)",
                 }}
               >
-                <div
-                  style={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: "50%",
-                    background: "#5E6B3E",
-                    flexShrink: 0,
-                    marginTop: 5,
-                  }}
-                />
-                <div>
-                  <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.25rem" }}>
-                    {z.nombre}
-                  </p>
-                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", lineHeight: 1.55 }}>
-                    {z.desc}
-                  </p>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem", flex: 1, minWidth: 0 }}>
+                  <div
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: "50%",
+                      background: "#5E6B3E",
+                      flexShrink: 0,
+                      marginTop: 5,
+                    }}
+                  />
+                  <div style={{ minWidth: 0 }}>
+                    <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A", marginBottom: "0.25rem" }}>
+                      {z.nombre}
+                    </p>
+                    <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", color: "#5E6B3E", lineHeight: 1.55 }}>
+                      {z.desc}
+                    </p>
+                  </div>
                 </div>
+                {z.km && (
+                  <span style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", fontWeight: 600, color: "#5E6B3E", opacity: 0.65, flexShrink: 0, alignSelf: "center" }}>
+                    {z.km}
+                  </span>
+                )}
               </div>
             ))}
           </div>
+
+          {/* Nota de cálculo transparente */}
+          <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "#5E6B3E", lineHeight: 1.65, marginBottom: "3rem", maxWidth: 560, fontStyle: "italic", opacity: 0.85 }}>
+            {CALCULO_NOTA}
+          </p>
 
           {/* Fuera de cobertura */}
           <div

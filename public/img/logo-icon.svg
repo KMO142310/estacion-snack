@@ -1,10 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
-  <!-- Background rounded square -->
-  <rect width="120" height="120" rx="28" fill="#FF6B35"/>
-  <!-- Nut/seed shape — stylized almond -->
-  <path d="M60 25C45 25 33 40 33 58C33 76 45 95 60 95C75 95 87 76 87 58C87 40 75 25 60 25Z" fill="white" opacity="0.95"/>
-  <!-- Inner detail — seed line -->
-  <path d="M60 32C60 32 50 50 50 62C50 74 54 85 60 88C66 85 70 74 70 62C70 50 60 32 60 32Z" fill="#FF6B35" opacity="0.15"/>
-  <!-- Leaf accent -->
-  <path d="M72 30C72 30 78 22 86 24C86 24 82 32 74 34L72 30Z" fill="white" opacity="0.7"/>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Estación Snack">
+  <!-- Squircle bg, ratio 22% (Apple app icon convention) -->
+  <rect width="64" height="64" rx="14" fill="#1D1D1F"/>
+
+  <!-- Almond seed silhouette: vertical asymmetric oval -->
+  <path
+    d="M32 12
+       C 22.5 12, 16 21, 16 30
+       C 16 39, 21 49, 28 52.5
+       C 30.5 53.7, 33.5 53.7, 36 52.5
+       C 43 49, 48 39, 48 30
+       C 48 21, 41.5 12, 32 12 Z"
+    fill="#FAF9F7"
+  />
+
+  <!-- S-curve interior — sugiere "Snack" + da memoria visual -->
+  <path
+    d="M27 25
+       C 27 22, 31 21, 33 23
+       C 35 25, 31 29, 29 31
+       C 27 33, 31 37, 33 39
+       C 35 41, 31 43, 29 41"
+    stroke="#1D1D1F" stroke-width="2.6" stroke-linecap="round" fill="none"
+  />
 </svg>

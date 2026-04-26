@@ -11,10 +11,11 @@ interface HeaderProps {
 }
 
 /**
- * Header retail-clean (referencia: grupoalval.com).
- * - Logo izquierda + nav center + cart-icon derecha.
- * - Fondo blanco, borde inferior.
- * - Sin animaciones extra: visible y funcional.
+ * Header Apple-style.
+ * - Glass blur sutil en blanco translúcido.
+ * - Altura compacta 48px (Apple usa 44-52px en sus headers globales).
+ * - Logo + wordmark izq · nav center · cart icon der.
+ * - Sin animaciones gimmick. Restraint.
  */
 export default function Header({ onOrderOpen }: HeaderProps) {
   const [hydrated, setHydrated] = useState(false);
@@ -32,7 +33,7 @@ export default function Header({ onOrderOpen }: HeaderProps) {
     <header className="hd">
       <div className="hd-row">
         <Link href="/" className="hd-logo" aria-label="Estación Snack — inicio">
-          <Image src="/img/logo-icon.svg" alt="" width={36} height={36} className="hd-logo-icon" />
+          <Image src="/img/logo-icon.svg" alt="" width={28} height={28} className="hd-logo-icon" priority />
           <span className="hd-logo-text">Estación Snack</span>
         </Link>
 
@@ -46,10 +47,10 @@ export default function Header({ onOrderOpen }: HeaderProps) {
         <button
           type="button"
           onClick={onOrderOpen}
-          aria-label={`Tu pedido${itemCount > 0 ? ` (${itemCount} ${itemCount === 1 ? "ítem" : "ítems"})` : ""}`}
+          aria-label={`Bolsa${itemCount > 0 ? ` (${itemCount})` : ""}`}
           className="hd-cart"
         >
-          <ShoppingBag size={22} />
+          <ShoppingBag size={20} />
           {itemCount > 0 && (
             <span className="hd-cart-badge" aria-hidden="true">{itemCount}</span>
           )}
@@ -58,87 +59,90 @@ export default function Header({ onOrderOpen }: HeaderProps) {
 
       <style>{`
         .hd {
-          background: #ffffff;
-          border-bottom: 1px solid #e6e6e6;
+          background: rgba(255, 255, 255, 0.85);
+          backdrop-filter: saturate(180%) blur(20px);
+          -webkit-backdrop-filter: saturate(180%) blur(20px);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.06);
         }
         .hd-row {
-          max-width: 1200px;
+          max-width: 1280px;
           margin: 0 auto;
-          padding: 0 1rem;
-          height: 64px;
+          padding: 0 1.25rem;
+          height: 52px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 1.5rem;
+          gap: 1rem;
         }
         .hd-logo {
           display: inline-flex;
           align-items: center;
-          gap: 10px;
-          color: #000;
-          font-weight: 700;
+          gap: 8px;
+          color: #1d1d1f;
+          font-weight: 600;
           flex-shrink: 0;
+          font-size: 0.875rem;
+          letter-spacing: -0.014em;
         }
-        .hd-logo-icon { border-radius: 8px; }
-        .hd-logo-text {
-          font-size: 1rem;
-          letter-spacing: -0.01em;
-        }
+        .hd-logo-icon { border-radius: 6px; }
+        .hd-logo-text { white-space: nowrap; }
 
         .hd-nav {
           display: none;
-          gap: 1.75rem;
-          font-size: 0.9rem;
-          font-weight: 500;
-          color: #000;
+          gap: 2rem;
+          font-size: 12px;
+          font-weight: 400;
+          color: #1d1d1f;
+          letter-spacing: -0.005em;
         }
         .hd-nav a {
           color: inherit;
-          padding: 6px 0;
-          border-bottom: 2px solid transparent;
-          transition: border-color 0.15s ease, color 0.15s ease;
+          opacity: 0.85;
+          transition: opacity 0.15s ease;
         }
-        .hd-nav a:hover {
-          border-bottom-color: #000;
-        }
+        .hd-nav a:hover { opacity: 1; }
 
         .hd-cart {
           position: relative;
-          width: 42px;
-          height: 42px;
+          width: 36px;
+          height: 36px;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: #000;
+          color: #1d1d1f;
           background: transparent;
           border: none;
-          border-radius: 4px;
+          border-radius: 50%;
           flex-shrink: 0;
           transition: background 0.15s ease;
         }
-        .hd-cart:hover { background: #f0f0f0; }
+        .hd-cart:hover { background: rgba(0, 0, 0, 0.05); }
         .hd-cart-badge {
           position: absolute;
-          top: 4px;
-          right: 2px;
-          min-width: 18px;
-          height: 18px;
-          padding: 0 5px;
-          background: #000;
+          top: 1px;
+          right: 0;
+          min-width: 16px;
+          height: 16px;
+          padding: 0 4px;
+          background: #1d1d1f;
           color: #fff;
-          font-size: 10px;
-          font-weight: 700;
+          font-size: 9px;
+          font-weight: 600;
           border-radius: 999px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
           font-variant-numeric: tabular-nums;
+          line-height: 1;
         }
 
         @media (min-width: 768px) {
-          .hd-row { padding: 0 1.5rem; height: 72px; }
+          .hd-row { padding: 0 1.5rem; height: 56px; }
           .hd-nav { display: flex; }
-          .hd-logo-text { font-size: 1.0625rem; }
+          .hd-logo-text { font-size: 0.9375rem; }
+        }
+        @media (min-width: 1100px) {
+          .hd-row { padding: 0 2rem; }
         }
       `}</style>
     </header>

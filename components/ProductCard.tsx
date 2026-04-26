@@ -28,14 +28,6 @@ interface Props {
   onOpen: () => void;
 }
 
-/**
- * ProductCard retail-clean (referencia: grupoalval.com).
- * - Foto cuadrada blanca, packshot.
- * - Nombre + precio + botón "Agregar al carro" negro.
- * - Badge amarillo (#EFD200) para "Última unidad" / promo.
- * - Sin stickers, sin confetti, sin hover-tilt elaborado.
- *   Comportamiento de Shopify estándar.
- */
 export default function ProductCard({ product, onOpen }: Props) {
   const {
     name,
@@ -65,8 +57,6 @@ export default function ProductCard({ product, onOpen }: Props) {
     addItem({ kind: "product", id: product.id, qty: min_unit_kg, name, pricePerUnit: price });
     addToast(`${name} agregado`);
     setAdded(true);
-    // Abrir el carrito tras 280ms da feedback visible — sin esto se siente
-    // como que "no pasó nada" aunque el item se haya agregado al state.
     setTimeout(() => setOrderOpen(true), 280);
     setTimeout(() => setAdded(false), 1400);
   };
@@ -86,17 +76,11 @@ export default function ProductCard({ product, onOpen }: Props) {
             alt={name}
             fill
             sizes="(max-width:700px) 50vw, 33vw"
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "contain" }}
           />
-          {agotado && (
-            <span className="pc-tag pc-tag-out">Agotado</span>
-          )}
-          {!agotado && ultimaBolsa && (
-            <span className="pc-tag pc-tag-promo">Última unidad</span>
-          )}
-          {!agotado && !ultimaBolsa && badge && (
-            <span className="pc-tag pc-tag-new">{badge}</span>
-          )}
+          {agotado && <span className="pc-tag pc-tag-out">Agotado</span>}
+          {!agotado && ultimaBolsa && <span className="pc-tag pc-tag-promo">Última unidad</span>}
+          {!agotado && !ultimaBolsa && badge && <span className="pc-tag pc-tag-new">{badge}</span>}
         </div>
 
         <div className="pc-info">
@@ -114,18 +98,14 @@ export default function ProductCard({ product, onOpen }: Props) {
           type="button"
           onClick={handleAdd}
           className="pc-add"
-          aria-label={`Agregar ${name} al carro`}
+          aria-label={`Agregar ${name} a la bolsa`}
         >
-          {added ? "Agregado ✓" : "Agregar al carro"}
+          {added ? "Agregado" : "Agregar"}
         </button>
       )}
 
       <style>{`
-        .pc {
-          background: #fff;
-          display: flex;
-          flex-direction: column;
-        }
+        .pc { display: flex; flex-direction: column; }
         .pc-link {
           display: block;
           text-align: left;
@@ -137,79 +117,72 @@ export default function ProductCard({ product, onOpen }: Props) {
         .pc-img {
           position: relative;
           aspect-ratio: 1/1;
-          background: #FAF9F7;
+          background: #f5f5f7;
+          border-radius: 18px;
           overflow: hidden;
+          transition: transform 0.3s ease;
         }
-        .pc-link:hover .pc-img img {
-          transform: scale(1.03);
-        }
-        .pc-img img { transition: transform 0.4s ease; }
+        .pc-link:hover .pc-img { transform: scale(1.02); }
 
         .pc-tag {
           position: absolute;
-          top: 10px;
-          left: 10px;
+          top: 12px;
+          left: 12px;
           z-index: 2;
           padding: 4px 10px;
-          font-size: 10.5px;
-          font-weight: 700;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-          border-radius: 2px;
+          font-size: 11px;
+          font-weight: 500;
+          letter-spacing: -0.005em;
+          border-radius: 999px;
         }
-        .pc-tag-promo { background: #EFD200; color: #000; }
-        .pc-tag-new   { background: #000;    color: #fff; }
-        .pc-tag-out   { background: #555;    color: #fff; }
+        .pc-tag-promo { background: #1d1d1f; color: #ffffff; }
+        .pc-tag-new   { background: #1d1d1f; color: #ffffff; }
+        .pc-tag-out   { background: rgba(29,29,31,0.7); color: #ffffff; }
 
         .pc-info {
-          padding: 0.85rem 0 0;
+          padding: 1rem 4px 0;
+          text-align: center;
         }
         .pc-cat {
-          font-size: 10.5px;
-          font-weight: 600;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: #888;
+          font-size: 11px;
+          font-weight: 500;
+          color: #6e6e73;
           margin: 0 0 4px;
         }
         .pc-name {
-          font-size: 0.9375rem;
+          font-size: 1.0625rem;
           font-weight: 500;
-          color: #000;
+          color: #1d1d1f;
           margin: 0 0 4px;
-          line-height: 1.3;
+          line-height: 1.2;
+          letter-spacing: -0.014em;
         }
         .pc-price {
           font-size: 0.9375rem;
-          color: #000;
+          color: #1d1d1f;
           margin: 0;
           font-variant-numeric: tabular-nums;
         }
-        .pc-price-main { font-weight: 700; }
-        .pc-price-unit {
-          font-weight: 500;
-          color: #888;
-        }
+        .pc-price-main { font-weight: 500; }
+        .pc-price-unit { color: #6e6e73; }
 
         .pc-add {
-          margin-top: 0.85rem;
-          width: 100%;
-          background: #000;
-          color: #fff;
+          margin-top: 1rem;
+          align-self: center;
+          padding: 0.625rem 1.5rem;
+          background: #1d1d1f;
+          color: #ffffff;
           font-size: 0.875rem;
-          font-weight: 600;
-          letter-spacing: 0.02em;
-          padding: 0.75rem 1rem;
+          font-weight: 500;
+          letter-spacing: -0.005em;
           border: none;
-          border-radius: 4px;
+          border-radius: 980px;
           cursor: pointer;
-          transition: background 0.15s ease;
+          transition: background 0.2s ease, transform 0.15s ease;
+          min-width: 120px;
         }
-        .pc-add:hover { background: #333; }
-
-        @media (hover: hover) {
-          .pc-link:hover { opacity: 1; }
-        }
+        .pc-add:hover { background: #424245; }
+        .pc-add:active { transform: scale(0.97); }
       `}</style>
     </article>
   );

@@ -179,32 +179,39 @@ export default function PageShell() {
         @media (min-width: 768px) { .rt-wrap { padding: 0 1.5rem; } }
 
         .rt-section {
-          padding: 3rem 0;
-          background: #FAF9F7;
+          padding: 4rem 0;
+          background: #ffffff;
+          /* Anchor scroll: el sticky header no debe tapar el title.
+             scroll-margin-top + scroll-padding-top en globals.css = 110px buffer. */
+          scroll-margin-top: 110px;
         }
-        .rt-section-alt { background: #ffffff; }
+        .rt-section-alt { background: #f5f5f7; }
         @media (min-width: 768px) {
-          .rt-section { padding: 4.5rem 0; }
+          .rt-section { padding: 6rem 0; }
         }
 
         .rt-section-head {
-          margin-bottom: 2rem;
-          padding: 0 1rem;
+          margin-bottom: 2.5rem;
+          padding: 0 1.25rem;
+          text-align: center;
         }
         @media (min-width: 768px) {
-          .rt-section-head { margin-bottom: 2.5rem; padding: 0 1.5rem; }
+          .rt-section-head { margin-bottom: 3rem; padding: 0 1.5rem; }
         }
         .rt-section-title {
-          font-size: clamp(1.4rem, 3vw, 1.875rem);
-          font-weight: 700;
-          color: #000;
+          font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+          font-weight: 600;
+          color: #1d1d1f;
           margin: 0;
-          letter-spacing: -0.01em;
+          letter-spacing: -0.022em;
+          line-height: 1.1;
         }
         .rt-section-sub {
-          font-size: 0.9375rem;
-          color: #555;
-          margin: 0.4rem 0 0;
+          font-size: 1rem;
+          color: #6e6e73;
+          margin: 0.5rem auto 0;
+          max-width: 560px;
+          letter-spacing: -0.011em;
         }
 
         .rt-grid {

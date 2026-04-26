@@ -1,11 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 80" fill="none">
-  <!-- Icon -->
-  <rect width="56" height="56" rx="14" y="12" fill="#FF6B35"/>
-  <path d="M28 22C20 22 15 31 15 41C15 51 20 60 28 60C36 60 41 51 41 41C41 31 36 22 28 22Z" transform="translate(0,12)" fill="white" opacity="0.95"/>
-  <path d="M28 26C28 26 23 36 23 43C23 50 25 56 28 58C31 56 33 50 33 43C33 36 28 26 28 26Z" transform="translate(0,12)" fill="#FF6B35" opacity="0.15"/>
-  <path d="M36 24C36 24 39 19 44 20C44 20 42 25 37 26L36 24Z" transform="translate(0,12)" fill="white" opacity="0.7"/>
-  <!-- Text: Estación -->
-  <text x="72" y="38" font-family="'DM Serif Display',Georgia,serif" font-size="28" font-weight="400" fill="#1A1816">Estación</text>
-  <!-- Text: Snack -->
-  <text x="72" y="64" font-family="'Outfit',system-ui,sans-serif" font-size="22" font-weight="800" fill="#FF6B35" letter-spacing="0.05em">SNACK</text>
+<svg width="220" height="44" viewBox="0 0 220 44" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Estación Snack">
+  <!-- Icono compacto -->
+  <rect x="0" y="0" width="44" height="44" rx="10" fill="#1D1D1F"/>
+  <path
+    d="M22 8
+       C 15.5 8, 11 14.5, 11 20.5
+       C 11 26.5, 14.5 33, 19 35.7
+       C 20.5 36.4, 23.5 36.4, 25 35.7
+       C 29.5 33, 33 26.5, 33 20.5
+       C 33 14.5, 28.5 8, 22 8 Z"
+    fill="#FAF9F7"
+  />
+  <path
+    d="M18.5 17
+       C 18.5 15, 21.5 14.3, 23 15.7
+       C 24.5 17.1, 21.5 19.8, 20 21.2
+       C 18.5 22.6, 21.5 25.3, 23 26.7
+       C 24.5 28.1, 21.5 29.5, 20 28.1"
+    stroke="#1D1D1F" stroke-width="1.8" stroke-linecap="round" fill="none"
+  />
+  <!-- Wordmark — system font para coherencia Apple-style en SSR + en SVG export -->
+  <text x="56" y="29"
+        font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif"
+        font-size="18"
+        font-weight="600"
+        letter-spacing="-0.022em"
+        fill="#1D1D1F">Estación Snack</text>
 </svg>

@@ -2,190 +2,212 @@
 
 import Image from "next/image";
 import productsData from "@/data/products.json";
+import { fmt } from "@/lib/cart-utils";
 
 interface HeroProps {
   onOrderOpen: () => void;
 }
 
-const featured = productsData.slice(0, 3);
+const lead = productsData[0]; // Mix Europeo
 
 /**
- * Hero retail-clean (referencia: grupoalval.com).
- * - Fondo blanco/off-white.
- * - Sans-serif (sin Fraunces italic).
- * - 3 categorías visuales lado a lado: foco en el catálogo, no en marca.
- * - Sin stickers, sin animaciones decorativas, sin marca-storytelling.
- *   El sitio existe para vender, no para narrar.
+ * Hero Apple-style.
+ * Referencia: apple.com/store, AirPods page, HomePod page.
+ *
+ * - Tipografía GIGANTE centrada (h1 hasta 72-96px desktop).
+ * - Subhead delgado en gris secundario.
+ * - 2 CTAs: pill negro principal + link azul Apple ("Ver detalles ›").
+ * - Foto del producto destacado debajo, full bleed con bg #f5f5f7.
+ * - Spacing vertical generoso (8rem desktop, 4rem mobile).
  */
-export default function Hero({ onOrderOpen }: HeroProps) {
+export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
   return (
     <section aria-label="Inicio" className="hero">
-      {/* Banner promocional superior — retail standard */}
+      {/* Banner promo top — sutil, gris claro Apple */}
       <div className="hero-promo">
-        <span className="hero-promo-text">
-          Despacho martes a sábado · Envío gratis sobre $25.000 · Pago al recibir o transferencia
-        </span>
+        <span>Despacho martes a sábado · Envío gratis sobre $25.000 · Pago al recibir</span>
       </div>
 
-      {/* Banner principal con CTAs */}
-      <div className="hero-main">
-        <div className="hero-main-text">
-          <p className="hero-eyebrow">Frutos secos · Santa Cruz</p>
-          <h1 className="hero-h1">Bolsa sellada por kilo.</h1>
-          <p className="hero-sub">
-            Seis productos: cinco en bolsa de 1 kg y Chuby Bardú en bolsa de 500 g.
-            Pedido por WhatsApp, llega a tu casa.
-          </p>
-          <div className="hero-actions">
-            <a href="#productos" className="hero-cta hero-cta-primary">Ver catálogo</a>
-            <button type="button" onClick={onOrderOpen} className="hero-cta hero-cta-secondary">
-              Tu pedido
-            </button>
+      {/* Headline + CTAs */}
+      <div className="hero-headline">
+        <p className="hero-eyebrow">Estación Snack</p>
+        <h1 className="hero-h1">
+          Frutos secos,
+          <br />
+          <span className="hero-h1-soft">por kilo.</span>
+        </h1>
+        <p className="hero-sub">
+          Bolsa sellada. Pedido por WhatsApp. Despacho local en Colchagua.
+        </p>
+        <div className="hero-actions">
+          <a href="#productos" className="hero-cta-primary">
+            Ver productos
+          </a>
+          <a href="#packs" className="hero-cta-link">
+            Ver packs <span aria-hidden="true">›</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Producto destacado — full-bleed gris claro Apple style */}
+      <div className="hero-product">
+        <div className="hero-product-inner">
+          <p className="hero-product-tag">Más pedido</p>
+          <h2 className="hero-product-name">{lead.name}</h2>
+          <p className="hero-product-price">{fmt(lead.price)} · Bolsa de 1 kg</p>
+          <a href="#productos" className="hero-product-link">
+            Verlo en el catálogo <span aria-hidden="true">›</span>
+          </a>
+          <div className="hero-product-image">
+            <Image
+              src={lead.image_webp_url}
+              alt={lead.name}
+              fill
+              priority
+              sizes="(max-width: 768px) 90vw, 600px"
+              style={{ objectFit: "contain" }}
+            />
           </div>
         </div>
       </div>
 
-      {/* Tres tiles de categoría — grid clásico de e-commerce */}
-      <div className="hero-tiles">
-        {featured.map((p) => (
-          <a key={p.id} href={`#productos`} className="hero-tile">
-            <div className="hero-tile-img">
-              <Image
-                src={p.image_webp_url}
-                alt={p.name}
-                fill
-                sizes="(max-width: 900px) 100vw, 33vw"
-                style={{ objectFit: "cover" }}
-              />
-            </div>
-            <div className="hero-tile-meta">
-              <p className="hero-tile-cat">{p.cat_label}</p>
-              <p className="hero-tile-name">{p.name}</p>
-            </div>
-          </a>
-        ))}
-      </div>
-
       <style>{`
         .hero {
-          background: #FAF9F7;
+          background: #ffffff;
         }
 
+        /* Banner promo — sutil */
         .hero-promo {
-          background: #000;
-          color: #fff;
-          padding: 9px 1rem;
+          background: #f5f5f7;
+          color: #1d1d1f;
+          padding: 10px 1.25rem;
           text-align: center;
           font-size: 12px;
-          font-weight: 500;
-          letter-spacing: 0.02em;
-        }
-        .hero-promo-text {
-          display: inline-block;
+          font-weight: 400;
+          letter-spacing: -0.005em;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.04);
         }
 
-        .hero-main {
-          padding: 3rem 1rem 2.5rem;
-          max-width: 1200px;
+        /* Headline — Apple landing style */
+        .hero-headline {
+          max-width: 980px;
           margin: 0 auto;
+          padding: 4rem 1.25rem 3rem;
           text-align: center;
         }
         .hero-eyebrow {
-          font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          color: #888;
-          margin: 0 0 1rem;
+          font-size: 13px;
+          font-weight: 500;
+          color: #6e6e73;
+          letter-spacing: -0.005em;
+          margin: 0 0 0.875rem;
         }
         .hero-h1 {
-          font-size: clamp(2rem, 6vw, 3.25rem);
-          font-weight: 700;
+          font-size: clamp(2.5rem, 9vw, 5.5rem);
+          font-weight: 600;
           line-height: 1.05;
-          letter-spacing: -0.02em;
-          color: #000;
-          margin: 0 0 0.85rem;
+          letter-spacing: -0.022em;
+          color: #1d1d1f;
+          margin: 0 0 1rem;
+        }
+        .hero-h1-soft {
+          color: #6e6e73;
         }
         .hero-sub {
-          font-size: 1rem;
-          line-height: 1.55;
-          color: #555;
-          max-width: 580px;
-          margin: 0 auto 1.75rem;
+          font-size: clamp(1rem, 1.6vw, 1.25rem);
+          line-height: 1.4;
+          font-weight: 400;
+          color: #1d1d1f;
+          margin: 0 auto 2rem;
+          max-width: 540px;
+          letter-spacing: -0.011em;
         }
         .hero-actions {
           display: inline-flex;
           flex-wrap: wrap;
-          gap: 0.75rem;
+          gap: 0.75rem 1.75rem;
           justify-content: center;
-        }
-        .hero-cta {
-          display: inline-flex;
           align-items: center;
-          justify-content: center;
-          padding: 0.85rem 1.6rem;
-          border-radius: 4px;
-          font-size: 0.9375rem;
-          font-weight: 600;
-          letter-spacing: 0.01em;
-          border: 1.5px solid #000;
-          cursor: pointer;
-          transition: background 0.15s ease, color 0.15s ease;
-          text-decoration: none;
         }
         .hero-cta-primary {
-          background: #000;
-          color: #fff;
+          display: inline-flex;
+          align-items: center;
+          padding: 0.85rem 1.5rem;
+          background: #1d1d1f;
+          color: #ffffff;
+          border-radius: 980px;
+          font-size: 0.9375rem;
+          font-weight: 500;
+          letter-spacing: -0.005em;
+          transition: background 0.2s ease, transform 0.15s ease;
         }
-        .hero-cta-primary:hover { background: #333; }
-        .hero-cta-secondary {
-          background: transparent;
-          color: #000;
+        .hero-cta-primary:hover { background: #424245; }
+        .hero-cta-primary:active { transform: scale(0.98); }
+        .hero-cta-link {
+          font-size: 0.9375rem;
+          font-weight: 400;
+          color: #0071e3;
+          letter-spacing: -0.005em;
+          transition: color 0.15s ease;
         }
-        .hero-cta-secondary:hover { background: #000; color: #fff; }
+        .hero-cta-link:hover { color: #0077ed; }
 
-        .hero-tiles {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1px;
-          background: #e6e6e6;
-          border-top: 1px solid #e6e6e6;
-          border-bottom: 1px solid #e6e6e6;
-        }
-        .hero-tile {
-          display: block;
-          background: #fff;
-          padding: 0;
-          color: inherit;
-          transition: opacity 0.2s ease;
-        }
-        .hero-tile:hover { opacity: 0.85; }
-        .hero-tile-img {
-          position: relative;
-          aspect-ratio: 1/1;
-          background: #FAF9F7;
-        }
-        .hero-tile-meta {
-          padding: 0.85rem 1rem 1.1rem;
+        /* Producto destacado — full-bleed Apple section */
+        .hero-product {
+          background: #f5f5f7;
+          padding: 3.5rem 1.25rem 0;
           text-align: center;
         }
-        .hero-tile-cat {
-          font-size: 10.5px;
+        .hero-product-inner {
+          max-width: 980px;
+          margin: 0 auto;
+        }
+        .hero-product-tag {
+          font-size: 12px;
           font-weight: 600;
-          letter-spacing: 0.16em;
+          color: #6e6e73;
+          letter-spacing: 0.04em;
           text-transform: uppercase;
-          color: #888;
-          margin: 0 0 4px;
+          margin: 0 0 0.5rem;
         }
-        .hero-tile-name {
-          font-size: 0.95rem;
+        .hero-product-name {
+          font-size: clamp(2rem, 5.5vw, 3.5rem);
           font-weight: 600;
-          color: #000;
-          margin: 0;
+          line-height: 1.05;
+          letter-spacing: -0.022em;
+          color: #1d1d1f;
+          margin: 0 0 0.625rem;
         }
-        @media (min-width: 700px) {
-          .hero-tiles { grid-template-columns: repeat(3, 1fr); }
-          .hero-main { padding: 4.5rem 1.5rem 3.5rem; }
+        .hero-product-price {
+          font-size: 1.0625rem;
+          color: #1d1d1f;
+          margin: 0 0 0.875rem;
+          font-variant-numeric: tabular-nums;
+        }
+        .hero-product-link {
+          display: inline-block;
+          font-size: 0.9375rem;
+          font-weight: 400;
+          color: #0071e3;
+          margin-bottom: 2rem;
+          letter-spacing: -0.005em;
+        }
+        .hero-product-link:hover { color: #0077ed; }
+        .hero-product-image {
+          position: relative;
+          aspect-ratio: 16/10;
+          width: 100%;
+          max-width: 720px;
+          margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+          .hero-headline { padding: 6rem 1.5rem 4rem; }
+          .hero-product { padding: 5rem 1.5rem 0; }
+        }
+        @media (min-width: 1100px) {
+          .hero-headline { padding: 7rem 2rem 5rem; }
+          .hero-product { padding: 6rem 2rem 0; }
         }
       `}</style>
     </section>

@@ -5,18 +5,13 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import FocusTrap from "focus-trap-react";
 import { useCartStore } from "@/lib/store";
-import { fmtKg } from "@/lib/cart-utils";
+import { fmt } from "@/lib/cart-utils";
 import { hapticChip, hapticWhistle } from "@/lib/haptics";
 import { buildWaUrl } from "@/lib/whatsapp";
 import { captureOrder } from "@/lib/actions";
 import { getPackAvailability, type Pack, type ProductStock } from "@/lib/pack-utils";
 import { COMUNAS, COMUNA_DEFAULT, FREE_SHIPPING_MIN, getShippingCost, type Comuna } from "@/lib/shipping";
 import X from "./icons/X";
-import Minus from "./icons/Minus";
-import Plus from "./icons/Plus";
-import Odometer from "./Odometer";
-import StampButton from "./StampButton";
-import TicketProgress from "./TicketProgress";
 import productsData from "@/data/products.json";
 import packsData from "@/data/packs.json";
 
@@ -25,6 +20,18 @@ interface Props {
   onClose: () => void;
 }
 
+/**
+ * OrderSheet — Apple Bag style.
+ *
+ * Inspirado en apple.com Bag (carrito). Limpio, blanco, tipografía sistema,
+ * pill buttons, total prominente. Reemplaza el sheet cream/burdeo previo.
+ *
+ * Mantiene lógica de negocio crítica del flujo:
+ * - Popup window.open SINCRÓNICO antes del await (iOS Safari fix).
+ * - captureOrder fire-and-forget paralelo a buildWaUrl.
+ * - Step de cantidad respeta min_unit_kg (0.5 para Chuby) y stock_kg.
+ * - Comuna selector con cálculo de envío (Ley 19.496 Art. 1 N°2).
+ */
 export default function OrderSheet({ open, onClose }: Props) {
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
@@ -36,28 +43,25 @@ export default function OrderSheet({ open, onClose }: Props) {
   const addToast = useCartStore((s) => s.addToast);
   const clear = useCartStore((s) => s.clear);
 
-  // Totales: subtotal (items), shipping (según comuna), total (subtotal + shipping)
-  // Ley 19.496 Art. 1 N°2: el precio total debe ser visible antes del cierre de compra.
   const subtotal = items.reduce((sum, item) => sum + getSubtotal(item), 0);
   const shipping = getShippingCost(comuna, subtotal);
   const total = subtotal + shipping;
-
-  const totalWeight = items.reduce((sum, item) => {
-    if (item.kind === "product") return sum + item.qty;
-    const pk = (packsData as Pack[]).find((p) => p.id === item.id);
-    return sum + (pk ? pk.items.reduce((s, i) => s + i.kg, 0) * item.qty : 0);
-  }, 0);
+  const remainingForFree = Math.max(0, FREE_SHIPPING_MIN - subtotal);
 
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
+    return () => {
+      document.body.style.overflow = prev;
+    };
   }, [open]);
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
@@ -65,17 +69,14 @@ export default function OrderSheet({ open, onClose }: Props) {
   const handleConfirm = async () => {
     if (loading || items.length === 0) return;
     setLoading(true);
-    // Silbato de partida — momento culminante del flow de pedido
     hapticWhistle();
 
-    // iOS Safari: el popup se abre SINCRÓNICAMENTE durante el gesto del usuario.
-    // Si se abre después del await, Safari lo bloquea como popup.
-    // Ref: https://webkit.org/blog/7763/a-closer-look-into-wkwebview/ + E2E research 2026-04-13
-    const popup = typeof window !== "undefined"
-      ? window.open("about:blank", "_blank", "noopener,noreferrer")
-      : null;
+    // iOS Safari: popup debe abrirse SINCRÓNICO durante el gesto.
+    const popup =
+      typeof window !== "undefined"
+        ? window.open("about:blank", "_blank", "noopener,noreferrer")
+        : null;
 
-    // Capture order intent for analytics (non-blocking — WhatsApp flow continues on failure)
     const captureItems = items.map((item) => {
       if (item.kind === "product") {
         const p = productsData.find((x) => x.id === item.id);
@@ -84,20 +85,20 @@ export default function OrderSheet({ open, onClose }: Props) {
           qty: item.qty,
           unit_price: p?.price ?? 0,
         };
-      } else {
-        const pk = (packsData as Pack[]).find((x) => x.id === item.id);
-        return {
-          product_name: `${pk?.name ?? item.name ?? "Pack"} (pack)`,
-          qty: item.qty,
-          unit_price: pk?.price ?? 0,
-        };
       }
+      const pk = (packsData as Pack[]).find((x) => x.id === item.id);
+      return {
+        product_name: `${pk?.name ?? item.name ?? "Pack"} (pack)`,
+        qty: item.qty,
+        unit_price: pk?.price ?? 0,
+      };
     });
 
-    const captureResult = await captureOrder(captureItems, note, { comuna, shipping }).catch(() => ({ ok: false, orderId: undefined }));
-    const orderRef = captureResult.ok && captureResult.orderId
-      ? captureResult.orderId.slice(0, 8)
-      : undefined;
+    const captureResult = await captureOrder(captureItems, note, { comuna, shipping }).catch(
+      () => ({ ok: false, orderId: undefined }),
+    );
+    const orderRef =
+      captureResult.ok && captureResult.orderId ? captureResult.orderId.slice(0, 8) : undefined;
 
     const url = buildWaUrl(
       items,
@@ -115,20 +116,22 @@ export default function OrderSheet({ open, onClose }: Props) {
     onClose();
 
     if (popup && !popup.closed) {
+      // eslint-disable-next-line react-hooks/immutability
       popup.location.href = url;
     } else {
-      // popup bloqueado — fallback: misma pestaña
+      // Fallback: misma pestaña (popup bloqueado por el navegador).
+      // eslint-disable-next-line react-hooks/immutability
       window.location.href = url;
     }
   };
 
   function stepQty(item: typeof items[number], delta: number) {
     hapticChip();
-    const min = item.kind === "product"
-      ? (productsData.find((p) => p.id === item.id)?.min_unit_kg ?? 1)
-      : 1;
-    const step = min; // step by min_unit_kg (0.5 for Chuby, 1 for others)
-    const newQty = +(item.qty + delta * step).toFixed(3);
+    const min =
+      item.kind === "product"
+        ? productsData.find((p) => p.id === item.id)?.min_unit_kg ?? 1
+        : 1;
+    const newQty = +(item.qty + delta * min).toFixed(3);
     const max = getMaxQty(item);
     if (newQty < min) {
       removeItem(item.id, item.kind);
@@ -151,383 +154,611 @@ export default function OrderSheet({ open, onClose }: Props) {
             returnFocusOnDeactivate: true,
           }}
         >
-        <div>
-          <motion.div
-            key="order-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            style={{ position: "fixed", inset: 0, background: "rgba(18,5,3,0.55)", zIndex: 700, backdropFilter: "blur(2px)", WebkitBackdropFilter: "blur(2px)" }}
-            aria-hidden="true"
-          />
+          <div>
+            {/* Backdrop blur estilo Apple sheet */}
+            <motion.div
+              key="ord-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={onClose}
+              className="ord-backdrop"
+              aria-hidden="true"
+            />
 
-          <motion.div
-            key="order-sheet"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Tu pedido"
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "100%" }}
-            transition={{ type: "spring", stiffness: 280, damping: 30 }}
-            drag="y"
-            dragConstraints={{ top: 0 }}
-            dragElastic={{ top: 0, bottom: 0.3 }}
-            onDragEnd={(_, info) => { if (info.offset.y > 80 || info.velocity.y > 500) onClose(); }}
-            style={{
-              position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 800,
-              background: "#F4EADB", borderRadius: "24px 24px 0 0",
-              boxShadow: "0 -8px 56px rgba(90,31,26,0.20)",
-              maxHeight: "94vh", display: "flex", flexDirection: "column",
-            }}
-          >
-            {/* Header */}
-            <div style={{
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-              padding: "1rem 1.25rem 0.75rem", flexShrink: 0,
-            }}>
-              <div>
-                <div aria-hidden="true" style={{ width: 40, height: 4, borderRadius: 9999, background: "rgba(90,31,26,0.18)", marginBottom: "0.75rem" }} />
-                <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.375rem", color: "#5A1F1A" }}>
-                  Tu pedido
-                </h2>
-              </div>
-              <button onClick={onClose} aria-label="Cerrar" style={{
-                width: 36, height: 36, borderRadius: "50%", background: "rgba(90,31,26,0.08)",
-                color: "#5A1F1A", display: "flex", alignItems: "center", justifyContent: "center",
-                border: "none", cursor: "pointer",
-              }}>
-                <X size={18} />
-              </button>
-            </div>
-
-            {/* Shipping progress — TicketProgress ferroviario */}
-            {items.length > 0 && (
-              <div style={{ padding: "0 1.25rem 0.75rem", flexShrink: 0 }}>
-                <TicketProgress current={subtotal} threshold={FREE_SHIPPING_MIN} />
-              </div>
-            )}
-
-            {/* Items — scroll-hint: fade en el borde inferior para indicar
-                que hay más contenido cuando la lista excede el alto del sheet.
-                overscroll-contain evita que el gesto pase al body detrás. */}
-            <div style={{
-              flex: 1, overflowY: "auto", padding: "0 1.25rem",
-              overscrollBehavior: "contain",
-              WebkitMaskImage: "linear-gradient(to bottom, black calc(100% - 18px), transparent 100%)",
-              maskImage: "linear-gradient(to bottom, black calc(100% - 18px), transparent 100%)",
-            }}>
-              {items.length === 0 ? (
-                <div style={{ padding: "3rem 0", textAlign: "center" }}>
-                  <p style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", color: "#5A1F1A", marginBottom: "0.5rem" }}>
-                    Tu carrito está tranquilo.
-                  </p>
-                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", lineHeight: 1.6 }}>
-                    Cuando agregues algo, acá va a aparecer el resumen antes de mandarlo por WhatsApp.
-                  </p>
+            {/* Sheet */}
+            <motion.div
+              key="ord-sheet"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Tu bolsa"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", stiffness: 300, damping: 32 }}
+              drag="y"
+              dragConstraints={{ top: 0 }}
+              dragElastic={{ top: 0, bottom: 0.3 }}
+              onDragEnd={(_, info) => {
+                if (info.offset.y > 80 || info.velocity.y > 500) onClose();
+              }}
+              className="ord-sheet"
+            >
+              {/* Header — drag handle + título + close */}
+              <div className="ord-head">
+                <div className="ord-handle" aria-hidden="true" />
+                <div className="ord-head-row">
+                  <h2 className="ord-title">Tu bolsa</h2>
+                  <button onClick={onClose} aria-label="Cerrar" className="ord-close">
+                    <X size={18} />
+                  </button>
                 </div>
-              ) : (
-                <div style={{ paddingTop: "0.25rem" }}>
-                  <AnimatePresence>
-                    {items.map((item) => {
-                      const maxQty = getMaxQty(item);
-                      const minQty = item.kind === "product"
-                        ? (productsData.find((p) => p.id === item.id)?.min_unit_kg ?? 1)
-                        : 1;
-                      const atMin = item.qty <= minQty;
-                      const atMax = item.qty >= maxQty;
+                {items.length > 0 && (
+                  <p className="ord-head-sub">
+                    {items.length} {items.length === 1 ? "ítem" : "ítems"}
+                    {remainingForFree > 0 && comuna !== "Retiro en local" ? (
+                      <> · agrega {fmt(remainingForFree)} para envío gratis</>
+                    ) : null}
+                  </p>
+                )}
+              </div>
 
-                      const imageSrc = item.kind === "product"
-                        ? productsData.find((p) => p.id === item.id)?.image_webp_url
-                        : (packsData as Pack[]).find((p) => p.id === item.id)?.image_webp_url;
+              {/* Scrollable content */}
+              <div className="ord-content">
+                {items.length === 0 ? (
+                  <div className="ord-empty">
+                    <div className="ord-empty-mark" aria-hidden="true">
+                      <svg viewBox="0 0 64 64" width="56" height="56" fill="none">
+                        <rect width="64" height="64" rx="14" fill="#f5f5f7" />
+                        <path
+                          d="M22 24h20l-2 22H24l-2-22z M26 24v-4a6 6 0 0 1 12 0v4"
+                          stroke="#86868b"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <p className="ord-empty-title">Tu bolsa está vacía</p>
+                    <p className="ord-empty-sub">
+                      Agrega productos desde el catálogo y vuelve acá para confirmar el pedido.
+                    </p>
+                  </div>
+                ) : (
+                  <>
+                    {/* Items */}
+                    <ul className="ord-items">
+                      <AnimatePresence>
+                        {items.map((item) => {
+                          const max = getMaxQty(item);
+                          const min =
+                            item.kind === "product"
+                              ? productsData.find((p) => p.id === item.id)?.min_unit_kg ?? 1
+                              : 1;
+                          const atMax = item.qty >= max;
+                          const imageSrc =
+                            item.kind === "product"
+                              ? productsData.find((p) => p.id === item.id)?.image_webp_url
+                              : (packsData as Pack[]).find((p) => p.id === item.id)?.image_webp_url;
+                          const formatLabel =
+                            item.kind === "product"
+                              ? productsData.find((p) => p.id === item.id)?.format_short ?? "1 kg"
+                              : "Pack";
+                          const bagsCount = Math.round(item.qty / min);
 
-                      return (
-                        <motion.div
-                          key={`${item.kind}-${item.id}`}
-                          layout
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: 60, transition: { duration: 0.2 } }}
-                          style={{
-                            display: "flex",
-                            gap: 12,
-                            padding: "0.875rem 0",
-                            borderBottom: "1px solid rgba(90,31,26,0.08)",
-                            alignItems: "center",
-                          }}
-                        >
-                          {/* Thumbnail */}
-                          {imageSrc && (
-                            <div style={{
-                              width: 64, height: 64, borderRadius: 10, overflow: "hidden",
-                              position: "relative", flexShrink: 0, background: "#EDE4D6",
-                            }}>
-                              <Image
-                                src={imageSrc}
-                                alt=""
-                                fill
-                                sizes="64px"
-                                style={{ objectFit: "cover" }}
-                              />
-                            </div>
-                          )}
-
-                          {/* Main content */}
-                          <div style={{ flex: 1, minWidth: 0 }}>
-                            {/* Nombre */}
-                            <p style={{
-                              fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.9375rem",
-                              color: "#5A1F1A", lineHeight: 1.3, marginBottom: 8,
-                            }}>
-                              {getLabel(item)}
-                            </p>
-
-                            {/* Stepper + subtotal */}
-                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
-                              <div style={{
-                                display: "inline-flex", alignItems: "center",
-                                background: "#fff", borderRadius: 999,
-                                border: "1px solid rgba(90,31,26,0.12)",
-                              }}>
-                                <button
-                                  onClick={() => stepQty(item, -1)}
-                                  aria-label={atMin ? "Eliminar" : "Menos"}
-                                  style={{
-                                    width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center",
-                                    border: "none", borderRadius: "999px 0 0 999px", cursor: "pointer",
-                                    background: "transparent",
-                                    color: "#5A1F1A",
-                                    WebkitTapHighlightColor: "transparent",
-                                  }}
-                                >
-                                  <Minus size={16} />
-                                </button>
-                                <span style={{
-                                  minWidth: 48, textAlign: "center", fontFamily: "var(--font-body)",
-                                  fontWeight: 700, fontSize: "0.9375rem", color: "#5A1F1A",
-                                  userSelect: "none",
-                                }}>
-                                  {item.kind === "product" ? fmtKg(item.qty) : `×${item.qty}`}
-                                </span>
-                                <button
-                                  onClick={() => stepQty(item, 1)}
-                                  disabled={atMax}
-                                  aria-label="Más"
-                                  style={{
-                                    width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center",
-                                    border: "none", borderRadius: "0 999px 999px 0", cursor: atMax ? "default" : "pointer",
-                                    background: "transparent",
-                                    color: atMax ? "rgba(90,31,26,0.2)" : "#5A1F1A",
-                                    WebkitTapHighlightColor: "transparent",
-                                  }}
-                                >
-                                  <Plus size={16} />
-                                </button>
+                          return (
+                            <motion.li
+                              key={`${item.kind}-${item.id}`}
+                              layout
+                              initial={{ opacity: 0, y: 8 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, x: 40, transition: { duration: 0.18 } }}
+                              className="ord-item"
+                            >
+                              {imageSrc && (
+                                <div className="ord-item-thumb">
+                                  <Image
+                                    src={imageSrc}
+                                    alt=""
+                                    fill
+                                    sizes="72px"
+                                    style={{ objectFit: "contain" }}
+                                  />
+                                </div>
+                              )}
+                              <div className="ord-item-body">
+                                <p className="ord-item-name">{getLabel(item)}</p>
+                                <p className="ord-item-meta">
+                                  {item.kind === "product"
+                                    ? `${bagsCount} ${bagsCount === 1 ? "bolsa" : "bolsas"} · ${formatLabel}`
+                                    : `Pack · ×${item.qty}`}
+                                </p>
+                                <div className="ord-item-foot">
+                                  <div className="ord-stepper" role="group" aria-label="Cantidad">
+                                    <button
+                                      type="button"
+                                      onClick={() => stepQty(item, -1)}
+                                      aria-label={item.qty <= min ? "Eliminar" : "Menos"}
+                                      className="ord-stepper-btn"
+                                    >
+                                      −
+                                    </button>
+                                    <span className="ord-stepper-val">{bagsCount}</span>
+                                    <button
+                                      type="button"
+                                      onClick={() => stepQty(item, 1)}
+                                      disabled={atMax}
+                                      aria-label="Más"
+                                      className="ord-stepper-btn"
+                                    >
+                                      +
+                                    </button>
+                                  </div>
+                                  <span className="ord-item-price">{fmt(getSubtotal(item))}</span>
+                                </div>
                               </div>
+                            </motion.li>
+                          );
+                        })}
+                      </AnimatePresence>
+                    </ul>
 
-                              <Odometer
-                                value={getSubtotal(item)}
-                                style={{
-                                  fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.125rem",
-                                  color: "#5A1F1A", marginLeft: "auto",
-                                }}
-                              />
-                            </div>
-                          </div>
-
-                        </motion.div>
-                      );
-                    })}
-                  </AnimatePresence>
-
-                  {/* Selector de comuna — necesario para calcular envío antes del cierre (Ley 19.496) */}
-                  <div style={{ padding: "1rem 0 0" }}>
-                    <p style={{
-                      fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem",
-                      color: "#5A1F1A", marginBottom: 8,
-                    }}>
-                      Entregar en
-                    </p>
-                    <div
-                      role="radiogroup"
-                      aria-label="Comuna de entrega"
-                      style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 14 }}
-                    >
-                      {COMUNAS.map((c) => {
-                        const selected = comuna === c;
-                        return (
-                          <button
-                            key={c}
-                            role="radio"
-                            aria-checked={selected}
-                            onClick={() => setComuna(c)}
-                            style={{
-                              fontFamily: "var(--font-body)", fontSize: "0.875rem",
-                              fontWeight: selected ? 600 : 500,
-                              padding: "10px 16px",
-                              minHeight: 44,
-                              borderRadius: 999,
-                              border: `1.5px solid ${selected ? "#A8411A" : "rgba(90,31,26,0.15)"}`,
-                              background: selected ? "#A8411A" : "transparent",
-                              color: selected ? "#F4EADB" : "#5A1F1A",
-                              cursor: "pointer",
-                              WebkitTapHighlightColor: "transparent",
-                              transition: "all 0.15s ease",
-                            }}
-                          >
-                            {c}
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    {/* Desglose: Subtotal + Envío + Total — visible antes del cierre (Ley 19.496 Art. 1 N°2) */}
-                    <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", marginBottom: 4 }}>
-                      <span>Subtotal</span>
-                      <Odometer value={subtotal} />
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", marginBottom: 8 }}>
-                      <span>Envío {comuna}</span>
-                      <span>
-                        {shipping === 0 ? "Gratis" : <Odometer value={shipping} />}
-                      </span>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", paddingTop: 8, borderTop: "1px solid rgba(90,31,26,0.08)" }}>
-                      <div>
-                        <p style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "1rem", color: "#5A1F1A" }}>
-                          Total
-                        </p>
-                        <p style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "#5E6B3E", marginTop: 2 }}>
-                          {fmtKg(totalWeight)} en total
-                        </p>
+                    {/* Comuna */}
+                    <div className="ord-section">
+                      <p className="ord-section-label">Entregar en</p>
+                      <div role="radiogroup" aria-label="Comuna" className="ord-comunas">
+                        {COMUNAS.map((c) => {
+                          const selected = comuna === c;
+                          return (
+                            <button
+                              key={c}
+                              type="button"
+                              role="radio"
+                              aria-checked={selected}
+                              onClick={() => setComuna(c)}
+                              className={`ord-comuna ${selected ? "ord-comuna--selected" : ""}`}
+                            >
+                              {c}
+                            </button>
+                          );
+                        })}
                       </div>
-                      <Odometer
-                        value={total}
-                        style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.75rem", color: "#5A1F1A" }}
-                      />
                     </div>
-                    <p style={{
-                      fontFamily: "var(--font-body)", fontSize: "0.8125rem", color: "#5E6B3E",
-                      lineHeight: 1.5, marginTop: 8, marginBottom: "1.25rem",
-                    }}>
-                      Revisa este total antes de pasar a WhatsApp. Ahí seguimos contigo y cerramos el despacho.
-                    </p>
 
-                    {/* Nota opcional */}
-                    <div style={{ marginBottom: "1.5rem" }}>
-                      <label htmlFor="order-note" style={{
-                        fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.875rem",
-                        color: "#5A1F1A", display: "block", marginBottom: "0.5rem",
-                      }}>
+                    {/* Totales */}
+                    <div className="ord-totals">
+                      <div className="ord-totals-row">
+                        <span>Subtotal</span>
+                        <span>{fmt(subtotal)}</span>
+                      </div>
+                      <div className="ord-totals-row">
+                        <span>Envío · {comuna}</span>
+                        <span>{shipping === 0 ? "Gratis" : fmt(shipping)}</span>
+                      </div>
+                      <div className="ord-totals-total">
+                        <span>Total</span>
+                        <span>{fmt(total)}</span>
+                      </div>
+                    </div>
+
+                    {/* Nota */}
+                    <div className="ord-section">
+                      <label htmlFor="ord-note" className="ord-section-label">
                         Nota (opcional)
                       </label>
                       <textarea
-                        id="order-note"
+                        id="ord-note"
                         value={note}
                         onChange={(e) => setNote(e.target.value)}
-                        placeholder="Ej: sin sal, horario preferido, etc."
+                        placeholder="Sin sal · llamar antes · portón rojo…"
                         rows={2}
-                        style={{
-                          width: "100%", fontFamily: "var(--font-body)", fontSize: "0.9375rem",
-                          color: "#5A1F1A", background: "rgba(90,31,26,0.04)",
-                          border: "1.5px solid rgba(90,31,26,0.15)", borderRadius: "10px",
-                          padding: "0.75rem", resize: "none", outline: "none", lineHeight: 1.5,
-                        }}
-                        onFocus={(e) => { e.currentTarget.style.borderColor = "#A8411A"; }}
-                        onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(90,31,26,0.15)"; }}
+                        className="ord-note"
                       />
                     </div>
-                  </div>
-                </div>
-              )}
-            </div>
+                  </>
+                )}
+              </div>
 
-            {/* CTA */}
-            <div style={{
-              padding: "0.875rem 1.25rem",
-              paddingBottom: "calc(0.875rem + env(safe-area-inset-bottom, 0px))",
-              flexShrink: 0, borderTop: "1px solid rgba(90,31,26,0.08)", background: "#F4EADB",
-            }}>
-              {items.length > 0 && (
-                <div style={{
-                  display: "flex", alignItems: "baseline", justifyContent: "space-between",
-                  gap: 12, marginBottom: "0.75rem",
-                }}>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-                    <span style={{
-                      fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 700,
-                      letterSpacing: "0.14em", textTransform: "uppercase",
-                      color: "rgba(90,31,26,0.55)",
-                    }}>
-                      Total
-                    </span>
-                    <Odometer
-                      value={total}
-                      style={{
-                        fontFamily: "var(--font-display)", fontWeight: 700,
-                        fontSize: "1.5rem", color: "#5A1F1A", lineHeight: 1,
-                      }}
-                    />
-                  </div>
-                  {shipping === 0 && subtotal >= FREE_SHIPPING_MIN && (
-                    <span style={{
-                      fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 700,
-                      letterSpacing: "0.08em", textTransform: "uppercase",
-                      color: "#5E6B3E",
-                    }}>
-                      Envío gratis
-                    </span>
-                  )}
-                </div>
-              )}
-              {items.length === 0 ? (
-                <StampButton
-                  onClick={onClose}
-                  fullWidth
-                  style={{ background: "#5A1F1A", color: "#F4EADB" }}
-                >
-                  Ver las mezclas
-                </StampButton>
-              ) : (
-                <StampButton
-                  onClick={handleConfirm}
-                  disabled={loading}
-                  fullWidth
-                  size="lg"
-                  style={{ background: loading ? "#A84019" : "#A8411A" }}
-                >
-                  {loading ? (
-                    <>
-                      <span style={{
-                        width: 18, height: 18, border: "2px solid rgba(244,234,219,0.4)",
-                        borderTopColor: "#F4EADB", borderRadius: "50%",
-                        animation: "spin 0.7s linear infinite", display: "inline-block",
-                      }} />
-                      Preparando mensaje...
-                    </>
-                  ) : (
-                    <>
-                      <svg width={18} height={18} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479c0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                      </svg>
-                      Pasar a WhatsApp
-                    </>
-                  )}
-                </StampButton>
-              )}
+              {/* Sticky CTA bottom */}
+              <div className="ord-cta">
+                {items.length === 0 ? (
+                  <button type="button" onClick={onClose} className="ord-btn-secondary">
+                    Ver productos
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleConfirm}
+                    disabled={loading}
+                    className="ord-btn-primary"
+                  >
+                    {loading ? (
+                      <span className="ord-spinner" aria-hidden="true" />
+                    ) : (
+                      <>
+                        <svg width={16} height={16} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479c0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
+                        Pasar a WhatsApp · {fmt(total)}
+                      </>
+                    )}
+                  </button>
+                )}
+                {items.length > 0 && (
+                  <p className="ord-fineprint">
+                    Al continuar compartís tu número con Estación Snack para coordinar tu pedido. Ver{" "}
+                    <a href="/privacidad">política</a>.
+                  </p>
+                )}
+              </div>
+            </motion.div>
 
-              {items.length > 0 && (
-                <p style={{
-                  fontFamily: "var(--font-body)", fontSize: 11, color: "#5E6B3E",
-                  lineHeight: 1.4, marginTop: 10, textAlign: "center",
-                }}>
-                  Al continuar compartís tu número con Estación Snack para coordinar tu pedido. Ver <a href="/privacidad" style={{ color: "#A8411A", textDecoration: "underline", textUnderlineOffset: 2 }}>política</a>.
-                </p>
-              )}
-            </div>
-          </motion.div>
-        </div>
+            <style>{`
+              @keyframes ord-spin { to { transform: rotate(360deg); } }
+
+              .ord-backdrop {
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.4);
+                z-index: 700;
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+              }
+
+              .ord-sheet {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 800;
+                background: #ffffff;
+                border-radius: 18px 18px 0 0;
+                box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.18);
+                max-height: 92vh;
+                display: flex;
+                flex-direction: column;
+                color: #1d1d1f;
+                letter-spacing: -0.011em;
+              }
+
+              .ord-head {
+                padding: 0.5rem 1.25rem 0.75rem;
+                border-bottom: 1px solid #e6e6e6;
+                flex-shrink: 0;
+              }
+              .ord-handle {
+                width: 36px;
+                height: 4px;
+                border-radius: 999px;
+                background: #d2d2d7;
+                margin: 8px auto 14px;
+              }
+              .ord-head-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+              }
+              .ord-title {
+                font-size: 1.375rem;
+                font-weight: 600;
+                color: #1d1d1f;
+                margin: 0;
+                letter-spacing: -0.022em;
+                line-height: 1;
+              }
+              .ord-head-sub {
+                font-size: 13px;
+                color: #6e6e73;
+                margin: 6px 0 0;
+                letter-spacing: -0.005em;
+              }
+              .ord-close {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background: #f5f5f7;
+                color: #1d1d1f;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border: none;
+                cursor: pointer;
+                transition: background 0.15s ease;
+              }
+              .ord-close:hover { background: #e6e6e8; }
+
+              .ord-content {
+                flex: 1;
+                overflow-y: auto;
+                padding: 1rem 1.25rem 0;
+                overscroll-behavior: contain;
+              }
+
+              .ord-empty {
+                padding: 3rem 0 4rem;
+                text-align: center;
+              }
+              .ord-empty-mark {
+                display: inline-block;
+                margin-bottom: 1rem;
+              }
+              .ord-empty-title {
+                font-size: 1.125rem;
+                font-weight: 500;
+                color: #1d1d1f;
+                margin: 0 0 0.5rem;
+                letter-spacing: -0.014em;
+              }
+              .ord-empty-sub {
+                font-size: 0.9375rem;
+                color: #6e6e73;
+                margin: 0 auto;
+                max-width: 360px;
+                line-height: 1.45;
+              }
+
+              .ord-items {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+              }
+              .ord-item {
+                display: flex;
+                gap: 14px;
+                padding: 1rem 0;
+                border-bottom: 1px solid #f0f0f2;
+              }
+              .ord-item:last-child { border-bottom: none; }
+              .ord-item-thumb {
+                position: relative;
+                width: 72px;
+                height: 72px;
+                background: #f5f5f7;
+                border-radius: 12px;
+                overflow: hidden;
+                flex-shrink: 0;
+              }
+              .ord-item-body {
+                flex: 1;
+                min-width: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+              }
+              .ord-item-name {
+                font-size: 0.9375rem;
+                font-weight: 500;
+                color: #1d1d1f;
+                margin: 0;
+                line-height: 1.25;
+                letter-spacing: -0.011em;
+              }
+              .ord-item-meta {
+                font-size: 12px;
+                color: #6e6e73;
+                margin: 0;
+                letter-spacing: -0.005em;
+              }
+              .ord-item-foot {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 6px;
+                gap: 12px;
+              }
+              .ord-item-price {
+                font-size: 0.9375rem;
+                font-weight: 500;
+                color: #1d1d1f;
+                font-variant-numeric: tabular-nums;
+              }
+
+              .ord-stepper {
+                display: inline-flex;
+                align-items: center;
+                background: #f5f5f7;
+                border-radius: 999px;
+                padding: 2px;
+              }
+              .ord-stepper-btn {
+                width: 28px;
+                height: 28px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                font-weight: 500;
+                color: #1d1d1f;
+                background: transparent;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                line-height: 1;
+                transition: background 0.15s ease, color 0.15s ease;
+              }
+              .ord-stepper-btn:hover { background: #ffffff; }
+              .ord-stepper-btn:disabled {
+                color: #c7c7cc;
+                cursor: not-allowed;
+              }
+              .ord-stepper-val {
+                min-width: 26px;
+                text-align: center;
+                font-size: 14px;
+                font-weight: 500;
+                color: #1d1d1f;
+                font-variant-numeric: tabular-nums;
+                user-select: none;
+              }
+
+              .ord-section {
+                padding: 1.25rem 0 0.5rem;
+              }
+              .ord-section-label {
+                font-size: 13px;
+                font-weight: 500;
+                color: #1d1d1f;
+                margin: 0 0 10px;
+                letter-spacing: -0.005em;
+              }
+              .ord-comunas {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+              }
+              .ord-comuna {
+                font-size: 13px;
+                font-weight: 400;
+                padding: 8px 14px;
+                min-height: 36px;
+                background: #f5f5f7;
+                color: #1d1d1f;
+                border: 1px solid transparent;
+                border-radius: 999px;
+                cursor: pointer;
+                letter-spacing: -0.005em;
+                transition: all 0.15s ease;
+              }
+              .ord-comuna:hover { background: #e6e6e8; }
+              .ord-comuna--selected {
+                background: #1d1d1f;
+                color: #ffffff;
+                font-weight: 500;
+              }
+              .ord-comuna--selected:hover { background: #424245; }
+
+              .ord-totals {
+                margin-top: 1rem;
+                padding: 1rem 0 0.25rem;
+                border-top: 1px solid #e6e6e6;
+              }
+              .ord-totals-row {
+                display: flex;
+                justify-content: space-between;
+                font-size: 14px;
+                color: #1d1d1f;
+                margin-bottom: 8px;
+                font-variant-numeric: tabular-nums;
+              }
+              .ord-totals-row span:first-child { color: #6e6e73; }
+              .ord-totals-total {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                font-size: 1.5rem;
+                font-weight: 600;
+                color: #1d1d1f;
+                margin-top: 4px;
+                padding-top: 12px;
+                border-top: 1px solid #f0f0f2;
+                font-variant-numeric: tabular-nums;
+                letter-spacing: -0.022em;
+              }
+              .ord-totals-total span:first-child { font-weight: 500; }
+
+              .ord-note {
+                width: 100%;
+                font-family: inherit;
+                font-size: 14px;
+                color: #1d1d1f;
+                background: #f5f5f7;
+                border: 1px solid transparent;
+                border-radius: 12px;
+                padding: 12px;
+                resize: none;
+                outline: none;
+                line-height: 1.4;
+                letter-spacing: -0.005em;
+                transition: background 0.15s ease, border-color 0.15s ease;
+              }
+              .ord-note:focus {
+                background: #ffffff;
+                border-color: #0071e3;
+              }
+
+              .ord-cta {
+                padding: 14px 1.25rem;
+                padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+                flex-shrink: 0;
+                border-top: 1px solid #e6e6e6;
+                background: #ffffff;
+              }
+              .ord-btn-primary {
+                width: 100%;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                padding: 14px 20px;
+                background: #1d1d1f;
+                color: #ffffff;
+                font-size: 0.9375rem;
+                font-weight: 500;
+                letter-spacing: -0.005em;
+                border: none;
+                border-radius: 980px;
+                cursor: pointer;
+                min-height: 50px;
+                transition: background 0.15s ease, transform 0.15s ease;
+              }
+              .ord-btn-primary:hover { background: #424245; }
+              .ord-btn-primary:active { transform: scale(0.98); }
+              .ord-btn-primary:disabled {
+                background: #424245;
+                cursor: wait;
+              }
+              .ord-btn-secondary {
+                width: 100%;
+                padding: 14px 20px;
+                background: #f5f5f7;
+                color: #1d1d1f;
+                font-size: 0.9375rem;
+                font-weight: 500;
+                border: none;
+                border-radius: 980px;
+                cursor: pointer;
+                min-height: 50px;
+                transition: background 0.15s ease;
+              }
+              .ord-btn-secondary:hover { background: #e6e6e8; }
+
+              .ord-spinner {
+                width: 18px;
+                height: 18px;
+                border: 2px solid rgba(255, 255, 255, 0.4);
+                border-top-color: #ffffff;
+                border-radius: 50%;
+                display: inline-block;
+                animation: ord-spin 0.7s linear infinite;
+              }
+
+              .ord-fineprint {
+                font-size: 11px;
+                color: #86868b;
+                line-height: 1.4;
+                margin: 10px 0 0;
+                text-align: center;
+                letter-spacing: -0.005em;
+              }
+              .ord-fineprint a {
+                color: #0071e3;
+                text-decoration: none;
+              }
+
+              /* Desktop: centrar el sheet en vez de full-width bottom (Apple Bag style) */
+              @media (min-width: 768px) {
+                .ord-sheet {
+                  max-width: 480px;
+                  left: 50%;
+                  transform: translateX(-50%) !important;
+                  bottom: 16px;
+                  border-radius: 18px;
+                  max-height: min(720px, 90vh);
+                }
+              }
+            `}</style>
+          </div>
         </FocusTrap>
       )}
     </AnimatePresence>

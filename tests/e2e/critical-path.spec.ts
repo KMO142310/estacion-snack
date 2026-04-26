@@ -14,7 +14,7 @@ test.describe("Home renderiza", () => {
   test("titulo y CTA principal visibles", async ({ page }) => {
     await page.goto("/");
     await expect(page.locator("h1").first()).toBeVisible();
-    await expect(page.getByRole("link", { name: /ver catálogo/i })).toBeVisible();
+    await expect(page.getByRole("link", { name: /ver productos/i })).toBeVisible();
   });
 
   test("seis productos en el grid", async ({ page }) => {
@@ -95,16 +95,17 @@ test.describe("Cart action — el bug que se nos pasó", () => {
     await expect(sheet).toBeVisible({ timeout: 2000 });
   });
 
-  test("Hero 'Tu pedido' button también abre el sheet", async ({ page }) => {
+  test("Hero 'Ver packs' link navega a #packs", async ({ page }) => {
     await page.goto("/");
     await page.waitForTimeout(500);
 
-    const heroCta = page.locator(".hero-cta-secondary");
-    await heroCta.click();
-    await page.waitForTimeout(500);
+    const heroPacksLink = page.locator(".hero-cta-link").first();
+    await expect(heroPacksLink).toBeVisible();
+    await heroPacksLink.click();
+    await page.waitForTimeout(400);
 
-    const sheet = page.locator('[role="dialog"], [aria-modal="true"], .order-sheet').first();
-    await expect(sheet).toBeVisible({ timeout: 2000 });
+    // Después del click, la URL debe cambiar al anchor #packs.
+    expect(page.url()).toContain("#packs");
   });
 });
 

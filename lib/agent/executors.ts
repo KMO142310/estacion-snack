@@ -36,7 +36,7 @@ const STATUS_LABEL: Record<OrderStatus, string> = {
 };
 
 /** Normaliza phone a solo dígitos con código país. "987654321" → "56987654321". */
-function normalizePhone(raw: string): string {
+export function normalizePhone(raw: string): string {
   const digits = raw.replace(/\D/g, "");
   if (digits.startsWith("56")) return digits;
   if (digits.length === 9 && digits.startsWith("9")) return `56${digits}`;
@@ -44,14 +44,14 @@ function normalizePhone(raw: string): string {
 }
 
 /** Masking PII para outputs públicos: +56 9 ••••3338 */
-function maskPhone(phone: string | null | undefined): string {
+export function maskPhone(phone: string | null | undefined): string {
   if (!phone) return "—";
   const digits = phone.replace(/\D/g, "");
   if (digits.length < 4) return phone;
   return `+${digits.slice(0, 2)} ${digits.slice(2, 3)} ••••${digits.slice(-4)}`;
 }
 
-function shortId(id: string): string {
+export function shortId(id: string): string {
   return id.slice(0, 8);
 }
 
@@ -264,6 +264,31 @@ export async function executeUpdateOrderStatus(
     return err(`Falló la mutación: ${res.error ?? "error desconocido"}`);
   }
 
+  // Auto-trigger Bloque 5: si la confirmación es a "confirmed", incluyo en
+  // la respuesta los links wa.me + imagen para que el operador los reenvíe.
+  // No envío automáticamente — sólo proveo las URLs (control humano final).
+  if (new_status === "confirmed") {
+    const ownerPhone = process.env.OWNER_WHATSAPP || "56953743338";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.estacionsnack.cl";
+    const imageUrl = `${siteUrl}/api/og/order-confirmation?order=${order.id}&t=${order.access_token}`;
+    const items = order.order_items.map((it) => `${it.qty}× ${it.product_name}`).join(", ");
+    const text = encodeURIComponent(
+      `🛒 Pedido nuevo confirmado\n` +
+        `${order.customer_name ?? "—"}\n` +
+        `Items: ${items}\n` +
+        `Total: ${fmt(order.total)}\n` +
+        `Ver: ${siteUrl}/pedido/${order.id}\n` +
+        `Imagen: ${imageUrl}`,
+    );
+    const ownerWaUrl = `https://wa.me/${ownerPhone}?text=${text}`;
+
+    return ok(
+      `✓ ${summary}\n\n` +
+        `📲 Notificación lista para vos:\n${ownerWaUrl}\n\n` +
+        `🖼️ Imagen para reenviar al cliente:\n${imageUrl}`,
+    );
+  }
+
   return ok(`✓ ${summary}`);
 }
 
@@ -406,17 +431,23 @@ export async function executeNotifyOwnerWhatsapp(
   const ownerPhone = process.env.OWNER_WHATSAPP || "56953743338";
   const items = order.order_items.map((it) => `${it.qty}× ${it.product_name}`).join(", ");
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.estacionsnack.cl";
+
+  // Link a la imagen OG: WhatsApp lo renderiza como preview (tarjeta con
+  // "Gracias <nombre>"), y el operador puede reenviarlo al cliente.
+  const imageUrl = `${siteUrl}/api/og/order-confirmation?order=${order.id}&t=${order.access_token}`;
+
   const text = encodeURIComponent(
     `🛒 Pedido nuevo confirmado\n` +
       `${order.customer_name ?? "—"} (${order.customer_phone ?? "—"})\n` +
       `Items: ${items}\n` +
       `Total: ${fmt(order.total)}\n` +
-      `Ver: ${siteUrl}/pedido/${order.id}`,
+      `Ver: ${siteUrl}/pedido/${order.id}\n` +
+      `Imagen: ${imageUrl}`,
   );
   const url = `https://wa.me/${ownerPhone}?text=${text}`;
 
   return ok(
-    `URL hacia tu WhatsApp con el resumen:\n${url}\n\n(Tocá el link para abrir WhatsApp con el mensaje pre-armado.)`,
+    `URL hacia tu WhatsApp con el resumen:\n${url}\n\n(Tocá el link para abrir WhatsApp con el mensaje pre-armado, que incluye el link a la imagen para reenviar al cliente.)`,
   );
 }
 

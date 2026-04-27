@@ -71,7 +71,7 @@ export default async function DashboardPage() {
   return (
     <div>
       <div style={{ marginBottom: 24 }}>
-        <h1 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: 32, fontWeight: 400, marginBottom: 4 }}>
+        <h1 style={{ fontFamily: "var(--font-fraunces), Georgia, serif", fontSize: 32, fontWeight: 400, marginBottom: 4 }}>
           Dashboard
         </h1>
         <p style={{ fontSize: 14, color: "#5F5A52" }}>Resumen del mes en curso</p>

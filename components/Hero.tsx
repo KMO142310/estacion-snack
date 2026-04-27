@@ -17,7 +17,7 @@ const lead = productsData[0]; // Mix Europeo
  * - Tipografía GIGANTE centrada (h1 hasta 72-96px desktop).
  * - Subhead delgado en gris secundario.
  * - 2 CTAs: pill negro principal + link azul Apple ("Ver detalles ›").
- * - Foto del producto destacado debajo, full bleed con bg #f5f5f7.
+ * - Foto del producto destacado debajo, full bleed con bg #F1ECE2.
  * - Spacing vertical generoso (8rem desktop, 4rem mobile).
  */
 export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
@@ -30,7 +30,7 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
 
       {/* Headline + CTAs */}
       <div className="hero-headline">
-        <p className="hero-eyebrow">Estación Snack</p>
+        <p className="hero-eyebrow">Santa Cruz · Valle de Colchagua</p>
         <h1 className="hero-h1">
           Frutos secos,
           <br />
@@ -78,7 +78,7 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
 
         /* Banner promo — sutil */
         .hero-promo {
-          background: #f5f5f7;
+          background: #F1ECE2;
           color: #1d1d1f;
           padding: 10px 1.25rem;
           text-align: center;
@@ -96,11 +96,13 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
           text-align: center;
         }
         .hero-eyebrow {
-          font-size: 13px;
-          font-weight: 500;
-          color: #6e6e73;
-          letter-spacing: -0.005em;
-          margin: 0 0 0.875rem;
+          font-family: var(--font-fraunces), Georgia, serif;
+          font-style: italic;
+          font-size: 15px;
+          font-weight: 400;
+          color: #A8411A;
+          letter-spacing: 0;
+          margin: 0 0 1rem;
         }
         .hero-h1 {
           font-size: clamp(2.5rem, 9vw, 5.5rem);
@@ -146,15 +148,16 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
         .hero-cta-link {
           font-size: 0.9375rem;
           font-weight: 400;
-          color: #0071e3;
+          color: #A8411A;
           letter-spacing: -0.005em;
           transition: color 0.15s ease;
         }
-        .hero-cta-link:hover { color: #0077ed; }
+        .hero-cta-link:hover { color: #7a3013; }
 
-        /* Producto destacado — full-bleed Apple section */
+        /* Producto destacado — full-bleed con calidez Colchagua */
         .hero-product {
-          background: #f5f5f7;
+          background: #F1ECE2;
+          background-image: radial-gradient(ellipse at 50% 30%, rgba(168,65,26,0.06) 0%, transparent 70%);
           padding: 3.5rem 1.25rem 0;
           text-align: center;
         }
@@ -163,11 +166,13 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
           margin: 0 auto;
         }
         .hero-product-tag {
-          font-size: 12px;
-          font-weight: 600;
-          color: #6e6e73;
-          letter-spacing: 0.04em;
-          text-transform: uppercase;
+          font-family: var(--font-fraunces), Georgia, serif;
+          font-style: italic;
+          font-size: 14px;
+          font-weight: 400;
+          color: #A8411A;
+          letter-spacing: 0;
+          text-transform: none;
           margin: 0 0 0.5rem;
         }
         .hero-product-name {
@@ -188,11 +193,11 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
           display: inline-block;
           font-size: 0.9375rem;
           font-weight: 400;
-          color: #0071e3;
+          color: #A8411A;
           margin-bottom: 2rem;
           letter-spacing: -0.005em;
         }
-        .hero-product-link:hover { color: #0077ed; }
+        .hero-product-link:hover { color: #7a3013; }
         .hero-product-image {
           position: relative;
           aspect-ratio: 16/10;

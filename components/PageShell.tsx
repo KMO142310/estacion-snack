@@ -180,12 +180,12 @@ export default function PageShell() {
 
         .rt-section {
           padding: 4rem 0;
-          background: #ffffff;
+          background: transparent;
           /* Anchor scroll: el sticky header no debe tapar el title.
              scroll-margin-top + scroll-padding-top en globals.css = 110px buffer. */
           scroll-margin-top: 110px;
         }
-        .rt-section-alt { background: #f5f5f7; }
+        .rt-section-alt { background: #F1ECE2; }
         @media (min-width: 768px) {
           .rt-section { padding: 6rem 0; }
         }
@@ -199,16 +199,18 @@ export default function PageShell() {
           .rt-section-head { margin-bottom: 3rem; padding: 0 1.5rem; }
         }
         .rt-section-title {
+          font-family: var(--font-fraunces), Georgia, serif;
           font-size: clamp(1.75rem, 4.5vw, 2.5rem);
-          font-weight: 600;
+          font-weight: 500;
           color: #1d1d1f;
           margin: 0;
-          letter-spacing: -0.022em;
-          line-height: 1.1;
+          letter-spacing: -0.025em;
+          line-height: 1.05;
+          font-variation-settings: "opsz" 96, "SOFT" 50;
         }
         .rt-section-sub {
           font-size: 1rem;
-          color: #6e6e73;
+          color: #6B6459;
           margin: 0.5rem auto 0;
           max-width: 560px;
           letter-spacing: -0.011em;
@@ -229,13 +231,13 @@ export default function PageShell() {
 
         /* FAQ */
         .rt-faq-list { display: flex; flex-direction: column; }
-        .rt-faq-item { border-bottom: 1px solid #e6e6e6; }
+        .rt-faq-item { border-bottom: 1px solid rgba(26, 24, 21, 0.08); }
         .rt-faq-item:last-child { border-bottom: none; }
         .rt-faq-q {
           padding: 1.1rem 0;
           font-size: 0.95rem;
-          font-weight: 600;
-          color: #000;
+          font-weight: 500;
+          color: #1d1d1f;
           cursor: pointer;
           list-style: none;
           display: flex;
@@ -244,45 +246,51 @@ export default function PageShell() {
           gap: 1rem;
         }
         .rt-faq-q::-webkit-details-marker { display: none; }
-        .rt-faq-chev { color: #888; transition: transform 0.2s ease; flex-shrink: 0; }
+        .rt-faq-chev { color: #8C8579; transition: transform 0.2s ease; flex-shrink: 0; }
         details[open] .rt-faq-chev { transform: rotate(180deg); }
         .rt-faq-a {
           padding: 0 0 1.1rem;
           font-size: 0.9375rem;
-          color: #555;
+          color: #6B6459;
           line-height: 1.65;
         }
 
         /* CTA */
         .rt-cta {
           padding: 3.5rem 1rem;
-          background: #FAF9F7;
-          border-top: 1px solid #e6e6e6;
+          background: #F1ECE2;
+          border-top: 1px solid rgba(26, 24, 21, 0.08);
         }
         .rt-cta-title {
+          font-family: var(--font-fraunces), Georgia, serif;
           font-size: clamp(1.5rem, 3.5vw, 2rem);
-          font-weight: 700;
-          color: #000;
+          font-weight: 500;
+          color: #1d1d1f;
           margin: 0 0 0.6rem;
+          letter-spacing: -0.025em;
+          line-height: 1.05;
+          font-variation-settings: "opsz" 96, "SOFT" 50;
         }
         .rt-cta-sub {
           font-size: 0.9375rem;
-          color: #555;
+          color: #6B6459;
           margin: 0 0 1.5rem;
         }
         .rt-cta-btn {
           display: inline-flex;
-          padding: 0.95rem 2rem;
-          background: #000;
-          color: #fff;
-          font-weight: 600;
+          padding: 0.85rem 1.75rem;
+          background: #1d1d1f;
+          color: #ffffff;
+          font-weight: 500;
           font-size: 0.9375rem;
-          border-radius: 4px;
+          letter-spacing: -0.005em;
+          border-radius: 980px;
           border: none;
           cursor: pointer;
-          transition: background 0.15s ease;
+          transition: background 0.2s ease, transform 0.15s ease;
         }
-        .rt-cta-btn:hover { background: #333; }
+        .rt-cta-btn:hover { background: #424245; }
+        .rt-cta-btn:active { transform: scale(0.98); }
 
         /* Sticky bar mobile */
         .rt-sticky {
@@ -293,7 +301,7 @@ export default function PageShell() {
           z-index: 100;
           padding: 14px 1rem;
           padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-          background: #000;
+          background: #1d1d1f;
           color: #fff;
           display: flex;
           align-items: center;

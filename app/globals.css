@@ -5,20 +5,21 @@
    Negro suave #1d1d1f (no puro), blanco puro, system font stack,
    pill buttons, mucho whitespace. */
 @theme inline {
-  --color-bg:           #ffffff;     /* white puro — main */
-  --color-surface:      #f5f5f7;     /* gris muy suave — alt sections */
-  --color-ink:          #1d1d1f;     /* Apple's signature near-black */
-  --color-ink-soft:     #6e6e73;     /* texto secundario */
-  --color-muted:        #86868b;     /* texto terciario */
-  --color-line:         #d2d2d7;     /* bordes sutiles */
+  --color-bg:           #FBF8F3;     /* warm off-white — calidez Colchagua sin sacrificar limpieza */
+  --color-surface:      #F1ECE2;     /* surface cálido tipo papel */
+  --color-ink:          #1d1d1f;     /* near-black, contraste WCAG AA+ sobre warm bg */
+  --color-ink-soft:     #6B6459;     /* gris cálido */
+  --color-muted:        #8C8579;     /* terciario cálido */
+  --color-line:         rgba(26,24,21,0.08);  /* bordes sutiles que respetan el bg cálido */
   --color-promo:        #EFD200;     /* amarillo promo (puntual, no dominante) */
-  --color-link:         #0071e3;     /* Apple blue */
+  --color-link:         #A8411A;     /* terracota Colchagua reemplaza Apple blue */
   --color-error:        #B74432;
   --color-success:      #2E7D32;
 
-  /* Tipografías — system stack tipo Apple. SF Pro Display si OS Apple,
-     fallback a Inter cargada vía Next, después system-ui. */
-  --font-display: var(--font-inter), -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+  /* Tipografía: Fraunces (serif contemporáneo variable) en display + Inter en body.
+     Da personalidad editorial sin perder neutralidad funcional.
+     Fraunces: cargado en app/layout.tsx con opsz + SOFT axes para tono cálido. */
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
   --font-body:    var(--font-inter), -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
 
   /* Espaciados generosos al estilo Apple */
@@ -41,24 +42,25 @@
 }
 
 :root {
-  --bg:          #ffffff;
-  --surface:     #f5f5f7;
+  --bg:          #FBF8F3;       /* warm off-white */
+  --surface:     #F1ECE2;       /* surface cálido */
   --text:        #1d1d1f;
-  --sub:         #6e6e73;
+  --sub:         #6B6459;       /* gris cálido */
+  --accent:      #A8411A;       /* terracota Colchagua */
   --green:       #2E7D32;
   --green-soft:  #E8F5E9;
-  --orange:      #1d1d1f;
-  --orange-soft: #f5f5f7;
+  --orange:      #A8411A;
+  --orange-soft: #FBE9DD;
   --red:         #B74432;
   --r:           8px;
   --r-lg:        12px;
   --r-full:      9999px;
 
-  /* Tokens legacy mapeados a la paleta Apple */
-  --terracota:   #1d1d1f;
-  --crema:       #ffffff;
-  --burdeo:      #1d1d1f;
-  --oliva:       #6e6e73;
+  /* Tokens legacy mapeados a la paleta cálida */
+  --terracota:   #A8411A;
+  --crema:       #FBF8F3;
+  --burdeo:      #5A1F1A;
+  --oliva:       #6B6459;
 }
 
 /* === Reset === */
@@ -84,7 +86,7 @@ html {
 
 body {
   font-family: var(--font-body);
-  background: #ffffff;
+  background: var(--bg);
   color: #1d1d1f;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -106,12 +108,16 @@ body {
 @media (min-width: 768px) { .wrap { padding: 0 1.5rem; } }
 @media (min-width: 1100px) { .wrap { padding: 0 2rem; } }
 
-/* === Tipografía Apple — letter-spacing tight, weight 600 default === */
+/* === Tipografía — Fraunces editorial en headings, Inter en body ===
+   Fraunces es serif variable: opsz=96 (Display) + SOFT=50 (más curvas, menos rígido).
+   Weight 500 porque serif pesa más visualmente que sans 600. */
 h1, h2, h3, h4 {
-  letter-spacing: -0.022em;
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
   color: #1d1d1f;
-  font-weight: 600;
-  line-height: 1.08;
+  font-weight: 500;
+  line-height: 1.05;
+  font-variation-settings: "opsz" 96, "SOFT" 50;
 }
 
 p {
@@ -149,7 +155,7 @@ img { display: block; max-width: 100%; }
 .skip:focus { left: 8px; top: 8px; }
 
 *:focus-visible {
-  outline: 2px solid #0071e3;
+  outline: 2px solid #A8411A;
   outline-offset: 2px;
   border-radius: 4px;
 }

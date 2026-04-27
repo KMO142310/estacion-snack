@@ -39,7 +39,7 @@ export default function LoginPage() {
     }}>
       <div style={{ width: "100%", maxWidth: 400 }}>
         <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <h1 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: 28, marginBottom: 8 }}>
+          <h1 style={{ fontFamily: "var(--font-fraunces), Georgia, serif", fontSize: 28, marginBottom: 8 }}>
             Estación Snack
           </h1>
           <p style={{ fontSize: 14, color: "#5F5A52" }}>Panel de administración</p>

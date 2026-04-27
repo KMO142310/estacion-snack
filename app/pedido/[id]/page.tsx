@@ -223,7 +223,7 @@ export default async function OrderPage({
           </div>
           <h1
             style={{
-              fontFamily: "var(--font-dm-serif), Georgia, serif",
+              fontFamily: "var(--font-fraunces), Georgia, serif",
               fontSize: 32,
               fontWeight: 400,
               letterSpacing: "-.01em",

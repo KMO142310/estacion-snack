@@ -117,7 +117,7 @@ export default function ProductCard({ product, onOpen }: Props) {
         .pc-img {
           position: relative;
           aspect-ratio: 1/1;
-          background: #f5f5f7;
+          background: #F1ECE2;
           border-radius: 18px;
           overflow: hidden;
           transition: transform 0.3s ease;
@@ -144,9 +144,11 @@ export default function ProductCard({ product, onOpen }: Props) {
           text-align: center;
         }
         .pc-cat {
-          font-size: 11px;
-          font-weight: 500;
-          color: #6e6e73;
+          font-family: var(--font-fraunces), Georgia, serif;
+          font-style: italic;
+          font-size: 13px;
+          font-weight: 400;
+          color: #A8411A;
           margin: 0 0 4px;
         }
         .pc-name {

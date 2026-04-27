@@ -48,7 +48,7 @@ export default function Footer() {
 
       <style>{`
         .ft {
-          background: #000;
+          background: #1d1d1f;
           color: rgba(255,255,255,0.85);
           padding: 3rem 1rem 1.5rem;
         }
@@ -73,10 +73,12 @@ export default function Footer() {
         }
         .ft-col a:hover { color: #fff; }
         .ft-brand {
-          font-size: 1.05rem;
-          font-weight: 700;
+          font-family: var(--font-fraunces), Georgia, serif;
+          font-size: 1.25rem;
+          font-weight: 500;
           color: #fff;
           margin: 0 0 0.4rem;
+          letter-spacing: -0.022em;
         }
         .ft-tag {
           font-size: 0.875rem;
@@ -85,11 +87,13 @@ export default function Footer() {
           margin: 0;
         }
         .ft-h {
-          font-size: 11px;
-          font-weight: 700;
-          letter-spacing: 0.16em;
-          text-transform: uppercase;
-          color: #EFD200;
+          font-family: var(--font-fraunces), Georgia, serif;
+          font-style: italic;
+          font-size: 14px;
+          font-weight: 400;
+          letter-spacing: 0;
+          text-transform: none;
+          color: #E8B894;
           margin: 0 0 0.5rem;
         }
         .ft-bottom {

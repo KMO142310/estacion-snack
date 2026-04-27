@@ -25,7 +25,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         top: 0,
         zIndex: 50,
       }}>
-        <span style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: 18, marginRight: 16 }}>
+        <span style={{ fontFamily: "var(--font-fraunces), Georgia, serif", fontSize: 18, marginRight: 16 }}>
           Estación Snack
         </span>
         <a href="/admin"           style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,.7)", padding: "4px 12px", borderRadius: 8 }}>Inicio</a>

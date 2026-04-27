@@ -292,7 +292,7 @@ export default function AssistantChat() {
         }
         .ac-seed {
           padding: 10px 16px;
-          background: #f5f5f7;
+          background: #F1ECE2;
           color: #1d1d1f;
           border: none;
           border-radius: 999px;
@@ -321,7 +321,7 @@ export default function AssistantChat() {
           line-height: 1.55;
           color: #1d1d1f;
           padding: 12px 16px;
-          background: #f5f5f7;
+          background: #F1ECE2;
           border-radius: 16px;
           max-width: 78%;
           white-space: pre-wrap;
@@ -361,10 +361,10 @@ export default function AssistantChat() {
           color: #1d1d1f;
           border: 1px solid #d2d2d7;
         }
-        .ac-action--image:hover { background: #f5f5f7; }
+        .ac-action--image:hover { background: #F1ECE2; }
         .ac-action--link {
-          background: #f5f5f7;
-          color: #0071e3;
+          background: #F1ECE2;
+          color: #A8411A;
         }
 
         .ac-tools {
@@ -434,7 +434,7 @@ export default function AssistantChat() {
           font-size: 13px;
           cursor: pointer;
         }
-        .ac-btn-secondary:hover { background: #f5f5f7; }
+        .ac-btn-secondary:hover { background: #F1ECE2; }
 
         .ac-loading {
           opacity: 0.6;
@@ -465,7 +465,7 @@ export default function AssistantChat() {
           font-family: inherit;
           font-size: 0.9375rem;
           color: #1d1d1f;
-          background: #f5f5f7;
+          background: #F1ECE2;
           border: 1px solid transparent;
           border-radius: 12px;
           padding: 12px 14px;
@@ -476,7 +476,7 @@ export default function AssistantChat() {
         }
         .ac-input:focus {
           background: #ffffff;
-          border-color: #0071e3;
+          border-color: #A8411A;
         }
         .ac-send {
           padding: 12px 24px;

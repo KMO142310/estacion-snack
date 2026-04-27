@@ -128,7 +128,7 @@ export default function ProductForm({ product, onClose, onSaved }: Props) {
         boxShadow: "0 24px 64px rgba(0,0,0,.18)",
       }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-          <h2 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: 24, fontWeight: 400 }}>
+          <h2 style={{ fontFamily: "var(--font-fraunces), Georgia, serif", fontSize: 24, fontWeight: 400 }}>
             {isEdit ? "Editar producto" : "Nuevo producto"}
           </h2>
           <button

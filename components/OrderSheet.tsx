@@ -209,7 +209,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                   <div className="ord-empty">
                     <div className="ord-empty-mark" aria-hidden="true">
                       <svg viewBox="0 0 64 64" width="56" height="56" fill="none">
-                        <rect width="64" height="64" rx="14" fill="#f5f5f7" />
+                        <rect width="64" height="64" rx="14" fill="#F1ECE2" />
                         <path
                           d="M22 24h20l-2 22H24l-2-22z M26 24v-4a6 6 0 0 1 12 0v4"
                           stroke="#86868b"
@@ -457,7 +457,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                 width: 32px;
                 height: 32px;
                 border-radius: 50%;
-                background: #f5f5f7;
+                background: #F1ECE2;
                 color: #1d1d1f;
                 display: inline-flex;
                 align-items: center;
@@ -514,7 +514,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                 position: relative;
                 width: 72px;
                 height: 72px;
-                background: #f5f5f7;
+                background: #F1ECE2;
                 border-radius: 12px;
                 overflow: hidden;
                 flex-shrink: 0;
@@ -557,7 +557,7 @@ export default function OrderSheet({ open, onClose }: Props) {
               .ord-stepper {
                 display: inline-flex;
                 align-items: center;
-                background: #f5f5f7;
+                background: #F1ECE2;
                 border-radius: 999px;
                 padding: 2px;
               }
@@ -612,7 +612,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                 font-weight: 400;
                 padding: 8px 14px;
                 min-height: 36px;
-                background: #f5f5f7;
+                background: #F1ECE2;
                 color: #1d1d1f;
                 border: 1px solid transparent;
                 border-radius: 999px;
@@ -662,7 +662,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                 font-family: inherit;
                 font-size: 14px;
                 color: #1d1d1f;
-                background: #f5f5f7;
+                background: #F1ECE2;
                 border: 1px solid transparent;
                 border-radius: 12px;
                 padding: 12px;
@@ -674,7 +674,7 @@ export default function OrderSheet({ open, onClose }: Props) {
               }
               .ord-note:focus {
                 background: #ffffff;
-                border-color: #0071e3;
+                border-color: #A8411A;
               }
 
               .ord-cta {
@@ -711,7 +711,7 @@ export default function OrderSheet({ open, onClose }: Props) {
               .ord-btn-secondary {
                 width: 100%;
                 padding: 14px 20px;
-                background: #f5f5f7;
+                background: #F1ECE2;
                 color: #1d1d1f;
                 font-size: 0.9375rem;
                 font-weight: 500;
@@ -742,7 +742,7 @@ export default function OrderSheet({ open, onClose }: Props) {
                 letter-spacing: -0.005em;
               }
               .ord-fineprint a {
-                color: #0071e3;
+                color: #A8411A;
                 text-decoration: none;
               }
 

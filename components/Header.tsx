@@ -59,10 +59,10 @@ export default function Header({ onOrderOpen }: HeaderProps) {
 
       <style>{`
         .hd {
-          background: rgba(255, 255, 255, 0.85);
+          background: rgba(251, 248, 243, 0.85);
           backdrop-filter: saturate(180%) blur(20px);
           -webkit-backdrop-filter: saturate(180%) blur(20px);
-          border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+          border-bottom: 1px solid rgba(26, 24, 21, 0.08);
         }
         .hd-row {
           max-width: 1280px;

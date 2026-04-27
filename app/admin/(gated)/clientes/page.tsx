@@ -12,7 +12,7 @@ export default async function ClientesPage() {
   return (
     <div>
       <div style={{ marginBottom: 24 }}>
-        <h1 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: 28, fontWeight: 400, marginBottom: 4 }}>
+        <h1 style={{ fontFamily: "var(--font-fraunces), Georgia, serif", fontSize: 28, fontWeight: 400, marginBottom: 4 }}>
           Clientes
         </h1>
         <p style={{ fontSize: 14, color: "#5F5A52" }}>

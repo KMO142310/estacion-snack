@@ -52,7 +52,7 @@ export default function ContactForm() {
         role="status"
       >
         <div style={{ fontSize: 36, marginBottom: 12 }}>🌰</div>
-        <h3 style={{ fontFamily: "var(--font-dm-serif), Georgia, serif", fontSize: 24, fontWeight: 400, marginBottom: 8 }}>
+        <h3 style={{ fontFamily: "var(--font-fraunces), Georgia, serif", fontSize: 24, fontWeight: 400, marginBottom: 8 }}>
           Mensaje enviado
         </h3>
         <p style={{ fontSize: 15, color: "var(--sub)" }}>

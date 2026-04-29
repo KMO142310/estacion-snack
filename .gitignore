@@ -68,3 +68,6 @@ next-env.d.ts
 test-results/
 playwright-report/
 playwright/.cache/
+
+# backups locales (prod data exports antes de migraciones destructivas)
+.backup-prod-*/

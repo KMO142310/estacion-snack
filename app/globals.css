@@ -1,34 +1,37 @@
 @import "tailwindcss";
 
-/* === Paleta Apple-style ===
-   Referencia: apple.com (Store, Bag, App Store).
-   Negro suave #1d1d1f (no puro), blanco puro, system font stack,
-   pill buttons, mucho whitespace. */
-@theme inline {
-  --color-bg:           #FBF8F3;     /* warm off-white — calidez Colchagua sin sacrificar limpieza */
-  --color-surface:      #F1ECE2;     /* surface cálido tipo papel */
-  --color-ink:          #1d1d1f;     /* near-black, contraste WCAG AA+ sobre warm bg */
-  --color-ink-soft:     #6B6459;     /* gris cálido */
-  --color-muted:        #8C8579;     /* terciario cálido */
-  --color-line:         rgba(26,24,21,0.08);  /* bordes sutiles que respetan el bg cálido */
-  --color-promo:        #EFD200;     /* amarillo promo (puntual, no dominante) */
-  --color-link:         #A8411A;     /* terracota Colchagua reemplaza Apple blue */
-  --color-error:        #B74432;
-  --color-success:      #2E7D32;
+/* ============================================================
+   DESIGN TOKENS — Estación Snack
+   Base científica: type scale modular (1.200), OKLCH perceptual,
+   8pt grid, Material motion, prefers-reduced-motion compliant.
+   Anclas de marca preservadas: terracota #A8411A, crema #FBF8F3,
+   burdeo #5A1F1A, oliva cálido (text-soft).
+   ============================================================ */
 
-  /* Tipografía: Fraunces (serif contemporáneo variable) en display + Inter en body.
-     Da personalidad editorial sin perder neutralidad funcional.
-     Fraunces: cargado en app/layout.tsx con opsz + SOFT axes para tono cálido. */
+@theme inline {
+  /* === Tipografía: familia + axes Fraunces variable === */
   --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
   --font-body:    var(--font-inter), -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
 
-  /* Espaciados generosos al estilo Apple */
-  --section-gap:    5rem;
-  --section-gap-lg: 8rem;
-  --edge-pad:       1.25rem;
-  --edge-pad-lg:    1.5rem;
+  /* === Color (Tailwind theme exposure) — backward compat === */
+  --color-bg:           #FBF8F3;
+  --color-surface:      #F1ECE2;
+  --color-ink:          #1d1d1f;
+  --color-ink-soft:     #6B6459;
+  --color-muted:        #8C8579;
+  --color-line:         rgba(26,24,21,0.08);
+  --color-promo:        #EFD200;
+  --color-link:         #A8411A;
+  --color-error:        #B74432;
+  --color-success:      #2E7D32;
 
-  /* Radii */
+  /* === Spacing legacy (mapped al sistema 8pt) === */
+  --section-gap:    4rem;     /* 64 — múltiplo 8 */
+  --section-gap-lg: 6rem;     /* 96 */
+  --edge-pad:       1rem;     /* 16 */
+  --edge-pad-lg:    1.5rem;   /* 24 */
+
+  /* === Radii === */
   --radius-xs:   4px;
   --radius-sm:   8px;
   --radius-md:   12px;
@@ -36,31 +39,160 @@
   --radius-xl:   24px;
   --radius-full: 9999px;
 
-  /* Sombras */
-  --shadow-card:  0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.05);
-  --shadow-sheet: 0 -8px 40px rgba(0,0,0,0.18);
+  --shadow-card:  0 1px 2px rgba(28,18,12,0.04), 0 4px 12px rgba(28,18,12,0.06);
+  --shadow-sheet: 0 -8px 40px rgba(28,18,12,0.18);
 }
 
 :root {
-  --bg:          #FBF8F3;       /* warm off-white */
-  --surface:     #F1ECE2;       /* surface cálido */
-  --text:        #1d1d1f;
-  --sub:         #6B6459;       /* gris cálido */
-  --accent:      #A8411A;       /* terracota Colchagua */
-  --green:       #2E7D32;
-  --green-soft:  #E8F5E9;
-  --orange:      #A8411A;
-  --orange-soft: #FBE9DD;
-  --red:         #B74432;
-  --r:           8px;
-  --r-lg:        12px;
-  --r-full:      9999px;
+  /* ---------- TYPE SCALE (modular, ratio 1.200, fluid clamp) ---------- */
+  /* Base 16px. Cada step interpola entre mobile-min y desktop-max para fluid type
+     sin media queries. Math: ratio^n a 320vw → 1280vw. */
+  --fs-xs:    clamp(0.75rem,  0.74rem + 0.05vw, 0.8125rem);   /* 12 → 13 */
+  --fs-sm:    clamp(0.875rem, 0.86rem + 0.07vw, 0.9375rem);   /* 14 → 15 */
+  --fs-base:  clamp(1rem,     0.98rem + 0.10vw, 1.0625rem);   /* 16 → 17 */
+  --fs-md:    clamp(1.125rem, 1.10rem + 0.13vw, 1.20rem);     /* 18 → 19.2 */
+  --fs-lg:    clamp(1.35rem,  1.30rem + 0.25vw, 1.50rem);     /* 21.6 → 24 */
+  --fs-xl:    clamp(1.60rem,  1.50rem + 0.50vw, 1.80rem);     /* 25.6 → 28.8 */
+  --fs-2xl:   clamp(1.95rem,  1.80rem + 0.75vw, 2.20rem);     /* 31 → 35 */
+  --fs-3xl:   clamp(2.40rem,  2.20rem + 1.00vw, 2.80rem);     /* 38 → 45 */
+  --fs-4xl:   clamp(3.00rem,  2.70rem + 1.50vw, 3.60rem);     /* 48 → 58 */
+  --fs-5xl:   clamp(3.60rem,  3.20rem + 2.00vw, 4.50rem);     /* 58 → 72 */
 
-  /* Tokens legacy mapeados a la paleta cálida */
-  --terracota:   #A8411A;
-  --crema:       #FBF8F3;
-  --burdeo:      #5A1F1A;
-  --oliva:       #6B6459;
+  --lh-tight:   1.05;
+  --lh-snug:    1.20;
+  --lh-normal:  1.45;
+  --lh-relaxed: 1.60;
+
+  --tracking-tight:  -0.025em;
+  --tracking-snug:   -0.015em;
+  --tracking-normal: -0.011em;
+  --tracking-wide:    0.05em;
+
+  /* ---------- SPACING (8pt grid) ---------- */
+  --space-0:  0;
+  --space-1:  0.25rem;   /*  4 */
+  --space-2:  0.5rem;    /*  8 */
+  --space-3:  0.75rem;   /* 12 */
+  --space-4:  1rem;      /* 16 */
+  --space-5:  1.5rem;    /* 24 */
+  --space-6:  2rem;      /* 32 */
+  --space-7:  3rem;      /* 48 */
+  --space-8:  4rem;      /* 64 */
+  --space-9:  6rem;      /* 96 */
+  --space-10: 8rem;      /* 128 */
+
+  --gap-section-sm: var(--space-7);
+  --gap-section-md: var(--space-8);
+  --gap-section-lg: var(--space-9);
+
+  --edge-pad-mobile:  var(--space-4);
+  --edge-pad-tablet:  var(--space-5);
+  --edge-pad-desktop: var(--space-6);
+
+  /* ---------- COLOR (OKLCH perceptual, fallback hex) ---------- */
+  /* Anclas marca convertidas a OKLCH:
+     Terracota #A8411A → oklch(0.530 0.135 35)
+     Crema    #FBF8F3 → oklch(0.980 0.007 80)
+     Burdeo   #5A1F1A → oklch(0.295 0.080 26)
+     Ink      #1d1d1f → oklch(0.230 0.003 280) */
+  --bg:                #FBF8F3;
+  --bg:                oklch(0.980 0.007 80);
+  --surface-1:         #F4EEE3;
+  --surface-1:         oklch(0.965 0.011 75);
+  --surface-2:         #ECE5D6;
+  --surface-2:         oklch(0.945 0.014 72);
+  --surface-3:         #DFD7C4;
+  --surface-3:         oklch(0.920 0.018 70);
+
+  --text:              #1d1d1f;
+  --text:              oklch(0.230 0.003 280);
+  --text-soft:         #6B6459;
+  --text-soft:         oklch(0.470 0.020 70);
+  --text-muted:        #8C8579;
+  --text-muted:        oklch(0.625 0.015 75);
+  --text-inverse:      #FBF8F3;
+
+  --accent:            #A8411A;
+  --accent:            oklch(0.530 0.135 35);
+  --accent-hover:      oklch(0.475 0.135 32);
+  --accent-soft:       oklch(0.940 0.040 38);
+  --burdeo:            #5A1F1A;
+  --burdeo:            oklch(0.295 0.080 26);
+
+  --success:           oklch(0.55 0.16 145);
+  --success-soft:      oklch(0.94 0.05 145);
+  --error:             oklch(0.55 0.18 28);
+  --error-soft:        oklch(0.93 0.07 28);
+  --warning:           oklch(0.78 0.18 90);
+  --warning-soft:      oklch(0.96 0.08 90);
+
+  --line:              color-mix(in oklch, var(--text) 8%, transparent);
+  --line-strong:       color-mix(in oklch, var(--text) 16%, transparent);
+
+  /* ---------- ELEVATION (warm shadows) ---------- */
+  --elev-1: 0 1px 2px rgba(28,18,12,0.04), 0 1px 3px rgba(28,18,12,0.06);
+  --elev-2: 0 2px 4px rgba(28,18,12,0.05), 0 4px 8px rgba(28,18,12,0.08);
+  --elev-3: 0 4px 8px rgba(28,18,12,0.06), 0 8px 16px rgba(28,18,12,0.10);
+  --elev-4: 0 6px 12px rgba(28,18,12,0.07), 0 12px 24px rgba(28,18,12,0.12);
+  --elev-sheet: 0 -8px 40px rgba(28,18,12,0.18);
+
+  /* ---------- MOTION (Material Motion) ---------- */
+  --dur-instant: 80ms;
+  --dur-fast:    150ms;
+  --dur-base:    220ms;
+  --dur-slow:    320ms;
+  --dur-slower:  500ms;
+
+  --ease-standard:   cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0, 1);
+  --ease-accelerate: cubic-bezier(0.3, 0, 1, 1);
+  --ease-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ---------- Z-INDEX SCALE ---------- */
+  --z-base:     1;
+  --z-raised:   10;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-overlay:  400;
+  --z-modal:    500;
+  --z-toast:    600;
+  --z-tooltip:  700;
+
+  /* ---------- LAYOUT ---------- */
+  --header-height: 70px;
+  --max-content:   1200px;
+  --max-prose:     65ch;
+
+  /* ---------- LEGACY ALIASES (componentes existentes los usan) ---------- */
+  --sub:         var(--text-soft);
+  --green:       var(--success);
+  --green-soft:  var(--success-soft);
+  --orange:      var(--accent);
+  --orange-soft: var(--accent-soft);
+  --red:         var(--error);
+  --r:           var(--radius-sm);
+  --r-lg:        var(--radius-md);
+  --r-full:      var(--radius-full);
+  --terracota:   var(--accent);
+  --crema:       var(--bg);
+  --oliva:       var(--text-soft);
+}
+
+/* === prefers-reduced-motion: corta toda animación no esencial === */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 0ms;
+    --dur-fast:    0ms;
+    --dur-base:    0ms;
+    --dur-slow:    0ms;
+    --dur-slower:  0ms;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* === Reset === */
@@ -71,58 +203,74 @@
 }
 
 ::selection {
-  background: #1d1d1f;
-  color: #ffffff;
+  background: var(--text);
+  color: var(--text-inverse);
 }
 
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /* Sticky header (~70px) + breathing room para que anchor scroll no
-     tape el title de la sección destino. */
-  scroll-padding-top: 110px;
+  scroll-padding-top: calc(var(--header-height) + var(--space-5));
 }
 
 body {
   font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  letter-spacing: var(--tracking-normal);
   background: var(--bg);
-  color: #1d1d1f;
+  color: var(--text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  /* Apple-style tracking */
-  letter-spacing: -0.011em;
   padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px));
 }
 @media (min-width: 768px) {
   body { padding-bottom: 0; }
 }
 
-/* === Layout — container Apple style === */
+/* === Layout container === */
 .wrap {
-  max-width: 1200px;
+  max-width: var(--max-content);
   margin: 0 auto;
-  padding: 0 1.25rem;
+  padding: 0 var(--edge-pad-mobile);
 }
-@media (min-width: 768px) { .wrap { padding: 0 1.5rem; } }
-@media (min-width: 1100px) { .wrap { padding: 0 2rem; } }
+@media (min-width: 768px)  { .wrap { padding: 0 var(--edge-pad-tablet); } }
+@media (min-width: 1100px) { .wrap { padding: 0 var(--edge-pad-desktop); } }
 
-/* === Tipografía — Fraunces editorial en headings, Inter en body ===
-   Fraunces es serif variable: opsz=96 (Display) + SOFT=50 (más curvas, menos rígido).
-   Weight 500 porque serif pesa más visualmente que sans 600. */
+/* === Tipografía editorial: Fraunces opsz=96 SOFT=50 === */
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  letter-spacing: -0.025em;
-  color: #1d1d1f;
   font-weight: 500;
-  line-height: 1.05;
+  color: var(--text);
   font-variation-settings: "opsz" 96, "SOFT" 50;
 }
 
+h1 {
+  font-size: var(--fs-4xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+h2 {
+  font-size: var(--fs-3xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+h3 {
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-snug);
+}
+h4 {
+  font-size: var(--fs-xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-snug);
+}
+
 p {
-  letter-spacing: -0.011em;
-  line-height: 1.5;
+  letter-spacing: var(--tracking-normal);
+  line-height: var(--lh-normal);
 }
 
 /* === Reseteos comunes === */
@@ -130,14 +278,15 @@ a {
   text-decoration: none;
   color: inherit;
   -webkit-tap-highlight-color: transparent;
-  transition: color 0.15s ease, opacity 0.15s ease;
+  transition: color var(--dur-fast) var(--ease-standard),
+              opacity var(--dur-fast) var(--ease-standard);
 }
 button {
   font-family: inherit;
   border: none;
   cursor: pointer;
   background: none;
-  letter-spacing: -0.011em;
+  letter-spacing: var(--tracking-normal);
 }
 img { display: block; max-width: 100%; }
 
@@ -146,20 +295,20 @@ img { display: block; max-width: 100%; }
   position: absolute;
   left: -9999px;
   top: 0;
-  background: #1d1d1f;
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 8px;
-  z-index: 1000;
+  background: var(--text);
+  color: var(--text-inverse);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  z-index: var(--z-tooltip);
 }
-.skip:focus { left: 8px; top: 8px; }
+.skip:focus { left: var(--space-2); top: var(--space-2); }
 
 *:focus-visible {
-  outline: 2px solid #A8411A;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
 }
 
 /* === Utilidades === */
 .price { font-variant-numeric: tabular-nums; }
-.wa-float { transition: bottom 0.2s ease; }
+.wa-float { transition: bottom var(--dur-base) var(--ease-standard); }

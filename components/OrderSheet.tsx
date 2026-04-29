@@ -8,7 +8,6 @@ import { useCartStore } from "@/lib/store";
 import { fmt } from "@/lib/cart-utils";
 import { hapticChip, hapticWhistle } from "@/lib/haptics";
 import { buildWaUrl } from "@/lib/whatsapp";
-import { captureOrder } from "@/lib/actions";
 import { getPackAvailability, type Pack, type ProductStock } from "@/lib/pack-utils";
 import { COMUNAS, COMUNA_DEFAULT, FREE_SHIPPING_MIN, getShippingCost, type Comuna } from "@/lib/shipping";
 import X from "./icons/X";
@@ -21,17 +20,24 @@ interface Props {
 }
 
 /**
- * OrderSheet — Apple Bag style.
+ * OrderSheet — bolsa estilo Apple Bag.
  *
- * Inspirado en apple.com Bag (carrito). Limpio, blanco, tipografía sistema,
- * pill buttons, total prominente. Reemplaza el sheet cream/burdeo previo.
+ * Flujo: cliente revisa items → elige comuna → "Pasar a WhatsApp".
+ * Sin DB: el pedido es la conversación de WhatsApp. Generamos un código
+ * corto local (orderRef) para que cliente y operador puedan referenciarlo.
  *
- * Mantiene lógica de negocio crítica del flujo:
- * - Popup window.open SINCRÓNICO antes del await (iOS Safari fix).
- * - captureOrder fire-and-forget paralelo a buildWaUrl.
+ * - Popup window.open SINCRÓNICO antes del cambio de URL (iOS Safari fix).
  * - Step de cantidad respeta min_unit_kg (0.5 para Chuby) y stock_kg.
  * - Comuna selector con cálculo de envío (Ley 19.496 Art. 1 N°2).
  */
+function generateOrderRef(): string {
+  const bytes = new Uint8Array(4);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("")
+    .toUpperCase();
+}
 export default function OrderSheet({ open, onClose }: Props) {
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
@@ -66,7 +72,7 @@ export default function OrderSheet({ open, onClose }: Props) {
     return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  const handleConfirm = async () => {
+  const handleConfirm = () => {
     if (loading || items.length === 0) return;
     setLoading(true);
     hapticWhistle();
@@ -77,29 +83,7 @@ export default function OrderSheet({ open, onClose }: Props) {
         ? window.open("about:blank", "_blank", "noopener,noreferrer")
         : null;
 
-    const captureItems = items.map((item) => {
-      if (item.kind === "product") {
-        const p = productsData.find((x) => x.id === item.id);
-        return {
-          product_name: p?.name ?? item.name ?? "Producto",
-          qty: item.qty,
-          unit_price: p?.price ?? 0,
-        };
-      }
-      const pk = (packsData as Pack[]).find((x) => x.id === item.id);
-      return {
-        product_name: `${pk?.name ?? item.name ?? "Pack"} (pack)`,
-        qty: item.qty,
-        unit_price: pk?.price ?? 0,
-      };
-    });
-
-    const captureResult = await captureOrder(captureItems, note, { comuna, shipping }).catch(
-      () => ({ ok: false, orderId: undefined }),
-    );
-    const orderRef =
-      captureResult.ok && captureResult.orderId ? captureResult.orderId.slice(0, 8) : undefined;
-
+    const orderRef = generateOrderRef();
     const url = buildWaUrl(
       items,
       productsData.map((p) => ({ id: p.id, name: p.name, price: p.price })),
@@ -108,11 +92,8 @@ export default function OrderSheet({ open, onClose }: Props) {
       orderRef,
       { comuna, shipping, total },
     );
-    if (captureResult.ok) {
-      clear();
-    } else {
-      addToast("Abrimos WhatsApp, pero el pedido no quedó guardado en la app todavía.", "info");
-    }
+
+    clear();
     onClose();
 
     if (popup && !popup.closed) {

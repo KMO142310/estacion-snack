@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
-import { getProducts } from "@/lib/actions";
+import { getProducts } from "@/lib/products";
 
 const SITE =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.estacionsnack.cl";
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const products = await getProducts();
+export default function sitemap(): MetadataRoute.Sitemap {
+  const products = getProducts();
   const now = new Date();
 
   const staticRoutes: MetadataRoute.Sitemap = [

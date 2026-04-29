@@ -21,20 +21,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint (eslint)
+      - name: Lint
         run: npm run lint
 
       - name: Typecheck
         run: npm run typecheck
 
-      - name: Unit tests (vitest)
+      - name: Unit tests
         run: npm run test
 
-      - name: Build (next build)
+      - name: Build
         run: npm run build
         env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
           NEXT_PUBLIC_SITE_URL: https://www.estacionsnack.cl
 
   e2e:
@@ -58,15 +56,7 @@ jobs:
       - name: Run E2E tests
         run: npm run test:e2e
         env:
-          # Dummy values para CI E2E — los tests no tocan Supabase real, sólo
-          # verifican que /api/health responda 200 (las 6 env críticas presentes)
-          # y que la home/cart funcione contra el catálogo estático.
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://ci-dummy.supabase.co' }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'ci-dummy-anon-key' }}
           NEXT_PUBLIC_SITE_URL: http://localhost:3000
-          ADMIN_EMAIL: ci@example.com
-          CRON_SECRET: ci-dummy-cron-secret
-          AUDIT_PEPPER: ci-dummy-audit-pepper-32-chars-min
 
       - name: Upload Playwright report on failure
         if: failure()

@@ -29,13 +29,6 @@ test.describe("Home renderiza", () => {
     await page.goto("/");
     await expect(page.locator("#packs")).toBeVisible();
   });
-
-  test("/api/health devuelve ok", async ({ request }) => {
-    const res = await request.get("/api/health");
-    expect(res.status()).toBe(200);
-    const json = await res.json();
-    expect(json.status).toBe("ok");
-  });
 });
 
 test.describe("Cart action — el bug que se nos pasó", () => {

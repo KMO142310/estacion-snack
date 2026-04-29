@@ -7,11 +7,11 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Envíos y despacho",
   description:
-    "Despachamos martes a sábado en Santa Cruz, Cunaco, Palmilla, Peralillo, Nancagua y Marchigüe. Retiro en local gratis. Envío gratis sobre $25.000.",
+    "Despachamos en Santa Cruz, Palmilla, Peralillo y Marchigüe. Retiro en local gratis. Envío gratis sobre $25.000.",
   alternates: { canonical: "/envios" },
   openGraph: {
     title: "Envíos y despacho · Estación Snack",
-    description: "Envío gratis sobre $25.000. Martes a sábado 19:30-21:00.",
+    description: "Envío gratis sobre $25.000.",
   },
 };
 
@@ -26,15 +26,13 @@ const breadcrumbJsonLd = {
 
 const zonas = [
   { nombre: "Retiro en local", desc: "Gratis siempre.", km: null },
-  { nombre: "Santa Cruz",      desc: "$1.500 · gratis sobre $25.000", km: "urbano" },
-  { nombre: "Cunaco",          desc: "$2.000 · gratis sobre $25.000", km: null },
+  { nombre: "Santa Cruz",      desc: "$1.000 · gratis sobre $25.000", km: "urbano" },
   { nombre: "Palmilla",        desc: "$2.000 · gratis sobre $25.000", km: null },
-  { nombre: "Peralillo",       desc: "$3.000 · gratis sobre $25.000", km: null },
-  { nombre: "Nancagua",        desc: "$3.000 · gratis sobre $25.000", km: null },
-  { nombre: "Marchigüe",       desc: "$4.000 · gratis sobre $25.000", km: null },
+  { nombre: "Peralillo",       desc: "$2.000 · gratis sobre $25.000", km: null },
+  { nombre: "Marchigüe",       desc: "$2.000 · gratis sobre $25.000", km: null },
 ];
 
-const CALCULO_NOTA = "Los precios consideran el pasaje de bus rural ida y vuelta más una hora del tiempo del operador. Por eso varían según distancia.";
+const CALCULO_NOTA = "Los precios consideran el pasaje de bus rural ida y vuelta más una hora del tiempo del operador.";
 
 export default function EnviosPage() {
   return (

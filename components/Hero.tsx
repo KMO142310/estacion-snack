@@ -11,24 +11,18 @@ interface HeroProps {
 const lead = productsData[0]; // Mix Europeo
 
 /**
- * Hero Apple-style.
- * Referencia: apple.com/store, AirPods page, HomePod page.
- *
- * - Tipografía GIGANTE centrada (h1 hasta 72-96px desktop).
- * - Subhead delgado en gris secundario.
- * - 2 CTAs: pill negro principal + link azul Apple ("Ver detalles ›").
- * - Foto del producto destacado debajo, full bleed con bg #F1ECE2.
- * - Spacing vertical generoso (8rem desktop, 4rem mobile).
+ * Hero — base científica.
+ * Type scale modular fluido (--fs-*), spacing 8pt, colores OKLCH,
+ * motion tokens. Estructura editorial: eyebrow + display H1 + sub
+ * de respiración + CTAs claros + producto líder full-bleed.
  */
 export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
   return (
     <section aria-label="Inicio" className="hero">
-      {/* Banner promo top — sutil, gris claro Apple */}
       <div className="hero-promo">
         <span>Despacho martes a sábado · Envío gratis sobre $25.000 · Pago al recibir</span>
       </div>
 
-      {/* Headline + CTAs */}
       <div className="hero-headline">
         <p className="hero-eyebrow">Santa Cruz · Valle de Colchagua</p>
         <h1 className="hero-h1">
@@ -49,7 +43,6 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
         </div>
       </div>
 
-      {/* Producto destacado — full-bleed gris claro Apple style */}
       <div className="hero-product">
         <div className="hero-product-inner">
           <p className="hero-product-tag">Más pedido</p>
@@ -73,92 +66,95 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
 
       <style>{`
         .hero {
-          background: #ffffff;
+          background: var(--bg);
         }
 
-        /* Banner promo — sutil */
         .hero-promo {
-          background: #F1ECE2;
-          color: #1d1d1f;
-          padding: 10px 1.25rem;
+          background: var(--surface-1);
+          color: var(--text);
+          padding: var(--space-2) var(--edge-pad-mobile);
           text-align: center;
-          font-size: 12px;
+          font-size: var(--fs-xs);
           font-weight: 400;
-          letter-spacing: -0.005em;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+          letter-spacing: var(--tracking-normal);
+          border-bottom: 1px solid var(--line);
         }
 
-        /* Headline — Apple landing style */
         .hero-headline {
           max-width: 980px;
           margin: 0 auto;
-          padding: 4rem 1.25rem 3rem;
+          padding: var(--space-8) var(--edge-pad-mobile) var(--space-7);
           text-align: center;
         }
         .hero-eyebrow {
-          font-family: var(--font-fraunces), Georgia, serif;
+          font-family: var(--font-display);
           font-style: italic;
-          font-size: 15px;
+          font-size: var(--fs-sm);
           font-weight: 400;
-          color: #A8411A;
-          letter-spacing: 0;
-          margin: 0 0 1rem;
+          color: var(--accent);
+          margin: 0 0 var(--space-4);
         }
         .hero-h1 {
-          font-size: clamp(2.5rem, 9vw, 5.5rem);
-          font-weight: 600;
-          line-height: 1.05;
-          letter-spacing: -0.022em;
-          color: #1d1d1f;
-          margin: 0 0 1rem;
+          font-size: var(--fs-5xl);
+          font-weight: 500;
+          line-height: var(--lh-tight);
+          letter-spacing: var(--tracking-tight);
+          color: var(--text);
+          margin: 0 0 var(--space-4);
+          font-variation-settings: "opsz" 96, "SOFT" 50;
         }
         .hero-h1-soft {
-          color: #6e6e73;
+          color: var(--text-soft);
         }
         .hero-sub {
-          font-size: clamp(1rem, 1.6vw, 1.25rem);
-          line-height: 1.4;
+          font-size: var(--fs-md);
+          line-height: var(--lh-snug);
           font-weight: 400;
-          color: #1d1d1f;
-          margin: 0 auto 2rem;
+          color: var(--text);
+          margin: 0 auto var(--space-6);
           max-width: 540px;
-          letter-spacing: -0.011em;
+          letter-spacing: var(--tracking-normal);
         }
         .hero-actions {
           display: inline-flex;
           flex-wrap: wrap;
-          gap: 0.75rem 1.75rem;
+          gap: var(--space-3) var(--space-6);
           justify-content: center;
           align-items: center;
         }
         .hero-cta-primary {
           display: inline-flex;
           align-items: center;
-          padding: 0.85rem 1.5rem;
-          background: #1d1d1f;
-          color: #ffffff;
-          border-radius: 980px;
-          font-size: 0.9375rem;
+          min-height: 44px;
+          padding: var(--space-3) var(--space-5);
+          background: var(--text);
+          color: var(--text-inverse);
+          border-radius: var(--radius-full);
+          font-size: var(--fs-sm);
           font-weight: 500;
-          letter-spacing: -0.005em;
-          transition: background 0.2s ease, transform 0.15s ease;
+          letter-spacing: var(--tracking-normal);
+          transition: background var(--dur-base) var(--ease-standard),
+                      transform var(--dur-fast) var(--ease-spring);
         }
-        .hero-cta-primary:hover { background: #424245; }
-        .hero-cta-primary:active { transform: scale(0.98); }
+        .hero-cta-primary:hover { background: var(--burdeo); }
+        .hero-cta-primary:active { transform: scale(0.97); }
         .hero-cta-link {
-          font-size: 0.9375rem;
+          font-size: var(--fs-sm);
           font-weight: 400;
-          color: #A8411A;
-          letter-spacing: -0.005em;
-          transition: color 0.15s ease;
+          color: var(--accent);
+          letter-spacing: var(--tracking-normal);
+          transition: color var(--dur-fast) var(--ease-standard);
         }
-        .hero-cta-link:hover { color: #7a3013; }
+        .hero-cta-link:hover { color: var(--accent-hover); }
 
-        /* Producto destacado — full-bleed con calidez Colchagua */
         .hero-product {
-          background: #F1ECE2;
-          background-image: radial-gradient(ellipse at 50% 30%, rgba(168,65,26,0.06) 0%, transparent 70%);
-          padding: 3.5rem 1.25rem 0;
+          background: var(--surface-1);
+          background-image: radial-gradient(
+            ellipse at 50% 30%,
+            color-mix(in oklch, var(--accent) 7%, transparent) 0%,
+            transparent 70%
+          );
+          padding: var(--space-7) var(--edge-pad-mobile) 0;
           text-align: center;
         }
         .hero-product-inner {
@@ -166,38 +162,37 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
           margin: 0 auto;
         }
         .hero-product-tag {
-          font-family: var(--font-fraunces), Georgia, serif;
+          font-family: var(--font-display);
           font-style: italic;
-          font-size: 14px;
+          font-size: var(--fs-sm);
           font-weight: 400;
-          color: #A8411A;
-          letter-spacing: 0;
-          text-transform: none;
-          margin: 0 0 0.5rem;
+          color: var(--accent);
+          margin: 0 0 var(--space-2);
         }
         .hero-product-name {
-          font-size: clamp(2rem, 5.5vw, 3.5rem);
-          font-weight: 600;
-          line-height: 1.05;
-          letter-spacing: -0.022em;
-          color: #1d1d1f;
-          margin: 0 0 0.625rem;
+          font-size: var(--fs-4xl);
+          font-weight: 500;
+          line-height: var(--lh-tight);
+          letter-spacing: var(--tracking-tight);
+          color: var(--text);
+          margin: 0 0 var(--space-2);
         }
         .hero-product-price {
-          font-size: 1.0625rem;
-          color: #1d1d1f;
-          margin: 0 0 0.875rem;
+          font-size: var(--fs-md);
+          color: var(--text);
+          margin: 0 0 var(--space-3);
           font-variant-numeric: tabular-nums;
         }
         .hero-product-link {
           display: inline-block;
-          font-size: 0.9375rem;
+          font-size: var(--fs-sm);
           font-weight: 400;
-          color: #A8411A;
-          margin-bottom: 2rem;
-          letter-spacing: -0.005em;
+          color: var(--accent);
+          margin-bottom: var(--space-6);
+          letter-spacing: var(--tracking-normal);
+          transition: color var(--dur-fast) var(--ease-standard);
         }
-        .hero-product-link:hover { color: #7a3013; }
+        .hero-product-link:hover { color: var(--accent-hover); }
         .hero-product-image {
           position: relative;
           aspect-ratio: 16/10;
@@ -207,12 +202,13 @@ export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
         }
 
         @media (min-width: 768px) {
-          .hero-headline { padding: 6rem 1.5rem 4rem; }
-          .hero-product { padding: 5rem 1.5rem 0; }
+          .hero-promo { padding: var(--space-2) var(--edge-pad-tablet); }
+          .hero-headline { padding: var(--space-9) var(--edge-pad-tablet) var(--space-8); }
+          .hero-product { padding: var(--space-8) var(--edge-pad-tablet) 0; }
         }
         @media (min-width: 1100px) {
-          .hero-headline { padding: 7rem 2rem 5rem; }
-          .hero-product { padding: 6rem 2rem 0; }
+          .hero-headline { padding: var(--space-10) var(--edge-pad-desktop) var(--space-9); }
+          .hero-product { padding: var(--space-9) var(--edge-pad-desktop) 0; }
         }
       `}</style>
     </section>

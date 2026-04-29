@@ -48,6 +48,7 @@ export default function OrderSheet({ open, onClose }: Props) {
   const removeItem = useCartStore((s) => s.removeItem);
   const addToast = useCartStore((s) => s.addToast);
   const clear = useCartStore((s) => s.clear);
+  const setLastOrder = useCartStore((s) => s.setLastOrder);
 
   const subtotal = items.reduce((sum, item) => sum + getSubtotal(item), 0);
   const shipping = getShippingCost(comuna, subtotal);
@@ -93,6 +94,9 @@ export default function OrderSheet({ open, onClose }: Props) {
       { comuna, shipping, total },
     );
 
+    // eslint-disable-next-line react-hooks/purity
+    const at = Date.now();
+    setLastOrder({ ref: orderRef, waUrl: url, total, at });
     clear();
     onClose();
 

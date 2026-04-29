@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import { safeJsonLd } from "@/lib/json-ld";
+import OrderConfirmation from "@/components/OrderConfirmation";
 import "./globals.css";
 
 // Fraunces como variable font — sin array de weight, habilita todo el rango 100-900
@@ -116,6 +117,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: safeJsonLd(siteJsonLd) }}
         />
         {children}
+        <OrderConfirmation />
       </body>
     </html>
   );

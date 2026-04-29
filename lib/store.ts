@@ -19,11 +19,19 @@ interface Toast {
   type?: "success" | "info";
 }
 
+export interface LastOrder {
+  ref: string;
+  waUrl: string;
+  total: number;
+  at: number;
+}
+
 interface CartState {
   items: CartLine[];
   expiresAt: number;
   toasts: Toast[];
   orderOpen: boolean;
+  lastOrder: LastOrder | null;
 
   addItem: (item: Omit<CartLine, "kind"> & { kind: CartLineKind }) => void;
   updateQty: (id: string, kind: CartLineKind, qty: number) => void;
@@ -33,6 +41,9 @@ interface CartState {
 
   addToast: (message: string, type?: "success" | "info") => void;
   removeToast: (id: string) => void;
+
+  setLastOrder: (order: LastOrder) => void;
+  clearLastOrder: () => void;
 }
 
 const ONE_HOUR = 60 * 60 * 1000;
@@ -48,6 +59,7 @@ export const useCartStore = create<CartState>()(
       expiresAt: freshExpiry(),
       toasts: [],
       orderOpen: false,
+      lastOrder: null,
 
       addItem: (item) =>
         set((s) => {
@@ -89,22 +101,35 @@ export const useCartStore = create<CartState>()(
 
       removeToast: (id) =>
         set((s) => ({ toasts: s.toasts.filter((t) => t.id !== id) })),
+
+      setLastOrder: (order) => set({ lastOrder: order }),
+      clearLastOrder: () => set({ lastOrder: null }),
     }),
     {
-      name: "es_cart_v3",
-      version: 3,
+      name: "es_cart_v4",
+      version: 4,
       skipHydration: true,
       partialize: (state) => ({
         items: state.items,
         expiresAt: state.expiresAt,
+        lastOrder: state.lastOrder,
       }),
       merge: (persisted, current) => {
-        const p = persisted as { expiresAt?: number; items?: CartLine[] };
+        const p = persisted as {
+          expiresAt?: number;
+          items?: CartLine[];
+          lastOrder?: LastOrder | null;
+        };
         if (p.expiresAt && Date.now() > p.expiresAt) {
-          // Cart expired — start fresh
-          return { ...current };
+          // Cart expired — preserve lastOrder pero descarta items.
+          return { ...current, lastOrder: p.lastOrder ?? null };
         }
-        return { ...current, items: p.items ?? [], expiresAt: p.expiresAt ?? freshExpiry() };
+        return {
+          ...current,
+          items: p.items ?? [],
+          expiresAt: p.expiresAt ?? freshExpiry(),
+          lastOrder: p.lastOrder ?? null,
+        };
       },
     }
   )

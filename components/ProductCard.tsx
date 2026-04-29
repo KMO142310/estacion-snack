@@ -117,73 +117,79 @@ export default function ProductCard({ product, onOpen }: Props) {
         .pc-img {
           position: relative;
           aspect-ratio: 1/1;
-          background: #F1ECE2;
-          border-radius: 18px;
+          background: var(--surface-1);
+          border-radius: var(--radius-lg);
           overflow: hidden;
-          transition: transform 0.3s ease;
+          transition: transform var(--dur-slow) var(--ease-emphasized);
         }
         .pc-link:hover .pc-img { transform: scale(1.02); }
+        .pc-link:disabled { cursor: not-allowed; opacity: 0.6; }
 
         .pc-tag {
           position: absolute;
-          top: 12px;
-          left: 12px;
-          z-index: 2;
+          top: var(--space-3);
+          left: var(--space-3);
+          z-index: var(--z-raised);
           padding: 4px 10px;
-          font-size: 11px;
+          font-size: var(--fs-xs);
           font-weight: 500;
-          letter-spacing: -0.005em;
-          border-radius: 999px;
+          letter-spacing: var(--tracking-normal);
+          border-radius: var(--radius-full);
         }
-        .pc-tag-promo { background: #1d1d1f; color: #ffffff; }
-        .pc-tag-new   { background: #1d1d1f; color: #ffffff; }
-        .pc-tag-out   { background: rgba(29,29,31,0.7); color: #ffffff; }
+        .pc-tag-promo,
+        .pc-tag-new   { background: var(--text); color: var(--text-inverse); }
+        .pc-tag-out   {
+          background: color-mix(in oklch, var(--text) 70%, transparent);
+          color: var(--text-inverse);
+        }
 
         .pc-info {
-          padding: 1rem 4px 0;
+          padding: var(--space-4) var(--space-1) 0;
           text-align: center;
         }
         .pc-cat {
-          font-family: var(--font-fraunces), Georgia, serif;
+          font-family: var(--font-display);
           font-style: italic;
-          font-size: 13px;
+          font-size: var(--fs-xs);
           font-weight: 400;
-          color: #A8411A;
-          margin: 0 0 4px;
+          color: var(--accent);
+          margin: 0 0 var(--space-1);
         }
         .pc-name {
-          font-size: 1.0625rem;
+          font-size: var(--fs-md);
           font-weight: 500;
-          color: #1d1d1f;
-          margin: 0 0 4px;
-          line-height: 1.2;
-          letter-spacing: -0.014em;
+          color: var(--text);
+          margin: 0 0 var(--space-1);
+          line-height: var(--lh-snug);
+          letter-spacing: var(--tracking-snug);
         }
         .pc-price {
-          font-size: 0.9375rem;
-          color: #1d1d1f;
+          font-size: var(--fs-sm);
+          color: var(--text);
           margin: 0;
           font-variant-numeric: tabular-nums;
         }
         .pc-price-main { font-weight: 500; }
-        .pc-price-unit { color: #6e6e73; }
+        .pc-price-unit { color: var(--text-soft); }
 
         .pc-add {
-          margin-top: 1rem;
+          margin-top: var(--space-4);
           align-self: center;
-          padding: 0.625rem 1.5rem;
-          background: #1d1d1f;
-          color: #ffffff;
-          font-size: 0.875rem;
-          font-weight: 500;
-          letter-spacing: -0.005em;
-          border: none;
-          border-radius: 980px;
-          cursor: pointer;
-          transition: background 0.2s ease, transform 0.15s ease;
+          min-height: 44px;
           min-width: 120px;
+          padding: var(--space-2) var(--space-5);
+          background: var(--text);
+          color: var(--text-inverse);
+          font-size: var(--fs-sm);
+          font-weight: 500;
+          letter-spacing: var(--tracking-normal);
+          border: none;
+          border-radius: var(--radius-full);
+          cursor: pointer;
+          transition: background var(--dur-base) var(--ease-standard),
+                      transform var(--dur-fast) var(--ease-spring);
         }
-        .pc-add:hover { background: #424245; }
+        .pc-add:hover { background: var(--burdeo); }
         .pc-add:active { transform: scale(0.97); }
       `}</style>
     </article>

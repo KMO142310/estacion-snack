@@ -98,59 +98,63 @@ export default function PackCard({ pack, products, onOpen }: Props) {
           width: 100%;
           color: inherit;
         }
+        .pkc-link:disabled { cursor: not-allowed; opacity: 0.6; }
         .pkc-img {
           position: relative;
           aspect-ratio: 1/1;
-          background: #F1ECE2;
-          border-radius: 18px;
+          background: var(--surface-1);
+          border-radius: var(--radius-lg);
           overflow: hidden;
-          transition: transform 0.3s ease;
+          transition: transform var(--dur-slow) var(--ease-emphasized);
         }
         .pkc-link:hover .pkc-img { transform: scale(1.02); }
 
         .pkc-tag {
           position: absolute;
-          top: 12px;
-          left: 12px;
-          z-index: 2;
+          top: var(--space-3);
+          left: var(--space-3);
+          z-index: var(--z-raised);
           padding: 4px 10px;
-          font-size: 11px;
+          font-size: var(--fs-xs);
           font-weight: 500;
-          letter-spacing: -0.005em;
-          border-radius: 999px;
+          letter-spacing: var(--tracking-normal);
+          border-radius: var(--radius-full);
         }
-        .pkc-tag-promo { background: #1d1d1f; color: #ffffff; }
-        .pkc-tag-new   { background: #1d1d1f; color: #ffffff; }
-        .pkc-tag-out   { background: rgba(29,29,31,0.7); color: #ffffff; }
+        .pkc-tag-promo,
+        .pkc-tag-new   { background: var(--text); color: var(--text-inverse); }
+        .pkc-tag-out   {
+          background: color-mix(in oklch, var(--text) 70%, transparent);
+          color: var(--text-inverse);
+        }
 
         .pkc-info {
-          padding: 1rem 4px 0;
+          padding: var(--space-4) var(--space-1) 0;
           text-align: center;
           display: flex;
           flex-direction: column;
-          gap: 4px;
+          gap: var(--space-1);
         }
         .pkc-cat {
-          font-family: var(--font-fraunces), Georgia, serif;
+          font-family: var(--font-display);
           font-style: italic;
-          font-size: 13px;
+          font-size: var(--fs-xs);
           font-weight: 400;
-          color: #A8411A;
+          color: var(--accent);
           margin: 0;
         }
         .pkc-name {
-          font-size: 1.0625rem;
+          font-size: var(--fs-md);
           font-weight: 500;
-          color: #1d1d1f;
+          color: var(--text);
           margin: 0;
-          line-height: 1.2;
-          letter-spacing: -0.014em;
+          line-height: var(--lh-snug);
+          letter-spacing: var(--tracking-snug);
         }
         .pkc-tagline {
-          font-size: 0.8125rem;
-          color: #6e6e73;
-          margin: 0 0 4px;
-          line-height: 1.4;
+          font-size: var(--fs-sm);
+          color: var(--text-soft);
+          margin: 0 0 var(--space-1);
+          line-height: var(--lh-normal);
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
@@ -165,40 +169,42 @@ export default function PackCard({ pack, products, onOpen }: Props) {
           font-variant-numeric: tabular-nums;
         }
         .pkc-price-main {
-          font-size: 0.9375rem;
+          font-size: var(--fs-sm);
           font-weight: 500;
-          color: #1d1d1f;
+          color: var(--text);
         }
         .pkc-price-aside {
-          font-size: 11.5px;
-          color: #6e6e73;
+          font-size: var(--fs-xs);
+          color: var(--text-soft);
         }
 
         .pkc-add {
-          margin-top: 1rem;
+          margin-top: var(--space-4);
           align-self: center;
-          padding: 0.625rem 1.5rem;
-          background: #1d1d1f;
-          color: #ffffff;
-          font-size: 0.875rem;
-          font-weight: 500;
-          letter-spacing: -0.005em;
-          border: none;
-          border-radius: 980px;
-          cursor: pointer;
-          transition: background 0.2s ease, transform 0.15s ease;
+          min-height: 44px;
           min-width: 120px;
+          padding: var(--space-2) var(--space-5);
+          background: var(--text);
+          color: var(--text-inverse);
+          font-size: var(--fs-sm);
+          font-weight: 500;
+          letter-spacing: var(--tracking-normal);
+          border: none;
+          border-radius: var(--radius-full);
+          cursor: pointer;
+          transition: background var(--dur-base) var(--ease-standard),
+                      transform var(--dur-fast) var(--ease-spring);
         }
-        .pkc-add:hover { background: #424245; }
+        .pkc-add:hover { background: var(--burdeo); }
         .pkc-add:active { transform: scale(0.97); }
 
         .pkc-out {
-          margin-top: 1rem;
+          margin-top: var(--space-4);
           align-self: center;
-          padding: 0.625rem 1rem;
-          font-size: 0.8125rem;
+          padding: var(--space-2) var(--space-4);
+          font-size: var(--fs-sm);
           font-weight: 500;
-          color: #6e6e73;
+          color: var(--text-soft);
         }
       `}</style>
     </article>

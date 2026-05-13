@@ -94,14 +94,20 @@ export default function Hero({ onOrderOpen }: HeroProps) {
           letter-spacing: var(--tracking-normal);
           border-bottom: 1px solid var(--line);
         }
+        .hero-promo span {
+          display: block;
+          max-width: 32ch;
+          margin: 0 auto;
+          line-height: 1.45;
+        }
 
         .hero-shell {
           max-width: 1220px;
           margin: 0 auto;
-          padding: var(--space-7) var(--edge-pad-mobile) var(--space-8);
+          padding: var(--space-6) var(--edge-pad-mobile) var(--space-8);
           display: grid;
           grid-template-columns: 1fr;
-          gap: var(--space-6);
+          gap: var(--space-5);
           align-items: center;
         }
 
@@ -119,8 +125,8 @@ export default function Hero({ onOrderOpen }: HeroProps) {
 
         .hero-title {
           margin: 0 0 var(--space-4);
-          max-width: 10ch;
-          font-size: clamp(2.35rem, 11vw, 5rem);
+          max-width: 11ch;
+          font-size: clamp(2.15rem, 12vw, 5rem);
           line-height: 0.98;
           letter-spacing: -0.04em;
           color: var(--text);
@@ -129,16 +135,15 @@ export default function Hero({ onOrderOpen }: HeroProps) {
         .hero-sub {
           margin: 0 0 var(--space-6);
           max-width: 56ch;
-          font-size: var(--fs-md);
+          font-size: 0.9875rem;
           line-height: 1.6;
           color: var(--text-soft);
         }
 
         .hero-actions {
-          display: flex;
-          flex-wrap: wrap;
+          display: grid;
+          grid-template-columns: 1fr;
           gap: var(--space-3);
-          align-items: center;
           margin-bottom: var(--space-5);
         }
 
@@ -154,6 +159,7 @@ export default function Hero({ onOrderOpen }: HeroProps) {
           font-weight: 600;
           letter-spacing: var(--tracking-normal);
           transition: transform var(--dur-fast) var(--ease-spring), background var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard);
+          width: 100%;
         }
 
         .hero-cta-primary {
@@ -211,8 +217,10 @@ export default function Hero({ onOrderOpen }: HeroProps) {
 
         .hero-product-card {
           display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(108px, 34vw);
+          align-items: end;
           gap: var(--space-5);
-          padding: var(--space-5);
+          padding: 1.15rem;
           border-radius: 28px;
           background: linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(244,238,227,0.95) 100%);
           border: 1px solid rgba(90, 31, 26, 0.08);
@@ -232,7 +240,7 @@ export default function Hero({ onOrderOpen }: HeroProps) {
         .hero-product-name {
           margin: 0;
           font-family: var(--font-display);
-          font-size: clamp(1.9rem, 4vw, 2.8rem);
+          font-size: clamp(1.55rem, 7vw, 2.8rem);
           font-weight: 600;
           line-height: 1;
           letter-spacing: -0.03em;
@@ -248,11 +256,15 @@ export default function Hero({ onOrderOpen }: HeroProps) {
         }
 
         .hero-product-blurb {
-          margin: var(--space-2) 0 0;
+          margin: var(--space-1) 0 0;
           max-width: 34ch;
-          font-size: var(--fs-sm);
-          line-height: 1.65;
+          font-size: var(--fs-xs);
+          line-height: 1.55;
           color: var(--text-soft);
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
 
         .hero-product-meta {
@@ -262,7 +274,7 @@ export default function Hero({ onOrderOpen }: HeroProps) {
           margin-top: var(--space-3);
         }
         .hero-product-meta span {
-          font-size: var(--fs-xs);
+          font-size: 10px;
           font-weight: 700;
           letter-spacing: 0.08em;
           text-transform: uppercase;
@@ -271,20 +283,54 @@ export default function Hero({ onOrderOpen }: HeroProps) {
 
         .hero-product-image {
           position: relative;
-          min-height: 280px;
-          aspect-ratio: 1 / 1;
+          min-height: 180px;
+          aspect-ratio: 4 / 5;
           border-radius: 20px;
           overflow: hidden;
           background: rgba(244, 238, 227, 0.75);
         }
 
+        @media (min-width: 420px) {
+          .hero-actions {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
+
         @media (min-width: 768px) {
           .hero-promo { padding: var(--space-2) var(--edge-pad-tablet); }
+          .hero-promo span { max-width: none; }
           .hero-shell {
             padding: var(--space-8) var(--edge-pad-tablet) var(--space-9);
           }
+          .hero-sub {
+            font-size: var(--fs-md);
+          }
+          .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+          }
+          .hero-cta-primary,
+          .hero-cta-secondary {
+            width: auto;
+          }
+          .hero-product-card {
+            grid-template-columns: minmax(0, 1fr) minmax(170px, 220px);
+            padding: var(--space-5);
+          }
+          .hero-product-blurb {
+            margin-top: var(--space-2);
+            font-size: var(--fs-sm);
+            line-height: 1.65;
+            display: block;
+            overflow: visible;
+          }
+          .hero-product-meta span {
+            font-size: var(--fs-xs);
+          }
           .hero-product-image {
-            min-height: 360px;
+            min-height: 260px;
+            aspect-ratio: 1 / 1;
           }
         }
 
@@ -293,6 +339,12 @@ export default function Hero({ onOrderOpen }: HeroProps) {
             grid-template-columns: minmax(0, 1.05fr) minmax(420px, 520px);
             gap: var(--space-7);
             padding: var(--space-8) var(--edge-pad-desktop) var(--space-9);
+          }
+          .hero-product-card {
+            grid-template-columns: 1fr;
+          }
+          .hero-product-image {
+            min-height: 360px;
           }
         }
       `}</style>

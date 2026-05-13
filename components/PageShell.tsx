@@ -21,6 +21,7 @@ import TicketProgress from "./TicketProgress";
 import packsData from "@/data/packs.json";
 import { FREE_SHIPPING_MIN } from "@/lib/shipping";
 import type { Pack, ProductStock } from "@/lib/pack-utils";
+import { fmt } from "@/lib/cart-utils";
 
 const OrderSheet = dynamic(() => import("./OrderSheet"), { ssr: false });
 const PackSheet = dynamic(() => import("./PackSheet"), { ssr: false });
@@ -131,16 +132,22 @@ export default function PageShell() {
 
       {/* Sticky bar mobile */}
       {!orderOpen && !sheetPack && itemCount > 0 && (
-        <button
-          onClick={openOrder}
-          aria-label={`Tu pedido (${itemCount} ${itemCount === 1 ? "ítem" : "ítems"})`}
-          className="rt-sticky"
-        >
-          <span style={{ fontSize: 14, fontWeight: 600 }}>
-            Mi pedido · {itemCount} {itemCount === 1 ? "ítem" : "ítems"}
-          </span>
-          <span style={{ fontSize: 14, fontWeight: 700 }}>Ver →</span>
-        </button>
+        <div className="rt-sticky-wrap">
+          <button
+            type="button"
+            onClick={openOrder}
+            aria-label={`Tu pedido (${itemCount} ${itemCount === 1 ? "ítem" : "ítems"})`}
+            className="rt-sticky"
+          >
+            <span className="rt-sticky-copy">
+              <span className="rt-sticky-label">Mi pedido</span>
+              <span className="rt-sticky-meta">
+                {itemCount} {itemCount === 1 ? "ítem" : "ítems"} · {fmt(subtotal)}
+              </span>
+            </span>
+            <span className="rt-sticky-action">Ver pedido</span>
+          </button>
+        </div>
       )}
 
       {sheetPack && (
@@ -236,25 +243,71 @@ export default function PageShell() {
         }
 
         /* Sticky bar mobile */
-        .rt-sticky {
+        .rt-sticky-wrap {
           position: fixed;
           bottom: 0;
           left: 0;
           right: 0;
           z-index: 100;
-          padding: 14px 1rem;
-          padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-          background: #1d1d1f;
+          padding: 0 1rem calc(0.9rem + env(safe-area-inset-bottom, 0px));
+          pointer-events: none;
+        }
+        .rt-sticky {
+          pointer-events: auto;
+          width: min(100%, 34rem);
+          margin: 0 auto;
+          min-height: 64px;
+          padding: 0.85rem 0.9rem 0.85rem 1rem;
+          background: rgba(29, 29, 31, 0.94);
           color: #fff;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          border: none;
+          gap: 1rem;
+          border: 1px solid rgba(244, 234, 219, 0.12);
+          border-radius: 22px;
           cursor: pointer;
-          width: 100%;
+          box-shadow: 0 22px 40px -24px rgba(18, 18, 21, 0.72);
+          backdrop-filter: blur(18px);
+          -webkit-backdrop-filter: blur(18px);
           -webkit-tap-highlight-color: transparent;
         }
-        @media (min-width: 768px) { .rt-sticky { display: none !important; } }
+        .rt-sticky-copy {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.25rem;
+          min-width: 0;
+        }
+        .rt-sticky-label {
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: rgba(244, 234, 219, 0.72);
+        }
+        .rt-sticky-meta {
+          font-size: 0.9375rem;
+          font-weight: 700;
+          color: #fff;
+          line-height: 1.2;
+        }
+        .rt-sticky-action {
+          min-height: 40px;
+          padding: 0 0.95rem;
+          border-radius: 999px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(244, 234, 219, 0.12);
+          color: #F4EADB;
+          font-size: 0.8125rem;
+          font-weight: 700;
+          white-space: nowrap;
+        }
+        @media (min-width: 768px) {
+          .rt-sticky-wrap { display: none !important; }
+        }
       `}</style>
     </MotionConfig>
   );

@@ -59,6 +59,14 @@ export default function Header({ onOrderOpen }: HeaderProps) {
         </button>
       </div>
 
+      <nav className="hd-mobile-nav" aria-label="Accesos rápidos">
+        <Link href="/#productos">Productos</Link>
+        <Link href="/#packs">Packs</Link>
+        <Link href="/#como-funciona">Cómo comprar</Link>
+        <Link href="/envios">Envíos</Link>
+        <Link href="/contacto">Contacto</Link>
+      </nav>
+
       <style>{`
         .hd {
           background: rgba(251, 248, 243, 0.85);
@@ -103,6 +111,32 @@ export default function Header({ onOrderOpen }: HeaderProps) {
           transition: opacity 0.15s ease;
         }
         .hd-nav a:hover { opacity: 1; }
+
+        .hd-mobile-nav {
+          display: flex;
+          gap: 0.6rem;
+          overflow-x: auto;
+          padding: 0 1rem 0.75rem;
+          scrollbar-width: none;
+          -webkit-overflow-scrolling: touch;
+          border-top: 1px solid rgba(26, 24, 21, 0.06);
+        }
+        .hd-mobile-nav::-webkit-scrollbar { display: none; }
+        .hd-mobile-nav a {
+          flex: 0 0 auto;
+          min-height: 34px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0 0.9rem;
+          border-radius: 999px;
+          background: rgba(255,255,255,0.72);
+          border: 1px solid rgba(26,24,21,0.08);
+          color: #1d1d1f;
+          font-size: 12px;
+          font-weight: 500;
+          white-space: nowrap;
+        }
 
         .hd-cart {
           position: relative;
@@ -150,6 +184,7 @@ export default function Header({ onOrderOpen }: HeaderProps) {
         @media (min-width: 768px) {
           .hd-row { padding: 0 1.5rem; height: 56px; }
           .hd-nav { display: flex; }
+          .hd-mobile-nav { display: none; }
           .hd-logo-text { font-size: 0.9375rem; }
           .hd-cart-text { display: inline; }
         }

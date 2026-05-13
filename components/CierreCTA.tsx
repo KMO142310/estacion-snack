@@ -16,10 +16,9 @@ export default function CierreCTA({ itemCount, onOrderOpen }: CierreCTAProps) {
       <div className="closing-inner">
         <div className="closing-copy">
           <p className="closing-kicker">Cierre simple</p>
-          <h2 className="closing-title">Armas el pedido acá. Lo terminas por WhatsApp.</h2>
+          <h2 className="closing-title">Arma el pedido acá y lo confirmamos por WhatsApp.</h2>
           <p className="closing-sub">
-            Sin crear cuenta, sin pedir tarjeta de inmediato y sin pasos de más.
-            Revisas la bolsa, confirmas el resumen y coordinamos la entrega contigo.
+            Ves precios reales, revisas el total y coordinamos retiro o despacho en Santa Cruz y comunas cercanas.
           </p>
 
           <div className="closing-actions">
@@ -36,11 +35,11 @@ export default function CierreCTA({ itemCount, onOrderOpen }: CierreCTAProps) {
         </div>
 
         <div className="closing-card">
-          <p className="closing-card-label">Qué pasa después</p>
+          <p className="closing-card-label">Despacho local</p>
           <ol className="closing-list">
             <li>Te abrimos WhatsApp con el resumen ya escrito.</li>
-            <li>Nos dices la comuna y coordinamos entrega o retiro.</li>
-            <li>Pagas con transferencia o al recibir, según prefieras.</li>
+            <li>Confirmas la comuna y coordinamos entrega o retiro.</li>
+            <li>Pagas con transferencia o al recibir.</li>
           </ol>
           <p className="closing-card-note">
             Santa Cruz · Palmilla · Peralillo · Marchigüe

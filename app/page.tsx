@@ -44,9 +44,9 @@ export default function HomePage() {
     "@type": "CollectionPage",
     "@id": `${SITE_URL}/#home`,
     url: SITE_URL,
-    name: "Frutos secos y snacks por kilo en Santa Cruz",
+    name: "Frutos secos y dulces por kilo en Santa Cruz",
     description:
-      "Compra frutos secos, confites y snacks por kilo en Santa Cruz con despacho local y pedido por WhatsApp.",
+      "Compra mix, almendras, confites y dulces por kilo en Santa Cruz con despacho local y pedido por WhatsApp.",
     mainEntity: {
       "@id": `${SITE_URL}/#catalogo`,
     },

@@ -11,11 +11,12 @@ export default function FounderNote() {
         <div className="fn-quote-wrap">
           <span className="fn-quote-mark" aria-hidden="true">«</span>
           <p className="fn-quote">
-            Empecé esto porque me cansé de comprar 200 g de almendras
-            empaquetadas como si fueran joyas.
+            Esto partió por algo simple: en Santa Cruz cuesta encontrar
+            frutos secos por kilo sin terminar pagando envases chicos
+            a precio inflado.
             <br />
-            Acá te llega la <em>bolsa entera</em>, sellada y cerrada,
-            al precio que tendría que costar.
+            Prefiero vender la <em>bolsa clara</em>, con stock real,
+            precio visible y atención directa por WhatsApp.
           </p>
           <span className="fn-quote-mark fn-quote-mark-close" aria-hidden="true">»</span>
         </div>
@@ -47,7 +48,7 @@ export default function FounderNote() {
           </svg>
           <div className="fn-meta">
             <p className="fn-name">Omar</p>
-            <p className="fn-role">Lo que llega a tu casa, lo elegí yo</p>
+            <p className="fn-role">Elijo el catálogo, respondo y coordino los despachos</p>
           </div>
         </div>
       </div>

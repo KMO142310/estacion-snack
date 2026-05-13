@@ -63,7 +63,7 @@
     "min_unit_kg": 1,
     "format_label": "Bolsa sellada · 1 kg",
     "format_short": "1 kg",
-    "occasion": "El que pedís una vez y volvés a pedir."
+    "occasion": "El que suelen volver a pedir."
   },
   {
     "id": "4",
@@ -100,7 +100,7 @@
     "image_url": "/img/gomita-osito-docile-x-kg.jpg",
     "image_webp_url": "/img/gomita-osito-docile-x-kg.webp",
     "image_400_url": "/img/gomita-osito-docile-x-kg-400.webp",
-    "copy": "Ositos de goma suaves. Los comes de a uno y cuando cachái se acabaron.",
+    "copy": "Ositos de goma suaves. Empiezas con un puñado y se terminan rápido.",
     "long_copy": "Gomitas en forma de osito, sabores de frutas, textura suave que no endurece. Bolsa sellada de 1 kg. Los que llevan bien con el café de las 4.",
     "badge": null,
     "sort_order": 5,

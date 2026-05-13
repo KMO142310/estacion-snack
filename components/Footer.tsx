@@ -12,7 +12,7 @@ export default function Footer() {
           <div className="ft-col">
             <p className="ft-brand">Estación Snack</p>
             <p className="ft-tag">
-              Frutos secos en bolsa sellada.<br />
+              Frutos secos y dulces por kilo.<br />
               Santa Cruz, Valle de Colchagua.
             </p>
           </div>
@@ -24,6 +24,13 @@ export default function Footer() {
             <Link href="/#como-funciona">Cómo comprar</Link>
             <Link href="/envios">Envíos</Link>
             <Link href="/faq">Preguntas frecuentes</Link>
+          </div>
+
+          <div className="ft-col">
+            <p className="ft-h">Santa Cruz</p>
+            <Link href="/frutos-secos-santa-cruz">Frutos secos por kilo</Link>
+            <Link href="/dulces-por-kilo-santa-cruz">Dulces por kilo</Link>
+            <Link href="/sobre-nosotros">Nuestra historia</Link>
           </div>
 
           <div className="ft-col">
@@ -109,8 +116,8 @@ export default function Footer() {
         @media (min-width: 700px) {
           .ft { padding: 4rem 1.5rem 2rem; }
           .ft-cols {
-            grid-template-columns: 1.3fr 1fr 1.2fr 1fr;
-            gap: 3rem;
+            grid-template-columns: 1.2fr 1fr 1fr 1.2fr 1fr;
+            gap: 2.25rem;
             padding-bottom: 3rem;
           }
           .ft-bottom {

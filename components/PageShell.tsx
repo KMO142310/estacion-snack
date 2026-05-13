@@ -18,6 +18,7 @@ import CierreCTA from "./CierreCTA";
 import Footer from "./Footer";
 import ToastStack from "./Toast";
 import TicketProgress from "./TicketProgress";
+import LocalSeoSection from "./LocalSeoSection";
 import packsData from "@/data/packs.json";
 import { FREE_SHIPPING_MIN } from "@/lib/shipping";
 import type { Pack, ProductStock } from "@/lib/pack-utils";
@@ -99,6 +100,7 @@ export default function PageShell() {
           </section>
         )}
 
+        <LocalSeoSection />
         <ComoFunciona />
         <FounderNote />
 

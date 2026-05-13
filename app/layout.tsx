@@ -23,11 +23,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Estación Snack — Frutos secos por kilo · Santa Cruz",
+    default: "Estación Snack — Frutos secos y dulces por kilo en Santa Cruz",
     template: "%s · Estación Snack",
   },
   description:
-    "Frutos secos y dulces del Valle de Colchagua, vendidos por kilo. Despacho martes a sábado en Santa Cruz, Palmilla, Peralillo y Marchigüe.",
+    "Mix, almendras, maní confitado y dulces por kilo en Santa Cruz. Despacho local en Palmilla, Peralillo y Marchigüe. Pedido por WhatsApp.",
   metadataBase: new URL(SITE_URL),
   alternates: { canonical: SITE_URL },
   robots: {
@@ -43,17 +43,19 @@ export const metadata: Metadata = {
   keywords: [
     "frutos secos santa cruz",
     "frutos secos por kilo",
+    "dulces por kilo santa cruz",
     "mix frutos secos colchagua",
     "mani confitado",
+    "mani confitado santa cruz",
     "almendras por kilo",
-    "snacks chile santa cruz",
+    "almendras santa cruz",
     "estacion snack",
     "despacho frutos secos colchagua",
   ],
   openGraph: {
-    title: "Estación Snack — Frutos secos por kilo",
+    title: "Estación Snack — Frutos secos y dulces por kilo en Santa Cruz",
     description:
-      "Frutos secos del Valle de Colchagua, vendidos por kilo. Despacho martes a sábado.",
+      "Mix, almendras, maní confitado y dulces por kilo con despacho local en Santa Cruz y comunas cercanas.",
     url: SITE_URL,
     siteName: "Estación Snack",
     images: [{ url: absoluteUrl("/og-image.jpg"), width: 1200, height: 630, alt: "Estación Snack — Frutos secos por kilo" }],
@@ -62,8 +64,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Estación Snack — Frutos secos por kilo",
-    description: "Frutos secos del Valle de Colchagua, vendidos por kilo.",
+    title: "Estación Snack — Frutos secos y dulces por kilo en Santa Cruz",
+    description: "Mix, almendras, maní confitado y dulces por kilo con despacho local.",
     images: [absoluteUrl("/opengraph-image")],
   },
   manifest: "/manifest.webmanifest",

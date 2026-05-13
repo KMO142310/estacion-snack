@@ -1,7 +1,7 @@
 const steps = [
-  { n: "01", title: "Eliges la bolsa", desc: "Ves el catálogo, revisas la ficha y agregas solo lo que quieres pedir." },
-  { n: "02", title: "Abres tu pedido", desc: "Te preparamos el resumen y lo llevamos a WhatsApp con todo ya escrito." },
-  { n: "03", title: "Coordinamos contigo", desc: "Confirmamos comuna, horario y pago por transferencia o al recibir." },
+  { n: "01", title: "Eliges lo que quieres", desc: "Ves el catálogo, revisas la ficha y agregas la bolsa o el pack que te interesa." },
+  { n: "02", title: "Revisas el pedido", desc: "Te abrimos WhatsApp con el resumen ya escrito para que no tengas que partir de cero." },
+  { n: "03", title: "Coordinamos entrega o retiro", desc: "Confirmamos comuna, horario y pago para Santa Cruz o comunas cercanas." },
 ];
 
 export default function ComoFunciona() {
@@ -9,7 +9,7 @@ export default function ComoFunciona() {
     <section id="como-funciona" aria-label="Cómo funciona" className="cf">
       <div className="cf-inner">
         <p className="cf-kicker">Cómo se pide</p>
-        <h2 className="cf-title">Tres pasos. Sin formulario.</h2>
+        <h2 className="cf-title">Así compran nuestros clientes en Santa Cruz.</h2>
 
         <div className="cf-steps">
           {steps.map(({ n, title, desc }) => (

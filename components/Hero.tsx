@@ -11,25 +11,25 @@ interface HeroProps {
 
 const lead = productsData[0];
 const heroSignals = [
-  "Bolsa sellada",
+  "Precios reales",
   "Despacho local",
-  "Pago al recibir",
+  "Retiro gratis",
 ];
 
 export default function Hero({ onOrderOpen }: HeroProps) {
   return (
     <section aria-label="Inicio" className="hero">
       <div className="hero-promo">
-        <span>Santa Cruz y alrededores · Envío gratis sobre $25.000 · Responde una persona</span>
+        <span>Santa Cruz, Palmilla, Peralillo y Marchigüe · despacho martes a sábado · pedido por WhatsApp</span>
       </div>
 
       <div className="hero-shell">
         <div className="hero-copy">
-          <p className="hero-eyebrow">Santa Cruz · Valle de Colchagua</p>
-          <h1 className="hero-title">Frutos secos y dulces por kilo, sin vueltas.</h1>
+          <p className="hero-eyebrow">Santa Cruz, Chile · despacho local en Colchagua</p>
+          <h1 className="hero-title">Frutos secos y dulces por kilo en Santa Cruz.</h1>
           <p className="hero-sub">
-            Eliges la bolsa, armas el pedido y lo confirmas por WhatsApp.
-            Despacho local martes a sábado. Sin cuenta. Sin checkout eterno.
+            Mix, almendras, maní confitado y dulces por kilo.
+            Eliges la bolsa, ves el precio real y coordinamos por WhatsApp el retiro o la entrega.
           </p>
 
           <div className="hero-actions">
@@ -49,7 +49,7 @@ export default function Hero({ onOrderOpen }: HeroProps) {
         </div>
 
         <div className="hero-spotlight">
-          <p className="hero-spotlight-kicker">Más pedido esta semana</p>
+          <p className="hero-spotlight-kicker">Lo más pedido en Santa Cruz</p>
           <Link href={`/producto/${lead.slug}`} className="hero-product-card">
             <div className="hero-product-copy">
               <p className="hero-product-name">{lead.name}</p>
@@ -57,9 +57,9 @@ export default function Hero({ onOrderOpen }: HeroProps) {
               <p className="hero-product-blurb">{lead.copy}</p>
 
               <div className="hero-product-meta">
-                <span>Bolsa sellada</span>
-                <span>Pedido rápido</span>
-                <span>Ver ficha</span>
+                <span>Precio real</span>
+                <span>1 kg sellado</span>
+                <span>Ver stock</span>
               </div>
             </div>
 

@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "nodejs";
-export const alt = "Estación Snack — Frutos secos y snacks por kilo en Santa Cruz";
+export const alt = "Estación Snack — Frutos secos y dulces por kilo en Santa Cruz";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -66,7 +66,7 @@ export default function OgImage() {
             marginBottom: 52,
           }}
         >
-          Frutos secos frescos por kilo. Pide por WhatsApp y llega martes a sábado.
+          Frutos secos y dulces por kilo en Santa Cruz. Pide por WhatsApp y coordinamos retiro o despacho.
         </div>
 
         {/* Pills row */}
@@ -76,7 +76,7 @@ export default function OgImage() {
             gap: 16,
           }}
         >
-          {["Sin mínimo de compra", "Martes a sábado", "Vendido por kilo"].map((label) => (
+          {["Retiro en local", "Martes a sábado", "Santa Cruz y comunas cercanas"].map((label) => (
             <div
               key={label}
               style={{

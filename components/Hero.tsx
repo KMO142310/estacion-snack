@@ -19,10 +19,6 @@ const heroSignals = [
 export default function Hero({ onOrderOpen }: HeroProps) {
   return (
     <section aria-label="Inicio" className="hero">
-      <div className="hero-promo">
-        <span>Santa Cruz, Palmilla, Peralillo y Marchigüe · despacho martes a sábado · pedido por WhatsApp</span>
-      </div>
-
       <div className="hero-shell">
         <div className="hero-copy">
           <p className="hero-eyebrow">Santa Cruz, Chile · despacho local en Colchagua</p>
@@ -84,27 +80,10 @@ export default function Hero({ onOrderOpen }: HeroProps) {
             linear-gradient(180deg, #FBF8F3 0%, #F7F1E7 100%);
         }
 
-        .hero-promo {
-          background: rgba(90, 31, 26, 0.04);
-          color: var(--text);
-          padding: var(--space-2) var(--edge-pad-mobile);
-          text-align: center;
-          font-size: var(--fs-xs);
-          font-weight: 500;
-          letter-spacing: var(--tracking-normal);
-          border-bottom: 1px solid var(--line);
-        }
-        .hero-promo span {
-          display: block;
-          max-width: 32ch;
-          margin: 0 auto;
-          line-height: 1.45;
-        }
-
         .hero-shell {
           max-width: 1220px;
           margin: 0 auto;
-          padding: var(--space-6) var(--edge-pad-mobile) var(--space-8);
+          padding: var(--space-7) var(--edge-pad-mobile) var(--space-8);
           display: grid;
           grid-template-columns: 1fr;
           gap: var(--space-5);

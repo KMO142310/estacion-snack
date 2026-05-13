@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 
 // Mensajes rotativos — señales operativas honestas, no adjetivos.
 const MESSAGES = [
-  "Santa Cruz · pedidos por WhatsApp",
-  "Martes a sábado · despacho en el valle",
+  "Despacho martes a sábado · envío gratis sobre $25.000",
+  "Retiro en local gratis · Santa Cruz y comunas cercanas",
   "Bolsa sellada · peso exacto",
-  "Responde una persona, no un bot",
+  "Pedido por WhatsApp · responde una persona",
 ];
 
 export default function Announce() {

@@ -23,12 +23,12 @@ export default function LocalSeoSection() {
       <div className="ls-wrap">
         <div className="ls-copy">
           <p className="ls-kicker">Santa Cruz y Colchagua</p>
-          <h2 className="ls-title">No somos una tienda genérica. Vendemos para esta zona.</h2>
+          <h2 className="ls-title">Una tienda pensada para Santa Cruz y el valle.</h2>
           <p className="ls-body">
-            Estación Snack está pensada para gente de Santa Cruz que quiere comprar frutos secos y dulces por kilo sin irse a un marketplace grande ni pagar envases chicos con precio inflado.
+            Estación Snack reúne frutos secos y dulces por kilo con precios visibles, stock real y un catálogo claro para quienes compran desde Santa Cruz y comunas cercanas.
           </p>
           <p className="ls-body">
-            Despachamos en Santa Cruz, Palmilla, Peralillo y Marchigüe. Si estás comparando opciones, acá tienes precios visibles, stock real y cierre simple por WhatsApp.
+            Despachamos en Santa Cruz, Palmilla, Peralillo y Marchigüe. Puedes revisar el catálogo, armar el pedido y coordinar todo por WhatsApp.
           </p>
         </div>
 

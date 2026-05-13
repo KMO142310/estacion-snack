@@ -11,9 +11,9 @@ export default function FounderNote() {
         <div className="fn-quote-wrap">
           <span className="fn-quote-mark" aria-hidden="true">«</span>
           <p className="fn-quote">
-            Esto partió por algo simple: en Santa Cruz cuesta encontrar
-            frutos secos por kilo sin terminar pagando envases chicos
-            a precio inflado.
+            Esto partió por algo simple: quería armar en Santa Cruz
+            un catálogo claro de frutos secos y dulces por kilo,
+            con bolsa sellada, stock real y precio visible.
             <br />
             Prefiero vender la <em>bolsa clara</em>, con stock real,
             precio visible y atención directa por WhatsApp.

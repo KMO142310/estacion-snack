@@ -52,7 +52,7 @@ export default function DulcesPorKiloSantaCruzPage() {
               Dulces por kilo en Santa Cruz, Chile
             </h1>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "#5E6B3E", lineHeight: 1.75, marginBottom: "1rem" }}>
-              Si estás buscando dulces por kilo en Santa Cruz para la casa, la oficina, un cumpleaños o una mesa dulce, lo más útil es ver productos concretos y no una categoría vacía con texto inflado.
+              Si estás buscando dulces por kilo en Santa Cruz para la casa, la oficina, un cumpleaños o una mesa dulce, aquí puedes revisar productos concretos, formatos claros y precios visibles.
             </p>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "#5E6B3E", lineHeight: 1.75 }}>
               En Estación Snack mantenemos un catálogo corto: maní confitado, gomitas y chocolates por kilo, con precio visible y cierre simple por WhatsApp.
@@ -106,7 +106,7 @@ export default function DulcesPorKiloSantaCruzPage() {
 
           <section style={{ padding: "1.5rem", borderRadius: "22px", background: "rgba(255,249,241,0.95)", border: "1px solid rgba(90,31,26,0.08)" }}>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.35rem, 4vw, 1.9rem)", color: "#5A1F1A", marginBottom: "0.9rem" }}>
-              Enlaces útiles para seguir comparando
+              Enlaces útiles para seguir mirando
             </h2>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.85rem" }}>
               <Link href="/#productos" style={linkPillStyle}>Ver catálogo completo</Link>

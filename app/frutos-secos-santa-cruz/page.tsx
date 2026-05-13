@@ -124,7 +124,7 @@ export default function FrutosSecosSantaCruzPage() {
 
           <section style={{ padding: "1.5rem", borderRadius: "22px", background: "rgba(255,249,241,0.95)", border: "1px solid rgba(90,31,26,0.08)" }}>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.35rem, 4vw, 1.9rem)", color: "#5A1F1A", marginBottom: "0.9rem" }}>
-              Enlaces útiles si estás comparando opciones
+              Enlaces útiles para seguir mirando
             </h2>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.85rem" }}>
               <Link href="/#productos" style={linkPillStyle}>Ver catálogo completo</Link>

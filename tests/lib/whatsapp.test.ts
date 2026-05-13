@@ -65,9 +65,9 @@ describe("buildWaUrl", () => {
       { comuna: "Santa Cruz", shipping: 1000, total: 14000 },
     );
     const decoded = decodeURIComponent(url.split("?text=")[1]);
-    expect(decoded).toContain("Entregar en: Santa Cruz");
+    expect(decoded).toContain("Comuna: Santa Cruz");
     expect(decoded).toContain("Envío: $1.000");
-    expect(decoded).toContain("Total: $14.000");
+    expect(decoded).toContain("Total estimado: $14.000");
   });
 
   it("cuando shipping es 0 escribe 'gratis' en vez de '$0'", () => {
@@ -104,7 +104,7 @@ describe("buildWaUrl", () => {
       "ORD-12345-AB",
     );
     const decoded = decodeURIComponent(url.split("?text=")[1]);
-    expect(decoded).toContain("(ref: ORD-12345-AB)");
+    expect(decoded).toContain("Ref: ORD-12345-AB");
   });
 
   it("nota con saltos de línea + caracteres especiales se preserva sin romper la URL", () => {

@@ -64,7 +64,8 @@ export default function OrderConfirmation() {
             </svg>
           </div>
           <div className="oc-body">
-            <p className="oc-title">Tu pedido salió rumbo a WhatsApp</p>
+            <p className="oc-title">Tu pedido ya está listo en WhatsApp</p>
+            <p className="oc-copy">Si no se abrió o lo cerraste, puedes volver a abrirlo acá.</p>
             <p className="oc-meta">
               Total {fmt(lastOrder.total)} · referencia
               <button
@@ -83,7 +84,7 @@ export default function OrderConfirmation() {
             rel="noopener noreferrer"
             className="oc-action"
           >
-            Reabrir WhatsApp
+            Abrir de nuevo
           </a>
           <button
             type="button"
@@ -142,6 +143,12 @@ export default function OrderConfirmation() {
               align-items: center;
               gap: 6px;
               flex-wrap: wrap;
+            }
+            .oc-copy {
+              margin: 3px 0 0;
+              color: rgba(255,255,255,0.78);
+              font-size: var(--fs-xs);
+              line-height: 1.4;
             }
             .oc-ref {
               padding: 2px 8px;

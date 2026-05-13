@@ -23,8 +23,9 @@ export function buildWaUrl(
   orderRef?: string,
   delivery?: { comuna: string; shipping: number; total: number },
 ): string {
-  const lines: string[] = ["Hola! Quiero hacer un pedido:"];
+  const lines: string[] = ["Hola! Quiero pedir esto en Estación Snack:"];
   lines.push("");
+  lines.push("*Pedido*");
 
   let total = 0;
 
@@ -52,26 +53,27 @@ export function buildWaUrl(
   lines.push("");
 
   if (delivery) {
+    lines.push("*Entrega*");
     lines.push(`Subtotal: $${Math.round(total).toLocaleString("es-CL")}`);
-    lines.push(`Entregar en: ${delivery.comuna}`);
+    lines.push(`Comuna: ${delivery.comuna}`);
     const shipLabel = delivery.shipping === 0 ? "gratis" : `$${delivery.shipping.toLocaleString("es-CL")}`;
     lines.push(`Envío: ${shipLabel}`);
-    lines.push(`*Total: $${Math.round(delivery.total).toLocaleString("es-CL")}*`);
+    lines.push(`*Total estimado: $${Math.round(delivery.total).toLocaleString("es-CL")}*`);
   } else {
-    lines.push(`*Total: $${Math.round(total).toLocaleString("es-CL")}*`);
+    lines.push(`*Total estimado: $${Math.round(total).toLocaleString("es-CL")}*`);
   }
 
   if (note?.trim()) {
     lines.push("");
-    lines.push(`Nota: ${note.trim()}`);
+    lines.push(`*Nota:* ${note.trim()}`);
   }
 
   lines.push("");
-  lines.push("Te paso la dirección cuando me confirmes.");
+  lines.push("Si está todo bien, te paso la dirección y coordinamos el pago.");
 
   if (orderRef) {
     lines.push("");
-    lines.push(`(ref: ${orderRef})`);
+    lines.push(`Ref: ${orderRef}`);
   }
 
   const text = lines.join("\n");

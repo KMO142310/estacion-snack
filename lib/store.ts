@@ -26,6 +26,8 @@ export interface LastOrder {
   at: number;
 }
 
+type LastOrderInput = Omit<LastOrder, "at"> & { at?: number };
+
 interface CartState {
   items: CartLine[];
   expiresAt: number;
@@ -42,7 +44,7 @@ interface CartState {
   addToast: (message: string, type?: "success" | "info") => void;
   removeToast: (id: string) => void;
 
-  setLastOrder: (order: LastOrder) => void;
+  setLastOrder: (order: LastOrderInput) => void;
   clearLastOrder: () => void;
 }
 
@@ -102,7 +104,7 @@ export const useCartStore = create<CartState>()(
       removeToast: (id) =>
         set((s) => ({ toasts: s.toasts.filter((t) => t.id !== id) })),
 
-      setLastOrder: (order) => set({ lastOrder: order }),
+      setLastOrder: (order) => set({ lastOrder: { ...order, at: order.at ?? Date.now() } }),
       clearLastOrder: () => set({ lastOrder: null }),
     }),
     {
@@ -134,4 +136,3 @@ export const useCartStore = create<CartState>()(
     }
   )
 );
-

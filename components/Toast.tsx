@@ -8,6 +8,7 @@ export default function ToastStack() {
   const toasts = useCartStore((s) => s.toasts);
   const removeToast = useCartStore((s) => s.removeToast);
   const setOrderOpen = useCartStore((s) => s.setOrderOpen);
+  const orderOpen = useCartStore((s) => s.orderOpen);
 
   useEffect(() => {
     if (toasts.length === 0) return;
@@ -18,6 +19,13 @@ export default function ToastStack() {
   }, [toasts, removeToast]);
 
   const latest = toasts.length > 0 ? toasts[toasts.length - 1] : null;
+
+  useEffect(() => {
+    if (!orderOpen || !latest) return;
+    removeToast(latest.id);
+  }, [orderOpen, latest, removeToast]);
+
+  if (orderOpen) return null;
 
   return (
     <div

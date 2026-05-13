@@ -72,7 +72,7 @@ describe("Flujo completo: cart → WA message → factura honesta", () => {
     expect(subtotal).toBeGreaterThan(FREE_SHIPPING_MIN);
   });
 
-  it("WhatsApp message contiene cada item con precio correcto + total bold", () => {
+  it("WhatsApp message contiene cada item con precio correcto + total estimado bold", () => {
     const items = [
       { kind: "product" as const, id: "p1", qty: 1, name: "Mix Europeo", pricePerUnit: 9000 },
       { kind: "pack" as const, id: "pk1", qty: 1, name: "Pack Clásico", pricePerUnit: 18000 },
@@ -92,7 +92,7 @@ describe("Flujo completo: cart → WA message → factura honesta", () => {
     expect(msg).toContain("$18.000");
     expect(msg).toContain("Subtotal: $27.000");
     expect(msg).toContain("Envío: gratis");
-    expect(msg).toContain("*Total: $27.000*");
+    expect(msg).toContain("*Total estimado: $27.000*");
   });
 
   it("Pack BOM line aparece en el mensaje (operador puede verificar stock)", () => {

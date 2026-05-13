@@ -42,6 +42,9 @@ export default function ProductDetail({ product, related }: Props) {
   const remainingQty = Math.max(0, product.stock_kg - currentQty);
   const exceedsStock = selectedQty > remainingQty;
   const price = product.price * selectedQty;
+  const expandedCopy = product.long_copy?.trim();
+  const hasExpandedCopy = Boolean(expandedCopy && expandedCopy !== product.copy);
+  const formatLabel = (product.min_unit_kg ?? 1) < 1 ? "500 g" : "1 kg";
 
   const handleAdd = async () => {
     if (adding || isOut) return;
@@ -70,7 +73,7 @@ export default function ProductDetail({ product, related }: Props) {
           <nav aria-label="Ruta de navegación" style={{ fontSize: 13, color: "#5E6B3E", marginBottom: 20, display: "flex", gap: 6, flexWrap: "wrap", fontFamily: "var(--font-body)" }}>
             <Link href="/" style={{ color: "#5E6B3E" }}>Inicio</Link>
             <span>›</span>
-            <Link href="/#productos" style={{ color: "#5E6B3E" }}>{product.cat_label}</Link>
+            <Link href="/#productos" style={{ color: "#5E6B3E" }}>Productos</Link>
             <span>›</span>
             <span style={{ color: "#5A1F1A", fontWeight: 600 }}>{product.name}</span>
           </nav>
@@ -78,7 +81,14 @@ export default function ProductDetail({ product, related }: Props) {
           <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr)", gap: 32 }} className="product-detail-grid">
             {/* Imagen */}
             <div style={{ aspectRatio: "1/1", borderRadius: "16px", overflow: "hidden", background: "#F4EADB", position: "relative" }}>
-              <Image src={product.image_webp_url || product.image_url} alt={product.name} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover" }} priority />
+              <Image
+                src={product.image_webp_url || product.image_url}
+                alt={`${product.name} en bolsa sellada de ${formatLabel}`}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                style={{ objectFit: "cover" }}
+                priority
+              />
               {product.badge && (
                 <span style={{ position: "absolute", top: 12, left: 12, background: "#A8411A", color: "#F4EADB", fontSize: 12, fontWeight: 700, padding: "4px 10px", borderRadius: 8, fontFamily: "var(--font-body)" }}>
                   {product.badge}
@@ -95,13 +105,23 @@ export default function ProductDetail({ product, related }: Props) {
 
               <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 4 }}>
                 <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "2rem", color: "#5A1F1A" }}>{fmt(product.price * (product.min_unit_kg ?? 1))}</span>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#5E6B3E" }}>· Bolsa sellada {(product.min_unit_kg ?? 1) < 1 ? "500 g" : "1 kg"}</span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#5E6B3E" }}>· Bolsa sellada {formatLabel}</span>
               </div>
               <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(94,107,62,0.7)", marginBottom: 16 }}>
                 Equivale a {fmt(Math.round(product.price / 10))} cada 100 g
               </p>
 
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", lineHeight: 1.7, marginBottom: 24 }}>{product.copy}</p>
+              {hasExpandedCopy && (
+                <div style={{ marginBottom: 24 }}>
+                  <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.125rem", color: "#5A1F1A", marginBottom: 10 }}>
+                    Más sobre este producto
+                  </h2>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5E6B3E", lineHeight: 1.75, margin: 0 }}>
+                    {expandedCopy}
+                  </p>
+                </div>
+              )}
 
               {/* Chips de cantidad — spring scale al seleccionar (Apple HIG press feedback) */}
               {!isOut && (

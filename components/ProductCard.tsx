@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { fmtDisplayPrice } from "@/lib/cart-utils";
 import { useCartStore } from "@/lib/store";
 
@@ -25,14 +26,15 @@ interface Product {
 
 interface Props {
   product: Product;
-  onOpen: () => void;
 }
 
-export default function ProductCard({ product, onOpen }: Props) {
+export default function ProductCard({ product }: Props) {
   const {
+    slug,
     name,
     price,
     image_webp_url,
+    image_url,
     badge,
     status,
     stock_kg,
@@ -51,8 +53,7 @@ export default function ProductCard({ product, onOpen }: Props) {
   const remainingQty = Math.max(0, stock_kg - currentQty);
   const display = fmtDisplayPrice(price, min_unit_kg, format_short);
 
-  const handleAdd = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleAdd = () => {
     if (agotado || added || remainingQty < min_unit_kg) return;
     addItem({ kind: "product", id: product.id, qty: min_unit_kg, name, pricePerUnit: price });
     addToast(`${name} agregado`);
@@ -63,17 +64,15 @@ export default function ProductCard({ product, onOpen }: Props) {
 
   return (
     <article className="pc">
-      <button
-        type="button"
-        onClick={agotado ? undefined : onOpen}
-        disabled={agotado}
-        aria-label={agotado ? `${name} — agotado` : `Ver detalle de ${name}`}
+      <Link
+        href={`/producto/${slug}`}
+        aria-label={`Ver ficha de ${name}`}
         className="pc-link"
       >
         <div className="pc-img">
           <Image
-            src={image_webp_url}
-            alt={name}
+            src={image_webp_url || image_url}
+            alt={`${name} en bolsa sellada de ${format_short}`}
             fill
             sizes="(max-width:700px) 50vw, 33vw"
             style={{ objectFit: "contain" }}
@@ -90,8 +89,9 @@ export default function ProductCard({ product, onOpen }: Props) {
             <span className="pc-price-main">{display.price}</span>
             <span className="pc-price-unit"> · {format_short}</span>
           </p>
+          <span className="pc-detail-link">Ver ficha</span>
         </div>
-      </button>
+      </Link>
 
       {!agotado && (
         <button
@@ -113,6 +113,7 @@ export default function ProductCard({ product, onOpen }: Props) {
           padding: 0;
           width: 100%;
           color: inherit;
+          text-decoration: none;
         }
         .pc-img {
           position: relative;
@@ -123,7 +124,6 @@ export default function ProductCard({ product, onOpen }: Props) {
           transition: transform var(--dur-slow) var(--ease-emphasized);
         }
         .pc-link:hover .pc-img { transform: scale(1.02); }
-        .pc-link:disabled { cursor: not-allowed; opacity: 0.6; }
 
         .pc-tag {
           position: absolute;
@@ -171,6 +171,15 @@ export default function ProductCard({ product, onOpen }: Props) {
         }
         .pc-price-main { font-weight: 500; }
         .pc-price-unit { color: var(--text-soft); }
+        .pc-detail-link {
+          display: inline-flex;
+          margin-top: var(--space-3);
+          font-size: var(--fs-sm);
+          font-weight: 600;
+          color: var(--accent);
+          text-decoration: underline;
+          text-underline-offset: 3px;
+        }
 
         .pc-add {
           margin-top: var(--space-4);

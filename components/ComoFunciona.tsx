@@ -1,12 +1,12 @@
 const steps = [
-  { n: "01", title: "Eliges la bolsa", desc: "Miras las seis, marcas lo que quieres. Sin mínimo." },
-  { n: "02", title: "Mandas el resumen", desc: "Se arma solo. Un toque y te llevamos a WhatsApp con todo escrito." },
-  { n: "03", title: "Llega en dos días", desc: "Martes o sábado, según el que te quede más cerca. Pagas al recibir o transferencia." },
+  { n: "01", title: "Eliges la bolsa", desc: "Ves el catálogo, revisas la ficha y agregas solo lo que quieres pedir." },
+  { n: "02", title: "Abres tu pedido", desc: "Te preparamos el resumen y lo llevamos a WhatsApp con todo ya escrito." },
+  { n: "03", title: "Coordinamos contigo", desc: "Confirmamos comuna, horario y pago por transferencia o al recibir." },
 ];
 
 export default function ComoFunciona() {
   return (
-    <section aria-label="Cómo funciona" className="cf">
+    <section id="como-funciona" aria-label="Cómo funciona" className="cf">
       <div className="cf-inner">
         <p className="cf-kicker">Cómo se pide</p>
         <h2 className="cf-title">Tres pasos. Sin formulario.</h2>

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import productsData from "@/data/products.json";
 import { fmt } from "@/lib/cart-utils";
 
@@ -8,207 +9,291 @@ interface HeroProps {
   onOrderOpen: () => void;
 }
 
-const lead = productsData[0]; // Mix Europeo
+const lead = productsData[0];
+const heroSignals = [
+  "Bolsa sellada",
+  "Despacho local",
+  "Pago al recibir",
+];
 
-/**
- * Hero — base científica.
- * Type scale modular fluido (--fs-*), spacing 8pt, colores OKLCH,
- * motion tokens. Estructura editorial: eyebrow + display H1 + sub
- * de respiración + CTAs claros + producto líder full-bleed.
- */
-export default function Hero({ onOrderOpen: _onOrderOpen }: HeroProps) {
+export default function Hero({ onOrderOpen }: HeroProps) {
   return (
     <section aria-label="Inicio" className="hero">
       <div className="hero-promo">
-        <span>Despacho martes a sábado · Envío gratis sobre $25.000 · Pago al recibir</span>
+        <span>Santa Cruz y alrededores · Envío gratis sobre $25.000 · Responde una persona</span>
       </div>
 
-      <div className="hero-headline">
-        <p className="hero-eyebrow">Santa Cruz · Valle de Colchagua</p>
-        <h1 className="hero-h1">
-          Frutos secos,
-          <br />
-          <span className="hero-h1-soft">por kilo.</span>
-        </h1>
-        <p className="hero-sub">
-          Bolsa sellada. Pedido por WhatsApp. Despacho local en Colchagua.
-        </p>
-        <div className="hero-actions">
-          <a href="#productos" className="hero-cta-primary">
-            Ver productos
-          </a>
-          <a href="#packs" className="hero-cta-link">
-            Ver packs <span aria-hidden="true">›</span>
-          </a>
-        </div>
-      </div>
+      <div className="hero-shell">
+        <div className="hero-copy">
+          <p className="hero-eyebrow">Santa Cruz · Valle de Colchagua</p>
+          <h1 className="hero-title">Frutos secos y dulces por kilo, sin vueltas.</h1>
+          <p className="hero-sub">
+            Eliges la bolsa, armas el pedido y lo confirmas por WhatsApp.
+            Despacho local martes a sábado. Sin cuenta. Sin checkout eterno.
+          </p>
 
-      <div className="hero-product">
-        <div className="hero-product-inner">
-          <p className="hero-product-tag">Más pedido</p>
-          <h2 className="hero-product-name">{lead.name}</h2>
-          <p className="hero-product-price">{fmt(lead.price)} · Bolsa de 1 kg</p>
-          <a href="#productos" className="hero-product-link">
-            Verlo en el catálogo <span aria-hidden="true">›</span>
-          </a>
-          <div className="hero-product-image">
-            <Image
-              src={lead.image_webp_url}
-              alt={lead.name}
-              fill
-              priority
-              sizes="(max-width: 768px) 90vw, 600px"
-              style={{ objectFit: "contain" }}
-            />
+          <div className="hero-actions">
+            <button type="button" onClick={onOrderOpen} className="hero-cta-primary">
+              Armar mi pedido
+            </button>
+            <a href="#productos" className="hero-cta-secondary">
+              Ver catálogo
+            </a>
           </div>
+
+          <ul className="hero-signals" aria-label="Ventajas principales">
+            {heroSignals.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="hero-spotlight">
+          <p className="hero-spotlight-kicker">Más pedido esta semana</p>
+          <Link href={`/producto/${lead.slug}`} className="hero-product-card">
+            <div className="hero-product-copy">
+              <p className="hero-product-name">{lead.name}</p>
+              <p className="hero-product-price">{fmt(lead.price)} · {lead.format_short ?? "1 kg"}</p>
+              <p className="hero-product-blurb">{lead.copy}</p>
+
+              <div className="hero-product-meta">
+                <span>Bolsa sellada</span>
+                <span>Pedido rápido</span>
+                <span>Ver ficha</span>
+              </div>
+            </div>
+
+            <div className="hero-product-image">
+              <Image
+                src={lead.image_webp_url}
+                alt={`${lead.name} en bolsa sellada`}
+                fill
+                priority
+                sizes="(max-width: 768px) 92vw, 520px"
+                style={{ objectFit: "contain" }}
+              />
+            </div>
+          </Link>
         </div>
       </div>
 
       <style>{`
         .hero {
-          background: var(--bg);
+          background:
+            radial-gradient(circle at top left, rgba(168, 65, 26, 0.08), transparent 30%),
+            linear-gradient(180deg, #FBF8F3 0%, #F7F1E7 100%);
         }
 
         .hero-promo {
-          background: var(--surface-1);
+          background: rgba(90, 31, 26, 0.04);
           color: var(--text);
           padding: var(--space-2) var(--edge-pad-mobile);
           text-align: center;
           font-size: var(--fs-xs);
-          font-weight: 400;
+          font-weight: 500;
           letter-spacing: var(--tracking-normal);
           border-bottom: 1px solid var(--line);
         }
 
-        .hero-headline {
-          max-width: 980px;
+        .hero-shell {
+          max-width: 1220px;
           margin: 0 auto;
-          padding: var(--space-8) var(--edge-pad-mobile) var(--space-7);
-          text-align: center;
+          padding: var(--space-7) var(--edge-pad-mobile) var(--space-8);
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: var(--space-6);
+          align-items: center;
         }
+
+        .hero-copy {
+          max-width: 640px;
+        }
+
         .hero-eyebrow {
+          margin: 0 0 var(--space-4);
           font-family: var(--font-display);
           font-style: italic;
           font-size: var(--fs-sm);
-          font-weight: 400;
           color: var(--accent);
-          margin: 0 0 var(--space-4);
         }
-        .hero-h1 {
-          font-size: var(--fs-5xl);
-          font-weight: 500;
-          line-height: var(--lh-tight);
-          letter-spacing: var(--tracking-tight);
+
+        .hero-title {
+          margin: 0 0 var(--space-4);
+          max-width: 10ch;
+          font-size: clamp(2.35rem, 11vw, 5rem);
+          line-height: 0.98;
+          letter-spacing: -0.04em;
           color: var(--text);
-          margin: 0 0 var(--space-4);
-          font-variation-settings: "opsz" 96, "SOFT" 50;
         }
-        .hero-h1-soft {
+
+        .hero-sub {
+          margin: 0 0 var(--space-6);
+          max-width: 56ch;
+          font-size: var(--fs-md);
+          line-height: 1.6;
           color: var(--text-soft);
         }
-        .hero-sub {
-          font-size: var(--fs-md);
-          line-height: var(--lh-snug);
-          font-weight: 400;
-          color: var(--text);
-          margin: 0 auto var(--space-6);
-          max-width: 540px;
-          letter-spacing: var(--tracking-normal);
-        }
+
         .hero-actions {
-          display: inline-flex;
+          display: flex;
           flex-wrap: wrap;
-          gap: var(--space-3) var(--space-6);
-          justify-content: center;
+          gap: var(--space-3);
           align-items: center;
+          margin-bottom: var(--space-5);
         }
-        .hero-cta-primary {
+
+        .hero-cta-primary,
+        .hero-cta-secondary {
+          min-height: 48px;
           display: inline-flex;
           align-items: center;
-          min-height: 44px;
-          padding: var(--space-3) var(--space-5);
-          background: var(--text);
-          color: var(--text-inverse);
+          justify-content: center;
+          padding: 0 var(--space-5);
           border-radius: var(--radius-full);
           font-size: var(--fs-sm);
-          font-weight: 500;
+          font-weight: 600;
           letter-spacing: var(--tracking-normal);
-          transition: background var(--dur-base) var(--ease-standard),
-                      transform var(--dur-fast) var(--ease-spring);
+          transition: transform var(--dur-fast) var(--ease-spring), background var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard);
+        }
+
+        .hero-cta-primary {
+          background: var(--text);
+          color: var(--text-inverse);
+          border: none;
+          cursor: pointer;
+          box-shadow: var(--elev-2);
         }
         .hero-cta-primary:hover { background: var(--burdeo); }
-        .hero-cta-primary:active { transform: scale(0.97); }
-        .hero-cta-link {
-          font-size: var(--fs-sm);
-          font-weight: 400;
-          color: var(--accent);
-          letter-spacing: var(--tracking-normal);
-          transition: color var(--dur-fast) var(--ease-standard);
-        }
-        .hero-cta-link:hover { color: var(--accent-hover); }
+        .hero-cta-primary:active { transform: scale(0.98); }
 
-        .hero-product {
-          background: var(--surface-1);
-          background-image: radial-gradient(
-            ellipse at 50% 30%,
-            color-mix(in oklch, var(--accent) 7%, transparent) 0%,
-            transparent 70%
-          );
-          padding: var(--space-7) var(--edge-pad-mobile) 0;
-          text-align: center;
+        .hero-cta-secondary {
+          border: 1px solid var(--line-strong);
+          color: var(--text);
+          background: rgba(255, 255, 255, 0.55);
         }
-        .hero-product-inner {
-          max-width: 980px;
-          margin: 0 auto;
-        }
-        .hero-product-tag {
-          font-family: var(--font-display);
-          font-style: italic;
-          font-size: var(--fs-sm);
-          font-weight: 400;
+        .hero-cta-secondary:hover {
+          border-color: rgba(168, 65, 26, 0.28);
           color: var(--accent);
-          margin: 0 0 var(--space-2);
         }
+
+        .hero-signals {
+          list-style: none;
+          display: flex;
+          flex-wrap: wrap;
+          gap: var(--space-2);
+          padding: 0;
+          margin: 0;
+        }
+        .hero-signals li {
+          padding: 0.6rem 0.95rem;
+          border-radius: var(--radius-full);
+          background: rgba(255, 255, 255, 0.65);
+          border: 1px solid rgba(90, 31, 26, 0.08);
+          color: var(--text-soft);
+          font-size: var(--fs-xs);
+          font-weight: 600;
+        }
+
+        .hero-spotlight {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-3);
+        }
+
+        .hero-spotlight-kicker {
+          margin: 0;
+          font-size: var(--fs-xs);
+          font-weight: 700;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--accent);
+        }
+
+        .hero-product-card {
+          display: grid;
+          gap: var(--space-5);
+          padding: var(--space-5);
+          border-radius: 28px;
+          background: linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(244,238,227,0.95) 100%);
+          border: 1px solid rgba(90, 31, 26, 0.08);
+          box-shadow: 0 18px 50px -30px rgba(90, 31, 26, 0.45);
+          text-decoration: none;
+          color: inherit;
+          overflow: hidden;
+        }
+
+        .hero-product-copy {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-2);
+          min-width: 0;
+        }
+
         .hero-product-name {
-          font-size: var(--fs-4xl);
-          font-weight: 500;
-          line-height: var(--lh-tight);
-          letter-spacing: var(--tracking-tight);
-          color: var(--text);
-          margin: 0 0 var(--space-2);
+          margin: 0;
+          font-family: var(--font-display);
+          font-size: clamp(1.9rem, 4vw, 2.8rem);
+          font-weight: 600;
+          line-height: 1;
+          letter-spacing: -0.03em;
+          color: var(--burdeo);
         }
+
         .hero-product-price {
+          margin: 0;
           font-size: var(--fs-md);
+          font-weight: 600;
           color: var(--text);
-          margin: 0 0 var(--space-3);
           font-variant-numeric: tabular-nums;
         }
-        .hero-product-link {
-          display: inline-block;
+
+        .hero-product-blurb {
+          margin: var(--space-2) 0 0;
+          max-width: 34ch;
           font-size: var(--fs-sm);
-          font-weight: 400;
-          color: var(--accent);
-          margin-bottom: var(--space-6);
-          letter-spacing: var(--tracking-normal);
-          transition: color var(--dur-fast) var(--ease-standard);
+          line-height: 1.65;
+          color: var(--text-soft);
         }
-        .hero-product-link:hover { color: var(--accent-hover); }
+
+        .hero-product-meta {
+          display: flex;
+          flex-wrap: wrap;
+          gap: var(--space-2);
+          margin-top: var(--space-3);
+        }
+        .hero-product-meta span {
+          font-size: var(--fs-xs);
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: rgba(90, 31, 26, 0.75);
+        }
+
         .hero-product-image {
           position: relative;
-          aspect-ratio: 16/10;
-          width: 100%;
-          max-width: 720px;
-          margin: 0 auto;
+          min-height: 280px;
+          aspect-ratio: 1 / 1;
+          border-radius: 20px;
+          overflow: hidden;
+          background: rgba(244, 238, 227, 0.75);
         }
 
         @media (min-width: 768px) {
           .hero-promo { padding: var(--space-2) var(--edge-pad-tablet); }
-          .hero-headline { padding: var(--space-9) var(--edge-pad-tablet) var(--space-8); }
-          .hero-product { padding: var(--space-8) var(--edge-pad-tablet) 0; }
+          .hero-shell {
+            padding: var(--space-8) var(--edge-pad-tablet) var(--space-9);
+          }
+          .hero-product-image {
+            min-height: 360px;
+          }
         }
+
         @media (min-width: 1100px) {
-          .hero-headline { padding: var(--space-10) var(--edge-pad-desktop) var(--space-9); }
-          .hero-product { padding: var(--space-9) var(--edge-pad-desktop) 0; }
+          .hero-shell {
+            grid-template-columns: minmax(0, 1.05fr) minmax(420px, 520px);
+            gap: var(--space-7);
+            padding: var(--space-8) var(--edge-pad-desktop) var(--space-9);
+          }
         }
       `}</style>
     </section>

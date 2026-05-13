@@ -21,6 +21,7 @@ export default function Footer() {
             <p className="ft-h">Tienda</p>
             <Link href="/#productos">Productos</Link>
             <Link href="/#packs">Packs</Link>
+            <Link href="/#como-funciona">Cómo comprar</Link>
             <Link href="/envios">Envíos</Link>
             <Link href="/faq">Preguntas frecuentes</Link>
           </div>
@@ -29,7 +30,7 @@ export default function Footer() {
             <p className="ft-h">Contacto</p>
             <a href="https://wa.me/56953743338" target="_blank" rel="noopener noreferrer">WhatsApp +56 9 5374 3338</a>
             <a href="https://instagram.com/estacionsnack.sc" target="_blank" rel="noopener noreferrer">@estacionsnack.sc</a>
-            <Link href="/contacto">Formulario</Link>
+            <Link href="/contacto">Contacto</Link>
           </div>
 
           <div className="ft-col">

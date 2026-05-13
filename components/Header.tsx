@@ -40,6 +40,7 @@ export default function Header({ onOrderOpen }: HeaderProps) {
         <nav className="hd-nav" aria-label="Principal">
           <Link href="/#productos">Productos</Link>
           <Link href="/#packs">Packs</Link>
+          <Link href="/#como-funciona">Cómo comprar</Link>
           <Link href="/envios">Envíos</Link>
           <Link href="/contacto">Contacto</Link>
         </nav>
@@ -51,6 +52,7 @@ export default function Header({ onOrderOpen }: HeaderProps) {
           className="hd-cart"
         >
           <ShoppingBag size={20} />
+          <span className="hd-cart-text">{itemCount > 0 ? `Mi pedido (${itemCount})` : "Mi pedido"}</span>
           {itemCount > 0 && (
             <span className="hd-cart-badge" aria-hidden="true">{itemCount}</span>
           )}
@@ -104,19 +106,28 @@ export default function Header({ onOrderOpen }: HeaderProps) {
 
         .hd-cart {
           position: relative;
-          width: 36px;
+          width: auto;
+          min-width: 36px;
           height: 36px;
           display: flex;
           align-items: center;
           justify-content: center;
+          gap: 8px;
+          padding: 0 10px;
           color: #1d1d1f;
           background: transparent;
           border: none;
-          border-radius: 50%;
+          border-radius: 999px;
           flex-shrink: 0;
           transition: background 0.15s ease;
         }
         .hd-cart:hover { background: rgba(0, 0, 0, 0.05); }
+        .hd-cart-text {
+          display: none;
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: -0.01em;
+        }
         .hd-cart-badge {
           position: absolute;
           top: 1px;
@@ -140,6 +151,7 @@ export default function Header({ onOrderOpen }: HeaderProps) {
           .hd-row { padding: 0 1.5rem; height: 56px; }
           .hd-nav { display: flex; }
           .hd-logo-text { font-size: 0.9375rem; }
+          .hd-cart-text { display: inline; }
         }
         @media (min-width: 1100px) {
           .hd-row { padding: 0 2rem; }

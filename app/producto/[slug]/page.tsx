@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import productsData from "@/data/products.json";
 import ProductDetail from "./ProductDetail";
 import { safeJsonLd } from "@/lib/json-ld";
+import { absoluteUrl, buildMetaDescription, SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-static";
 
@@ -25,6 +26,7 @@ type RawProduct = {
   sort_order: number;
   min_unit_kg: number;
   occasion?: string | null;
+  format_short?: string;
 };
 
 const allProducts = productsData as RawProduct[];
@@ -43,9 +45,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) {
     return { title: "Producto no encontrado" };
   }
-  const title = `${product.name} por kilo`;
-  const description =
-    product.copy ?? `${product.name} fresco por kilo en Santa Cruz. Pide por WhatsApp.`;
+  const formatShort = product.format_short ?? (product.min_unit_kg < 1 ? "500 g" : "1 kg");
+  const title = `${product.name} ${formatShort} en Santa Cruz`;
+  const description = buildMetaDescription(
+    product.long_copy ?? product.copy ?? `${product.name} fresco por kilo en Santa Cruz. Pide por WhatsApp.`,
+  );
+
   return {
     title,
     description,
@@ -55,11 +60,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       type: "website",
       url: `/producto/${product.slug}`,
+      images: [
+        {
+          url: `/producto/${product.slug}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: `${product.name} · Estación Snack`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [`/producto/${product.slug}/opengraph-image`],
     },
   };
 }
@@ -73,9 +87,6 @@ export default async function ProductPage({ params }: Props) {
     .filter((p) => p.id !== product.id && p.category === product.category)
     .slice(0, 3);
 
-  const SITE =
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.estacionsnack.cl";
-
   // Precio válido hasta 30 días desde generación (requerido Google Search Console desde 2023).
   // Server Component: Date.now() en el boundary request/response, no en render de cliente.
   // eslint-disable-next-line react-hooks/purity
@@ -87,13 +98,15 @@ export default async function ProductPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
-    description: product.copy || product.name,
+    description: buildMetaDescription(product.long_copy ?? product.copy ?? product.name, 220),
     image: product.image_url.startsWith("http")
       ? product.image_url
-      : `${SITE}${product.image_url}`,
+      : absoluteUrl(product.image_url),
     sku: product.slug,
+    url: `${SITE_URL}/producto/${product.slug}`,
     category: product.cat_label,
     brand: { "@type": "Brand", name: "Estación Snack" },
+    mainEntityOfPage: `${SITE_URL}/producto/${product.slug}`,
     offers: {
       "@type": "Offer",
       priceCurrency: "CLP",
@@ -103,10 +116,10 @@ export default async function ProductPage({ params }: Props) {
         product.status === "agotado"
           ? "https://schema.org/OutOfStock"
           : "https://schema.org/InStock",
-      url: `${SITE}/producto/${product.slug}`,
+      url: `${SITE_URL}/producto/${product.slug}`,
       seller: {
-        "@type": "Store",
-        "@id": `${SITE}/#business`,
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#organization`,
         name: "Estación Snack",
       },
       // Google rich results requiere hasMerchantReturnPolicy desde 2023.
@@ -154,9 +167,9 @@ export default async function ProductPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Inicio", item: SITE },
-      { "@type": "ListItem", position: 2, name: "Productos", item: `${SITE}/#productos` },
-      { "@type": "ListItem", position: 3, name: product.name, item: `${SITE}/producto/${product.slug}` },
+      { "@type": "ListItem", position: 1, name: "Inicio", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Productos", item: `${SITE_URL}/#productos` },
+      { "@type": "ListItem", position: 3, name: product.name, item: `${SITE_URL}/producto/${product.slug}` },
     ],
   };
 

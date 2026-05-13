@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import { safeJsonLd } from "@/lib/json-ld";
+import { absoluteUrl, INSTAGRAM_URL, SERVICE_AREAS, SITE_URL, WHATSAPP_PHONE } from "@/lib/site";
 import OrderConfirmation from "@/components/OrderConfirmation";
 import "./globals.css";
 
@@ -20,8 +21,6 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.estacionsnack.cl";
-
 export const metadata: Metadata = {
   title: {
     default: "Estación Snack — Frutos secos por kilo · Santa Cruz",
@@ -29,8 +28,8 @@ export const metadata: Metadata = {
   },
   description:
     "Frutos secos y dulces del Valle de Colchagua, vendidos por kilo. Despacho martes a sábado en Santa Cruz, Palmilla, Peralillo y Marchigüe.",
-  metadataBase: new URL(SITE),
-  alternates: { canonical: SITE },
+  metadataBase: new URL(SITE_URL),
+  alternates: { canonical: SITE_URL },
   robots: {
     index: true,
     follow: true,
@@ -55,9 +54,9 @@ export const metadata: Metadata = {
     title: "Estación Snack — Frutos secos por kilo",
     description:
       "Frutos secos del Valle de Colchagua, vendidos por kilo. Despacho martes a sábado.",
-    url: SITE,
+    url: SITE_URL,
     siteName: "Estación Snack",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Estación Snack — Frutos secos por kilo" }],
+    images: [{ url: absoluteUrl("/og-image.jpg"), width: 1200, height: 630, alt: "Estación Snack — Frutos secos por kilo" }],
     locale: "es_CL",
     type: "website",
   },
@@ -65,7 +64,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Estación Snack — Frutos secos por kilo",
     description: "Frutos secos del Valle de Colchagua, vendidos por kilo.",
-    images: ["/opengraph-image"],
+    images: [absoluteUrl("/opengraph-image")],
   },
   manifest: "/manifest.webmanifest",
   icons: {
@@ -84,25 +83,40 @@ export const viewport: Viewport = {
   themeColor: "#F4EADB",
 };
 
-// JSON-LD mínimo: WebSite. No declaramos Store/LocalBusiness/Organization
-// porque implicaría entidad comercial formalizada (RUT activo, patente,
-// Seremi Salud). Esta es venta directa por WhatsApp.
-// Google acepta WebSite solo para indexación básica sin claims formales.
 const siteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": `${SITE}/#website`,
+  "@id": `${SITE_URL}/#website`,
   name: "Estación Snack",
-  url: SITE,
+  url: SITE_URL,
   inLanguage: "es-CL",
-  potentialAction: {
-    "@type": "SearchAction",
-    target: {
-      "@type": "EntryPoint",
-      urlTemplate: `${SITE}/?q={search_term_string}`,
-    },
-    "query-input": "required name=search_term_string",
+  publisher: {
+    "@id": `${SITE_URL}/#organization`,
   },
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${SITE_URL}/#organization`,
+  name: "Estación Snack",
+  url: SITE_URL,
+  logo: absoluteUrl("/apple-touch-icon.png"),
+  image: absoluteUrl("/og-image.jpg"),
+  sameAs: [INSTAGRAM_URL],
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: WHATSAPP_PHONE,
+      contactType: "customer service",
+      areaServed: "CL",
+      availableLanguage: "es",
+    },
+  ],
+  areaServed: SERVICE_AREAS.map((name) => ({
+    "@type": "City",
+    name,
+  })),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -115,6 +129,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: safeJsonLd(siteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(organizationJsonLd) }}
         />
         {children}
         <OrderConfirmation />

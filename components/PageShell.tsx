@@ -6,10 +6,15 @@ import { MotionConfig } from "framer-motion";
 import { useCartStore } from "@/lib/store";
 import productsData from "@/data/products.json";
 import { topFaqs } from "@/data/faq";
+import Announce from "./Announce";
 import Header from "./Header";
 import Hero from "./Hero";
+import Benefits from "./Benefits";
 import ProductCard from "./ProductCard";
 import PackSection from "./PackSection";
+import ComoFunciona from "./ComoFunciona";
+import FounderNote from "./FounderNote";
+import CierreCTA from "./CierreCTA";
 import Footer from "./Footer";
 import ToastStack from "./Toast";
 import TicketProgress from "./TicketProgress";
@@ -18,24 +23,13 @@ import { FREE_SHIPPING_MIN } from "@/lib/shipping";
 import type { Pack, ProductStock } from "@/lib/pack-utils";
 
 const OrderSheet = dynamic(() => import("./OrderSheet"), { ssr: false });
-const ProductSheet = dynamic(() => import("./ProductSheet"), { ssr: false });
 const PackSheet = dynamic(() => import("./PackSheet"), { ssr: false });
 
 const products = productsData.slice().sort((a, b) => a.sort_order - b.sort_order);
 const packs = packsData as Pack[];
 const packProducts = productsData as unknown as ProductStock[];
 
-/**
- * PageShell retail-clean (referencia: grupoalval.com).
- *
- * Flow simplificado: Header → Hero → Catálogo grid → Packs → Newsletter →
- * FAQ → CTA → Footer. Sin Marquee, sin StationManifesto, sin FounderNote,
- * sin FeaturedProduct, sin Announce — todos esos componentes existen en
- * /components pero no se renderizan; quedan disponibles si el dueño cambia
- * de dirección visual.
- */
 export default function PageShell() {
-  const [sheetProduct, setSheetProduct] = useState<typeof products[number] | null>(null);
   const [sheetPack, setSheetPack] = useState<Pack | null>(null);
   const orderOpen = useCartStore((s) => s.orderOpen);
   const setOrderOpen = useCartStore((s) => s.setOrderOpen);
@@ -55,29 +49,30 @@ export default function PageShell() {
 
   const openOrder = useCallback(() => setOrderOpen(true), [setOrderOpen]);
   const closeOrder = useCallback(() => setOrderOpen(false), [setOrderOpen]);
-  const closeSheet = useCallback(() => setSheetProduct(null), []);
   const closePackSheet = useCallback(() => setSheetPack(null), []);
 
   return (
     <MotionConfig reducedMotion="user">
       <a href="#main" className="skip">Saltar al contenido</a>
       <div style={{ position: "sticky", top: 0, zIndex: 200 }}>
+        <Announce />
         <Header onOrderOpen={openOrder} />
       </div>
 
       <main id="main" tabIndex={-1} style={{ outline: "none" }}>
         <Hero onOrderOpen={openOrder} />
+        <Benefits />
 
         {/* ── Catálogo completo en grid ── */}
         <section id="productos" className="rt-section">
           <div className="rt-wrap">
             <header className="rt-section-head">
               <h2 className="rt-section-title">Productos</h2>
-              <p className="rt-section-sub">Seis bolsas selladas. Lo que ves es lo que hay en stock.</p>
+              <p className="rt-section-sub">Bolsas selladas, stock visible y fichas claras para pedir sin dudas.</p>
             </header>
             <div className="rt-grid">
               {products.map((p) => (
-                <ProductCard key={p.id} product={p} onOpen={() => setSheetProduct(p)} />
+                <ProductCard key={p.id} product={p} />
               ))}
             </div>
           </div>
@@ -88,7 +83,7 @@ export default function PageShell() {
           <div className="rt-wrap">
             <header className="rt-section-head">
               <h2 className="rt-section-title">Packs</h2>
-              <p className="rt-section-sub">Dos bolsas combinadas, un poco más barato que sueltas.</p>
+              <p className="rt-section-sub">Combinaciones armadas para pedir más fácil y ahorrar un poco frente a las bolsas sueltas.</p>
             </header>
             <PackSection />
           </div>
@@ -103,11 +98,15 @@ export default function PageShell() {
           </section>
         )}
 
+        <ComoFunciona />
+        <FounderNote />
+
         {/* ── FAQ ── */}
         <section className="rt-section">
           <div className="rt-wrap" style={{ maxWidth: 720 }}>
             <header className="rt-section-head">
               <h2 className="rt-section-title">Preguntas frecuentes</h2>
+              <p className="rt-section-sub">Lo importante, antes de que tengas que preguntarlo por mensaje.</p>
             </header>
             <div className="rt-faq-list">
               {topFaqs.map((item) => (
@@ -125,42 +124,23 @@ export default function PageShell() {
           </div>
         </section>
 
-        {/* ── CTA final ── */}
-        <section className="rt-cta">
-          <div className="rt-wrap" style={{ maxWidth: 640, textAlign: "center" }}>
-            <h2 className="rt-cta-title">¿Listo para pedir?</h2>
-            <p className="rt-cta-sub">
-              Te abrimos WhatsApp con el resumen del pedido. Responde una persona.
-            </p>
-            <button onClick={openOrder} className="rt-cta-btn">Abrir pedido</button>
-          </div>
-        </section>
+        <CierreCTA itemCount={itemCount} onOrderOpen={openOrder} />
       </main>
 
       <Footer />
 
       {/* Sticky bar mobile */}
-      {!orderOpen && !sheetProduct && !sheetPack && itemCount > 0 && (
+      {!orderOpen && !sheetPack && itemCount > 0 && (
         <button
           onClick={openOrder}
           aria-label={`Tu pedido (${itemCount} ${itemCount === 1 ? "ítem" : "ítems"})`}
           className="rt-sticky"
         >
           <span style={{ fontSize: 14, fontWeight: 600 }}>
-            Tu carro · {itemCount} {itemCount === 1 ? "ítem" : "ítems"}
+            Mi pedido · {itemCount} {itemCount === 1 ? "ítem" : "ítems"}
           </span>
           <span style={{ fontSize: 14, fontWeight: 700 }}>Ver →</span>
         </button>
-      )}
-
-      {sheetProduct && (
-        <ProductSheet product={{
-          id: sheetProduct.id, slug: sheetProduct.slug, name: sheetProduct.name,
-          price: sheetProduct.price, image_webp_url: sheetProduct.image_webp_url,
-          image_url: sheetProduct.image_url, copy: sheetProduct.copy,
-          status: sheetProduct.status, min_unit_kg: sheetProduct.min_unit_kg,
-          stock_kg: sheetProduct.stock_kg,
-        }} onClose={closeSheet} />
       )}
 
       {sheetPack && (
@@ -254,43 +234,6 @@ export default function PageShell() {
           color: #6B6459;
           line-height: 1.65;
         }
-
-        /* CTA */
-        .rt-cta {
-          padding: 3.5rem 1rem;
-          background: #F1ECE2;
-          border-top: 1px solid rgba(26, 24, 21, 0.08);
-        }
-        .rt-cta-title {
-          font-family: var(--font-fraunces), Georgia, serif;
-          font-size: clamp(1.5rem, 3.5vw, 2rem);
-          font-weight: 500;
-          color: #1d1d1f;
-          margin: 0 0 0.6rem;
-          letter-spacing: -0.025em;
-          line-height: 1.05;
-          font-variation-settings: "opsz" 96, "SOFT" 50;
-        }
-        .rt-cta-sub {
-          font-size: 0.9375rem;
-          color: #6B6459;
-          margin: 0 0 1.5rem;
-        }
-        .rt-cta-btn {
-          display: inline-flex;
-          padding: 0.85rem 1.75rem;
-          background: #1d1d1f;
-          color: #ffffff;
-          font-weight: 500;
-          font-size: 0.9375rem;
-          letter-spacing: -0.005em;
-          border-radius: 980px;
-          border: none;
-          cursor: pointer;
-          transition: background 0.2s ease, transform 0.15s ease;
-        }
-        .rt-cta-btn:hover { background: #424245; }
-        .rt-cta-btn:active { transform: scale(0.98); }
 
         /* Sticky bar mobile */
         .rt-sticky {

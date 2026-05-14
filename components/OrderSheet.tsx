@@ -83,6 +83,24 @@ export default function OrderSheet({ open, onClose }: Props) {
     return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
+  function handleBrowseProducts() {
+    onClose();
+
+    if (typeof window === "undefined") return;
+
+    window.setTimeout(() => {
+      const section = document.getElementById("productos");
+
+      if (section) {
+        window.history.replaceState(null, "", "#productos");
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+
+      window.location.assign("/#productos");
+    }, 220);
+  }
+
   const handleConfirm = () => {
     if (loading || items.length === 0) return;
     setLoading(true);
@@ -386,7 +404,7 @@ export default function OrderSheet({ open, onClose }: Props) {
               {/* Sticky CTA bottom */}
               <div className="ord-cta">
                 {items.length === 0 ? (
-                  <button type="button" onClick={onClose} className="ord-btn-secondary">
+                  <button type="button" onClick={handleBrowseProducts} className="ord-btn-secondary">
                     Ver productos
                   </button>
                 ) : (

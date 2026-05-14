@@ -208,8 +208,9 @@ export default function PageShell() {
         .rt-grid {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
-          gap: 2rem 1rem;
-          padding: 0 1rem;
+          gap: 1rem 0.85rem;
+          padding: 0 0.9rem;
+          align-items: stretch;
         }
         @media (min-width: 700px) {
           .rt-grid { grid-template-columns: repeat(3, 1fr); gap: 2.5rem 1.5rem; padding: 0 1.5rem; }

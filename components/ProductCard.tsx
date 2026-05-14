@@ -64,50 +64,72 @@ export default function ProductCard({ product }: Props) {
 
   return (
     <article className="pc">
-      <Link
-        href={`/producto/${slug}`}
-        aria-label={`Ver ficha de ${name}`}
-        className="pc-link"
-      >
-        <div className="pc-img">
-          <Image
-            src={image_webp_url || image_url}
-            alt={`${name} en bolsa sellada de ${format_short}`}
-            fill
-            sizes="(max-width:700px) 50vw, 33vw"
-            style={{ objectFit: "contain" }}
-          />
-          {agotado && <span className="pc-tag pc-tag-out">Agotado</span>}
-          {!agotado && ultimaBolsa && <span className="pc-tag pc-tag-promo">Última unidad</span>}
-          {!agotado && !ultimaBolsa && badge && <span className="pc-tag pc-tag-new">{badge}</span>}
-        </div>
-
-        <div className="pc-info">
-          {cat_label && <p className="pc-cat">{cat_label}</p>}
-          <p className="pc-name">{name}</p>
-          <p className="pc-price">
-            <span className="pc-price-main">{display.price}</span>
-            <span className="pc-price-unit"> · {format_short}</span>
-          </p>
-          <span className="pc-detail-link">Ver ficha</span>
-        </div>
-      </Link>
-
-      {!agotado && (
-        <button
-          type="button"
-          onClick={handleAdd}
-          className="pc-add"
-          aria-label={`Agregar ${name} a la bolsa`}
+      <div className="pc-shell">
+        <Link
+          href={`/producto/${slug}`}
+          aria-label={`Ver ficha de ${name}`}
+          className="pc-link"
         >
-          {added ? "Agregado" : "Agregar"}
-        </button>
-      )}
+          <div className="pc-media">
+            <div className="pc-img">
+              <Image
+                src={image_webp_url || image_url}
+                alt={`${name} en bolsa sellada de ${format_short}`}
+                fill
+                sizes="(max-width:700px) 42vw, 33vw"
+                style={{ objectFit: "contain" }}
+              />
+              {agotado && <span className="pc-tag pc-tag-out">Agotado</span>}
+              {!agotado && ultimaBolsa && <span className="pc-tag pc-tag-promo">Última unidad</span>}
+              {!agotado && !ultimaBolsa && badge && <span className="pc-tag pc-tag-new">{badge}</span>}
+            </div>
+          </div>
+
+          <div className="pc-info">
+            {cat_label && <p className="pc-cat">{cat_label}</p>}
+            <p className="pc-name">{name}</p>
+            <p className="pc-price">
+              <span className="pc-price-main">{display.price}</span>
+              <span className="pc-price-unit"> · {format_short}</span>
+            </p>
+            <span className="pc-detail-link">Ver ficha</span>
+          </div>
+        </Link>
+
+        {!agotado && (
+          <button
+            type="button"
+            onClick={handleAdd}
+            className="pc-add"
+            aria-label={`Agregar ${name} a la bolsa`}
+          >
+            {added ? "Agregado" : "Agregar"}
+          </button>
+        )}
+      </div>
 
       <style>{`
-        .pc { display: flex; flex-direction: column; }
+        .pc {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+        .pc-shell {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-4);
+          height: 100%;
+          padding: 0.85rem;
+          border-radius: 22px;
+          background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(247, 241, 231, 0.96) 100%);
+          border: 1px solid rgba(90, 31, 26, 0.08);
+          box-shadow: 0 18px 34px -30px rgba(90, 31, 26, 0.42);
+        }
         .pc-link {
-          display: block;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
           text-align: left;
           background: transparent;
           padding: 0;
@@ -115,25 +137,31 @@ export default function ProductCard({ product }: Props) {
           color: inherit;
           text-decoration: none;
         }
+        .pc-media {
+          position: relative;
+        }
         .pc-img {
           position: relative;
           aspect-ratio: 1/1;
-          background: var(--surface-1);
-          border-radius: var(--radius-lg);
+          background:
+            radial-gradient(circle at top left, rgba(168, 65, 26, 0.08), transparent 38%),
+            linear-gradient(180deg, #F7F0E5 0%, #F1E7D9 100%);
+          border-radius: 18px;
           overflow: hidden;
+          border: 1px solid rgba(90, 31, 26, 0.06);
           transition: transform var(--dur-slow) var(--ease-emphasized);
         }
         .pc-link:hover .pc-img { transform: scale(1.02); }
 
         .pc-tag {
           position: absolute;
-          top: var(--space-3);
-          left: var(--space-3);
+          top: 0.7rem;
+          left: 0.7rem;
           z-index: var(--z-raised);
-          padding: 4px 10px;
-          font-size: var(--fs-xs);
-          font-weight: 500;
-          letter-spacing: var(--tracking-normal);
+          padding: 0.34rem 0.62rem;
+          font-size: 0.6875rem;
+          font-weight: 700;
+          letter-spacing: 0.04em;
           border-radius: var(--radius-full);
         }
         .pc-tag-promo,
@@ -144,37 +172,53 @@ export default function ProductCard({ product }: Props) {
         }
 
         .pc-info {
-          padding: var(--space-4) var(--space-1) 0;
-          text-align: center;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          gap: 0.2rem;
+          padding: 0 0.15rem;
+          text-align: left;
         }
         .pc-cat {
-          font-family: var(--font-display);
-          font-style: italic;
-          font-size: var(--fs-xs);
-          font-weight: 400;
+          font-family: var(--font-body);
+          text-transform: uppercase;
+          letter-spacing: 0.12em;
+          font-size: 0.65rem;
+          font-weight: 700;
           color: var(--accent);
-          margin: 0 0 var(--space-1);
+          margin: 0 0 0.15rem;
         }
         .pc-name {
-          font-size: var(--fs-md);
-          font-weight: 500;
-          color: var(--text);
-          margin: 0 0 var(--space-1);
-          line-height: var(--lh-snug);
-          letter-spacing: var(--tracking-snug);
-        }
-        .pc-price {
-          font-size: var(--fs-sm);
+          font-family: var(--font-display);
+          font-size: clamp(1rem, 3.7vw, 1.15rem);
+          font-weight: 600;
           color: var(--text);
           margin: 0;
-          font-variant-numeric: tabular-nums;
+          line-height: 1.08;
+          letter-spacing: var(--tracking-snug);
+          min-height: 2.2em;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
-        .pc-price-main { font-weight: 500; }
+        .pc-price {
+          font-size: 0.875rem;
+          color: var(--text);
+          margin: 0.2rem 0 0;
+          font-variant-numeric: tabular-nums;
+          line-height: 1.35;
+        }
+        .pc-price-main {
+          font-weight: 700;
+          font-size: 0.98rem;
+        }
         .pc-price-unit { color: var(--text-soft); }
         .pc-detail-link {
           display: inline-flex;
-          margin-top: var(--space-3);
-          font-size: var(--fs-sm);
+          margin-top: auto;
+          padding-top: 0.7rem;
+          font-size: 0.8125rem;
           font-weight: 600;
           color: var(--accent);
           text-decoration: underline;
@@ -182,15 +226,13 @@ export default function ProductCard({ product }: Props) {
         }
 
         .pc-add {
-          margin-top: var(--space-4);
-          align-self: center;
-          min-height: 44px;
-          min-width: 120px;
-          padding: var(--space-2) var(--space-5);
+          width: 100%;
+          min-height: 46px;
+          padding: 0 var(--space-4);
           background: var(--text);
           color: var(--text-inverse);
-          font-size: var(--fs-sm);
-          font-weight: 500;
+          font-size: 0.875rem;
+          font-weight: 700;
           letter-spacing: var(--tracking-normal);
           border: none;
           border-radius: var(--radius-full);
@@ -200,6 +242,27 @@ export default function ProductCard({ product }: Props) {
         }
         .pc-add:hover { background: var(--burdeo); }
         .pc-add:active { transform: scale(0.97); }
+
+        @media (min-width: 700px) {
+          .pc-shell {
+            padding: 1rem;
+            border-radius: 24px;
+          }
+          .pc-tag {
+            top: 0.8rem;
+            left: 0.8rem;
+          }
+          .pc-info {
+            gap: 0.28rem;
+            padding: 0 0.25rem;
+          }
+          .pc-cat {
+            font-size: 0.6875rem;
+          }
+          .pc-name {
+            font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+          }
+        }
       `}</style>
     </article>
   );

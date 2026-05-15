@@ -50,6 +50,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   const relatedProducts = post.relatedProductSlugs
     .map((productSlug) => products.find((product) => product.slug === productSlug))
     .filter((product): product is NonNullable<typeof product> => Boolean(product));
+  const relatedLinks = post.relatedLinks ?? [];
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
@@ -112,13 +113,18 @@ export default async function BlogPostPage({ params }: PageProps) {
             ))}
           </div>
 
-          {relatedProducts.length > 0 && (
+          {(relatedProducts.length > 0 || relatedLinks.length > 0) && (
             <section className="blog-box">
-              <p className="blog-box-kicker">Qué mirar en el catálogo</p>
+              <p className="blog-box-kicker">Qué mirar también</p>
               <div className="blog-chip-row">
                 {relatedProducts.map((product) => (
                   <Link key={product.slug} href={`/producto/${product.slug}`} className="blog-chip">
                     {product.name}
+                  </Link>
+                ))}
+                {relatedLinks.map((link) => (
+                  <Link key={link.href} href={link.href} className="blog-chip">
+                    {link.label}
                   </Link>
                 ))}
               </div>

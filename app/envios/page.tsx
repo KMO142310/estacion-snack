@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import StaticLayout from "@/components/StaticLayout";
 import { safeJsonLd } from "@/lib/json-ld";
@@ -12,6 +13,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Envíos y despacho · Estación Snack",
     description: "Envío gratis sobre $25.000.",
+  },
+  twitter: {
+    title: "Envíos y despacho · Estación Snack",
+    description: "Despacho local en Santa Cruz y comunas cercanas. Envío gratis sobre $25.000.",
   },
 };
 
@@ -69,6 +74,33 @@ export default function EnviosPage() {
               Despachamos de <strong style={{ color: "#5A1F1A" }}>martes a sábado, de 19:30 a 21:00 hrs</strong>. Coordinamos
               por WhatsApp una vez confirmado el pedido.
             </p>
+          </div>
+
+          <div
+            style={{
+              marginBottom: "3rem",
+              borderRadius: "24px",
+              overflow: "hidden",
+              background: "linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(244,238,227,0.94) 100%)",
+              border: "1px solid rgba(90,31,26,0.08)",
+              boxShadow: "0 18px 42px -34px rgba(90,31,26,0.28)",
+            }}
+          >
+            <div style={{ position: "relative", aspectRatio: "3 / 2" }}>
+              <Image
+                src="/img/envios-local-agency.webp"
+                alt="Pedidos listos para despacho local en Santa Cruz"
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 960px"
+                style={{ objectFit: "cover" }}
+              />
+            </div>
+            <div style={{ padding: "1rem 1.1rem 1.15rem" }}>
+              <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: "0.875rem", lineHeight: 1.65, color: "#5E6B3E" }}>
+                Trabajamos con rutas locales y cobertura definida. Esa es la razón de que podamos coordinar mejor el horario, el costo y el retiro sin dar vueltas.
+              </p>
+            </div>
           </div>
 
           {/* Zona de cobertura */}
@@ -290,7 +322,7 @@ export default function EnviosPage() {
           {/* CTA */}
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
             <Link
-              href="/"
+              href="/#productos"
               style={{
                 fontFamily: "var(--font-body)",
                 fontWeight: 600,

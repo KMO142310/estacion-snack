@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import StaticLayout from "@/components/StaticLayout";
 import { safeJsonLd } from "@/lib/json-ld";
@@ -12,6 +13,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Nuestra historia · Estación Snack",
     description: "Frutos secos frescos por kilo desde el corazón del Valle de Colchagua.",
+  },
+  twitter: {
+    title: "Nuestra historia · Estación Snack",
+    description: "Venta directa desde Santa Cruz, con catálogo corto, despacho local y atención por WhatsApp.",
   },
 };
 
@@ -66,6 +71,33 @@ export default function SobreNosotrosPage() {
             <p style={{ fontFamily: "var(--font-body)", fontSize: "1.0625rem", lineHeight: 1.75, color: "#5E6B3E" }}>
               Estación Snack es una venta directa de frutos secos y dulces por WhatsApp, desde Santa Cruz, Valle de Colchagua. Elegimos trabajar simple: buen producto, respuesta humana y despacho local.
             </p>
+          </div>
+
+          <div
+            style={{
+              marginBottom: "4rem",
+              borderRadius: "24px",
+              overflow: "hidden",
+              background: "linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(244,238,227,0.94) 100%)",
+              border: "1px solid rgba(90,31,26,0.08)",
+              boxShadow: "0 18px 42px -34px rgba(90,31,26,0.28)",
+            }}
+          >
+            <div style={{ position: "relative", aspectRatio: "3 / 2" }}>
+              <Image
+                src="/img/sobre-nosotros-agency.webp"
+                alt="Mesa de trabajo con pedidos de Estación Snack en Santa Cruz"
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 960px"
+                style={{ objectFit: "cover" }}
+              />
+            </div>
+            <div style={{ padding: "1rem 1.1rem 1.15rem" }}>
+              <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: "0.875rem", lineHeight: 1.65, color: "#5E6B3E" }}>
+                Detrás de cada pedido hay una operación pequeña y bien concreta: revisar stock, preparar bolsas, responder mensajes y coordinar entregas dentro del valle.
+              </p>
+            </div>
           </div>
 
           {/* Historia + valores */}
@@ -179,7 +211,7 @@ export default function SobreNosotrosPage() {
                 Escribir por WhatsApp
               </a>
               <Link
-                href="/"
+                href="/#productos"
                 style={{
                   fontFamily: "var(--font-body)",
                   fontWeight: 600,

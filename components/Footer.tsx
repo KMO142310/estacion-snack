@@ -22,6 +22,7 @@ export default function Footer() {
             <Link href="/#productos">Productos</Link>
             <Link href="/#packs">Packs</Link>
             <Link href="/#como-funciona">Cómo comprar</Link>
+            <Link href="/blog">Blog</Link>
             <Link href="/envios">Envíos</Link>
             <Link href="/faq">Preguntas frecuentes</Link>
           </div>

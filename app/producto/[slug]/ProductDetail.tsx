@@ -108,7 +108,7 @@ export default function ProductDetail({ product, related }: Props) {
             <div style={{ aspectRatio: "1/1", borderRadius: "16px", overflow: "hidden", background: "#F4EADB", position: "relative" }}>
               <Image
                 src={product.image_webp_url || product.image_url}
-                alt={`${product.name} en bolsa sellada de ${formatLabel}`}
+                alt={`Imagen de ${product.name}`}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 style={{ objectFit: "cover" }}

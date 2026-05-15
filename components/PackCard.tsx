@@ -55,7 +55,6 @@ export default function PackCard({ pack, products, onOpen }: Props) {
                 alt={pack.name}
                 fill
                 sizes="(max-width: 700px) 92vw, 33vw"
-                loading="eager"
                 style={{ objectFit: "cover" }}
               />
               {isAgotado && (

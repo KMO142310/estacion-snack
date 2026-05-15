@@ -41,6 +41,7 @@ export default function Header({ onOrderOpen }: HeaderProps) {
           <Link href="/#productos">Productos</Link>
           <Link href="/#packs">Packs</Link>
           <Link href="/#como-funciona">Cómo comprar</Link>
+          <Link href="/blog">Blog</Link>
           <Link href="/envios">Envíos</Link>
           <Link href="/contacto">Contacto</Link>
         </nav>
@@ -63,6 +64,7 @@ export default function Header({ onOrderOpen }: HeaderProps) {
         <Link href="/#productos">Productos</Link>
         <Link href="/#packs">Packs</Link>
         <Link href="/#como-funciona">Cómo comprar</Link>
+        <Link href="/blog">Blog</Link>
         <Link href="/envios">Envíos</Link>
         <Link href="/contacto">Contacto</Link>
       </nav>

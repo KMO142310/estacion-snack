@@ -19,6 +19,7 @@ import Footer from "./Footer";
 import ToastStack from "./Toast";
 import TicketProgress from "./TicketProgress";
 import LocalSeoSection from "./LocalSeoSection";
+import BlogPreview from "./BlogPreview";
 import packsData from "@/data/packs.json";
 import { FREE_SHIPPING_MIN } from "@/lib/shipping";
 import type { Pack, ProductStock } from "@/lib/pack-utils";
@@ -103,6 +104,7 @@ export default function PageShell() {
         <FounderNote />
         <ComoFunciona />
         <LocalSeoSection />
+        <BlogPreview />
 
         {/* ── FAQ ── */}
         <section className="rt-section">

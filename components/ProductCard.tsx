@@ -74,7 +74,7 @@ export default function ProductCard({ product }: Props) {
             <div className="pc-img">
               <Image
                 src={image_webp_url || image_url}
-                alt={`${name} en bolsa sellada de ${format_short}`}
+                alt={`Imagen de ${name}`}
                 fill
                 sizes="(max-width:700px) 42vw, 33vw"
                 style={{ objectFit: "contain" }}

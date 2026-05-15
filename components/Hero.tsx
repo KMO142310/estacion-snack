@@ -62,7 +62,7 @@ export default function Hero({ onOrderOpen }: HeroProps) {
             <div className="hero-product-image">
               <Image
                 src={lead.image_webp_url}
-                alt={`${lead.name} en bolsa sellada`}
+                alt={`Imagen principal de ${lead.name}`}
                 fill
                 priority
                 sizes="(max-width: 768px) 92vw, 520px"

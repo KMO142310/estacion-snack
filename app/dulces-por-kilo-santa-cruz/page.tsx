@@ -18,6 +18,11 @@ export const metadata: Metadata = {
     description:
       "Maní confitado, gomitas y chocolates por kilo en Santa Cruz con pedido por WhatsApp y despacho local.",
   },
+  twitter: {
+    title: "Dulces por kilo en Santa Cruz",
+    description:
+      "Maní confitado, gomitas y chocolates por kilo en Santa Cruz con pedido por WhatsApp y despacho local.",
+  },
 };
 
 const breadcrumbJsonLd = {

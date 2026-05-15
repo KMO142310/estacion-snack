@@ -13,7 +13,6 @@ import Benefits from "./Benefits";
 import ProductCard from "./ProductCard";
 import PackSection from "./PackSection";
 import ComoFunciona from "./ComoFunciona";
-import FounderNote from "./FounderNote";
 import CierreCTA from "./CierreCTA";
 import Footer from "./Footer";
 import ToastStack from "./Toast";
@@ -101,7 +100,6 @@ export default function PageShell() {
           </section>
         )}
 
-        <FounderNote />
         <ComoFunciona />
         <LocalSeoSection />
         <BlogPreview />

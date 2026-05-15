@@ -15,6 +15,10 @@ export const metadata: Metadata = {
     title: "Preguntas frecuentes · Estación Snack",
     description: "Cómo pedir, envíos, pagos y más sobre Estación Snack.",
   },
+  twitter: {
+    title: "Preguntas frecuentes · Estación Snack",
+    description: "Dudas sobre cómo pedir, envíos, pagos y productos en Estación Snack.",
+  },
 };
 
 const faqSchema = {

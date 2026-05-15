@@ -12,6 +12,10 @@ export const metadata: Metadata = {
     title: "Contacto · Estación Snack",
     description: "Contacta con Estación Snack por WhatsApp. Respondemos rápido.",
   },
+  twitter: {
+    title: "Contacto · Estación Snack",
+    description: "La vía más rápida para contactarnos es WhatsApp. Respondemos en menos de 24 horas hábiles.",
+  },
 };
 
 const WA_LINK = "https://wa.me/56953743338?text=Hola!%20Tengo%20una%20consulta";
@@ -47,8 +51,8 @@ const opciones = [
       </svg>
     ),
     titulo: "Hacer un pedido",
-    desc: "Si sabés lo que quieres, puedes armar tu pedido directo desde el catálogo y mandarlo por WhatsApp.",
-    href: "/",
+    desc: "Si ya sabes lo que quieres, puedes armar tu pedido directo desde el catálogo y mandarlo por WhatsApp.",
+    href: "/#productos",
     cta: "Ir al catálogo",
     primary: false,
   },
@@ -86,8 +90,8 @@ export default function ContactoPage() {
               Hablamos
             </h1>
             <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "#5E6B3E", lineHeight: 1.7 }}>
-              Respondemos rápido. Lo más fácil es escribirnos por WhatsApp —
-              lo atiende una persona, no un bot.
+              Respondemos rápido. Lo más fácil es escribirnos por WhatsApp.
+              Lo atiende una persona.
             </p>
           </div>
 

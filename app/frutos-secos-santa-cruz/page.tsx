@@ -18,6 +18,11 @@ export const metadata: Metadata = {
     description:
       "Compra frutos secos por kilo en Santa Cruz con precio visible, stock real y despacho local por WhatsApp.",
   },
+  twitter: {
+    title: "Frutos secos por kilo en Santa Cruz",
+    description:
+      "Compra frutos secos por kilo en Santa Cruz con precio visible, stock real y despacho local por WhatsApp.",
+  },
 };
 
 const breadcrumbJsonLd = {

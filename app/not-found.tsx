@@ -57,7 +57,7 @@ export default function NotFound() {
           maxWidth: 480,
         }}
       >
-        Probá desde el inicio o escribínos por WhatsApp y te orientamos.
+        Prueba desde el inicio o escríbenos por WhatsApp y te orientamos.
       </p>
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
         <Link

@@ -6,6 +6,14 @@ export const metadata: Metadata = {
   title: "Cambios y Devoluciones",
   description: "Política de cambios, devoluciones y derecho a retracto en Estación Snack. Ley 19.496.",
   alternates: { canonical: "/cambios-devoluciones" },
+  openGraph: {
+    title: "Cambios y devoluciones · Estación Snack",
+    description: "Política de cambios, devoluciones y derecho a retracto en Estación Snack.",
+  },
+  twitter: {
+    title: "Cambios y devoluciones · Estación Snack",
+    description: "Política de cambios, devoluciones y derecho a retracto en Estación Snack.",
+  },
 };
 
 const S = { h2: { fontFamily: "var(--font-display)", fontWeight: 600 as const, fontSize: "clamp(1.25rem, 3.5vw, 1.5rem)", color: "#5A1F1A", marginBottom: "0.75rem", marginTop: "2.5rem" }, p: { fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5A1F1A", lineHeight: 1.7, marginBottom: "1rem", opacity: 0.85 }, li: { fontFamily: "var(--font-body)", fontSize: "0.9375rem", color: "#5A1F1A", lineHeight: 1.7, opacity: 0.85, marginBottom: "0.5rem" } };
@@ -28,7 +36,7 @@ export default function CambiosDevolucionesPage() {
           <p style={S.p}>Según el artículo 3 bis de la Ley 19.496, tienes 10 días hábiles desde que recibes el producto para retractarte de tu compra sin necesidad de dar motivo.</p>
           <ul style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
             <li style={S.li}>El producto debe estar sin abrir, en las mismas condiciones en que lo recibiste.</li>
-            <li style={S.li}>Contactanos dentro del plazo de 10 días hábiles.</li>
+            <li style={S.li}>Contáctanos dentro del plazo de 10 días hábiles.</li>
           </ul>
 
           <h2 style={S.h2}>Cómo pedir una devolución</h2>
@@ -50,7 +58,7 @@ export default function CambiosDevolucionesPage() {
           <p style={S.p}>Si tu pedido llegó con algún problema:</p>
           <ol style={{ paddingLeft: "1.25rem", marginBottom: "1rem" }}>
             <li style={S.li}>Escríbenos por WhatsApp dentro de las 24 horas de recibido.</li>
-            <li style={S.li}>Mandanos una foto del producto tal como lo recibiste.</li>
+            <li style={S.li}>Mándanos una foto del producto tal como lo recibiste.</li>
             <li style={S.li}>Te ofrecemos reemplazo o devolución del dinero, lo que prefieras.</li>
             <li style={S.li}>El reemplazo o reembolso se hace en la siguiente ruta de despacho.</li>
           </ol>

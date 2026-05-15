@@ -100,9 +100,9 @@ export default function PageShell() {
           </section>
         )}
 
-        <LocalSeoSection />
-        <ComoFunciona />
         <FounderNote />
+        <ComoFunciona />
+        <LocalSeoSection />
 
         {/* ── FAQ ── */}
         <section className="rt-section">

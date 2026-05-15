@@ -16,14 +16,8 @@ export default function PackSection() {
   const products = productsData as unknown as ProductStock[];
 
   return (
-    <section aria-label="Packs armados" style={{ padding: "0.5rem 0 0" }}>
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "1fr",
-        gap: 16,
-        maxWidth: 420,
-        margin: "0 auto",
-      }} className="pack-grid-inline">
+    <section aria-label="Packs armados" className="pack-inline">
+      <div className="pack-grid-inline">
         {packs.map((pack) => (
           <PackCard
             key={pack.id}
@@ -35,8 +29,23 @@ export default function PackSection() {
       </div>
 
       <style>{`
+        .pack-inline {
+          padding: 0.5rem 0 0;
+        }
+        .pack-grid-inline {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 1rem;
+          max-width: 29rem;
+          margin: 0 auto;
+        }
         @media (min-width: 768px) {
-          .pack-grid-inline { grid-template-columns: repeat(3, 1fr) !important; max-width: none !important; margin: 0 !important; }
+          .pack-grid-inline {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.5rem;
+            max-width: none;
+            margin: 0;
+          }
         }
       `}</style>
 

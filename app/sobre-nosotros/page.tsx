@@ -83,12 +83,12 @@ export default function SobreNosotrosPage() {
                   marginBottom: "1.25rem",
                 }}
               >
-                El valle que nos inspira
+                Cómo trabajamos desde Santa Cruz
               </h2>
               {[
-                "Vivimos en uno de los valles más reconocidos de Chile. La tierra aquí tiene historia, los productores cuidan lo que hacen, y los vecinos valoran el oficio. Eso lo sentimos todos los días.",
-                "No somos una cadena ni un marketplace. Somos una persona eligiendo qué entra al catálogo, probando cada lote, decidiendo qué merece tu tiempo y tu plata.",
-                "Despachamos los martes a sábado en Santa Cruz y comunas cercanas de O'Higgins. Lo coordinamos por WhatsApp porque así funciona acá — con nombre y apellido, sin apps raras.",
+                "Estación Snack funciona desde Santa Cruz, con un catálogo corto y precios visibles desde el principio. Preferimos mostrar bien lo que sí tenemos antes que prometer de todo un poco.",
+                "Detrás de cada pedido hay una sola persona revisando stock, eligiendo qué entra al catálogo, respondiendo mensajes y coordinando las entregas.",
+                "Despachamos de martes a sábado en Santa Cruz y comunas cercanas. El pedido se confirma por WhatsApp porque es la forma más simple de coordinar comuna, horario y pago sin dar vueltas.",
               ].map((p, i) => (
                 <p key={i} style={{ fontFamily: "var(--font-body)", fontSize: "0.9375rem", lineHeight: 1.8, color: "#5E6B3E", marginBottom: "1rem" }}>{p}</p>
               ))}
